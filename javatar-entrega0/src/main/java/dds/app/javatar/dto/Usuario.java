@@ -1,4 +1,4 @@
-package dds.app.javatar_entrega0;
+package dds.app.javatar.dto;
 
 import java.math.BigDecimal;
 

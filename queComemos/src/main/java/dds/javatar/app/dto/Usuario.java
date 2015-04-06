@@ -31,9 +31,9 @@ public class Usuario {
 		this.peso = peso;
 	}
 	
-	public BigDecimal getIMC(int presicion) {
+	public BigDecimal getIMC(int precision) {
 		
-		MathContext mc = new MathContext(presicion, RoundingMode.HALF_DOWN);
+		MathContext mc = new MathContext(precision, RoundingMode.HALF_DOWN);
 		BigDecimal cuadrado = altura.pow(2, mc);
 		return peso.divide(cuadrado, mc); 
 	}

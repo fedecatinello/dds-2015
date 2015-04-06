@@ -1,6 +1,8 @@
 package dds.javatar.app.dto;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class Usuario {
 
@@ -20,9 +22,19 @@ public class Usuario {
 		this.peso = peso;
 	}
 	
-	public BigDecimal getIMC() {
+	public Usuario(){
 		
-		BigDecimal cuadrado = altura.pow(2);
-		return peso.divide(cuadrado); 
+	}
+	
+	public Usuario(BigDecimal altura, BigDecimal peso){
+		this.altura = altura;
+		this.peso = peso;
+	}
+	
+	public BigDecimal getIMC(int presicion) {
+		
+		MathContext mc = new MathContext(presicion, RoundingMode.HALF_DOWN);
+		BigDecimal cuadrado = altura.pow(2, mc);
+		return peso.divide(cuadrado, mc); 
 	}
 }

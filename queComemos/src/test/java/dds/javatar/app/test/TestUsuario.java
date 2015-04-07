@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,5 +31,16 @@ public class TestUsuario {
 		Usuario usuario = new Usuario(new BigDecimal(1.75), new BigDecimal(65.0));
 		this.assertIMC(usuario, 21.2244898);
 	}
-	
+
+	@Test
+	public void testMelinaMacko(){
+		Usuario meli = new Usuario();
+		BigDecimal altura = new BigDecimal(1.47);
+		BigDecimal peso = new BigDecimal(42);
+		meli.setAltura(altura);
+		meli.setPeso(peso);
+		this.assertIMC(meli,19.43635);
+
+
+	}
 }

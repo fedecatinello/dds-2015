@@ -40,7 +40,7 @@ public class Usuario {
 	public BigDecimal getIMC(int precision) {
 		
 		MathContext mc = new MathContext(precision, RoundingMode.HALF_DOWN);
-		BigDecimal cuadrado = altura.pow(2, mc);
-		return peso.divide(cuadrado, mc); 
+		BigDecimal cuadrado = this.altura.pow(2, mc);
+		return this.peso.divide(cuadrado, mc); 
 	}
 }

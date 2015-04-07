@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    TestFedericoCatinello.class,
    TestMelinaMacko.class,
-   TestEliana.class
+   TestEliana.class,
+   TestPabloGomez.class
 })
 
 public class TestJavatarSuite {   

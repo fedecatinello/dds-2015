@@ -9,6 +9,8 @@ public class Usuario {
 	private BigDecimal altura;
 	private BigDecimal peso;
 	
+	/* Setters y getters */
+	
 	public BigDecimal getAltura() {
 		return altura;
 	}
@@ -22,6 +24,8 @@ public class Usuario {
 		this.peso = peso;
 	}
 	
+	/* Constructors */
+	
 	public Usuario(){
 		
 	}
@@ -30,6 +34,8 @@ public class Usuario {
 		this.altura = altura;
 		this.peso = peso;
 	}
+	
+	/* Obtener la masa corporal dada una presicion */
 	
 	public BigDecimal getIMC(int precision) {
 		

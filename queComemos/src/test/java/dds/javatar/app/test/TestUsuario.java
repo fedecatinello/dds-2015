@@ -40,7 +40,11 @@ public class TestUsuario {
 		meli.setAltura(altura);
 		meli.setPeso(peso);
 		this.assertIMC(meli,19.43635);
-
-
+	}
+	
+	@Test
+	public final void testFedericoCatinello() {
+		Usuario fede = new Usuario(new BigDecimal(1.72), new BigDecimal(75));
+		this.assertIMC(fede, 25.35154137);
 	}
 }

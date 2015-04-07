@@ -24,10 +24,6 @@ public class TestMelinaMacko {
 		meli.setPeso(peso);
 		BigDecimal actual = meli.getIMC(mc.getPrecision());
 		Assert.assertTrue(actual.toString().equals("19.43635"));
-		System.out.println("Mi peso calculado por mi calculadora es:19.43635, el peso"
-				+ " calculado por la app es:" +actual.toString());
-		
-		
 	}
 	
 }

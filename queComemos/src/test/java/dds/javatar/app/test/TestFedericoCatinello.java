@@ -19,11 +19,6 @@ public class TestFedericoCatinello {
 		
 		MathContext mc = new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_DOWN);
 		BigDecimal expected = new BigDecimal(25.35154137, mc);
-		
-		/* Imprimo valores para chequear igualdad */
-		System.out.println(expected.toString());
-		System.out.println(fcatinello.getIMC(mc.getPrecision()));
-		
 		assertEquals(expected.doubleValue(), fcatinello.getIMC(mc.getPrecision()).doubleValue(), 0.1);
 	}
 

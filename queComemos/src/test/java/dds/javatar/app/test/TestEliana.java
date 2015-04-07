@@ -17,8 +17,6 @@ public class TestEliana {
 	public void testGetIMC() {
 		MathContext mc = new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_DOWN);
 		BigDecimal expected = new BigDecimal(22.49964, mc);
-		System.out.println("Se espera: "+expected.toString());
-		System.out.println("Se obtiene: "+eliana.getIMC(mc.getPrecision()));
 		assertTrue(expected.equals(eliana.getIMC(mc.getPrecision())));
 	}
 

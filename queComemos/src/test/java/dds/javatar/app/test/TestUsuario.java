@@ -47,4 +47,10 @@ public class TestUsuario {
 		Usuario fede = new Usuario(new BigDecimal(1.72), new BigDecimal(75));
 		this.assertIMC(fede, 25.35154137);
 	}
+	
+	@Test
+	public final void testElianaLuguerosSinatra() {
+		Usuario eliana = new Usuario(new BigDecimal(1.66), new BigDecimal(62));
+		this.assertIMC(eliana, 22.49964);
+	}
 }

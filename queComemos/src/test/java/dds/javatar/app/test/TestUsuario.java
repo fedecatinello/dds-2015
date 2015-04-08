@@ -1,12 +1,11 @@
 package dds.javatar.app.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ import dds.javatar.app.dto.Usuario;
 
 public class TestUsuario {
 
-	MathContext mc;
+	private MathContext mc;
 	
 	@Before
 	public void initialize() {

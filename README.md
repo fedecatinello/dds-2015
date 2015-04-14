@@ -5,7 +5,7 @@ Nombre del grupo: Javatar
 Integrantes del grupo:
 - Catinello, Federico
 - García, Nicolás
-- Gomez, Pablo
+- Gomez, Pablo Matias
 - Lugueros Sinatra, Eliana
 - Macko, Melina
 

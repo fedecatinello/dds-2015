@@ -3,10 +3,12 @@
 Nombre del grupo: Javatar
 
 Integrantes del grupo:
-- Catinello, Federico
+- Catinello, Federico Lucas
 - García, Nicolás
 - Gomez, Pablo Matias
 - Lugueros Sinatra, Eliana
 - Macko, Melina
 
 Nombre del tutor: Cano, Federico
+
+[![Build Status](https://travis-ci.org/fedecatinello/queComemos.svg?branch=master)](https://travis-ci.org/fedecatinello/queComemos)

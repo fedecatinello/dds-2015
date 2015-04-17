@@ -11,4 +11,4 @@ Integrantes del grupo:
 
 Nombre del tutor: Cano, Federico
 
-[![Build Status](https://travis-ci.com/fedecatinello/queComemos.svg?branch=master)](https://travis-ci.com/fedecatinello/queComemos)
+[![Build Status](https://magnum.travis-ci.com/dds-utn/2015-mn-group-6.svg?token=pLHpFEsKnpotZxuQDUUZ&branch=master)](https://magnum.travis-ci.com/dds-utn/2015-mn-group-6)

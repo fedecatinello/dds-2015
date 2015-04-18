@@ -7,12 +7,16 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import dds.javatar.app.dto.BusinessException;
+import dds.javatar.app.dto.Diabetico;
+import dds.javatar.app.dto.Hipertenso;
 import dds.javatar.app.dto.Usuario;
+import dds.javatar.app.dto.Vegano;
 
 public class TestUsuario {
 
@@ -56,23 +60,102 @@ public class TestUsuario {
 		this.assertIMC(eliana, 22.49964);
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testFechaNacimientoPostero() throws BusinessException {
+	private Usuario crearUsuarioBasicoValido() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, 1);
-		Date fechaPosterior = calendar.getTime();
-
+		calendar.add(Calendar.YEAR, -1);
+		
 		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(fechaPosterior);
+		usuario.setFechaNacimiento(calendar.getTime());
 		usuario.setNombre("Nombre del usuario");
 		usuario.setSexo("Masculino");
 		usuario.setPeso(new BigDecimal(70));
 		usuario.setAltura(new BigDecimal(1.77));
 		// usuario.setRutina("rutina");
+		
+		return usuario;
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testFechaNacimientoPosterior() throws BusinessException {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, 1);
+		Date fechaPosterior = calendar.getTime();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.setFechaNacimiento(fechaPosterior);
 
 		usuario.validar();
 	}
 
+	
+	@Test
+	public void testFechaNacimientoAnterior() throws BusinessException {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, -1);
+		Date fechaAnterior = calendar.getTime();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.setFechaNacimiento(fechaAnterior);
+				
+		usuario.validar();
+	}
+
+	@Test(expected = BusinessException.class)
+	public void testVeganoConPreferenciaInvalida() throws BusinessException {
+		Vegano vegano = new Vegano();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+		usuario.getCondicionesPreexistentes().add(vegano);
+		
+		usuario.validar();
+	}
+	
+
+	@Test(expected = BusinessException.class)
+	public void testDiabeticoSinSexo() throws BusinessException {
+		Diabetico diabetico = new Diabetico();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.setSexo(null);
+		usuario.getCondicionesPreexistentes().add(diabetico);
+		
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testHipertensoSinPreferencia() throws BusinessException {
+		Hipertenso hipertenso = new Hipertenso();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(hipertenso);
+		usuario.setPreferenciasAlimenticias(new HashMap<String, Boolean>());
+		
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testDiabeticoSinPreferencia() throws BusinessException {
+		Diabetico diabetico = new Diabetico();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.setPreferenciasAlimenticias(new HashMap<String, Boolean>());
+		
+		usuario.validar();
+	}
+	
+	public void testHipertensoConPreferencia() throws BusinessException {
+		Hipertenso hipertenso = new Hipertenso();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(hipertenso);
+		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+		
+		usuario.validar();
+	}
 	
 }

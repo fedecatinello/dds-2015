@@ -122,7 +122,7 @@ public class Usuario {
 
 	// TODO: deberiamos crear una especie de validadores ? porque queda medio feo chequear todos los campos asi, nose..
 	public void validar() throws BusinessException {
-		if (nombre == null || fechaNacimiento == null || peso == null || altura == null) { //|| rutina == null) {
+		if (nombre == null || fechaNacimiento == null || peso == null || altura == null || rutina == null) {
 			throw new BusinessException("El usuario tiene campos obligatorios sin completar");
 		}
 
@@ -138,6 +138,21 @@ public class Usuario {
 		if (this.condicionesPreexistentes != null) {
 			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
 				condicionPreexistente.validarUsuario(this);
+			}
+		}
+	}
+	
+	public void validarRutinaSaludable() throws BusinessException {
+		
+		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
+		
+		if(userIMC < 18 || userIMC > 30){
+			throw new BusinessException("El IMC debe estar en el rango entre 18 y 30");
+		}
+		
+		if(this.condicionesPreexistentes!=null){
+			for(CondicionPreexistente cond : this.condicionesPreexistentes){
+				cond.validarUsuarioSaludable(this);
 			}
 		}
 	}

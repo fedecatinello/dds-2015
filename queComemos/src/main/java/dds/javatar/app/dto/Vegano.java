@@ -14,14 +14,17 @@ public class Vegano implements CondicionPreexistente {
 	public void validarUsuario(Usuario usuario) throws BusinessException {
 		for (String preferenciaProhibida : preferenciasProhibidas) {;
 			if (Boolean.TRUE.equals(usuario.getPreferenciasAlimenticias().get(preferenciaProhibida))) {
-				throw new BusinessException(String.format("El usuario no puede tener como preferencia %s por ser vegano debe indicar sexo", preferenciaProhibida));
+				throw new BusinessException(String.format("El usuario no puede tener como preferencia %s por ser vegano", preferenciaProhibida));
 			}
 		}
 	}
 
 	@Override
 	public void validarUsuarioSaludable(Usuario usuario) throws BusinessException {
-		// TODO
+		
+		if(!(usuario.getPreferenciasAlimenticias().containsKey("fruta"))){
+			throw new BusinessException("El usuario vegano debería tener como preferencia a las frutas");
+		}
 	}
 
 }

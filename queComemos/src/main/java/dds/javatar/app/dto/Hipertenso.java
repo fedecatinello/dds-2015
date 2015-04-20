@@ -7,7 +7,13 @@ public class Hipertenso extends UsuarioConPreferencia {
 
 	@Override
 	public void validarUsuarioSaludable(Usuario usuario) throws BusinessException {
-		// TODO
+		if(!esRutinaIntensiva(usuario.getRutina())){
+			throw new BusinessException("El usuario es hipertenso y no subsana la condicion");
+		}
 	}
 
+	public boolean esRutinaIntensiva(Rutina rutina){
+		return rutina.getTipo().toString().equalsIgnoreCase("INTENSIVO");
+	}
 }
+

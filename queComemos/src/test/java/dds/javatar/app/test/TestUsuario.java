@@ -12,6 +12,7 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import dds.javatar.app.dto.Celiaco;
 import dds.javatar.app.dto.Diabetico;
 import dds.javatar.app.dto.Hipertenso;
 import dds.javatar.app.dto.Rutina;
@@ -73,7 +74,7 @@ public class TestUsuario {
 		usuario.setSexo(Usuario.Sexo.MASCULINO);
 		usuario.setPeso(new BigDecimal(70));
 		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina(TipoRutina.LEVE, 20));
+		usuario.setRutina(new Rutina());
 		
 		return usuario;
 	}
@@ -160,4 +161,93 @@ public class TestUsuario {
 		usuario.validar();
 	}
 	
+	@Test
+	public void testVeganoConPreferenciaFruta() throws BusinessException {
+		Vegano vegano = new Vegano();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(vegano);
+		usuario.getPreferenciasAlimenticias().put("fruta", Boolean.TRUE);
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test 
+	public void testHipertensoConRutinaActivaIntensiva() throws BusinessException {
+		Hipertenso hipertenso = new Hipertenso();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(hipertenso);
+		usuario.getRutina().setTipo(TipoRutina.INTENSIVO);
+		usuario.getRutina().setDuracion(40);
+		
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testHipertensoConRutinaSedentariaLeve() throws BusinessException {
+		Hipertenso hipertenso = new Hipertenso();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(hipertenso);
+		usuario.getRutina().setTipo(TipoRutina.LEVE);
+		usuario.getRutina().setDuracion(15);
+		
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testDiabeticoConRutinaSedentariaLeve() throws BusinessException {
+		Diabetico diabetico = new Diabetico();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.getRutina().setTipo(TipoRutina.LEVE);
+		usuario.getRutina().setDuracion(15);
+		
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test
+	public void testDiabeticoConRutinaActiva() throws BusinessException {
+		Diabetico diabetico = new Diabetico();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.getRutina().setTipo(TipoRutina.FUERTE);
+		usuario.getRutina().setDuracion(0);
+		
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testDiabeticoPesaMasde70() throws BusinessException {
+		Diabetico diabetico = new Diabetico();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.setPeso(new BigDecimal(85));
+		
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test
+	public void testDiabeticoPesaMenosde70() throws BusinessException {
+		Diabetico diabetico = new Diabetico();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.setPeso(new BigDecimal(65));
+		
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test
+	public void testCeliacoSaludable() throws BusinessException {
+		Celiaco celiaco = new Celiaco();
+		
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.getCondicionesPreexistentes().add(celiaco);
+				
+		usuario.validarRutinaSaludable();
+	}
 }

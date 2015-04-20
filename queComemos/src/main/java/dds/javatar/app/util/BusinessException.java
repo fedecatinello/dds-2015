@@ -1,8 +1,8 @@
-package dds.javatar.app.dto;
+package dds.javatar.app.util;
 
 public class BusinessException extends Exception {
 
-	BusinessException(String message) {
+	public BusinessException(String message) {
 		super(message);
 	}
 }

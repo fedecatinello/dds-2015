@@ -1,5 +1,7 @@
 package dds.javatar.app.dto;
 
+import dds.javatar.app.util.BusinessException;
+
 public abstract class UsuarioConPreferencia implements CondicionPreexistente {
 
 	

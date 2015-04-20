@@ -9,19 +9,22 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import dds.javatar.app.util.BusinessException;
+
 public class Usuario {
 
+	public enum Sexo {MASCULINO,FEMENINO};
 	private static final Integer MIN_NAME_LENGTH = 4;
 
 	private String nombre;
-	private String sexo; // TODO: hacer un enum, no?
+	private Sexo sexo;
 	private Date fechaNacimiento;
 	private BigDecimal altura;
 	private BigDecimal peso;
 
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	private Map<String, Boolean> preferenciasAlimenticias; 	// TODO: Aca creo que un enum no va porque da un ejemplo con strings en el texto.
-	// private String rutina; // TODO : analizar esto tambien, probablemente seria un strategy mejor.
+	private Rutina rutina;
 	// private Set<Receta> recetas;
 
 	/* Constructors */
@@ -34,6 +37,12 @@ public class Usuario {
 	public Usuario(BigDecimal altura, BigDecimal peso) {
 		this.altura = altura;
 		this.peso = peso;
+	}
+	
+	public Usuario(BigDecimal altura, BigDecimal peso, Sexo sexo) {
+		this.altura = altura;
+		this.peso = peso;
+		this.sexo = sexo;
 	}
 
 	/* Setters y getters */
@@ -62,11 +71,11 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-	public String getSexo() {
+	public Sexo getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(String sexo) {
+	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
 
@@ -92,6 +101,14 @@ public class Usuario {
 
 	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias) {
 		this.preferenciasAlimenticias = preferenciasAlimenticias;
+	}
+	
+	public Rutina getRutina() {
+		return rutina;
+	}
+
+	public void setRutina(Rutina rutina) {
+		this.rutina = rutina;
 	}
 
 	/* Obtener la masa corporal dada una presicion */

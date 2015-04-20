@@ -1,5 +1,7 @@
 package dds.javatar.app.dto;
 
+import dds.javatar.app.util.BusinessException;
+
 public interface CondicionPreexistente {
 
 	void validarUsuario(Usuario usuario) throws BusinessException;

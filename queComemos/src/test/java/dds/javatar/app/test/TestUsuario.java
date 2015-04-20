@@ -12,11 +12,13 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.BusinessException;
 import dds.javatar.app.dto.Diabetico;
 import dds.javatar.app.dto.Hipertenso;
+import dds.javatar.app.dto.Rutina;
+import dds.javatar.app.dto.Rutina.TipoRutina;
 import dds.javatar.app.dto.Usuario;
 import dds.javatar.app.dto.Vegano;
+import dds.javatar.app.util.BusinessException;
 
 public class TestUsuario {
 
@@ -68,10 +70,10 @@ public class TestUsuario {
 		Usuario usuario = new Usuario();
 		usuario.setFechaNacimiento(calendar.getTime());
 		usuario.setNombre("Nombre del usuario");
-		usuario.setSexo("Masculino");
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
 		usuario.setPeso(new BigDecimal(70));
 		usuario.setAltura(new BigDecimal(1.77));
-		// usuario.setRutina("rutina");
+		usuario.setRutina(new Rutina(TipoRutina.LEVE, 20));
 		
 		return usuario;
 	}

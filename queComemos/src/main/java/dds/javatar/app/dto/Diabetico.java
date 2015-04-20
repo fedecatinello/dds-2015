@@ -1,5 +1,7 @@
 package dds.javatar.app.dto;
 
+import dds.javatar.app.util.BusinessException;
+
 public class Diabetico extends UsuarioConPreferencia {
 
 	private static final Integer MAX_PESO = 70;

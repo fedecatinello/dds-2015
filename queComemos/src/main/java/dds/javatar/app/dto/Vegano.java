@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import dds.javatar.app.util.BusinessException;
+
 public class Vegano implements CondicionPreexistente {
 
 	private static final Set<String> preferenciasProhibidas = new HashSet<String>(Arrays.asList("pollo", "carne", "chivito", "chori"));

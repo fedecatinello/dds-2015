@@ -1,4 +1,4 @@
-package dds.javatar.app.dto;
+package dds.javatar.app.dto.usuario;
 
 import dds.javatar.app.util.BusinessException;
 

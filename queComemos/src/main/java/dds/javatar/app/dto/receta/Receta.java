@@ -1,4 +1,4 @@
-package dds.javatar.app.dto;
+package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
 import java.util.Collection;

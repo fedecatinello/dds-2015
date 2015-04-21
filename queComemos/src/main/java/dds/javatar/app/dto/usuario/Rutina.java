@@ -1,10 +1,13 @@
-package dds.javatar.app.dto;
+package dds.javatar.app.dto.usuario;
 
 public class Rutina {
 
 	public enum TipoRutina {
-		LEVE(Boolean.FALSE, "Sedentaria con algo de ejercicio"), NADA(Boolean.FALSE, "Sedentaria con nada de ejercicio"), MEDIANO(Boolean.FALSE,
-				"Sedentaria con ejercicio"), INTENSIVO(Boolean.TRUE, "Activa con ejercicio adicional"), FUERTE(Boolean.TRUE, "Activa sin ejercicio adicional");
+		LEVE(Boolean.FALSE, "Sedentaria con algo de ejercicio"),
+		NADA(Boolean.FALSE, "Sedentaria con nada de ejercicio"), 
+		MEDIANO(Boolean.FALSE, "Sedentaria con ejercicio"), 
+		INTENSIVO(Boolean.TRUE, "Activa con ejercicio adicional"), 
+		FUERTE(Boolean.TRUE, "Activa sin ejercicio adicional");
 
 		private String descripcion;
 		private Boolean activa;
@@ -29,7 +32,6 @@ public class Rutina {
 		public void setActiva(Boolean activa) {
 			this.activa = activa;
 		}
-
 	};
 
 	private TipoRutina tipo;
@@ -38,10 +40,6 @@ public class Rutina {
 	public Rutina(TipoRutina tipo, Integer duracion) {
 		this.setTipo(tipo);
 		this.setDuracion(duracion);
-	}
-
-	public TipoRutina getTipo() {
-		return tipo;
 	}
 
 	public void setTipo(TipoRutina tipo) {

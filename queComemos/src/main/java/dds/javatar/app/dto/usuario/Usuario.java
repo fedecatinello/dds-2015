@@ -1,4 +1,4 @@
-package dds.javatar.app.dto;
+package dds.javatar.app.dto.usuario;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.util.BusinessException;
 
 public class Usuario {

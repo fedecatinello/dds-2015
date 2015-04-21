@@ -12,14 +12,14 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.Celiaco;
-import dds.javatar.app.dto.Diabetico;
-import dds.javatar.app.dto.Hipertenso;
-import dds.javatar.app.dto.Receta;
-import dds.javatar.app.dto.Rutina;
-import dds.javatar.app.dto.Rutina.TipoRutina;
-import dds.javatar.app.dto.Usuario;
-import dds.javatar.app.dto.Vegano;
+import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.usuario.Celiaco;
+import dds.javatar.app.dto.usuario.Diabetico;
+import dds.javatar.app.dto.usuario.Hipertenso;
+import dds.javatar.app.dto.usuario.Rutina;
+import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.Vegano;
+import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.util.BusinessException;
 
 public class TestUsuario {
@@ -329,17 +329,6 @@ public class TestUsuario {
 
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("azucar", new BigDecimal(50));
-		usuario.validarSiAceptaReceta(receta);
-	}
-
-	@Test(expected = BusinessException.class)
-	public void testRecetaDiabeticoNoAceptaAzucar() throws BusinessException {
-		Usuario usuario = crearUsuarioBasicoValido();
-		Diabetico diabetico = new Diabetico();
-		usuario.agregarCondicionPreexistente(diabetico);
-
-		Receta receta = new Receta(150);
-		receta.agregarIngrediente("azucar", new BigDecimal(150));
 		usuario.validarSiAceptaReceta(receta);
 	}
 	

@@ -1,5 +1,6 @@
-package dds.javatar.app.dto;
+package dds.javatar.app.dto.usuario;
 
+import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.util.BusinessException;
 
 public class Celiaco implements CondicionPreexistente {

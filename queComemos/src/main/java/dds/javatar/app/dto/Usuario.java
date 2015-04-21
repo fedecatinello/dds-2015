@@ -25,7 +25,7 @@ public class Usuario {
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	private Map<String, Boolean> preferenciasAlimenticias; 	// TODO: Aca creo que un enum no va porque da un ejemplo con strings en el texto.
 	private Rutina rutina;
-	// private Set<Receta> recetas;
+	private Set<Receta> recetas;
 
 	/* Constructors */
 

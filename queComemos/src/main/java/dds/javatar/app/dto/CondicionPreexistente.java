@@ -8,5 +8,5 @@ public interface CondicionPreexistente {
 	
 	void validarUsuarioSaludable(Usuario usuario) throws BusinessException;
 	
-	void aceptaReceta(Receta receta) throws BusinessException;
+	void validarReceta(Receta receta) throws BusinessException;
 }

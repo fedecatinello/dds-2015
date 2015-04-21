@@ -13,7 +13,10 @@ import dds.javatar.app.util.BusinessException;
 
 public class Usuario {
 
-	public enum Sexo {MASCULINO,FEMENINO};
+	public enum Sexo {
+		MASCULINO, FEMENINO
+	};
+
 	private static final Integer MIN_NAME_LENGTH = 4;
 
 	private String nombre;
@@ -23,7 +26,7 @@ public class Usuario {
 	private BigDecimal peso;
 
 	private Set<CondicionPreexistente> condicionesPreexistentes;
-	private Map<String, Boolean> preferenciasAlimenticias; 	// TODO: Aca creo que un enum no va porque da un ejemplo con strings en el texto.
+	private Map<String, Boolean> preferenciasAlimenticias;
 	private Rutina rutina;
 	private Set<Receta> recetas;
 
@@ -32,16 +35,17 @@ public class Usuario {
 	public Usuario() {
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
 		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
+		this.recetas = new HashSet<Receta>();
 	}
 
 	public Usuario(BigDecimal altura, BigDecimal peso) {
+		this();
 		this.altura = altura;
 		this.peso = peso;
 	}
-	
+
 	public Usuario(BigDecimal altura, BigDecimal peso, Sexo sexo) {
-		this.altura = altura;
-		this.peso = peso;
+		this(altura, peso);
 		this.sexo = sexo;
 	}
 
@@ -87,14 +91,6 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public Set<CondicionPreexistente> getCondicionesPreexistentes() {
-		return condicionesPreexistentes;
-	}
-
-	public void setCondicionesPreexistentes(Set<CondicionPreexistente> condicionesPreexistentes) {
-		this.condicionesPreexistentes = condicionesPreexistentes;
-	}
-
 	public Map<String, Boolean> getPreferenciasAlimenticias() {
 		return preferenciasAlimenticias;
 	}
@@ -102,7 +98,7 @@ public class Usuario {
 	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias) {
 		this.preferenciasAlimenticias = preferenciasAlimenticias;
 	}
-	
+
 	public Rutina getRutina() {
 		return rutina;
 	}
@@ -120,7 +116,8 @@ public class Usuario {
 		return this.peso.divide(cuadrado, mc);
 	}
 
-	// TODO: deberiamos crear una especie de validadores ? porque queda medio feo chequear todos los campos asi, nose..
+	// TODO: deberiamos crear una especie de validadores ? porque queda medio
+	// feo chequear todos los campos asi, nose..
 	public void validar() throws BusinessException {
 		if (nombre == null || fechaNacimiento == null || peso == null || altura == null || rutina == null) {
 			throw new BusinessException("El usuario tiene campos obligatorios sin completar");
@@ -141,44 +138,40 @@ public class Usuario {
 			}
 		}
 	}
-	
+
 	public void validarRutinaSaludable() throws BusinessException {
-		
+
 		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
-		
-		if(userIMC < 18 || userIMC > 30){
-			throw new BusinessException("El IMC debe estar en el rango entre 18 y 30");
+
+		if (userIMC < 18 || userIMC > 30) {
+		    throw new BusinessException("El IMC debe estar en el rango entre 18 y 30");
 		}
-		
-		if(this.condicionesPreexistentes!=null){
-			for(CondicionPreexistente cond : this.condicionesPreexistentes){
-				cond.validarUsuarioSaludable(this);
+
+		if (this.condicionesPreexistentes != null) {
+			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+				condicionPreexistente.validarUsuarioSaludable(this);
 			}
-		}
-	}
-	
-	
-	public void agregarReceta(Receta receta) throws BusinessException {
-		if (receta.cumpleCalorias() && receta.contieneIngrediente()) {
-			this.recetas.add(receta);
-		}
-		else {
-			throw new BusinessException("La receta no cumple con el limite de calorias o no contiene ingredientes");
 		}
 	}
 
-	public void validarReceta(Receta receta) throws BusinessException {
-		if (!receta.cumpleCalorias() || !receta.contieneIngrediente()) {
-			throw new BusinessException("La receta no es valida");
-		}
+	public Boolean tienePreferenciaAlimenticia(String  alimento){ 
+		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get("fruta"));
 	}
 	
-	public void aceptaReceta(Receta receta)  throws BusinessException {
-		if(this.condicionesPreexistentes!=null){
-			for(CondicionPreexistente cond : this.condicionesPreexistentes){
-				cond.aceptaReceta(receta);
-			}
-		
+	public void agregarReceta(Receta receta) throws BusinessException {
+		receta.validar();
+		this.recetas.add(receta);
 	}
-}
+	
+	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
+		this.condicionesPreexistentes.add(condicion);
+	}
+
+	public void validarSiAceptaReceta(Receta receta) throws BusinessException {
+		if (this.condicionesPreexistentes != null) {
+			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+				condicionPreexistente.validarReceta(receta);
+			}
+		}
+	}
 }

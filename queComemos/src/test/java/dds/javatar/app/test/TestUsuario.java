@@ -28,7 +28,7 @@ public class TestUsuario {
 
 	@Before
 	public void initialize() {
-		this.mc = new MathContext(MathContext.DECIMAL32.getPrecision(),	RoundingMode.HALF_DOWN);
+		this.mc = new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_DOWN);
 	}
 
 	private void assertIMC(Usuario usuario, double expectedValue) {
@@ -38,7 +38,7 @@ public class TestUsuario {
 
 	@Test
 	public final void testPabloGomez() {
-		Usuario usuario = new Usuario(new BigDecimal(1.75),	new BigDecimal(65.0));
+		Usuario usuario = new Usuario(new BigDecimal(1.75), new BigDecimal(65.0));
 		this.assertIMC(usuario, 21.2244898);
 	}
 
@@ -68,18 +68,18 @@ public class TestUsuario {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, -1);
-		
+
 		Usuario usuario = new Usuario();
 		usuario.setFechaNacimiento(calendar.getTime());
 		usuario.setNombre("Nombre del usuario");
 		usuario.setSexo(Usuario.Sexo.MASCULINO);
 		usuario.setPeso(new BigDecimal(70));
 		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina());
-		
+		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
+
 		return usuario;
 	}
-	
+
 	@Test(expected = BusinessException.class)
 	public void testFechaNacimientoPosterior() throws BusinessException {
 		Calendar calendar = Calendar.getInstance();
@@ -93,7 +93,6 @@ public class TestUsuario {
 		usuario.validar();
 	}
 
-	
 	@Test
 	public void testFechaNacimientoAnterior() throws BusinessException {
 		Calendar calendar = Calendar.getInstance();
@@ -103,238 +102,245 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.setFechaNacimiento(fechaAnterior);
-				
+
 		usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
 	public void testVeganoConPreferenciaInvalida() throws BusinessException {
 		Vegano vegano = new Vegano();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
-		usuario.getCondicionesPreexistentes().add(vegano);
-		
+		usuario.agregarCondicionPreexistente(vegano);
+
 		usuario.validar();
 	}
-	
 
 	@Test(expected = BusinessException.class)
 	public void testDiabeticoSinSexo() throws BusinessException {
 		Diabetico diabetico = new Diabetico();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.setSexo(null);
-		usuario.getCondicionesPreexistentes().add(diabetico);
-		
+		usuario.agregarCondicionPreexistente(diabetico);
+
 		usuario.validar();
 	}
-	
+
 	@Test(expected = BusinessException.class)
 	public void testHipertensoSinPreferencia() throws BusinessException {
 		Hipertenso hipertenso = new Hipertenso();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(hipertenso);
+		usuario.agregarCondicionPreexistente(hipertenso);
 		usuario.setPreferenciasAlimenticias(new HashMap<String, Boolean>());
-		
+
 		usuario.validar();
 	}
-	
+
 	@Test(expected = BusinessException.class)
 	public void testDiabeticoSinPreferencia() throws BusinessException {
 		Diabetico diabetico = new Diabetico();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.agregarCondicionPreexistente(diabetico);
 		usuario.setPreferenciasAlimenticias(new HashMap<String, Boolean>());
-		
+
 		usuario.validar();
 	}
-	
+
 	public void testHipertensoConPreferencia() throws BusinessException {
 		Hipertenso hipertenso = new Hipertenso();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(hipertenso);
+		usuario.agregarCondicionPreexistente(hipertenso);
 		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
-		
+
 		usuario.validar();
 	}
-	
+
 	@Test
 	public void testVeganoConPreferenciaFruta() throws BusinessException {
 		Vegano vegano = new Vegano();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(vegano);
+		usuario.agregarCondicionPreexistente(vegano);
 		usuario.getPreferenciasAlimenticias().put("fruta", Boolean.TRUE);
 		usuario.validarRutinaSaludable();
 	}
-	
-	@Test 
+
+	@Test
 	public void testHipertensoConRutinaActivaIntensiva() throws BusinessException {
 		Hipertenso hipertenso = new Hipertenso();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(hipertenso);
+		usuario.agregarCondicionPreexistente(hipertenso);
 		usuario.getRutina().setTipo(TipoRutina.INTENSIVO);
 		usuario.getRutina().setDuracion(40);
-		
+
 		usuario.validarRutinaSaludable();
 	}
-	
+
 	@Test(expected = BusinessException.class)
 	public void testHipertensoConRutinaSedentariaLeve() throws BusinessException {
 		Hipertenso hipertenso = new Hipertenso();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(hipertenso);
+		usuario.agregarCondicionPreexistente(hipertenso);
 		usuario.getRutina().setTipo(TipoRutina.LEVE);
 		usuario.getRutina().setDuracion(15);
-		
+
 		usuario.validarRutinaSaludable();
 	}
-	
+
 	@Test(expected = BusinessException.class)
-	public void testDiabeticoConRutinaSedentariaLeve() throws BusinessException {
+	public void testDiabeticoConRutinaSedentariaLeveYSobrepeso() throws BusinessException {
 		Diabetico diabetico = new Diabetico();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.setPeso(new BigDecimal(100));
+		usuario.agregarCondicionPreexistente(diabetico);
 		usuario.getRutina().setTipo(TipoRutina.LEVE);
 		usuario.getRutina().setDuracion(15);
-		
+
 		usuario.validarRutinaSaludable();
 	}
-	
+
 	@Test
 	public void testDiabeticoConRutinaActiva() throws BusinessException {
 		Diabetico diabetico = new Diabetico();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.agregarCondicionPreexistente(diabetico);
 		usuario.getRutina().setTipo(TipoRutina.FUERTE);
 		usuario.getRutina().setDuracion(0);
-		
+
 		usuario.validarRutinaSaludable();
 	}
-	
+
 	@Test(expected = BusinessException.class)
 	public void testDiabeticoPesaMasde70() throws BusinessException {
 		Diabetico diabetico = new Diabetico();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.setRutina(new Rutina(TipoRutina.LEVE, 50));
+		usuario.agregarCondicionPreexistente(diabetico);
 		usuario.setPeso(new BigDecimal(85));
-		
+
 		usuario.validarRutinaSaludable();
 	}
-	
+
 	@Test
 	public void testDiabeticoPesaMenosde70() throws BusinessException {
 		Diabetico diabetico = new Diabetico();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(diabetico);
+		usuario.agregarCondicionPreexistente(diabetico);
 		usuario.setPeso(new BigDecimal(65));
-		
+
 		usuario.validarRutinaSaludable();
 	}
-	
+
 	@Test
 	public void testCeliacoSaludable() throws BusinessException {
 		Celiaco celiaco = new Celiaco();
-		
+
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getCondicionesPreexistentes().add(celiaco);
-				
+		usuario.agregarCondicionPreexistente(celiaco);
+
 		usuario.validarRutinaSaludable();
 	}
-	
+
 	@Test
 	public void testAgregarReceta() throws BusinessException {
 		Receta ravioles = new Receta(350);
 		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
 		ravioles.agregarIngrediente("Agua", new BigDecimal(70));
 		ravioles.agregarIngrediente("Verdura", new BigDecimal(100));
-		
+
 		Usuario usuario = crearUsuarioBasicoValido();
 		usuario.agregarReceta(ravioles);
-		
-		usuario.validarReceta(ravioles);
-		
 	}
-	
+
 	@Test(expected = BusinessException.class)
 	public void testRecetaHipertensoNoAcepta() throws BusinessException {
 		Usuario usuario = crearUsuarioBasicoValido();
 		Hipertenso hipertenso = new Hipertenso();
-		usuario.getCondicionesPreexistentes().add(hipertenso);
-		
+		usuario.agregarCondicionPreexistente(hipertenso);
+
 		Receta receta = new Receta(350);
 		receta.agregarIngrediente("sal", new BigDecimal(50));
-		usuario.aceptaReceta(receta);
+		usuario.validarSiAceptaReceta(receta);
 
 	}
-	
+
 	@Test(expected = BusinessException.class)
 	public void testRecetaVeganoNoAcepta() throws BusinessException {
 		Usuario usuario = crearUsuarioBasicoValido();
 		Vegano veggie = new Vegano();
-		usuario.getCondicionesPreexistentes().add(veggie);
-		
+		usuario.agregarCondicionPreexistente(veggie);
+
 		Receta receta = new Receta(350);
 		receta.agregarIngrediente("chori", new BigDecimal(120));
-		usuario.aceptaReceta(receta);
+		usuario.validarSiAceptaReceta(receta);
 	}
-	
+
 	@Test(expected = BusinessException.class)
 	public void testRecetaDiabeticoNoAcepta() throws BusinessException {
 		Usuario usuario = crearUsuarioBasicoValido();
 		Diabetico diabetico = new Diabetico();
-		usuario.getCondicionesPreexistentes().add(diabetico);
-		
+		usuario.agregarCondicionPreexistente(diabetico);
+
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("azucar", new BigDecimal(120));
-		usuario.aceptaReceta(receta);
+		usuario.validarSiAceptaReceta(receta);
 
 	}
-	
-	
-	@Test(expected = BusinessException.class)
+
+	@Test
 	public void testRecetaHipertensoAcepta() throws BusinessException {
 		Usuario usuario = crearUsuarioBasicoValido();
 		Hipertenso hipertenso = new Hipertenso();
-		usuario.getCondicionesPreexistentes().add(hipertenso);
-		
+		usuario.agregarCondicionPreexistente(hipertenso);
+
 		Receta receta = new Receta(350);
 		receta.agregarIngrediente("arroz", new BigDecimal(200));
-		usuario.aceptaReceta(receta);
+		usuario.validarSiAceptaReceta(receta);
 
 	}
-	
+
 	@Test
 	public void testRecetaVeganoAcepta() throws BusinessException {
 		Usuario usuario = crearUsuarioBasicoValido();
 		Vegano veggie = new Vegano();
-		usuario.getCondicionesPreexistentes().add(veggie);
-		
+		usuario.agregarCondicionPreexistente(veggie);
+
 		Receta receta = new Receta(350);
 		receta.agregarIngrediente("tomate", new BigDecimal(80));
-		usuario.aceptaReceta(receta);
+		usuario.validarSiAceptaReceta(receta);
 	}
-	
-	@Test(expected = BusinessException.class)
-	public void testRecetaDiabeticoAcepta() throws BusinessException {
+
+	@Test
+	public void testRecetaDiabeticoAceptaAzucar() throws BusinessException {
 		Usuario usuario = crearUsuarioBasicoValido();
 		Diabetico diabetico = new Diabetico();
-		usuario.getCondicionesPreexistentes().add(diabetico);
-		
+		usuario.agregarCondicionPreexistente(diabetico);
+
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("azucar", new BigDecimal(50));
-		usuario.aceptaReceta(receta);
+		usuario.validarSiAceptaReceta(receta);
 	}
-	
+
+	@Test(expected = BusinessException.class)
+	public void testRecetaDiabeticoNoAceptaAzucar() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Diabetico diabetico = new Diabetico();
+		usuario.agregarCondicionPreexistente(diabetico);
+
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("azucar", new BigDecimal(150));
+		usuario.validarSiAceptaReceta(receta);
+	}
 	
 }

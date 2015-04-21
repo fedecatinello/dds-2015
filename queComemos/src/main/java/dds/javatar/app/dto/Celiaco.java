@@ -14,4 +14,10 @@ public class Celiaco implements CondicionPreexistente {
 		
 	}
 
+	@Override
+	public void aceptaReceta(Receta receta) throws BusinessException {
+		
+		
+	}
+
 }

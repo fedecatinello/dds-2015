@@ -1,5 +1,7 @@
 package dds.javatar.app.dto;
 
+import java.math.BigDecimal;
+
 import dds.javatar.app.util.BusinessException;
 
 public class Diabetico extends UsuarioConPreferencia {
@@ -28,4 +30,13 @@ public class Diabetico extends UsuarioConPreferencia {
 				rutina.getTipo().toString().equalsIgnoreCase("FUERTE");
 	}
 
+	@Override
+	public void aceptaReceta(Receta receta) throws BusinessException {
+		if(receta.contieneCondimento("azucar") && receta.sobrepasaCantidad("azucar", new BigDecimal(100)))
+		{
+			throw new BusinessException("El usuario es diabetico y no tolera los condimentos");
+		}
+	}
+		
 }
+

@@ -15,6 +15,7 @@ import org.junit.Test;
 import dds.javatar.app.dto.Celiaco;
 import dds.javatar.app.dto.Diabetico;
 import dds.javatar.app.dto.Hipertenso;
+import dds.javatar.app.dto.Receta;
 import dds.javatar.app.dto.Rutina;
 import dds.javatar.app.dto.Rutina.TipoRutina;
 import dds.javatar.app.dto.Usuario;
@@ -250,4 +251,90 @@ public class TestUsuario {
 				
 		usuario.validarRutinaSaludable();
 	}
+	
+	@Test
+	public void testAgregarReceta() throws BusinessException {
+		Receta ravioles = new Receta(350);
+		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
+		ravioles.agregarIngrediente("Agua", new BigDecimal(70));
+		ravioles.agregarIngrediente("Verdura", new BigDecimal(100));
+		
+		Usuario usuario = crearUsuarioBasicoValido();
+		usuario.agregarReceta(ravioles);
+		
+		usuario.validarReceta(ravioles);
+		
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testRecetaHipertensoNoAcepta() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Hipertenso hipertenso = new Hipertenso();
+		usuario.getCondicionesPreexistentes().add(hipertenso);
+		
+		Receta receta = new Receta(350);
+		receta.agregarIngrediente("sal", new BigDecimal(50));
+		usuario.aceptaReceta(receta);
+
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testRecetaVeganoNoAcepta() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Vegano veggie = new Vegano();
+		usuario.getCondicionesPreexistentes().add(veggie);
+		
+		Receta receta = new Receta(350);
+		receta.agregarIngrediente("chori", new BigDecimal(120));
+		usuario.aceptaReceta(receta);
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testRecetaDiabeticoNoAcepta() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Diabetico diabetico = new Diabetico();
+		usuario.getCondicionesPreexistentes().add(diabetico);
+		
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("azucar", new BigDecimal(120));
+		usuario.aceptaReceta(receta);
+
+	}
+	
+	
+	@Test(expected = BusinessException.class)
+	public void testRecetaHipertensoAcepta() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Hipertenso hipertenso = new Hipertenso();
+		usuario.getCondicionesPreexistentes().add(hipertenso);
+		
+		Receta receta = new Receta(350);
+		receta.agregarIngrediente("arroz", new BigDecimal(200));
+		usuario.aceptaReceta(receta);
+
+	}
+	
+	@Test
+	public void testRecetaVeganoAcepta() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Vegano veggie = new Vegano();
+		usuario.getCondicionesPreexistentes().add(veggie);
+		
+		Receta receta = new Receta(350);
+		receta.agregarIngrediente("tomate", new BigDecimal(80));
+		usuario.aceptaReceta(receta);
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testRecetaDiabeticoAcepta() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Diabetico diabetico = new Diabetico();
+		usuario.getCondicionesPreexistentes().add(diabetico);
+		
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("azucar", new BigDecimal(50));
+		usuario.aceptaReceta(receta);
+	}
+	
+	
 }

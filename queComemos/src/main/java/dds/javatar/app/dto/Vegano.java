@@ -1,5 +1,6 @@
 package dds.javatar.app.dto;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,5 +27,16 @@ public class Vegano implements CondicionPreexistente {
 			throw new BusinessException("El usuario vegano debería tener como preferencia a las frutas");
 		}
 	}
+
+	@Override
+	public void aceptaReceta(Receta receta) throws BusinessException {
+
+		if(receta.contieneIngrediente("pollo") || receta.contieneIngrediente("chivito") ||
+				receta.contieneIngrediente("chivito") || receta.contieneIngrediente("chori"))
+		{
+			throw new BusinessException("El usuario es vegetariano y no tolera los ingredientes");
+		}
+	}
+		
 
 }

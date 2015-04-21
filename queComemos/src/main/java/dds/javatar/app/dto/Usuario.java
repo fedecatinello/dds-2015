@@ -156,4 +156,29 @@ public class Usuario {
 			}
 		}
 	}
+	
+	
+	public void agregarReceta(Receta receta) throws BusinessException {
+		if (receta.cumpleCalorias() && receta.contieneIngrediente()) {
+			this.recetas.add(receta);
+		}
+		else {
+			throw new BusinessException("La receta no cumple con el limite de calorias o no contiene ingredientes");
+		}
+	}
+
+	public void validarReceta(Receta receta) throws BusinessException {
+		if (!receta.cumpleCalorias() || !receta.contieneIngrediente()) {
+			throw new BusinessException("La receta no es valida");
+		}
+	}
+	
+	public void aceptaReceta(Receta receta)  throws BusinessException {
+		if(this.condicionesPreexistentes!=null){
+			for(CondicionPreexistente cond : this.condicionesPreexistentes){
+				cond.aceptaReceta(receta);
+			}
+		
+	}
+}
 }

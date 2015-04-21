@@ -28,6 +28,13 @@ public class Receta {
 		this.condimentos = new HashMap<String, BigDecimal>();
 	}
 	
+	public Receta(Integer calorias) {
+		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
+		this.ingredientes = new HashMap<String, BigDecimal>();
+		this.condimentos = new HashMap<String, BigDecimal>();
+		this.calorias = calorias;
+	}
+	
 	
 	// Setters & Getters
 	
@@ -86,7 +93,33 @@ public class Receta {
 	public void setSubrecetas(Collection<Receta> subrecetas) {
 		this.subrecetas = subrecetas;
 	}
+
 	
+	// Metodos
+
+	public boolean cumpleCalorias() {
+		return (this.calorias>=10 && this.calorias<=5000);
+	}
+
+	public boolean contieneIngrediente() {
+		return !(this.ingredientes.isEmpty());
+	}
+	
+	public void agregarIngrediente(String ingrediente, BigDecimal cantidad){
+		this.ingredientes.put(ingrediente, cantidad);
+	}
+
+	public boolean contieneIngrediente(String ingrediente) {
+		return this.ingredientes.containsKey(ingrediente);
+	}
+
+	public boolean contieneCondimento(String condimento) {
+		return this.condimentos.containsKey(condimento);
+	}
+
+	public boolean sobrepasaCantidad(String alimento, BigDecimal cantidad) {
+		return (this.getIngredientes().get(alimento).compareTo(new BigDecimal(100)) ==1);
+	}
 	
 	
 	

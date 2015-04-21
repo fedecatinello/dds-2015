@@ -15,5 +15,17 @@ public class Hipertenso extends UsuarioConPreferencia {
 	public boolean esRutinaIntensiva(Rutina rutina){
 		return rutina.getTipo().toString().equalsIgnoreCase("INTENSIVO");
 	}
-}
+
+	@Override
+	public void aceptaReceta(Receta receta) throws BusinessException {
+		if(receta.contieneIngrediente("sal") || receta.contieneIngrediente("caldo")
+				|| receta.contieneCondimento("sal") || receta.contieneCondimento("caldo"))
+		{
+			throw new BusinessException("El usuario es hipertenso y no tolera los ingredientes o condimentos");
+		}
+	}
+		
+	}
+	
+
 

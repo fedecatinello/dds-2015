@@ -186,6 +186,7 @@ public class Usuario {
 		this.verReceta(receta);
 	}
 	
+	
 	public void puedeAgregarSubRecetas(Collection<Receta> subrecetas) throws BusinessException {
 		for (Receta subreceta : subrecetas) {
 			try {

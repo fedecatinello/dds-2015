@@ -3,7 +3,6 @@ package dds.javatar.app.dto.usuario;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -185,27 +184,22 @@ public class Usuario {
 	public void puedeModificarReceta(Receta receta) throws BusinessException {
 		this.verReceta(receta);
 	}
-	
-	
-	public void puedeAgregarSubRecetas(Collection<Receta> subrecetas) throws BusinessException {
-		for (Receta subreceta : subrecetas) {
+
+	public void puedeAgregarSubRecetas(Set<Receta> subRecetas) throws BusinessException {
+		for (Receta subReceta : subRecetas) {
 			try {
-				this.verReceta(subreceta);
+				this.verReceta(subReceta);
 			} catch (Exception e) {
 				throw new BusinessException("El Usuario no tiene permitido agregar alguna subreceta");
 			}
 		}
 	}
-	
-/*	
-	public void modificarReceta(Receta receta) throws BusinessException	{
-		if(!this.recetas.contains(receta)){
-		Receta modificada = receta.clone()
-		modificada.setAutor(this);
-		this.agregarReceta(modificada);
-		}
-		modificada.modificar();
-	}
-*/
-	
+
+	/*
+	 * public void modificarReceta(Receta receta) throws BusinessException {
+	 * if(!this.recetas.contains(receta)){ Receta modificada = receta.clone()
+	 * modificada.setAutor(this); this.agregarReceta(modificada); }
+	 * modificada.modificar(); }
+	 */
+
 }

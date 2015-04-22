@@ -1,14 +1,13 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
-
 
 public class Receta {
 
@@ -21,13 +20,13 @@ public class Receta {
 
 	private Map<String, BigDecimal> ingredientes;
 	private Map<String, BigDecimal> condimentos;
-	private Collection<Receta> subrecetas;
+	private Set<Receta> subRecetas;
 
 	// Builders
 	public Receta() {
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.condimentos = new HashMap<String, BigDecimal>();
-		this.subrecetas = new HashSet<Receta>();
+		this.subRecetas = new HashSet<Receta>();
 	}
 
 	public Receta(Integer calorias) {
@@ -77,29 +76,10 @@ public class Receta {
 		this.temporada = temporada;
 	}
 
-	public Map<String, BigDecimal> getIngredientes() {
-		return ingredientes;
+	public Set<Receta> getSubRecetas() {
+		return subRecetas;
 	}
 
-	public void setIngredientes(Map<String, BigDecimal> ingredientes) {
-		this.ingredientes = ingredientes;
-	}
-
-	public Map<String, BigDecimal> getCondimentos() {
-		return condimentos;
-	}
-
-	public void setCondimentos(Map<String, BigDecimal> condimentos) {
-		this.condimentos = condimentos;
-	}
-
-	public Collection<Receta> getSubrecetas() {
-		return subrecetas;
-	}
-
-	public void setSubrecetas(Collection<Receta> subrecetas) {
-		this.subrecetas = subrecetas;
-	}
 	public Usuario getAutor() {
 		return autor;
 	}
@@ -107,7 +87,7 @@ public class Receta {
 	public void setAutor(Usuario autor) {
 		this.autor = autor;
 	}
-	
+
 	
 	// Metodos
 
@@ -124,6 +104,10 @@ public class Receta {
 		this.ingredientes.put(ingrediente, cantidad);
 	}
 
+	public void agregarSubReceta(Receta subReceta) {
+		this.subRecetas.add(subReceta);
+	}
+
 	public Boolean contieneIngrediente(String ingrediente) {
 		// TODO: habria que chequear en las subrecetas?
 		return this.ingredientes.containsKey(ingrediente);
@@ -136,11 +120,11 @@ public class Receta {
 
 	public Boolean alimentoSobrepasaCantidad(String alimento, BigDecimal cantidad) {
 		// TODO: habria que chequear en las subrecetas?
-		
+
 		if (!this.ingredientes.containsKey(alimento)) {
 			return Boolean.FALSE;
 		}
-		
+
 		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
 	}
 

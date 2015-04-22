@@ -37,7 +37,7 @@ public class Receta {
 	// Setters & Getters
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
@@ -45,7 +45,7 @@ public class Receta {
 	}
 
 	public String getPreparacion() {
-		return preparacion;
+		return this.preparacion;
 	}
 
 	public void setPreparacion(String preparacion) {
@@ -53,7 +53,7 @@ public class Receta {
 	}
 
 	public Integer getCalorias() {
-		return calorias;
+		return this.calorias;
 	}
 
 	public void setCalorias(Integer calorias) {
@@ -61,7 +61,7 @@ public class Receta {
 	}
 
 	public String getDificultad() {
-		return dificultad;
+		return this.dificultad;
 	}
 
 	public void setDificultad(String dificultad) {
@@ -69,7 +69,7 @@ public class Receta {
 	}
 
 	public String getTemporada() {
-		return temporada;
+		return this.temporada;
 	}
 
 	public void setTemporada(String temporada) {
@@ -77,18 +77,17 @@ public class Receta {
 	}
 
 	public Set<Receta> getSubRecetas() {
-		return subRecetas;
+		return this.subRecetas;
 	}
 
 	public Usuario getAutor() {
-		return autor;
+		return this.autor;
 	}
 
 	public void setAutor(Usuario autor) {
 		this.autor = autor;
 	}
 
-	
 	// Metodos
 
 	public void validar() throws BusinessException {

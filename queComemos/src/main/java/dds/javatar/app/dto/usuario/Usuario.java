@@ -53,7 +53,7 @@ public class Usuario {
 	/* Setters y getters */
 
 	public BigDecimal getAltura() {
-		return altura;
+		return this.altura;
 	}
 
 	public void setAltura(BigDecimal altura) {
@@ -61,7 +61,7 @@ public class Usuario {
 	}
 
 	public BigDecimal getPeso() {
-		return peso;
+		return this.peso;
 	}
 
 	public void setPeso(BigDecimal peso) {
@@ -69,7 +69,7 @@ public class Usuario {
 	}
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
@@ -77,7 +77,7 @@ public class Usuario {
 	}
 
 	public Sexo getSexo() {
-		return sexo;
+		return this.sexo;
 	}
 
 	public void setSexo(Sexo sexo) {
@@ -85,7 +85,7 @@ public class Usuario {
 	}
 
 	public Date getFechaNacimiento() {
-		return fechaNacimiento;
+		return this.fechaNacimiento;
 	}
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
@@ -93,7 +93,7 @@ public class Usuario {
 	}
 
 	public Rutina getRutina() {
-		return rutina;
+		return this.rutina;
 	}
 
 	public void setRutina(Rutina rutina) {
@@ -112,11 +112,11 @@ public class Usuario {
 	// TODO: deberiamos crear una especie de validadores ? porque queda medio
 	// feo chequear todos los campos asi, nose..
 	public void validar() throws BusinessException {
-		if (nombre == null || fechaNacimiento == null || peso == null || altura == null || rutina == null) {
+		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null || this.rutina == null) {
 			throw new BusinessException("El usuario tiene campos obligatorios sin completar");
 		}
 
-		if (nombre.length() <= MIN_NAME_LENGTH) {
+		if (this.nombre.length() <= MIN_NAME_LENGTH) {
 			throw new BusinessException("El nombre del usuario es demasido corto");
 		}
 
@@ -152,7 +152,7 @@ public class Usuario {
 	}
 
 	public Boolean tieneAlgunaPreferencia() {
-		return (preferenciasAlimenticias.values().contains(Boolean.TRUE));
+		return (this.preferenciasAlimenticias.values().contains(Boolean.TRUE));
 	}
 
 	public void agregarPreferenciaAlimenticia(String alimento) {
@@ -176,7 +176,7 @@ public class Usuario {
 	}
 
 	public void verReceta(Receta receta) throws BusinessException {
-		if (!recetas.contains(receta) && receta.getAutor() != null) {
+		if (!this.recetas.contains(receta) && receta.getAutor() != null) {
 			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
 		}
 	}

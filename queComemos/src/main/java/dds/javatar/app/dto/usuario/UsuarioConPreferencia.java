@@ -4,7 +4,6 @@ import dds.javatar.app.util.BusinessException;
 
 public abstract class UsuarioConPreferencia implements CondicionPreexistente {
 
-	
 	@Override
 	public void validarUsuario(Usuario usuario) throws BusinessException {
 		if (!usuario.tieneAlgunaPreferencia()) {

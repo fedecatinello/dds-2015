@@ -619,9 +619,11 @@ public class TestUsuario {
 
 	@Test(expected = BusinessException.class)
 	public void testAgregaRecetaConSubrecetaAjena() throws BusinessException {
+		Usuario usuarioOwner = this.crearUsuarioBasicoValido();		
+		
 		Receta recetaPure = new Receta(150);
 		recetaPure.agregarIngrediente("papa", new BigDecimal(100));
-		this.usuario.agregarReceta(recetaPure);
+		usuarioOwner.agregarReceta(recetaPure);
 		Receta recetaPollo = new Receta(350);
 		recetaPollo.agregarIngrediente("pollo", new BigDecimal(100));
 

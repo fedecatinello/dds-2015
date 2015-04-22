@@ -93,14 +93,6 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public Map<String, Boolean> getPreferenciasAlimenticias() {
-		return preferenciasAlimenticias;
-	}
-
-	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias) {
-		this.preferenciasAlimenticias = preferenciasAlimenticias;
-	}
-
 	public Rutina getRutina() {
 		return rutina;
 	}
@@ -134,53 +126,58 @@ public class Usuario {
 			throw new BusinessException("La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
 		}
 
-		if (this.condicionesPreexistentes != null) {
-			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-				condicionPreexistente.validarUsuario(this);
-			}
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			condicionPreexistente.validarUsuario(this);
 		}
 	}
 
-	public void validarRutinaSaludable() throws BusinessException {
+	public Boolean sigueRutinaSaludable() {
 
 		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
 
 		if (userIMC < 18 || userIMC > 30) {
-		    throw new BusinessException("El IMC debe estar en el rango entre 18 y 30");
+			return Boolean.FALSE;
 		}
 
-		if (this.condicionesPreexistentes != null) {
-			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-				condicionPreexistente.validarUsuarioSaludable(this);
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			if (!condicionPreexistente.usuarioSigueRutinaSaludable(this)) {
+				return Boolean.FALSE;
 			}
 		}
+
+		return Boolean.TRUE;
 	}
 
-	public Boolean tienePreferenciaAlimenticia(String  alimento){ 
-		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get("fruta"));
+	public Boolean tienePreferenciaAlimenticia(String alimento) {
+		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get(alimento));
 	}
-	
+
+	public Boolean tieneAlgunaPreferencia() {
+		return (preferenciasAlimenticias.values().contains(Boolean.TRUE));
+	}
+
+	public void agregarPreferenciaAlimenticia(String alimento) {
+		this.preferenciasAlimenticias.put(alimento, Boolean.TRUE);
+	}
+
+	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
+		this.condicionesPreexistentes.add(condicion);
+	}
+
 	public void agregarReceta(Receta receta) throws BusinessException {
 		receta.validar();
 		this.recetas.add(receta);
 		receta.setAutor(this);
 	}
-	
-	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
-		this.condicionesPreexistentes.add(condicion);
-	}
 
 	public void validarSiAceptaReceta(Receta receta) throws BusinessException {
-		if (this.condicionesPreexistentes != null) {
-			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-				condicionPreexistente.validarReceta(receta);
-			}
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			condicionPreexistente.validarReceta(receta);
 		}
 	}
-	
-	
+
 	public void verReceta(Receta receta) throws BusinessException {
-		if (!recetas.contains(receta) && receta.getAutor()!=null){
+		if (!recetas.contains(receta) && receta.getAutor() != null) {
 			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
 		}
 	}

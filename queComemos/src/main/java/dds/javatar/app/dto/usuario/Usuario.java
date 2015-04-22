@@ -163,6 +163,7 @@ public class Usuario {
 	}
 
 	public void agregarReceta(Receta receta) throws BusinessException {
+		this.validarVerReceta(receta);
 		receta.validar();
 		receta.setAutor(this);
 		this.recetas.add(receta);
@@ -204,12 +205,12 @@ public class Usuario {
 
 	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws BusinessException {
 		this.validarVerReceta(receta);
-		
+
 		if (receta.getAutor() == null) {
 			receta = receta.clone();
 			this.agregarReceta(receta);
 		}
-		
+
 		receta.setNombre(nuevoNombre);
 	}
 

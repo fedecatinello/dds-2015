@@ -6,8 +6,10 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -67,7 +69,7 @@ public class TestUsuario {
 	@Test
 	public final void testNicolasGarcia() {
 		Usuario nico = new Usuario(new BigDecimal(1.79), new BigDecimal(81));
-		this.assertIMC(nico, 25.2801);
+		this.assertIMC(nico, 25.28010);
 	}
 
 	private Usuario crearUsuarioBasicoValido() {
@@ -199,6 +201,23 @@ public class TestUsuario {
 		Usuario usuario = new Usuario();
 		usuario.setFechaNacimiento(calendar.getTime());
 		usuario.setNombre("Nom");
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
+		usuario.setPeso(new BigDecimal(70));
+		usuario.setAltura(new BigDecimal(1.77));
+		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
+		
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testUsuarioConNombreIgualACuatroCaracters() throws BusinessException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, -1);
+
+		Usuario usuario = new Usuario();
+		usuario.setFechaNacimiento(calendar.getTime());
+		usuario.setNombre("Nomb");
 		usuario.setSexo(Usuario.Sexo.MASCULINO);
 		usuario.setPeso(new BigDecimal(70));
 		usuario.setAltura(new BigDecimal(1.77));
@@ -603,7 +622,7 @@ public class TestUsuario {
 	
 		usuario.puedeModificarReceta(receta);
 	}
-	
+		
 	@Test(expected = BusinessException.class)
 	public void testNoPuedeModificarReceta() throws BusinessException {
 		Usuario usuarioQueQuiereModificar = crearUsuarioBasicoValido();
@@ -624,5 +643,57 @@ public class TestUsuario {
 		usuario.puedeModificarReceta(receta);
 	}
 	
+	@Test
+	public void testAgregaRecetaConSubrecetaPropia() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta recetaPure = new Receta(150);
+		recetaPure.agregarIngrediente("papa", new BigDecimal(100));
+		usuario.agregarReceta(recetaPure);
+		Receta recetaPollo = new Receta(350);
+		recetaPollo.agregarIngrediente("pollo", new BigDecimal(100));
+		
+		Collection<Receta> subrecetas = new HashSet<Receta>();
+		subrecetas.add(recetaPure);
+		recetaPollo.setSubrecetas(subrecetas);	
+		usuario.puedeAgregarSubRecetas(subrecetas);
+		
+	}
+	
+	@Test
+	public void testAgregaRecetaConSubrecetaAjena() throws BusinessException {
+		Usuario usuarioOwner = crearUsuarioBasicoValido();
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta recetaPure = new Receta(150);
+		recetaPure.agregarIngrediente("papa", new BigDecimal(100));
+		usuarioOwner.agregarReceta(recetaPure);
+		Receta recetaPollo = new Receta(350);
+		recetaPollo.agregarIngrediente("pollo", new BigDecimal(100));
+		
+		Collection<Receta> subrecetas = new HashSet<Receta>();
+		subrecetas.add(recetaPure);
+		recetaPollo.setSubrecetas(subrecetas);	
+		usuario.puedeAgregarSubRecetas(subrecetas);		
+	}
+	
+	@Test
+	public void testAgregaRecetaConSubrecetaPublica() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta recetaPure = new Receta(150);
+		recetaPure.agregarIngrediente("papa", new BigDecimal(100));
+		Receta recetaPollo = new Receta(350);
+		recetaPollo.agregarIngrediente("pollo", new BigDecimal(100));
+		
+		Collection<Receta> subrecetas = new HashSet<Receta>();
+		subrecetas.add(recetaPure);
+		recetaPollo.setSubrecetas(subrecetas);	
+		usuario.puedeAgregarSubRecetas(subrecetas);
+		
+	}
+	
+	@Test
+	public void testAgregaRecetaConSubrecetaVacia() throws BusinessException {
+			
+		
+	}
 	
 }

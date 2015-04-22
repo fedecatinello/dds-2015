@@ -3,6 +3,7 @@ package dds.javatar.app.dto.receta;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import dds.javatar.app.dto.usuario.Usuario;
@@ -26,6 +27,7 @@ public class Receta {
 	public Receta() {
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.condimentos = new HashMap<String, BigDecimal>();
+		this.subrecetas = new HashSet<Receta>();
 	}
 
 	public Receta(Integer calorias) {

@@ -48,8 +48,9 @@ public class TestUsuario {
 		return usuario;
 	}
 
+	
+	
 	// Punto 1: validación de usuario
-
 	@Test
 	public void testUsuarioValido() throws BusinessException {
 		this.usuario.validar();
@@ -237,7 +238,7 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	// Fin punto 1.
+	
 
 	// Punto 2: averiguar el índice de masa corporal o IMC de un usuario
 	private void assertIMC(Usuario usuario, double expectedValue) {
@@ -290,6 +291,8 @@ public class TestUsuario {
 
 	}
 
+	
+	
 	// Punto 2: averiguar si un usuario sigue una rutina saludable.
 	@Test
 	public void testUsuarioConRutinaSaludableFuegaDelRangoDelIMC() throws BusinessException {
@@ -396,8 +399,8 @@ public class TestUsuario {
 		assertEquals(this.usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 
-	// Fin punto 2.
 
+	
 	// Punto 3: Hacer que un usuario agregue una receta
 	@Test
 	public void testAgregarReceta() throws BusinessException {
@@ -502,7 +505,7 @@ public class TestUsuario {
 		this.usuario.verReceta(receta);
 	}
 
-	// Fin Punto 3
+	
 
 	// Punto 4: Saber si un usuario puede ver a una receta dada
 	@Test
@@ -524,6 +527,8 @@ public class TestUsuario {
 		usuarioQueQuiereVer.verReceta(receta);
 	}
 
+	
+	
 	// Punto4: Saber si un usuario puede modificar una receta dada
 	@Test
 	public void testPuedeModificarRecetaPublica() throws BusinessException {
@@ -553,6 +558,8 @@ public class TestUsuario {
 		this.usuario.puedeModificarReceta(receta);
 	}
 
+	
+	
 	// Punto 4: Modificar una receta dada, respetando la validación del item anterior
 	@Test
 	public void testModificarRecetaPropia() throws BusinessException, CloneNotSupportedException {
@@ -568,7 +575,7 @@ public class TestUsuario {
 	public void testModificarRecetaPublica() throws BusinessException, CloneNotSupportedException {
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
-		this.usuario.agregarReceta(receta);
+//		this.usuario.agregarReceta(receta);
 
 		this.usuario.puedeModificarReceta(receta);
 		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);	
@@ -588,6 +595,7 @@ public class TestUsuario {
 	}
 
 
+	
 	// Punto 5: Poder construir una receta con sub-recetas.
 	@Test
 	public void testAgregaRecetaConSubrecetaPropia() throws BusinessException {

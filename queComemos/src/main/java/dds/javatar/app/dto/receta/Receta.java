@@ -9,7 +9,7 @@ import java.util.Set;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 
-public class Receta {
+public class Receta implements Cloneable{
 
 	private String nombre;
 	private String preparacion;
@@ -22,6 +22,8 @@ public class Receta {
 	private Map<String, BigDecimal> condimentos;
 	private Set<Receta> subRecetas;
 
+	
+	
 	// Builders
 	public Receta() {
 		this.ingredientes = new HashMap<String, BigDecimal>();
@@ -34,8 +36,9 @@ public class Receta {
 		this.calorias = calorias;
 	}
 
+	
+	
 	// Setters & Getters
-
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -43,7 +46,7 @@ public class Receta {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
 	public String getPreparacion() {
 		return this.preparacion;
 	}
@@ -88,8 +91,9 @@ public class Receta {
 		this.autor = autor;
 	}
 
+	
+	
 	// Metodos
-
 	public void validar() throws BusinessException {
 		if (this.ingredientes.isEmpty()) {
 			throw new BusinessException("La receta no es valida ya que no tiene ingredientes!");
@@ -128,7 +132,7 @@ public class Receta {
 	}
 	
 	@Override
-    public Object clone() throws CloneNotSupportedException {
+	public  Object clone() throws CloneNotSupportedException  {
         return super.clone();
     }
 

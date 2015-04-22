@@ -208,15 +208,15 @@ public class Usuario {
 
 	public void modificarReceta(Receta receta, Object ...modificaciones ) throws BusinessException, CloneNotSupportedException {
 		// Si le receta es publica, tenemos que clonar el objeto, para que los cmabios sean solo visibles para este usuario
-		if(receta.getAutor()==null){		
-			Receta modificada = (Receta) receta.clone();
-			if (this.recetas.contains(receta)) {
-				this.quitarReceta(receta);
-			}
-			receta=modificada;
-			this.agregarReceta(receta);			
-		}	
-		
+		if(receta.getAutor()==null){				
+				Receta modificada = (Receta) receta.clone();
+				if (this.recetas.contains(receta)) {
+					this.quitarReceta(receta);
+				}
+				receta=modificada;
+				this.agregarReceta(receta);			
+					
+		}			
 		
 		/*	Aplico los cambios utilizando:
 		 * [Nombre,

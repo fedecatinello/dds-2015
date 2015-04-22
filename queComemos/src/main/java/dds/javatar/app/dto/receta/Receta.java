@@ -24,7 +24,7 @@ public class Receta implements Cloneable{
 
 	
 	
-	// Builders
+	/****		builders		****/
 	public Receta() {
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.condimentos = new HashMap<String, BigDecimal>();
@@ -38,7 +38,7 @@ public class Receta implements Cloneable{
 
 	
 	
-	// Setters & Getters
+	/****	Setters & Getters	****/ 
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -93,7 +93,7 @@ public class Receta implements Cloneable{
 
 	
 	
-	// Metodos
+	/****		Metodos		****/
 	public void validar() throws BusinessException {
 		if (this.ingredientes.isEmpty()) {
 			throw new BusinessException("La receta no es valida ya que no tiene ingredientes!");

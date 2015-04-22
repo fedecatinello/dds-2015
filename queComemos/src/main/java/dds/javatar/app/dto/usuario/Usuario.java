@@ -31,7 +31,9 @@ public class Usuario {
 	private Rutina rutina;
 	private Set<Receta> recetas;
 
-	/* Constructors */
+	
+	
+	/****	 Constructors 	****/
 
 	public Usuario() {
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
@@ -50,8 +52,9 @@ public class Usuario {
 		this.sexo = sexo;
 	}
 
-	/* Setters y getters */
-
+	
+	
+	/****	 Setters y getters 		****/
 	public BigDecimal getAltura() {
 		return this.altura;
 	}
@@ -100,8 +103,12 @@ public class Usuario {
 		this.rutina = rutina;
 	}
 
+	
+	
+	
+	/****		Metodos		****/
+	
 	/* Obtener la masa corporal dada una presicion */
-
 	public BigDecimal getIMC(int precision) {
 
 		MathContext mc = new MathContext(precision, RoundingMode.HALF_DOWN);
@@ -109,8 +116,7 @@ public class Usuario {
 		return this.peso.divide(cuadrado, mc);
 	}
 
-	// TODO: deberiamos crear una especie de validadores ? porque queda medio
-	// feo chequear todos los campos asi, nose..
+	// TODO: deberiamos crear una especie de validadores ? porque queda medio feo chequear todos los campos asi, nose..
 	public void validar() throws BusinessException {
 		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null || this.rutina == null) {
 			throw new BusinessException("El usuario tiene campos obligatorios sin completar");
@@ -205,7 +211,6 @@ public class Usuario {
 		}
 	}
 
-
 	public void modificarReceta(Receta receta, Object ...modificaciones ) throws BusinessException, CloneNotSupportedException {
 		// Si le receta es publica, tenemos que clonar el objeto, para que los cmabios sean solo visibles para este usuario
 		if(receta.getAutor()==null){				
@@ -231,7 +236,5 @@ public class Usuario {
 		receta.actualizarDatos(modificaciones);	
 
 	}
-
-
 
 }

@@ -92,10 +92,6 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public Map<String, Boolean> getPreferenciasAlimenticias() {
-		return preferenciasAlimenticias;
-	}
-
 	public Rutina getRutina() {
 		return rutina;
 	}
@@ -153,6 +149,10 @@ public class Usuario {
 
 	public Boolean tienePreferenciaAlimenticia(String alimento) {
 		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get(alimento));
+	}
+
+	public Boolean tieneAlgunaPreferencia() {
+		return (preferenciasAlimenticias.values().contains(Boolean.TRUE));
 	}
 
 	public void agregarPreferenciaAlimenticia(String alimento) {

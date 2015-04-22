@@ -662,7 +662,7 @@ public class TestUsuario {
 		
 	}
 	
-	@Test
+	@Test(expected = BusinessException.class)
 	public void testAgregaRecetaConSubrecetaAjena() throws BusinessException {
 		Usuario usuarioOwner = crearUsuarioBasicoValido();
 		Usuario usuario = crearUsuarioBasicoValido();
@@ -678,7 +678,7 @@ public class TestUsuario {
 		usuario.puedeAgregarSubRecetas(subrecetas);		
 	}
 	
-	@Test
+	@Test 
 	public void testAgregaRecetaConSubrecetaPublica() throws BusinessException {
 		Usuario usuario = crearUsuarioBasicoValido();
 		Receta recetaPure = new Receta(150);

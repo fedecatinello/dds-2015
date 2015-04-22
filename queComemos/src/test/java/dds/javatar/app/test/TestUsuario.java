@@ -7,7 +7,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -212,7 +211,7 @@ public class TestUsuario {
 		Vegano vegano = new Vegano();
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("pollo");
 		usuario.agregarCondicionPreexistente(vegano);
 
 		usuario.validar();
@@ -235,7 +234,7 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(diabetico);
-		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("pollo");
 
 		usuario.validar();
 	}
@@ -246,7 +245,6 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(hipertenso);
-		usuario.setPreferenciasAlimenticias(new HashMap<String, Boolean>());
 
 		usuario.validar();
 	}
@@ -257,7 +255,6 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(diabetico);
-		usuario.setPreferenciasAlimenticias(new HashMap<String, Boolean>());
 
 		usuario.validar();
 	}
@@ -267,7 +264,7 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(hipertenso);
-		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("pollo");
 
 		usuario.validar();
 	}
@@ -278,7 +275,7 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(diabetico);
-		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("pollo");
 
 		usuario.validar();
 	}
@@ -289,7 +286,7 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(vegano);
-		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("pollo");
 
 		usuario.validar();
 	}
@@ -300,7 +297,7 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(vegano);
-		usuario.getPreferenciasAlimenticias().put("carne", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("carne");
 
 		usuario.validar();
 	}
@@ -311,8 +308,8 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(vegano);
-		usuario.getPreferenciasAlimenticias().put("chori", Boolean.TRUE);
-
+		usuario.agregarPreferenciaAlimenticia("chori");
+		
 		usuario.validar();
 	}
 	
@@ -322,7 +319,7 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(vegano);
-		usuario.getPreferenciasAlimenticias().put("chivito", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("chivito");
 
 		usuario.validar();
 	}
@@ -333,7 +330,7 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(vegano);
-		usuario.getPreferenciasAlimenticias().put("al diferente a chivito, carne, pollo o chori", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("lechuga");
 
 		usuario.validar();
 	}
@@ -376,7 +373,7 @@ public class TestUsuario {
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(vegano);
-		usuario.getPreferenciasAlimenticias().put("fruta", Boolean.TRUE);
+		usuario.agregarPreferenciaAlimenticia("fruta");
 		usuario.validarRutinaSaludable();
 	}
 

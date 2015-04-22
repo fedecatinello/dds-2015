@@ -96,10 +96,6 @@ public class Usuario {
 		return preferenciasAlimenticias;
 	}
 
-	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias) {
-		this.preferenciasAlimenticias = preferenciasAlimenticias;
-	}
-
 	public Rutina getRutina() {
 		return rutina;
 	}
@@ -145,7 +141,7 @@ public class Usuario {
 		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
 
 		if (userIMC < 18 || userIMC > 30) {
-		    throw new BusinessException("El IMC debe estar en el rango entre 18 y 30");
+			throw new BusinessException("El IMC debe estar en el rango entre 18 y 30");
 		}
 
 		if (this.condicionesPreexistentes != null) {
@@ -155,16 +151,20 @@ public class Usuario {
 		}
 	}
 
-	public Boolean tienePreferenciaAlimenticia(String  alimento){ 
-		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get("fruta"));
+	public Boolean tienePreferenciaAlimenticia(String alimento) {
+		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get(alimento));
 	}
-	
+
+	public void agregarPreferenciaAlimenticia(String alimento) {
+		this.preferenciasAlimenticias.put(alimento, Boolean.TRUE);
+	}
+
 	public void agregarReceta(Receta receta) throws BusinessException {
 		receta.validar();
 		this.recetas.add(receta);
 		receta.setAutor(this);
 	}
-	
+
 	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
 		this.condicionesPreexistentes.add(condicion);
 	}
@@ -176,27 +176,22 @@ public class Usuario {
 			}
 		}
 	}
-	
-	
+
 	public void verReceta(Receta receta) throws BusinessException {
-		if (!recetas.contains(receta) && receta.getAutor()!=null){
-			  throw new BusinessException("El Usuario no tiene permitido ver esta receta");
+		if (!recetas.contains(receta) && receta.getAutor() != null) {
+			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
 		}
 	}
 
 	public void puedeModificarReceta(Receta receta) throws BusinessException {
 		this.verReceta(receta);
 	}
-	
-/*	
-	public void modificarReceta(Receta receta) throws BusinessException	{
-		if(!this.recetas.contains(receta)){
-		Receta modificada = receta.clone()
-		modificada.setAutor(this);
-		this.agregarReceta(modificada);
-		}
-		modificada.modificar();
-	}
-*/
-	
+
+	/*
+	 * public void modificarReceta(Receta receta) throws BusinessException {
+	 * if(!this.recetas.contains(receta)){ Receta modificada = receta.clone()
+	 * modificada.setAutor(this); this.agregarReceta(modificada); }
+	 * modificada.modificar(); }
+	 */
+
 }

@@ -9,13 +9,13 @@ import dds.javatar.app.util.BusinessException;
 
 public class Vegano implements CondicionPreexistente {
 
-	private static final Set<String> preferenciasProhibidas = new HashSet<String>(Arrays.asList("pollo", "carne", "chivito", "chori"));
+	private static final Set<String> alimentosProhibidos = new HashSet<String>(Arrays.asList("pollo", "carne", "chivito", "chori"));
 
 	@Override
 	public void validarUsuario(Usuario usuario) throws BusinessException {
-		for (String preferenciaProhibida : preferenciasProhibidas) {
-			if (Boolean.TRUE.equals(usuario.getPreferenciasAlimenticias().get(preferenciaProhibida))) {
-				throw new BusinessException(String.format("El usuario no puede tener como preferencia %s por ser vegano", preferenciaProhibida));
+		for (String alimentoProhibido : alimentosProhibidos) {
+			if (usuario.tienePreferenciaAlimenticia(alimentoProhibido)) {
+				throw new BusinessException(String.format("El usuario no puede tener como preferencia %s por ser vegano", alimentoProhibido));
 			}
 		}
 	}
@@ -29,9 +29,10 @@ public class Vegano implements CondicionPreexistente {
 
 	@Override
 	public void validarReceta(Receta receta) throws BusinessException {
-		// TODO: codigo repetido...
-		if (receta.contieneIngrediente("pollo") || receta.contieneIngrediente("carne") || receta.contieneIngrediente("chivito") || receta.contieneIngrediente("chori")) {
-			throw new BusinessException("El usuario es vegetariano y no tolera los ingredientes");
+		for (String alimentoProhibido : alimentosProhibidos) {
+			if (receta.contieneIngrediente(alimentoProhibido)) {
+				throw new BusinessException("El usuario es vegetariano y no tolera los ingredientes dados por la receta");
+			}
 		}
 	}
 

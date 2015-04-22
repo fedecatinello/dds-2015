@@ -191,10 +191,11 @@ public class Usuario {
 /*	
 	public void modificarReceta(Receta receta) throws BusinessException	{
 		if(!this.recetas.contains(receta)){
-		receta.setAutor(this);
-		this.agregarReceta(receta);
+		Receta modificada = receta.clone()
+		modificada.setAutor(this);
+		this.agregarReceta(modificada);
 		}
-		receta.modificar();
+		modificada.modificar();
 	}
 */
 	

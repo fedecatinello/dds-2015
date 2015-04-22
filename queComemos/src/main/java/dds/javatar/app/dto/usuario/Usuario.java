@@ -202,24 +202,15 @@ public class Usuario {
 		}
 	}
 
-	public void modificarReceta(Receta receta, Object... modificaciones) throws BusinessException, CloneNotSupportedException {
-		// Si le receta es publica, tenemos que clonar el objeto, para que los cmabios sean solo visibles para este usuario
+	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws BusinessException {
+		this.validarVerReceta(receta);
+		
 		if (receta.getAutor() == null) {
-			Receta modificada = receta.clone();
-			if (this.recetas.contains(receta)) {
-				this.quitarReceta(receta);
-			}
-			receta = modificada;
+			receta = receta.clone();
 			this.agregarReceta(receta);
-
 		}
-
-		/*
-		 * Aplico los cambios utilizando: [Nombre, listaIngredientes, listaCondimentos, preparacion, calorias, dificultad,
-		 * temporada ]
-		 */
-		receta.actualizarDatos(modificaciones);
-
+		
+		receta.setNombre(nuevoNombre);
 	}
 
 }

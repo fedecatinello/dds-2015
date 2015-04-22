@@ -48,8 +48,6 @@ public class TestUsuario {
 		return usuario;
 	}
 
-	
-	
 	// Punto 1: validación de usuario
 	@Test
 	public void testUsuarioValido() throws BusinessException {
@@ -238,8 +236,6 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	
-
 	// Punto 2: averiguar el índice de masa corporal o IMC de un usuario
 	private void assertIMC(Usuario usuario, double expectedValue) {
 		BigDecimal expected = new BigDecimal(expectedValue, this.mc);
@@ -291,8 +287,6 @@ public class TestUsuario {
 
 	}
 
-	
-	
 	// Punto 2: averiguar si un usuario sigue una rutina saludable.
 	@Test
 	public void testUsuarioConRutinaSaludableFuegaDelRangoDelIMC() throws BusinessException {
@@ -399,8 +393,6 @@ public class TestUsuario {
 		assertEquals(this.usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 
-
-	
 	// Punto 3: Hacer que un usuario agregue una receta
 	@Test
 	public void testAgregarReceta() throws BusinessException {
@@ -505,8 +497,6 @@ public class TestUsuario {
 		this.usuario.validarVerReceta(receta);
 	}
 
-	
-
 	// Punto 4: Saber si un usuario puede ver a una receta dada
 	@Test
 	public void testVerRecetaPublica() throws BusinessException {
@@ -527,8 +517,6 @@ public class TestUsuario {
 		usuarioQueQuiereVer.validarVerReceta(receta);
 	}
 
-	
-	
 	// Punto4: Saber si un usuario puede modificar una receta dada
 	@Test
 	public void testPuedeModificarRecetaPublica() throws BusinessException {
@@ -558,55 +546,56 @@ public class TestUsuario {
 		this.usuario.validarModificarReceta(receta);
 	}
 
-	
-	
 	// Punto 4: Modificar una receta dada, respetando la validación del item anterior
 	@Test
 	public void testModificarRecetaPropia() throws BusinessException, CloneNotSupportedException {
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		receta.setNombre("Nombre original");
 		this.usuario.agregarReceta(receta);
 
 		this.usuario.validarModificarReceta(receta);
-		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);		
+		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
+		assertEquals(receta.getNombre(), "Nuevo nombre");
 	}
 
 	@Test
 	public void testModificarRecetaPublica() throws BusinessException, CloneNotSupportedException {
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
-//		this.usuario.agregarReceta(receta);
-
+		receta.setNombre("Nombre original");
+		
 		this.usuario.validarModificarReceta(receta);
-		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);	
+		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
+		
+		// La receta original sigue con el mismo nombre
+		assertEquals(receta.getNombre(), "Nombre original");
 	}
 
 	@Test(expected = BusinessException.class)
 	public void testModificarRecetaAjena() throws BusinessException, CloneNotSupportedException {
-		
+
 		Usuario usuarioOwner = this.crearUsuarioBasicoValido();
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("papa", new BigDecimal(100));
 		usuarioOwner.agregarReceta(receta);
-		
-		this.usuario.validarModificarReceta(receta);
-		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);	
 
+		this.usuario.validarModificarReceta(receta);
+		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
 	}
 
 	@Test
 	public void testClonarReceta() throws BusinessException, CloneNotSupportedException {
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("papa", new BigDecimal(100));
-	
+
 		Receta recetaClonada = receta.clone();
 		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
-		
+
 		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
 		assertEquals(recetaClonada.getIngredientes().get("papa"), new BigDecimal(150));
 	}
 
-	
 	// Punto 5: Poder construir una receta con sub-recetas.
 	@Test
 	public void testAgregaRecetaConSubrecetaPropia() throws BusinessException {

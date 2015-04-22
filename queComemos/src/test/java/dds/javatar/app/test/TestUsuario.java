@@ -63,6 +63,12 @@ public class TestUsuario {
 		Usuario eliana = new Usuario(new BigDecimal(1.66), new BigDecimal(62));
 		this.assertIMC(eliana, 22.49964);
 	}
+	
+	@Test
+	public final void testNicolasGarcia() {
+		Usuario nico = new Usuario(new BigDecimal(1.79), new BigDecimal(81));
+		this.assertIMC(nico, 25.2801);
+	}
 
 	private Usuario crearUsuarioBasicoValido() {
 		Calendar calendar = Calendar.getInstance();

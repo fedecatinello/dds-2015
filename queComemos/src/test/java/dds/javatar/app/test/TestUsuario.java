@@ -105,7 +105,102 @@ public class TestUsuario {
 
 		usuario.validar();
 	}
+	
+	@Test(expected = BusinessException.class)
+	public void testUsuarioSinFechaNacimiento() throws BusinessException{
+		Usuario usuario = new Usuario();
+		
+		usuario.setNombre("Nombre del usuario");
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
+		usuario.setPeso(new BigDecimal(70));
+		usuario.setAltura(new BigDecimal(1.77));
+		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
+		
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testUsuarioSinNombre() throws BusinessException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, -1);
 
+		Usuario usuario = new Usuario();
+		usuario.setFechaNacimiento(calendar.getTime());
+		
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
+		usuario.setPeso(new BigDecimal(70));
+		usuario.setAltura(new BigDecimal(1.77));
+		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
+		
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testUsuarioSinPeso() throws BusinessException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, -1);
+
+		Usuario usuario = new Usuario();
+		usuario.setFechaNacimiento(calendar.getTime());
+		usuario.setNombre("Nombre del usuario");
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
+		usuario.setAltura(new BigDecimal(1.77));
+		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
+		
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testUsuarioSinAltura() throws BusinessException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, -1);
+
+		Usuario usuario = new Usuario();
+		usuario.setFechaNacimiento(calendar.getTime());
+		usuario.setNombre("Nombre del usuario");
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
+		usuario.setPeso(new BigDecimal(70));
+		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
+		
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testUsuarioSinRutina() throws BusinessException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, -1);
+
+		Usuario usuario = new Usuario();
+		usuario.setFechaNacimiento(calendar.getTime());
+		usuario.setNombre("Nombre del usuario");
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
+		usuario.setPeso(new BigDecimal(70));
+		usuario.setAltura(new BigDecimal(1.77));
+		
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testUsuarioConNombreMenorACuatroCaracters() throws BusinessException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, -1);
+
+		Usuario usuario = new Usuario();
+		usuario.setFechaNacimiento(calendar.getTime());
+		usuario.setNombre("Nom");
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
+		usuario.setPeso(new BigDecimal(70));
+		usuario.setAltura(new BigDecimal(1.77));
+		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
+		
+		usuario.validar();
+	}
+	
 	@Test(expected = BusinessException.class)
 	public void testVeganoConPreferenciaInvalida() throws BusinessException {
 		Vegano vegano = new Vegano();
@@ -124,6 +219,17 @@ public class TestUsuario {
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.setSexo(null);
 		usuario.agregarCondicionPreexistente(diabetico);
+
+		usuario.validar();
+	}
+	
+	@Test
+	public void testDiabeticoConSexo() throws BusinessException {
+		Diabetico diabetico = new Diabetico();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.agregarCondicionPreexistente(diabetico);
+		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
 
 		usuario.validar();
 	}
@@ -159,9 +265,107 @@ public class TestUsuario {
 
 		usuario.validar();
 	}
+	
+	@Test
+	public void testDiabeticoConPreferencia() throws BusinessException {
+		Diabetico diabetico = new Diabetico();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.agregarCondicionPreexistente(diabetico);
+		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testVeganoConpreferenciaPollo() throws BusinessException{
+		Vegano vegano = new Vegano();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.agregarCondicionPreexistente(vegano);
+		usuario.getPreferenciasAlimenticias().put("pollo", Boolean.TRUE);
+
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testVeganoConpreferenciaCarne() throws BusinessException{
+		Vegano vegano = new Vegano();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.agregarCondicionPreexistente(vegano);
+		usuario.getPreferenciasAlimenticias().put("carne", Boolean.TRUE);
+
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testVeganoConpreferenciaChori() throws BusinessException{
+		Vegano vegano = new Vegano();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.agregarCondicionPreexistente(vegano);
+		usuario.getPreferenciasAlimenticias().put("chori", Boolean.TRUE);
+
+		usuario.validar();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testVeganoConpreferenciaChivito() throws BusinessException{
+		Vegano vegano = new Vegano();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.agregarCondicionPreexistente(vegano);
+		usuario.getPreferenciasAlimenticias().put("chivito", Boolean.TRUE);
+
+		usuario.validar();
+	}
+	
+	@Test
+	public void testVeganoConpreferenciaDiferenteAChivitoCarnePolloChori() throws BusinessException{
+		Vegano vegano = new Vegano();
+
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.agregarCondicionPreexistente(vegano);
+		usuario.getPreferenciasAlimenticias().put("al diferente a chivito, carne, pollo o chori", Boolean.TRUE);
+
+		usuario.validar();
+	}
 
 	@Test
-	public void testVeganoConPreferenciaFruta() throws BusinessException {
+	public void testCalculoIMC(){
+		Usuario usuarioEsperado = new Usuario(new BigDecimal(1.75), new BigDecimal(65.0));
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.setAltura(new BigDecimal(1.75));
+		usuario.setPeso(new BigDecimal(65.0));
+		BigDecimal usuarioObtenido = usuario.getIMC(10);
+		this.assertIMC(usuarioEsperado, usuarioObtenido.doubleValue());
+		
+	}
+
+	@Test(expected = BusinessException.class)
+	public void testUsuarioConRutinaSaludableFuegaDelRangoDelIMC() throws BusinessException{
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.setPeso( new BigDecimal (200));
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testUsuarioConRutinaSaludableConCondicionesPreexistentes() throws BusinessException{
+		Hipertenso hipertenso = new Hipertenso();
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.agregarCondicionPreexistente(hipertenso);
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test
+	public void testUsuarioConRUtinaSaludable() throws BusinessException{
+		Usuario usuario = this.crearUsuarioBasicoValido();
+		usuario.validarRutinaSaludable();
+	}
+	
+	@Test
+	public void testVeganoConPreferenciaFrutaTieneRutinaSaludable() throws BusinessException {
 		Vegano vegano = new Vegano();
 
 		Usuario usuario = this.crearUsuarioBasicoValido();
@@ -262,6 +466,30 @@ public class TestUsuario {
 		Usuario usuario = crearUsuarioBasicoValido();
 		usuario.agregarReceta(ravioles);
 	}
+	
+	@Test(expected = BusinessException.class)
+	public void testAgregarRecetaSinIngredientes() throws BusinessException{
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta receta = new Receta(350);
+		usuario.agregarReceta(receta);
+		
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testAgregarRecetaMenorAlRangoDeCalorias() throws BusinessException{
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta receta = new Receta(350);
+		receta.setCalorias(2);
+		usuario.agregarReceta(receta);
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testAgregarRecetaMayorAlRangoDeCalorias() throws BusinessException{
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta receta = new Receta(350);
+		receta.setCalorias(99999);
+		usuario.agregarReceta(receta);
+	}
 
 	@Test(expected = BusinessException.class)
 	public void testRecetaHipertensoNoAcepta() throws BusinessException {
@@ -323,6 +551,7 @@ public class TestUsuario {
 
 	@Test
 	public void testRecetaDiabeticoAceptaAzucar() throws BusinessException {
+
 		Usuario usuario = crearUsuarioBasicoValido();
 		Diabetico diabetico = new Diabetico();
 		usuario.agregarCondicionPreexistente(diabetico);

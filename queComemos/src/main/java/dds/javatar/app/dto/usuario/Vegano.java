@@ -30,7 +30,7 @@ public class Vegano implements CondicionPreexistente {
 	@Override
 	public void validarReceta(Receta receta) throws BusinessException {
 		// TODO: codigo repetido...
-		if (receta.contieneIngrediente("pollo") || receta.contieneIngrediente("chivito") || receta.contieneIngrediente("chivito") || receta.contieneIngrediente("chori")) {
+		if (receta.contieneIngrediente("pollo") || receta.contieneIngrediente("carne") || receta.contieneIngrediente("chivito") || receta.contieneIngrediente("chori")) {
 			throw new BusinessException("El usuario es vegetariano y no tolera los ingredientes");
 		}
 	}

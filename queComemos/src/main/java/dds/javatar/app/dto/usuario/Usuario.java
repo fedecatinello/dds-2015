@@ -165,8 +165,8 @@ public class Usuario {
 
 	public void agregarReceta(Receta receta) throws BusinessException {
 		receta.validar();
-		this.recetas.add(receta);
 		receta.setAutor(this);
+		this.recetas.add(receta);
 	}
 
 	public void validarSiAceptaReceta(Receta receta) throws BusinessException {

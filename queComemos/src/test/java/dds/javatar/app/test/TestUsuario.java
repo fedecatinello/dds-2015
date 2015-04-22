@@ -32,45 +32,6 @@ public class TestUsuario {
 		this.usuario = this.crearUsuarioBasicoValido();
 	}
 
-	private void assertIMC(Usuario usuario, double expectedValue) {
-		BigDecimal expected = new BigDecimal(expectedValue, this.mc);
-		assertEquals(expected.doubleValue(), usuario.getIMC(this.mc.getPrecision()).doubleValue(), 0.1);
-	}
-
-	@Test
-	public final void testPabloGomez() {
-		Usuario usuario = new Usuario(new BigDecimal(1.75), new BigDecimal(65.0));
-		this.assertIMC(usuario, 21.2244898);
-	}
-
-	@Test
-	public void testMelinaMacko() {
-		Usuario meli = new Usuario();
-		BigDecimal altura = new BigDecimal(1.47);
-		BigDecimal peso = new BigDecimal(42);
-		meli.setAltura(altura);
-		meli.setPeso(peso);
-		this.assertIMC(meli, 19.43635);
-	}
-
-	@Test
-	public final void testFedericoCatinello() {
-		Usuario fede = new Usuario(new BigDecimal(1.72), new BigDecimal(75));
-		this.assertIMC(fede, 25.35154137);
-	}
-
-	@Test
-	public final void testElianaLuguerosSinatra() {
-		Usuario eliana = new Usuario(new BigDecimal(1.66), new BigDecimal(62));
-		this.assertIMC(eliana, 22.49964);
-	}
-
-	@Test
-	public final void testNicolasGarcia() {
-		Usuario nico = new Usuario(new BigDecimal(1.79), new BigDecimal(81));
-		this.assertIMC(nico, 25.28010);
-	}
-
 	private Usuario crearUsuarioBasicoValido() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
@@ -85,6 +46,13 @@ public class TestUsuario {
 		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
 
 		return usuario;
+	}
+
+	// Punto 1: validación de usuario
+
+	@Test
+	public void testUsuarioValido() throws BusinessException {
+		this.usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
@@ -112,114 +80,44 @@ public class TestUsuario {
 
 	@Test(expected = BusinessException.class)
 	public void testUsuarioSinFechaNacimiento() throws BusinessException {
-		Usuario usuario = new Usuario();
-
-		usuario.setNombre("Nombre del usuario");
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setPeso(new BigDecimal(70));
-		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-
-		usuario.validar();
+		this.usuario.setFechaNacimiento(null);
+		this.usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
 	public void testUsuarioSinNombre() throws BusinessException {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -1);
-
-		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(calendar.getTime());
-
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setPeso(new BigDecimal(70));
-		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-
-		usuario.validar();
+		this.usuario.setNombre(null);
+		this.usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
 	public void testUsuarioSinPeso() throws BusinessException {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -1);
-
-		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(calendar.getTime());
-		usuario.setNombre("Nombre del usuario");
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-
-		usuario.validar();
+		this.usuario.setPeso(null);
+		this.usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
 	public void testUsuarioSinAltura() throws BusinessException {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -1);
-
-		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(calendar.getTime());
-		usuario.setNombre("Nombre del usuario");
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setPeso(new BigDecimal(70));
-		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-
-		usuario.validar();
+		this.usuario.setAltura(null);
+		this.usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
 	public void testUsuarioSinRutina() throws BusinessException {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -1);
-
-		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(calendar.getTime());
-		usuario.setNombre("Nombre del usuario");
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setPeso(new BigDecimal(70));
-		usuario.setAltura(new BigDecimal(1.77));
-
-		usuario.validar();
+		this.usuario.setRutina(null);
+		this.usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
 	public void testUsuarioConNombreMenorACuatroCaracters() throws BusinessException {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -1);
-
-		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(calendar.getTime());
-		usuario.setNombre("Nom");
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setPeso(new BigDecimal(70));
-		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-
-		usuario.validar();
+		this.usuario.setNombre("Nom");
+		this.usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
-	public void testUsuarioConNombreIgualACuatroCaracters() throws BusinessException {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -1);
-
-		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(calendar.getTime());
-		usuario.setNombre("Nomb");
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setPeso(new BigDecimal(70));
-		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-
-		usuario.validar();
+	public void testUsuarioConNombreIgualACuatroCaracteres() throws BusinessException {
+		this.usuario.setNombre("Nomb");
+		this.usuario.validar();
 	}
 
 	@Test(expected = BusinessException.class)
@@ -339,6 +237,48 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
+	// Fin punto 1.
+
+	// Punto 2: averiguar el índice de masa corporal o IMC de un usuario
+	private void assertIMC(Usuario usuario, double expectedValue) {
+		BigDecimal expected = new BigDecimal(expectedValue, this.mc);
+		assertEquals(expected.doubleValue(), usuario.getIMC(this.mc.getPrecision()).doubleValue(), 0.1);
+	}
+
+	@Test
+	public final void testPabloGomez() {
+		Usuario usuario = new Usuario(new BigDecimal(1.75), new BigDecimal(65.0));
+		this.assertIMC(usuario, 21.2244898);
+	}
+
+	@Test
+	public void testMelinaMacko() {
+		Usuario meli = new Usuario();
+		BigDecimal altura = new BigDecimal(1.47);
+		BigDecimal peso = new BigDecimal(42);
+		meli.setAltura(altura);
+		meli.setPeso(peso);
+		this.assertIMC(meli, 19.43635);
+	}
+
+	@Test
+	public final void testFedericoCatinello() {
+		Usuario fede = new Usuario(new BigDecimal(1.72), new BigDecimal(75));
+		this.assertIMC(fede, 25.35154137);
+	}
+
+	@Test
+	public final void testElianaLuguerosSinatra() {
+		Usuario eliana = new Usuario(new BigDecimal(1.66), new BigDecimal(62));
+		this.assertIMC(eliana, 22.49964);
+	}
+
+	@Test
+	public final void testNicolasGarcia() {
+		Usuario nico = new Usuario(new BigDecimal(1.79), new BigDecimal(81));
+		this.assertIMC(nico, 25.28010);
+	}
+
 	@Test
 	public void testCalculoIMC() {
 		Usuario usuarioEsperado = new Usuario(new BigDecimal(1.75), new BigDecimal(65.0));
@@ -350,6 +290,7 @@ public class TestUsuario {
 
 	}
 
+	// Punto 2: averiguar si un usuario sigue una rutina saludable.
 	@Test
 	public void testUsuarioConRutinaSaludableFuegaDelRangoDelIMC() throws BusinessException {
 		this.usuario.setPeso(new BigDecimal(200));
@@ -455,6 +396,9 @@ public class TestUsuario {
 		assertEquals(this.usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 
+	// Fin punto 2.
+
+	// Punto 3: Hacer que un usuario agregue una receta
 	@Test
 	public void testAgregarReceta() throws BusinessException {
 		Receta ravioles = new Receta(350);
@@ -558,6 +502,9 @@ public class TestUsuario {
 		this.usuario.verReceta(receta);
 	}
 
+	// Fin Punto 3
+
+	// Punto 4: Saber si un usuario puede ver a una receta dada
 	@Test
 	public void testVerRecetaPublica() throws BusinessException {
 		Receta receta = new Receta(150);
@@ -577,6 +524,7 @@ public class TestUsuario {
 		usuarioQueQuiereVer.verReceta(receta);
 	}
 
+	// Punto4: Saber si un usuario puede modificar una receta dada
 	@Test
 	public void testPuedeModificarRecetaPublica() throws BusinessException {
 
@@ -605,6 +553,10 @@ public class TestUsuario {
 		this.usuario.puedeModificarReceta(receta);
 	}
 
+	// Punto 4: Modificar una receta dada, respetando la validación del item anterior
+	// TODO
+
+	// Punto 5: Poder construir una receta con sub-recetas.
 	@Test
 	public void testAgregaRecetaConSubrecetaPropia() throws BusinessException {
 		Receta recetaPure = new Receta(150);
@@ -619,8 +571,8 @@ public class TestUsuario {
 
 	@Test(expected = BusinessException.class)
 	public void testAgregaRecetaConSubrecetaAjena() throws BusinessException {
-		Usuario usuarioOwner = this.crearUsuarioBasicoValido();		
-		
+		Usuario usuarioOwner = this.crearUsuarioBasicoValido();
+
 		Receta recetaPure = new Receta(150);
 		recetaPure.agregarIngrediente("papa", new BigDecimal(100));
 		usuarioOwner.agregarReceta(recetaPure);
@@ -645,7 +597,7 @@ public class TestUsuario {
 
 	@Test
 	public void testAgregaRecetaConSubrecetaVacia() throws BusinessException {
-
+		// TODO: ?
 	}
 
 }

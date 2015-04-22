@@ -162,6 +162,7 @@ public class Usuario {
 	public void agregarReceta(Receta receta) throws BusinessException {
 		receta.validar();
 		this.recetas.add(receta);
+		receta.setAutor(this);
 	}
 	
 	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
@@ -175,4 +176,26 @@ public class Usuario {
 			}
 		}
 	}
+	
+	
+	public void verReceta(Receta receta) throws BusinessException {
+		if (!recetas.contains(receta) && receta.getAutor()!=null){
+			  throw new BusinessException("El Usuario no tiene permitido ver esta receta");
+		}
+	}
+
+	public void puedeModificarReceta(Receta receta) throws BusinessException {
+		this.verReceta(receta);
+	}
+	
+/*	
+	public void modificarReceta(Receta receta) throws BusinessException	{
+		if(!this.recetas.contains(receta)){
+		receta.setAutor(this);
+		this.agregarReceta(receta);
+		}
+		receta.modificar();
+	}
+*/
+	
 }

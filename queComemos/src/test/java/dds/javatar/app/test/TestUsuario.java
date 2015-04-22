@@ -17,9 +17,9 @@ import dds.javatar.app.dto.usuario.Celiaco;
 import dds.javatar.app.dto.usuario.Diabetico;
 import dds.javatar.app.dto.usuario.Hipertenso;
 import dds.javatar.app.dto.usuario.Rutina;
+import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Vegano;
-import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.util.BusinessException;
 
 public class TestUsuario {
@@ -560,5 +560,63 @@ public class TestUsuario {
 		receta.agregarIngrediente("azucar", new BigDecimal(50));
 		usuario.validarSiAceptaReceta(receta);
 	}
+	
+	@Test
+	public void testVerRecetaPropia() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		usuario.agregarReceta(receta);
+		usuario.verReceta(receta);
+	}
+	
+	@Test
+	public void testVerRecetaPublica() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("pollo", new BigDecimal(100));
+	
+		usuario.verReceta(receta);
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testVerRecetaAjena() throws BusinessException {
+		Usuario usuarioQueQuiereVer = crearUsuarioBasicoValido();
+		Usuario usuarioQueAutoreo = crearUsuarioBasicoValido();
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		usuarioQueAutoreo.agregarReceta(receta);
+	
+		usuarioQueQuiereVer.verReceta(receta);
+	}
+	@Test
+	public void testPuedeModificarRecetaPublica() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("pollo", new BigDecimal(100));
+	
+		usuario.puedeModificarReceta(receta);
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void testNoPuedeModificarReceta() throws BusinessException {
+		Usuario usuarioQueQuiereModificar = crearUsuarioBasicoValido();
+		Usuario usuarioQueAutoreo = crearUsuarioBasicoValido();
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		usuarioQueAutoreo.agregarReceta(receta);
+	
+		usuarioQueQuiereModificar.puedeModificarReceta(receta);
+	}
+	
+	@Test
+	public void testPuedeModificarRecetaPropia() throws BusinessException {
+		Usuario usuario = crearUsuarioBasicoValido();
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		usuario.agregarReceta(receta);
+		usuario.puedeModificarReceta(receta);
+	}
+	
 	
 }

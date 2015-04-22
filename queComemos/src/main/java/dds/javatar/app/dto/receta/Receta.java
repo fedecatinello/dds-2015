@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 
 
@@ -15,6 +16,7 @@ public class Receta {
 	private Integer calorias;
 	private String dificultad;
 	private String temporada;
+	private Usuario autor;
 
 	private Map<String, BigDecimal> ingredientes;
 	private Map<String, BigDecimal> condimentos;
@@ -96,8 +98,17 @@ public class Receta {
 	public void setSubrecetas(Collection<Receta> subrecetas) {
 		this.subrecetas = subrecetas;
 	}
+	public Usuario getAutor() {
+		return autor;
+	}
 
+	public void setAutor(Usuario autor) {
+		this.autor = autor;
+	}
+	
+	
 	// Metodos
+
 
 	public void validar() throws BusinessException {
 		if (this.ingredientes.isEmpty()) {

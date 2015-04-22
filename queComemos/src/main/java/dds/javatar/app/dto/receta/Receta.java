@@ -4,12 +4,13 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 
-public class Receta implements Cloneable{
+public class Receta implements Cloneable {
 
 	private String nombre;
 	private String preparacion;
@@ -22,9 +23,7 @@ public class Receta implements Cloneable{
 	private Map<String, BigDecimal> condimentos;
 	private Set<Receta> subRecetas;
 
-	
-	
-	/****		builders		****/
+	/**** builders ****/
 	public Receta() {
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.condimentos = new HashMap<String, BigDecimal>();
@@ -36,9 +35,7 @@ public class Receta implements Cloneable{
 		this.calorias = calorias;
 	}
 
-	
-	
-	/****	Setters & Getters	****/ 
+	/**** Setters & Getters ****/
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -46,7 +43,7 @@ public class Receta implements Cloneable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public String getPreparacion() {
 		return this.preparacion;
 	}
@@ -91,9 +88,15 @@ public class Receta implements Cloneable{
 		this.autor = autor;
 	}
 
-	
-	
-	/****		Metodos		****/
+	public Map<String, BigDecimal> getCondimentos() {
+		return this.condimentos;
+	}
+
+	public Map<String, BigDecimal> getIngredientes() {
+		return this.ingredientes;
+	}
+
+	/**** Metodos ****/
 	public void validar() throws BusinessException {
 		if (this.ingredientes.isEmpty()) {
 			throw new BusinessException("La receta no es valida ya que no tiene ingredientes!");
@@ -130,29 +133,47 @@ public class Receta implements Cloneable{
 
 		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
 	}
-	
+
 	@Override
-	public  Object clone() throws CloneNotSupportedException  {
-        return super.clone();
-    }
+	public Receta clone() {
+		Receta recetaClonada = new Receta();
+		recetaClonada.nombre = this.nombre;
+		recetaClonada.preparacion = this.preparacion;
+		recetaClonada.calorias = this.calorias;
+
+		recetaClonada.dificultad = this.dificultad;
+		recetaClonada.temporada = this.temporada;
+		// TODO autor..
+
+		for (Entry<String, BigDecimal> entry : this.ingredientes.entrySet()) {
+			recetaClonada.ingredientes.put(entry.getKey(), entry.getValue());
+		}
+		for (Entry<String, BigDecimal> entry : this.condimentos.entrySet()) {
+			recetaClonada.condimentos.put(entry.getKey(), entry.getValue());
+		}
+		for (Receta subReceta : this.subRecetas) {
+			recetaClonada.agregarSubReceta(subReceta.clone());
+		}
+		return recetaClonada;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void actualizarDatos(Object[] modifs) {
-		if (modifs[0]!=null) 
-			this.setNombre((String)modifs[0]);
-		if (modifs[1]!=null) 
-			this.ingredientes=(Map<String, BigDecimal>) modifs[1];
-		if (modifs[2]!=null) 	
-			this.condimentos=(Map<String, BigDecimal>) modifs[2];
-		if (modifs[3]!=null) 	
+		if (modifs[0] != null)
+			this.setNombre((String) modifs[0]);
+		if (modifs[1] != null)
+			this.ingredientes = (Map<String, BigDecimal>) modifs[1];
+		if (modifs[2] != null)
+			this.condimentos = (Map<String, BigDecimal>) modifs[2];
+		if (modifs[3] != null)
 			this.setPreparacion((String) modifs[3]);
-		if (modifs[4]!=null) 	
+		if (modifs[4] != null)
 			this.setCalorias((Integer) modifs[4]);
-		if (modifs[5]!=null) 	
+		if (modifs[5] != null)
 			this.setDificultad((String) modifs[5]);
-		if (modifs[6]!=null) 	
-			this.setTemporada((String) modifs[6]);			
-			
+		if (modifs[6] != null)
+			this.setTemporada((String) modifs[6]);
+
 	}
 
 }

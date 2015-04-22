@@ -31,9 +31,7 @@ public class Usuario {
 	private Rutina rutina;
 	private Set<Receta> recetas;
 
-	
-	
-	/****	 Constructors 	****/
+	/**** Constructors ****/
 
 	public Usuario() {
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
@@ -52,9 +50,7 @@ public class Usuario {
 		this.sexo = sexo;
 	}
 
-	
-	
-	/****	 Setters y getters 		****/
+	/**** Setters y getters ****/
 	public BigDecimal getAltura() {
 		return this.altura;
 	}
@@ -103,11 +99,8 @@ public class Usuario {
 		this.rutina = rutina;
 	}
 
-	
-	
-	
-	/****		Metodos		****/
-	
+	/**** Metodos ****/
+
 	/* Obtener la masa corporal dada una presicion */
 	public BigDecimal getIMC(int precision) {
 
@@ -178,11 +171,9 @@ public class Usuario {
 	public void quitarReceta(Receta receta) throws BusinessException {
 		if (this.recetas.contains(receta)) {
 			this.recetas.remove(receta);
-		}
-		else {
+		} else {
 			throw new BusinessException("El Usuario no tenia agregada esa receta");
 		}
-
 	}
 
 	public void validarSiAceptaReceta(Receta receta) throws BusinessException {
@@ -191,49 +182,43 @@ public class Usuario {
 		}
 	}
 
-	public void verReceta(Receta receta) throws BusinessException {
+	public void validarVerReceta(Receta receta) throws BusinessException {
 		if (!this.recetas.contains(receta) && receta.getAutor() != null) {
 			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
 		}
 	}
 
-	public void puedeModificarReceta(Receta receta) throws BusinessException {
-		this.verReceta(receta);
+	public void validarModificarReceta(Receta receta) throws BusinessException {
+		this.validarVerReceta(receta);
 	}
 
 	public void puedeAgregarSubRecetas(Set<Receta> subRecetas) throws BusinessException {
 		for (Receta subReceta : subRecetas) {
 			try {
-				this.verReceta(subReceta);
+				this.validarVerReceta(subReceta);
 			} catch (Exception e) {
 				throw new BusinessException("El Usuario no tiene permitido agregar alguna subreceta");
 			}
 		}
 	}
 
-	public void modificarReceta(Receta receta, Object ...modificaciones ) throws BusinessException, CloneNotSupportedException {
+	public void modificarReceta(Receta receta, Object... modificaciones) throws BusinessException, CloneNotSupportedException {
 		// Si le receta es publica, tenemos que clonar el objeto, para que los cmabios sean solo visibles para este usuario
-		if(receta.getAutor()==null){				
-				Receta modificada = (Receta) receta.clone();
-				if (this.recetas.contains(receta)) {
-					this.quitarReceta(receta);
-				}
-				receta=modificada;
-				this.agregarReceta(receta);			
-					
-		}			
-		
-		/*	Aplico los cambios utilizando:
-		 * [Nombre,
-		 * 	listaIngredientes,
-		 * 	listaCondimentos,
-		 * 	preparacion,
-		 * 	calorias,
-		 * 	dificultad,
-		 * 	temporada	]
-		 * 
+		if (receta.getAutor() == null) {
+			Receta modificada = receta.clone();
+			if (this.recetas.contains(receta)) {
+				this.quitarReceta(receta);
+			}
+			receta = modificada;
+			this.agregarReceta(receta);
+
+		}
+
+		/*
+		 * Aplico los cambios utilizando: [Nombre, listaIngredientes, listaCondimentos, preparacion, calorias, dificultad,
+		 * temporada ]
 		 */
-		receta.actualizarDatos(modificaciones);	
+		receta.actualizarDatos(modificaciones);
 
 	}
 

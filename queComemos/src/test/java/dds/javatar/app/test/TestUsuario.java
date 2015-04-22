@@ -502,7 +502,7 @@ public class TestUsuario {
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		this.usuario.agregarReceta(receta);
-		this.usuario.verReceta(receta);
+		this.usuario.validarVerReceta(receta);
 	}
 
 	
@@ -513,7 +513,7 @@ public class TestUsuario {
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 
-		this.usuario.verReceta(receta);
+		this.usuario.validarVerReceta(receta);
 	}
 
 	@Test(expected = BusinessException.class)
@@ -524,7 +524,7 @@ public class TestUsuario {
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		usuarioQueAutoreo.agregarReceta(receta);
 
-		usuarioQueQuiereVer.verReceta(receta);
+		usuarioQueQuiereVer.validarVerReceta(receta);
 	}
 
 	
@@ -536,7 +536,7 @@ public class TestUsuario {
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 
-		this.usuario.puedeModificarReceta(receta);
+		this.usuario.validarModificarReceta(receta);
 	}
 
 	@Test(expected = BusinessException.class)
@@ -547,7 +547,7 @@ public class TestUsuario {
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		usuarioQueAutoreo.agregarReceta(receta);
 
-		usuarioQueQuiereModificar.puedeModificarReceta(receta);
+		usuarioQueQuiereModificar.validarModificarReceta(receta);
 	}
 
 	@Test
@@ -555,7 +555,7 @@ public class TestUsuario {
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		this.usuario.agregarReceta(receta);
-		this.usuario.puedeModificarReceta(receta);
+		this.usuario.validarModificarReceta(receta);
 	}
 
 	
@@ -567,7 +567,7 @@ public class TestUsuario {
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		this.usuario.agregarReceta(receta);
 
-		this.usuario.puedeModificarReceta(receta);
+		this.usuario.validarModificarReceta(receta);
 		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);		
 	}
 
@@ -577,7 +577,7 @@ public class TestUsuario {
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 //		this.usuario.agregarReceta(receta);
 
-		this.usuario.puedeModificarReceta(receta);
+		this.usuario.validarModificarReceta(receta);
 		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);	
 	}
 
@@ -589,11 +589,22 @@ public class TestUsuario {
 		receta.agregarIngrediente("papa", new BigDecimal(100));
 		usuarioOwner.agregarReceta(receta);
 		
-		this.usuario.puedeModificarReceta(receta);
+		this.usuario.validarModificarReceta(receta);
 		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);	
 
 	}
 
+	@Test
+	public void testClonarReceta() throws BusinessException, CloneNotSupportedException {
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("papa", new BigDecimal(100));
+	
+		Receta recetaClonada = receta.clone();
+		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
+		
+		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
+		assertEquals(recetaClonada.getIngredientes().get("papa"), new BigDecimal(150));
+	}
 
 	
 	// Punto 5: Poder construir una receta con sub-recetas.

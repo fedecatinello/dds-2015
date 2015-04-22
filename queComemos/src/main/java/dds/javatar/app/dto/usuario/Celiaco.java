@@ -13,12 +13,12 @@ public class Celiaco implements CondicionPreexistente {
 
 	@Override
 	public void validarUsuario(Usuario usuario) throws BusinessException {
-		// TODO
+		// TODO: no hay información al respecto, deberia solicitarse?
 	}
 
 	@Override
 	public void validarReceta(Receta receta) throws BusinessException {
-		// TODO
+		// TODO: no hay información al respecto, deberia solicitarse?
 	}
 
 }

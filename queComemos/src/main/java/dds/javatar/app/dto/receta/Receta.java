@@ -109,7 +109,6 @@ public class Receta {
 	
 	// Metodos
 
-
 	public void validar() throws BusinessException {
 		if (this.ingredientes.isEmpty()) {
 			throw new BusinessException("La receta no es valida ya que no tiene ingredientes!");
@@ -124,19 +123,23 @@ public class Receta {
 	}
 
 	public Boolean contieneIngrediente(String ingrediente) {
+		// TODO: habria que chequear en las subrecetas?
 		return this.ingredientes.containsKey(ingrediente);
 	}
 
 	public Boolean contieneCondimento(String condimento) {
+		// TODO: habria que chequear en las subrecetas?
 		return this.condimentos.containsKey(condimento);
 	}
 
 	public Boolean alimentoSobrepasaCantidad(String alimento, BigDecimal cantidad) {
+		// TODO: habria que chequear en las subrecetas?
+		
 		if (!this.ingredientes.containsKey(alimento)) {
 			return Boolean.FALSE;
 		}
 		
-		return (this.ingredientes.get(alimento).compareTo(new BigDecimal(100)) == 1);
+		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
 	}
 
 }

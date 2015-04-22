@@ -143,7 +143,7 @@ public class Usuario {
 				return Boolean.FALSE;
 			}
 		}
-		
+
 		return Boolean.TRUE;
 	}
 
@@ -159,21 +159,19 @@ public class Usuario {
 		this.preferenciasAlimenticias.put(alimento, Boolean.TRUE);
 	}
 
+	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
+		this.condicionesPreexistentes.add(condicion);
+	}
+
 	public void agregarReceta(Receta receta) throws BusinessException {
 		receta.validar();
 		this.recetas.add(receta);
 		receta.setAutor(this);
 	}
 
-	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
-		this.condicionesPreexistentes.add(condicion);
-	}
-
 	public void validarSiAceptaReceta(Receta receta) throws BusinessException {
-		if (this.condicionesPreexistentes != null) {
-			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-				condicionPreexistente.validarReceta(receta);
-			}
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			condicionPreexistente.validarReceta(receta);
 		}
 	}
 

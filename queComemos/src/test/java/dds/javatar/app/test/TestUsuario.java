@@ -346,25 +346,28 @@ public class TestUsuario {
 		
 	}
 
-	@Test(expected = BusinessException.class)
+	@Test
 	public void testUsuarioConRutinaSaludableFuegaDelRangoDelIMC() throws BusinessException{
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.setPeso( new BigDecimal (200));
-		usuario.validarRutinaSaludable();
+		
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.FALSE);
 	}
 	
-	@Test(expected = BusinessException.class)
+	@Test
 	public void testUsuarioConRutinaSaludableConCondicionesPreexistentes() throws BusinessException{
 		Hipertenso hipertenso = new Hipertenso();
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(hipertenso);
-		usuario.validarRutinaSaludable();
+		
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.FALSE);
 	}
 	
 	@Test
-	public void testUsuarioConRUtinaSaludable() throws BusinessException{
+	public void testUsuarioConRutinaSaludable() throws BusinessException{
 		Usuario usuario = this.crearUsuarioBasicoValido();
-		usuario.validarRutinaSaludable();
+		
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 	
 	@Test
@@ -374,7 +377,8 @@ public class TestUsuario {
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(vegano);
 		usuario.agregarPreferenciaAlimenticia("fruta");
-		usuario.validarRutinaSaludable();
+		
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 
 	@Test
@@ -386,10 +390,10 @@ public class TestUsuario {
 		usuario.getRutina().setTipo(TipoRutina.INTENSIVO);
 		usuario.getRutina().setDuracion(40);
 
-		usuario.validarRutinaSaludable();
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 
-	@Test(expected = BusinessException.class)
+	@Test
 	public void testHipertensoConRutinaSedentariaLeve() throws BusinessException {
 		Hipertenso hipertenso = new Hipertenso();
 
@@ -398,10 +402,10 @@ public class TestUsuario {
 		usuario.getRutina().setTipo(TipoRutina.LEVE);
 		usuario.getRutina().setDuracion(15);
 
-		usuario.validarRutinaSaludable();
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.FALSE);
 	}
 
-	@Test(expected = BusinessException.class)
+	@Test
 	public void testDiabeticoConRutinaSedentariaLeveYSobrepeso() throws BusinessException {
 		Diabetico diabetico = new Diabetico();
 
@@ -411,7 +415,7 @@ public class TestUsuario {
 		usuario.getRutina().setTipo(TipoRutina.LEVE);
 		usuario.getRutina().setDuracion(15);
 
-		usuario.validarRutinaSaludable();
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.FALSE);
 	}
 
 	@Test
@@ -423,10 +427,10 @@ public class TestUsuario {
 		usuario.getRutina().setTipo(TipoRutina.FUERTE);
 		usuario.getRutina().setDuracion(0);
 
-		usuario.validarRutinaSaludable();
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 
-	@Test(expected = BusinessException.class)
+	@Test
 	public void testDiabeticoPesaMasde70() throws BusinessException {
 		Diabetico diabetico = new Diabetico();
 
@@ -435,7 +439,7 @@ public class TestUsuario {
 		usuario.agregarCondicionPreexistente(diabetico);
 		usuario.setPeso(new BigDecimal(85));
 
-		usuario.validarRutinaSaludable();
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.FALSE);
 	}
 
 	@Test
@@ -446,7 +450,7 @@ public class TestUsuario {
 		usuario.agregarCondicionPreexistente(diabetico);
 		usuario.setPeso(new BigDecimal(65));
 
-		usuario.validarRutinaSaludable();
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 
 	@Test
@@ -456,7 +460,7 @@ public class TestUsuario {
 		Usuario usuario = this.crearUsuarioBasicoValido();
 		usuario.agregarCondicionPreexistente(celiaco);
 
-		usuario.validarRutinaSaludable();
+		assertEquals(usuario.sigueRutinaSaludable(), Boolean.TRUE);
 	}
 
 	@Test

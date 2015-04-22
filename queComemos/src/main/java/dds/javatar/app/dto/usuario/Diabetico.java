@@ -19,10 +19,8 @@ public class Diabetico extends UsuarioConPreferencia {
 	}
 
 	@Override
-	public void validarUsuarioSaludable(Usuario usuario) throws BusinessException {
-		if (usuario.getPeso().intValue() > MAX_PESO && !usuario.getRutina().esActiva()) {
-			throw new BusinessException("El usuario es diabetico y no subsana la condicion");
-		}
+	public Boolean usuarioSigueRutinaSaludable(Usuario usuario) {
+		return (usuario.getPeso().intValue() <= MAX_PESO || usuario.getRutina().esActiva());
 	}
 
 	@Override

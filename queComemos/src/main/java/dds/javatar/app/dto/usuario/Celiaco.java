@@ -6,8 +6,9 @@ import dds.javatar.app.util.BusinessException;
 public class Celiaco implements CondicionPreexistente {
 
 	@Override
-	public void validarUsuarioSaludable(Usuario usuario) throws BusinessException {
-		// TODO
+	public Boolean usuarioSigueRutinaSaludable(Usuario usuario) {
+		// Para los celiacos no hace falta que cumplan con alguna condición.
+		return Boolean.TRUE;
 	}
 
 	@Override

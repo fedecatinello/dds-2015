@@ -21,10 +21,8 @@ public class Vegano implements CondicionPreexistente {
 	}
 
 	@Override
-	public void validarUsuarioSaludable(Usuario usuario) throws BusinessException {
-		if (!usuario.tienePreferenciaAlimenticia("fruta")) {
-			throw new BusinessException("El usuario vegano debería tener como preferencia a las frutas");
-		}
+	public Boolean usuarioSigueRutinaSaludable(Usuario usuario) {
+		return usuario.tienePreferenciaAlimenticia("fruta");
 	}
 
 	@Override
@@ -35,5 +33,4 @@ public class Vegano implements CondicionPreexistente {
 			}
 		}
 	}
-
 }

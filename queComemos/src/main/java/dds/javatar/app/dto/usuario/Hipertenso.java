@@ -4,12 +4,12 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.util.BusinessException;
 
 public class Hipertenso extends UsuarioConPreferencia {
-
+	
+	
+	
 	@Override
-	public void validarUsuarioSaludable(Usuario usuario) throws BusinessException {
-		if (!usuario.getRutina().esIntensiva()) {
-			throw new BusinessException("El usuario es hipertenso y no subsana la condicion");
-		}
+	public Boolean usuarioSigueRutinaSaludable(Usuario usuario) {
+		return usuario.getRutina().esIntensiva();
 	}
 
 	@Override

@@ -125,26 +125,26 @@ public class Usuario {
 			throw new BusinessException("La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
 		}
 
-		if (this.condicionesPreexistentes != null) {
-			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-				condicionPreexistente.validarUsuario(this);
-			}
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			condicionPreexistente.validarUsuario(this);
 		}
 	}
 
-	public void validarRutinaSaludable() throws BusinessException {
+	public Boolean sigueRutinaSaludable() {
 
 		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
 
 		if (userIMC < 18 || userIMC > 30) {
-			throw new BusinessException("El IMC debe estar en el rango entre 18 y 30");
+			return Boolean.FALSE;
 		}
 
-		if (this.condicionesPreexistentes != null) {
-			for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-				condicionPreexistente.validarUsuarioSaludable(this);
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			if (!condicionPreexistente.usuarioSigueRutinaSaludable(this)) {
+				return Boolean.FALSE;
 			}
 		}
+		
+		return Boolean.TRUE;
 	}
 
 	public Boolean tienePreferenciaAlimenticia(String alimento) {

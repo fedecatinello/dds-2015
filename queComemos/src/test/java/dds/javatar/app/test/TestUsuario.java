@@ -554,7 +554,39 @@ public class TestUsuario {
 	}
 
 	// Punto 4: Modificar una receta dada, respetando la validación del item anterior
-	// TODO
+	@Test
+	public void testModificarRecetaPropia() throws BusinessException, CloneNotSupportedException {
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		this.usuario.agregarReceta(receta);
+
+		this.usuario.puedeModificarReceta(receta);
+		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);		
+	}
+
+	@Test
+	public void testModificarRecetaPublica() throws BusinessException, CloneNotSupportedException {
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		this.usuario.agregarReceta(receta);
+
+		this.usuario.puedeModificarReceta(receta);
+		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);	
+	}
+
+	@Test(expected = BusinessException.class)
+	public void testModificarRecetaAjena() throws BusinessException, CloneNotSupportedException {
+		
+		Usuario usuarioOwner = this.crearUsuarioBasicoValido();
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("papa", new BigDecimal(100));
+		usuarioOwner.agregarReceta(receta);
+		
+		this.usuario.puedeModificarReceta(receta);
+		this.usuario.modificarReceta(receta,"hola",null,null,"probando", 650,"dificilisimo",null);	
+
+	}
+
 
 	// Punto 5: Poder construir una receta con sub-recetas.
 	@Test

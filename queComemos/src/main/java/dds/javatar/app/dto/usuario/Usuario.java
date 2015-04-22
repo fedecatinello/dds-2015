@@ -169,6 +169,16 @@ public class Usuario {
 		this.recetas.add(receta);
 	}
 
+	public void quitarReceta(Receta receta) throws BusinessException {
+		if (this.recetas.contains(receta)) {
+			this.recetas.remove(receta);
+		}
+		else {
+			throw new BusinessException("El Usuario no tenia agregada esa receta");
+		}
+
+	}
+
 	public void validarSiAceptaReceta(Receta receta) throws BusinessException {
 		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
 			condicionPreexistente.validarReceta(receta);
@@ -195,11 +205,33 @@ public class Usuario {
 		}
 	}
 
-	/*
-	 * public void modificarReceta(Receta receta) throws BusinessException {
-	 * if(!this.recetas.contains(receta)){ Receta modificada = receta.clone()
-	 * modificada.setAutor(this); this.agregarReceta(modificada); }
-	 * modificada.modificar(); }
-	 */
+
+	public void modificarReceta(Receta receta, Object ...modificaciones ) throws BusinessException, CloneNotSupportedException {
+		// Si le receta es publica, tenemos que clonar el objeto, para que los cmabios sean solo visibles para este usuario
+		if(receta.getAutor()==null){		
+			Receta modificada = (Receta) receta.clone();
+			if (this.recetas.contains(receta)) {
+				this.quitarReceta(receta);
+			}
+			receta=modificada;
+			this.agregarReceta(receta);			
+		}	
+		
+		
+		/*	Aplico los cambios utilizando:
+		 * [Nombre,
+		 * 	listaIngredientes,
+		 * 	listaCondimentos,
+		 * 	preparacion,
+		 * 	calorias,
+		 * 	dificultad,
+		 * 	temporada	]
+		 * 
+		 */
+		receta.actualizarDatos(modificaciones);	
+
+	}
+
+
 
 }

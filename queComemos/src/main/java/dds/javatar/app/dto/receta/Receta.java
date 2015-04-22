@@ -126,5 +126,29 @@ public class Receta {
 
 		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
 	}
+	
+	@Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+	@SuppressWarnings("unchecked")
+	public void actualizarDatos(Object[] modifs) {
+		if (modifs[0]!=null) 
+			this.setNombre((String)modifs[0]);
+		if (modifs[1]!=null) 
+			this.ingredientes=(Map<String, BigDecimal>) modifs[1];
+		if (modifs[2]!=null) 	
+			this.condimentos=(Map<String, BigDecimal>) modifs[2];
+		if (modifs[3]!=null) 	
+			this.setPreparacion((String) modifs[3]);
+		if (modifs[4]!=null) 	
+			this.setCalorias((Integer) modifs[4]);
+		if (modifs[5]!=null) 	
+			this.setDificultad((String) modifs[5]);
+		if (modifs[6]!=null) 	
+			this.setTemporada((String) modifs[6]);			
+			
+	}
 
 }

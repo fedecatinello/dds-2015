@@ -98,6 +98,14 @@ public class Usuario {
 	public void setRutina(Rutina rutina) {
 		this.rutina = rutina;
 	}
+	
+	public Set<Receta> getRecetas() {
+		return recetas;
+	}
+
+	public void setRecetas(Set<Receta> recetas) {
+		this.recetas = recetas;
+	}
 
 	/**** Metodos ****/
 
@@ -163,10 +171,9 @@ public class Usuario {
 	}
 
 	public void agregarReceta(Receta receta) throws BusinessException {
-		this.validarVerReceta(receta);
-		receta.validar();
-		receta.setAutor(this);
-		this.recetas.add(receta);
+		this.verReceta(receta);
+		receta.getTipo().agregar(receta, this);
+		//this.recetas.add(receta);
 	}
 
 	public void quitarReceta(Receta receta) throws BusinessException {
@@ -183,20 +190,20 @@ public class Usuario {
 		}
 	}
 
-	public void validarVerReceta(Receta receta) throws BusinessException {
-		if (!this.recetas.contains(receta) && receta.getAutor() != null) {
+	public void verReceta(Receta receta) throws BusinessException {
+		if (!receta.getTipo().chequearVisibilidad(receta, this)){
 			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
 		}
 	}
 
 	public void validarModificarReceta(Receta receta) throws BusinessException {
-		this.validarVerReceta(receta);
+		receta.getTipo().chequearVisibilidad(receta, this);
 	}
 
 	public void puedeAgregarSubRecetas(Set<Receta> subRecetas) throws BusinessException {
 		for (Receta subReceta : subRecetas) {
 			try {
-				this.validarVerReceta(subReceta);
+				this.verReceta(subReceta);
 			} catch (Exception e) {
 				throw new BusinessException("El Usuario no tiene permitido agregar alguna subreceta");
 			}
@@ -204,14 +211,14 @@ public class Usuario {
 	}
 
 	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws BusinessException {
-		this.validarVerReceta(receta);
-
-		if (receta.getAutor() == null) {
-			receta = receta.clone();
-			this.agregarReceta(receta);
-		}
-
+			
+		this.agregarReceta(receta);
 		receta.setNombre(nuevoNombre);
+	}
+
+	public boolean puedeModificarReceta(Receta receta) {
+		return receta.getTipo().chequearModificacion(receta, this);
+		
 	}
 
 }

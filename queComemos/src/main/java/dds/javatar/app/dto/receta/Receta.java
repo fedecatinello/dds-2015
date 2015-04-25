@@ -17,7 +17,7 @@ public class Receta implements Cloneable {
 	private Integer calorias;
 	private String dificultad;
 	private String temporada;
-	private Usuario autor;
+	private TipoReceta tipo;
 
 	private Map<String, BigDecimal> ingredientes;
 	private Map<String, BigDecimal> condimentos;
@@ -28,11 +28,17 @@ public class Receta implements Cloneable {
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.condimentos = new HashMap<String, BigDecimal>();
 		this.subRecetas = new HashSet<Receta>();
+
 	}
 
 	public Receta(Integer calorias) {
 		this();
 		this.calorias = calorias;
+	}
+	
+	public Receta(Integer calorias, TipoReceta tipo){
+		this(calorias);
+		this.setTipo(tipo);
 	}
 
 	/**** Setters & Getters ****/
@@ -80,20 +86,20 @@ public class Receta implements Cloneable {
 		return this.subRecetas;
 	}
 
-	public Usuario getAutor() {
-		return this.autor;
-	}
-
-	public void setAutor(Usuario autor) {
-		this.autor = autor;
-	}
-
 	public Map<String, BigDecimal> getCondimentos() {
 		return this.condimentos;
 	}
 
 	public Map<String, BigDecimal> getIngredientes() {
 		return this.ingredientes;
+	}
+	
+	public TipoReceta getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoReceta tipo) {
+		this.tipo = tipo;
 	}
 
 	/**** Metodos ****/

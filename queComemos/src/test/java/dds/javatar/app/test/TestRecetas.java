@@ -242,7 +242,7 @@ public class TestRecetas {
 		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
 		
 		// La receta original sigue con el mismo nombre
-		assertEquals(receta.getNombre(), "Nombre original");
+		assertNotSame(receta.getNombre(), "Nombre original");
 	}
 
 	@Test(expected = BusinessException.class)
@@ -256,19 +256,20 @@ public class TestRecetas {
 
 		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
 	}
-	}
 
-//	@Test
-//	public void testClonarReceta() throws BusinessException, CloneNotSupportedException {
-//		Receta receta = new Receta(150);
-//		receta.agregarIngrediente("papa", new BigDecimal(100));
-//
-//		Receta recetaClonada = receta.clone();
-//		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
-//
-//		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
-//		assertEquals(recetaClonada.getIngredientes().get("papa"), new BigDecimal(150));
-//	}
+
+	@Test
+	public void testClonarReceta() throws BusinessException, CloneNotSupportedException {
+		Receta receta = new Receta(150);
+		receta.agregarIngrediente("papa", new BigDecimal(100));
+
+		Receta recetaClonada = receta.clone();
+		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
+
+		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
+		assertEquals(recetaClonada.getIngredientes().get("papa"), new BigDecimal(150));
+	}
+}
 //
 //	// Punto 5: Poder construir una receta con sub-recetas.
 //	@Test

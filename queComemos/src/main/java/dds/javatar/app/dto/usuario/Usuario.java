@@ -211,9 +211,10 @@ public class Usuario {
 	}
 
 	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws BusinessException {
-			
+		
 		this.agregarReceta(receta);
 		receta.setNombre(nuevoNombre);
+		
 	}
 
 	public boolean puedeModificarReceta(Receta receta) {

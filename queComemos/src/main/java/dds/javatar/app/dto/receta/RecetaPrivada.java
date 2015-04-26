@@ -20,13 +20,20 @@ public class RecetaPrivada implements TipoReceta{
 		return false;
 	}
 
-	public void agregar(Receta receta, Usuario usuario) throws BusinessException {
+/*	
+ * Contiene un chequeo no necesario que trae problemas.
+ * public void agregar(Receta receta, Usuario usuario) throws BusinessException {
 		if(usuario.getRecetas().contains(receta)){
 			throw new BusinessException("El usuario ya contiene esta receta");
 		} else {
 			receta.validar();
 			usuario.getRecetas().add(receta);
 		}
+	}
+*/	
+	public void agregar(Receta receta, Usuario usuario) throws BusinessException {
+		receta.validar();
+		usuario.getRecetas().add(receta);
 	}
 
 	public boolean chequearModificacion(Receta receta, Usuario usuario) {

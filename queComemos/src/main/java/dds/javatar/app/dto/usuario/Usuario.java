@@ -1,5 +1,6 @@
 package dds.javatar.app.dto.usuario;
 
+import java.awt.List;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -184,10 +185,23 @@ public class Usuario {
 		}
 	}
 
-	public void validarSiAceptaReceta(Receta receta) throws BusinessException {
+	public boolean validarSiAceptaReceta(Receta receta)  {
 		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-			condicionPreexistente.validarReceta(receta);
+			if(!condicionPreexistente.validarReceta(receta)){
+				return false;
+			}
 		}
+		return true;
+	}
+	
+	public Set<CondicionPreexistente> condicionesQueNoAcepta(Usuario usuario, Receta receta){
+		Set<CondicionPreexistente> condicionesQueNoAceptanReceta= new HashSet<CondicionPreexistente>();
+		for (CondicionPreexistente condicionPreexistente : usuario.condicionesPreexistentes) {
+			if(!usuario.validarSiAceptaReceta(receta)){
+				condicionesQueNoAceptanReceta.add(condicionPreexistente);
+			}
+		}
+		return condicionesQueNoAceptanReceta;
 	}
 
 	public void verReceta(Receta receta) throws BusinessException {

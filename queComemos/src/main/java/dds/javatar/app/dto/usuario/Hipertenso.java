@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.util.BusinessException;
 
 public class Hipertenso extends UsuarioConPreferencia {
 	
@@ -16,13 +15,23 @@ public class Hipertenso extends UsuarioConPreferencia {
 		return usuario.getRutina().esIntensiva();
 	}
 
-	@Override
-	public void validarReceta(Receta receta) throws BusinessException {
+//	@Override
+//	public void validarReceta(Receta receta) throws BusinessException {
+//		for (String ingredienteProhibido : ingredientesProhibidos) {
+//			if (receta.contieneIngrediente(ingredienteProhibido) || receta.contieneCondimento(ingredienteProhibido)) {
+//				throw new BusinessException("El usuario es hipertenso y no tolera los ingredientes o condimentos");
+//			}
+//		}
+//	}
+
+	public boolean validarReceta(Receta receta){
 		for (String ingredienteProhibido : ingredientesProhibidos) {
 			if (receta.contieneIngrediente(ingredienteProhibido) || receta.contieneCondimento(ingredienteProhibido)) {
-				throw new BusinessException("El usuario es hipertenso y no tolera los ingredientes o condimentos");
+				return false;
 			}
 		}
+		return true;
 	}
+	
 
 }

@@ -11,5 +11,6 @@ public interface CondicionPreexistente {
 
 	// TODO: analizar si hacerlo con boolean o con exception, para mi no es una
 	// regla de negocio sino algo que se quiere conocer
-	void validarReceta(Receta receta) throws BusinessException;
+	boolean validarReceta(Receta receta);
+
 }

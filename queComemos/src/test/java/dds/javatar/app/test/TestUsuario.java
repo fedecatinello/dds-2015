@@ -233,6 +233,7 @@ public class TestUsuario {
 
 		this.usuario.validar();
 	}
+	
 
 	// Punto 2: averiguar el índice de masa corporal o IMC de un usuario
 	private void assertIMC(Usuario usuario, double expectedValue) {

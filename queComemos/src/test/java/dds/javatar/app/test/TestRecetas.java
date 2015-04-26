@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivada;
 import dds.javatar.app.dto.receta.RecetaPublica;
 import dds.javatar.app.dto.receta.TipoReceta;
+import dds.javatar.app.dto.usuario.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.Diabetico;
 import dds.javatar.app.dto.usuario.Hipertenso;
 import dds.javatar.app.dto.usuario.Rutina;
@@ -82,46 +85,56 @@ public class TestRecetas {
 		this.usuario.agregarReceta(receta);
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testRecetaHipertensoNoAcepta() throws BusinessException {
+	@Test
+	public void testRecetaHipertensoNoAcepta() {
 		Hipertenso hipertenso = new Hipertenso();
 		this.usuario.agregarCondicionPreexistente(hipertenso);
 
 		Receta receta = new Receta(350);
 		receta.agregarIngrediente("sal", new BigDecimal(50));
-		this.usuario.validarSiAceptaReceta(receta);
+		
+		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
+		noAcepta.add(hipertenso);
+		assertEquals(noAcepta , this.usuario.condicionesQueNoAcepta(this.usuario, receta));;
 
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testRecetaVeganoNoAcepta() throws BusinessException {
+	@Test
+	public void testRecetaVeganoNoAcepta() {
 		Vegano veggie = new Vegano();
 		this.usuario.agregarCondicionPreexistente(veggie);
 
 		Receta receta = new Receta(350);
 		receta.agregarIngrediente("chori", new BigDecimal(120));
-		this.usuario.validarSiAceptaReceta(receta);
+	//	this.usuario.validarSiAceptaReceta(receta);
+		
+		assertFalse(this.usuario.validarSiAceptaReceta(receta));
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testRecetaDiabeticoNoAcepta() throws BusinessException {
+	@Test
+	public void testRecetaDiabeticoNoAcepta()  {
 		Diabetico diabetico = new Diabetico();
 		this.usuario.agregarCondicionPreexistente(diabetico);
 
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("azucar", new BigDecimal(120));
-		this.usuario.validarSiAceptaReceta(receta);
+
+		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
+		noAcepta.add(diabetico);
+		assertEquals(noAcepta , this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 
 	}
 
 	@Test
-	public void testRecetaHipertensoAcepta() throws BusinessException {
+	public void testRecetaHipertensoAcepta()  {
 		Hipertenso hipertenso = new Hipertenso();
 		this.usuario.agregarCondicionPreexistente(hipertenso);
 
 		Receta receta = new Receta(350);
 		receta.agregarIngrediente("arroz", new BigDecimal(200));
-		this.usuario.validarSiAceptaReceta(receta);
+	
+		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
+		assertEquals(noAcepta , this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 
 	}
 
@@ -137,13 +150,15 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testRecetaDiabeticoAceptaAzucar() throws BusinessException {
+	public void testRecetaDiabeticoAceptaAzucar()  {
 		Diabetico diabetico = new Diabetico();
 		this.usuario.agregarCondicionPreexistente(diabetico);
 
 		Receta receta = new Receta(150);
 		receta.agregarIngrediente("azucar", new BigDecimal(50));
-		this.usuario.validarSiAceptaReceta(receta);
+		
+		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
+		assertEquals(noAcepta , this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 	}
 
 	@Test

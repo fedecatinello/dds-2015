@@ -25,12 +25,23 @@ public class Vegano implements CondicionPreexistente {
 		return usuario.tienePreferenciaAlimenticia("fruta");
 	}
 
+//	@Override
+//	public void validarReceta(Receta receta) throws BusinessException {
+//		for (String alimentoProhibido : alimentosProhibidos) {
+//			if (receta.contieneIngrediente(alimentoProhibido)) {
+//				throw new BusinessException("El usuario es vegetariano y no tolera los ingredientes dados por la receta");
+//			}
+//		}
+//	}
+	
+	
 	@Override
-	public void validarReceta(Receta receta) throws BusinessException {
+	public boolean validarReceta(Receta receta){
 		for (String alimentoProhibido : alimentosProhibidos) {
 			if (receta.contieneIngrediente(alimentoProhibido)) {
-				throw new BusinessException("El usuario es vegetariano y no tolera los ingredientes dados por la receta");
+				return false;
 			}
 		}
+		return true;
 	}
 }

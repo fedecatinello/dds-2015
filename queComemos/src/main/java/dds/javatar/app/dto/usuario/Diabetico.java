@@ -23,11 +23,20 @@ public class Diabetico extends UsuarioConPreferencia {
 		return (usuario.getPeso().intValue() <= MAX_PESO || usuario.getRutina().esActiva());
 	}
 
-	@Override
-	public void validarReceta(Receta receta) throws BusinessException {
+//	@Override
+//	public void validarReceta(Receta receta) throws BusinessException {
+//		if (receta.alimentoSobrepasaCantidad("azucar", new BigDecimal(100))) {
+//			throw new BusinessException("El usuario es diabetico y no puede consumir mas de 100gr de azucar");
+//		}
+//	}
+	
+	public boolean validarReceta(Receta receta){
 		if (receta.alimentoSobrepasaCantidad("azucar", new BigDecimal(100))) {
-			throw new BusinessException("El usuario es diabetico y no puede consumir mas de 100gr de azucar");
+		return false; 
+		}else{
+			return true;
 		}
 	}
+	
 
 }

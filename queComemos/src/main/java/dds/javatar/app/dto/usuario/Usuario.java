@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -206,6 +207,14 @@ public class Usuario {
 	public void verReceta(Receta receta) throws BusinessException {
 		if (!receta.getTipo().chequearVisibilidad(receta, this)){
 			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
+		}
+		
+		if (receta.getSubRecetas()!=null) {
+			Set<Receta> subRecetas= receta.getSubRecetas();
+			for (Iterator<Receta> iterator = subRecetas.iterator(); iterator.hasNext();) {
+				Receta subReceta = iterator.next();
+				this.verReceta(subReceta);			
+			}
 		}
 	}
 

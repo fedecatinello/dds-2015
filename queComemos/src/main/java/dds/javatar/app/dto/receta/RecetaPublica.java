@@ -12,7 +12,7 @@ public class RecetaPublica implements TipoReceta{
 
 	@Override
 	public void agregar(Receta receta, Usuario usuario) throws BusinessException {
-		receta.validar();
+		receta.validarSiLaRecetaEsValida();
 		usuario.getRecetas().add(convertirEnPrivada(receta, usuario));
 	}
 

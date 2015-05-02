@@ -32,7 +32,7 @@ public class RecetaPrivada implements TipoReceta{
 	}
 */	
 	public void agregar(Receta receta, Usuario usuario) throws BusinessException {
-		receta.validar();
+		receta.validarSiLaRecetaEsValida();
 		usuario.getRecetas().add(receta);
 	}
 

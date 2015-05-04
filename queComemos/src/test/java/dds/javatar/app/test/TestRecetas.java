@@ -11,10 +11,9 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.receta.RecetaCompuesta;
+
 import dds.javatar.app.dto.receta.RecetaPrivada;
 import dds.javatar.app.dto.receta.RecetaPublica;
-import dds.javatar.app.dto.receta.RecetaSimple;
 import dds.javatar.app.dto.receta.TipoReceta;
 import dds.javatar.app.dto.usuario.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.Diabetico;
@@ -28,7 +27,7 @@ import dds.javatar.app.util.BusinessException;
 public class TestRecetas {
 
 	private Usuario usuario;
-
+	/*
 	@Before
 	public void initialize() {
 		this.usuario = this.crearUsuarioBasicoValido();
@@ -405,5 +404,5 @@ public class TestRecetas {
 		unaRecetaCompuesta.agregarSubReceta(pan);
 		this.usuario.agregarReceta(unaRecetaCompuesta);
 	}
-	
+	*/
 }

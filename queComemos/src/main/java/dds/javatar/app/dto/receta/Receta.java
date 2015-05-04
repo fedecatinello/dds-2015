@@ -3,7 +3,7 @@ package dds.javatar.app.dto.receta;
 import java.math.BigDecimal;
 import java.util.Map;
 
-
+import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 
 public abstract class Receta {
@@ -18,6 +18,9 @@ public abstract class Receta {
 	protected Map<String, BigDecimal> ingredientes;
 	protected Map<String, BigDecimal> condimentos;
 
+
+	
+	/**		Getters & Setters			**/
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -53,13 +56,9 @@ public abstract class Receta {
 		this.temporada = temporada;
 	}
 	
-	public TipoReceta getTipo() {
-		return tipo;
-	}
-	public void setTipo(TipoReceta tipo) {
-		this.tipo = tipo;
-	}
-
+	
+	
+	/**			Metodos			**/
 	public void validarSiLaRecetaEsValida() throws BusinessException {
 		if (this.ingredientes.isEmpty()) {
 			throw new BusinessException("La receta no es valida ya que no tiene ingredientes!");
@@ -74,25 +73,51 @@ public abstract class Receta {
 	}
 
 	public Boolean contieneIngrediente(String ingrediente) {
-		// TODO: Es una hoja, no tiene subrecetas para chequiar
 		return this.ingredientes.containsKey(ingrediente);
 	}
 
 	public Boolean contieneCondimento(String condimento) {
-		// TODO: Es una hoja, no tiene subrecetas para chequiar
 		return this.condimentos.containsKey(condimento);
 	}
 
 	public Boolean alimentoSobrepasaCantidad(String alimento, BigDecimal cantidad) {
-		// TODO: habria que chequear en las subrecetas?
-
 		if (!this.ingredientes.containsKey(alimento)) {
 			return Boolean.FALSE;
 		}
-
 		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
 	}
 
+	public void validar() throws BusinessException {
+		if (this.ingredientes.isEmpty()) {
+			throw new BusinessException("La receta no es valida ya que no tiene ingredientes!");
+		}
+		if (this.calorias < 10 || this.calorias > 5000) {
+			throw new BusinessException("La receta no es valida por su cantidad de calorias!");
+		}
+	}
+	
+	public boolean chequearVisibilidad(Receta receta, Usuario usuario) {
+		if(usuario.getRecetas().contains(receta)) {
+				//|| usuario==autor){
+			return true;
+		}
+		return false;
+	}
+	public void agregar(Receta receta, Usuario usuario) throws BusinessException {
+		receta.validar();
+		usuario.getRecetas().add(receta);
+	}
+
+	public boolean chequearModificacion(Receta receta, Usuario usuario) {
+		if(usuario.getRecetas().contains(receta)){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+
+	
 	@SuppressWarnings("unchecked")
 	public void actualizarDatos(Object[] modifs) {
 		if (modifs[0] != null)

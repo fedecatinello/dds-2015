@@ -12,11 +12,15 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	private Map<String, BigDecimal> condimentos;
 	private Map<String, BigDecimal> ingredientes;
 
+	
+	/**		Builder			**/
 	public RecetaPublicaCompuesta() {
 		this.subRecetas = new HashSet<Receta>();
-
 	}
+
 	
+	
+
 	public Set<Receta> getSubRecetas() {
 		return this.subRecetas;
 	}
@@ -28,6 +32,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	public Map<String, BigDecimal> getIngredientes() {
 		return this.ingredientes;
 	}
+	
 	
 	
 	public void agregarCondimento(String condimento, BigDecimal cantidad) {
@@ -42,6 +47,8 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		this.subRecetas.add(subReceta);
 	}
 
+	
+	
 	public Boolean contieneIngrediente(String ingrediente) {
 		//copy&paste, chequear esto
 

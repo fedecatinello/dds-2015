@@ -6,7 +6,6 @@ import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -173,7 +172,7 @@ public class Usuario {
 
 	public void agregarReceta(Receta receta) throws BusinessException {
 		this.verReceta(receta);
-		receta.getTipo().agregar(receta, this);
+		receta.agregar(receta, this);
 		//this.recetas.add(receta);
 	}
 
@@ -205,21 +204,21 @@ public class Usuario {
 	}
 
 	public void verReceta(Receta receta) throws BusinessException {
-		if (!receta.getTipo().chequearVisibilidad(receta, this)){
+		if (!receta.chequearVisibilidad(receta, this)){
 			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
 		}
-		
+		/*
 		if (receta.getSubRecetas()!=null) {
 			Set<Receta> subRecetas= receta.getSubRecetas();
 			for (Iterator<Receta> iterator = subRecetas.iterator(); iterator.hasNext();) {
 				Receta subReceta = iterator.next();
 				this.verReceta(subReceta);			
 			}
-		}
+		}*/
 	}
 
 	public void validarModificarReceta(Receta receta) throws BusinessException {
-		receta.getTipo().chequearVisibilidad(receta, this);
+		receta.chequearVisibilidad(receta, this);
 	}
 
 	public void puedeAgregarSubRecetas(Set<Receta> subRecetas) throws BusinessException {
@@ -240,7 +239,7 @@ public class Usuario {
 	}
 
 	public boolean puedeModificarReceta(Receta receta) {
-		return receta.getTipo().chequearModificacion(receta, this);
+		return receta.chequearModificacion(receta, this);
 		
 	}
 

@@ -42,4 +42,5 @@ public class RecetaPublicaSimple extends Receta implements RecetaPublica{
 	}
 
 	
+		
 }

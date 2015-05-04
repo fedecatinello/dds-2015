@@ -100,7 +100,7 @@ public class Usuario {
 	}
 	
 	public Set<Receta> getRecetas() {
-		return recetas;
+		return this.recetas;
 	}
 
 	public void setRecetas(Set<Receta> recetas) {
@@ -117,26 +117,42 @@ public class Usuario {
 		return this.peso.divide(cuadrado, mc);
 	}
 
-	// TODO: deberiamos crear una especie de validadores ? porque queda medio feo chequear todos los campos asi, nose..
 	public void validar() throws BusinessException {
+		this.validarCamposNulos();
+		this.validarNombre();
+		this.validarFechaNacimiento();
+		this.validarCondicionesPreexistentes();
+	}
+	
+	/* Validadores */
+	private void validarCamposNulos() throws BusinessException {
 		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null || this.rutina == null) {
 			throw new BusinessException("El usuario tiene campos obligatorios sin completar");
 		}
-
+	}
+	
+	private void validarNombre() throws BusinessException {
 		if (this.nombre.length() <= MIN_NAME_LENGTH) {
 			throw new BusinessException("El nombre del usuario es demasido corto");
 		}
-
+	}
+	
+	private void validarFechaNacimiento() throws BusinessException {
 		Date today = new Date();
 		if (today.compareTo(this.fechaNacimiento) <= 0) {
 			throw new BusinessException("La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
 		}
+	}
 
+	private void validarCondicionesPreexistentes() throws BusinessException {
 		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
 			condicionPreexistente.validarUsuario(this);
 		}
 	}
-
+	/* .... */
+	
+	
+	
 	public Boolean sigueRutinaSaludable() {
 
 		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();

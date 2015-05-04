@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-public class RecetaPublicaSimple extends Receta implements RecetaPublica{
+import dds.javatar.app.dto.usuario.Usuario;
+
+public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica{
 
 	/**** builders ****/
 	public RecetaPublicaSimple() {
@@ -41,6 +43,12 @@ public class RecetaPublicaSimple extends Receta implements RecetaPublica{
 		return recetaClonada;
 	}
 
+	public Boolean chequearVisibilidad(Receta receta, Usuario usuario) {
+		return true;
+	}
 	
+	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
+		return true;
+	}
 		
 }

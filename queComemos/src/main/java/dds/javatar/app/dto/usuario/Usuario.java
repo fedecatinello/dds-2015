@@ -171,9 +171,8 @@ public class Usuario {
 	}
 
 	public void agregarReceta(Receta receta) throws BusinessException {
-		this.verReceta(receta);
-		receta.agregar(receta, this);
-		//this.recetas.add(receta);
+		receta.validarSiLaRecetaEsValida();
+		this.getRecetas().add(receta);
 	}
 
 	public void quitarReceta(Receta receta) throws BusinessException {
@@ -207,14 +206,6 @@ public class Usuario {
 		if (!receta.chequearVisibilidad(receta, this)){
 			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
 		}
-		/*
-		if (receta.getSubRecetas()!=null) {
-			Set<Receta> subRecetas= receta.getSubRecetas();
-			for (Iterator<Receta> iterator = subRecetas.iterator(); iterator.hasNext();) {
-				Receta subReceta = iterator.next();
-				this.verReceta(subReceta);			
-			}
-		}*/
 	}
 
 	public void validarModificarReceta(Receta receta) throws BusinessException {
@@ -232,8 +223,7 @@ public class Usuario {
 	}
 
 	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws BusinessException {
-		
-		this.agregarReceta(receta);
+		this.verReceta(receta);
 		receta.setNombre(nuevoNombre);
 		
 	}

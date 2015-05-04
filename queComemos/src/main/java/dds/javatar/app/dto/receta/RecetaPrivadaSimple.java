@@ -3,7 +3,7 @@ package dds.javatar.app.dto.receta;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-public class RecetaPrivadaSimple extends Receta implements RecetaPrivada {
+public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 
 	/**** builders ****/
 	public RecetaPrivadaSimple() {

@@ -1,4 +1,4 @@
-package dds.javatar.app.dto.busqueda;
+package dds.javatar.app.dto.receta.busqueda;
 
 public interface PostProcesamiento {
 

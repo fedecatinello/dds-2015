@@ -11,7 +11,7 @@ import dds.javatar.app.util.BusinessException;
 
 public class RecetaPrivadaCompuesta implements RecetaPrivada {
 
-	private HashSet<Receta> subRecetas;
+	private HashSet<RecetaPrivada> subRecetas;
 	private Map<String, BigDecimal> condimentos;
 	private Map<String, BigDecimal> ingredientes;
 	private String nombre;
@@ -19,7 +19,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	
 	/**		Builder			**/
 	public RecetaPrivadaCompuesta() {
-		this.subRecetas = new HashSet<Receta>();
+		this.subRecetas = new HashSet<RecetaPrivada>();
 
 	}
 
@@ -34,12 +34,12 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	}
 	
 
-	public Set<Receta> getSubRecetas() {
+	public Set<RecetaPrivada> getSubRecetas() {
 		return this.subRecetas;
 	}
 	
 	public Map<String, BigDecimal> getCondimentos() {
-		for (Iterator<Receta> iterator = subRecetas.iterator(); iterator.hasNext();) {
+		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
 			Receta receta = (Receta) iterator.next();
 			this.condimentos.putAll(receta.getCondimentos());			
 		}
@@ -47,7 +47,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	}
 
 	public Map<String, BigDecimal> getIngredientes() {
-		for (Iterator<Receta> iterator = subRecetas.iterator(); iterator.hasNext();) {
+		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
 			Receta receta = (Receta) iterator.next();
 			this.ingredientes.putAll(receta.getIngredientes());			
 		}
@@ -56,7 +56,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	
 	
 	/**		Add items	**/
-	public void agregarSubReceta(Receta subReceta) throws BusinessException {
+	public void agregarSubReceta(RecetaPrivada subReceta) throws BusinessException {
 		subReceta.validarSiLaRecetaEsValida();
 		this.subRecetas.add(subReceta);
 	}

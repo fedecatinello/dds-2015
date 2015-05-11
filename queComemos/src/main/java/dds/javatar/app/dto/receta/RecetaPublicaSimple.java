@@ -50,5 +50,5 @@ public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica{
 	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
 		return true;
 	}
-		
+	
 }

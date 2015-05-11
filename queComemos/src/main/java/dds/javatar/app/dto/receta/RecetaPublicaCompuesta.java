@@ -97,4 +97,5 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 			throw new BusinessException("La receta no es valida ya que esta vacia! (No tiene subrecetas)");
 		}
 	}
+
 }

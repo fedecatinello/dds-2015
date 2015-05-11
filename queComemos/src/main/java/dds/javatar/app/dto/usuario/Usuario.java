@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.util.BusinessException;
 
@@ -28,8 +29,10 @@ public class Usuario {
 
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	private Map<String, Boolean> preferenciasAlimenticias;
+	private Map<String, Boolean> alimentosQueLeDisgustan;
 	private Rutina rutina;
 	private Set<Receta> recetas;
+	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
 
 	/**** Constructors ****/
 
@@ -105,6 +108,22 @@ public class Usuario {
 
 	public void setRecetas(Set<Receta> recetas) {
 		this.recetas = recetas;
+	}
+	
+	public Map<String, Boolean> getAlimentosQueLeDisgustan() {
+		return alimentosQueLeDisgustan;
+	}
+
+	public void setAlimentosQueLeDisgustan(Map<String, Boolean> alimentosQueLeDisgustan) {
+		this.alimentosQueLeDisgustan = alimentosQueLeDisgustan;
+	}
+
+	public Set<GrupoDeUsuarios> getGruposAlQuePertenece() {
+		return gruposAlQuePertenece;
+	}
+
+	public void setGruposAlQuePertenece(GrupoDeUsuarios grupoAlQuePertenece) {
+		this.gruposAlQuePertenece.add(grupoAlQuePertenece);
 	}
 
 	/**** Metodos ****/

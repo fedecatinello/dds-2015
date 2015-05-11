@@ -3,7 +3,6 @@ package dds.javatar.app.dto.sistema;
 import java.util.List;
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaPublica;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 
@@ -38,10 +37,10 @@ public class Sistema implements RepositorioRecetas {
 	public void sugerir(Receta receta, Usuario usuario)
 			throws BusinessException {
 
-		for (String ingrediente : usuario.getAlimentosQueLeDisgustan().keySet()) {
+		for (String ingrediente : receta.getIngredientes().keySet()) {
 
 			if (!usuario.validarSiAceptaReceta(receta)
-					|| receta.contieneIngrediente(ingrediente)) {
+					|| !usuario.tienePreferenciaAlimenticia(ingrediente)) {
 
 				throw new BusinessException("la receta: " + receta.getNombre()
 						+ " no puede ser sugerida al usuario"

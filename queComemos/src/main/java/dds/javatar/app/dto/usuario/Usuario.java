@@ -29,7 +29,6 @@ public class Usuario {
 
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	private Map<String, Boolean> preferenciasAlimenticias;
-	private Map<String, Boolean> alimentosQueLeDisgustan;
 	private Rutina rutina;
 	private Set<Receta> recetas;
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
@@ -108,14 +107,6 @@ public class Usuario {
 
 	public void setRecetas(Set<Receta> recetas) {
 		this.recetas = recetas;
-	}
-	
-	public Map<String, Boolean> getAlimentosQueLeDisgustan() {
-		return alimentosQueLeDisgustan;
-	}
-
-	public void setAlimentosQueLeDisgustan(Map<String, Boolean> alimentosQueLeDisgustan) {
-		this.alimentosQueLeDisgustan = alimentosQueLeDisgustan;
 	}
 
 	public Set<GrupoDeUsuarios> getGruposAlQuePertenece() {

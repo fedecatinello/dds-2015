@@ -21,12 +21,12 @@ public class Sistema implements RepositorioRecetas {
 		return SistemaHolder.INSTANCE;
 	}
 	
-	public void agregar(RecetaPublica receta) {
+	public void agregar(Receta receta) {
 		this.recetaConocidas.add(receta);
 		
 	}
 
-	public void quitar(RecetaPublica receta) {
+	public void quitar(Receta receta) {
 		this.recetaConocidas.remove(receta);
 		
 	}

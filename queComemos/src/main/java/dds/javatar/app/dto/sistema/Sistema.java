@@ -87,5 +87,5 @@ public class Sistema implements RepositorioRecetas {
 		}
 		return recetasQueConoce;
 	}
-	
+
 }

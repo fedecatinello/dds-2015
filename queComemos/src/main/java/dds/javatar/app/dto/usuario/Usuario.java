@@ -183,6 +183,10 @@ public class Usuario {
 	public Boolean tienePreferenciaAlimenticia(String alimento) {
 		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get(alimento));
 	}
+	
+	public Boolean tieneAlimentoQueLeDisguste(String alimento) {
+		return Boolean.FALSE.equals(this.preferenciasAlimenticias.get(alimento));
+	}
 
 	public Boolean tieneAlgunaPreferencia() {
 		return (this.preferenciasAlimenticias.values().contains(Boolean.TRUE));
@@ -190,6 +194,10 @@ public class Usuario {
 
 	public void agregarPreferenciaAlimenticia(String alimento) {
 		this.preferenciasAlimenticias.put(alimento, Boolean.TRUE);
+	}
+	
+	public void agregarAlimentoQueLeDisgusta(String alimento) {
+		this.preferenciasAlimenticias.put(alimento, Boolean.FALSE);
 	}
 
 	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {

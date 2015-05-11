@@ -40,7 +40,7 @@ public class Sistema implements RepositorioRecetas {
 		for (String ingrediente : receta.getIngredientes().keySet()) {
 
 			if (!usuario.validarSiAceptaReceta(receta)
-					|| !usuario.tienePreferenciaAlimenticia(ingrediente)) {
+					|| usuario.tieneAlimentoQueLeDisguste(ingrediente)) {
 
 				throw new BusinessException("la receta: " + receta.getNombre()
 						+ " no puede ser sugerida al usuario"

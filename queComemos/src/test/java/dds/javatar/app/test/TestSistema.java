@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,12 +50,7 @@ public class TestSistema {
 		usuario.setPeso(new BigDecimal(70));
 		usuario.setAltura(new BigDecimal(1.77));
 		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-		Map<String, Boolean> alimentosQueLeDisgustan = new HashMap<String, Boolean>();
-		alimentosQueLeDisgustan.put("zanahoria", true);
-		alimentosQueLeDisgustan.put("inojo", false);
-		alimentosQueLeDisgustan.put("almejas", true);
-		alimentosQueLeDisgustan.put("risoto", true);
-		usuario.setAlimentosQueLeDisgustan(alimentosQueLeDisgustan );
+		
 
 		return usuario;
 	}
@@ -97,16 +93,47 @@ public class TestSistema {
 		nioquis.agregarIngrediente("Verdura", new BigDecimal(100));
 		return nioquis;
 	}
+	
+	private Receta crearRecetaNoAptaParaHipertensos() {
+		RecetaPublicaSimple pizza = new RecetaPublicaSimple(350);
+		pizza.setNombre("Pizza");
+		pizza.agregarIngrediente("sal", new BigDecimal(300));
+		pizza.agregarIngrediente("Agua", new BigDecimal(70));
+		pizza.agregarIngrediente("Harina", new BigDecimal(100));
+		return pizza;
+	}
 
 	@Test
 	public void unaRecetaQueLeGustaPuedeSugerirseAUnUsuario() throws BusinessException {
+		this.usuario.agregarAlimentoQueLeDisgusta("pollo");
 		this.sistema.sugerir(crearRecetaPublicaSimpleRica(), crearUsuarioBasicoValido());
 		
 	}
 	
+	@Test(expected=BusinessException.class)
+	public void unaRecetaQueNoLeGustaNoPuedeSugerirseAUnUsuario() throws BusinessException{
+		this.usuario = crearUsuarioBasicoValido();
+		this.usuario.agregarAlimentoQueLeDisgusta("Harina");
+		this.sistema.sugerir(crearRecetaPublicaSimpleRica(),this.usuario);
+		
+	}
 	
-	//un teste con una receta que no le gusta
-	//un test con una receta que no sea de su perfil
+	@Test(expected = BusinessException.class)
+	public void unaRecetaQueNoSeaAptaParaElPerfilDelUsuarioNoSePuedeSugerir() throws BusinessException{
+		Hipertenso hipertenso = new Hipertenso();
+
+		this.usuario = crearUsuarioBasicoValido();
+		this.usuario.agregarCondicionPreexistente(hipertenso);
+		this.sistema.sugerir(crearRecetaNoAptaParaHipertensos(), this.usuario);
+		
+	}
+	
+//	@Test
+//	public void recetasQueConoce(){
+//		 Sistema p = this.sistema.getInstance();
+//		  p.agregar((Receta)crearRecetaPublicaSimpleRica());
+//		  assertEquals(p.listarTodas(),p.recetasQueConoceEl(crearUsuarioBasicoValido()));
+//	}
 	// un teste con una receta compuesta que no le guta
 	// un test con una receta compuesta que le gusta
 	//un test con una receta compuesta que no este en su perfil

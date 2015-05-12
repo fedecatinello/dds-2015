@@ -8,4 +8,7 @@ public interface Criterio {
 
 	public List<Receta> ascendente(List<Receta> recetasXusuario);
 
+	void ascendente();
+	void descendente();
+
 }

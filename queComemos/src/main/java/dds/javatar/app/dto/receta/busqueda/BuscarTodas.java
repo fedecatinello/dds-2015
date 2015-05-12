@@ -8,6 +8,7 @@ import dds.javatar.app.dto.usuario.Usuario;
 
 public class BuscarTodas extends Sistema implements Busqueda {
 
+	
 	public List<Receta> ObtenerRecetas (Usuario usuario){
 		return recetasQueConoceEl(usuario);
 	}

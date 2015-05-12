@@ -1,13 +1,11 @@
 package dds.javatar.app.dto.sistema;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.List;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.usuario.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 
@@ -15,10 +13,13 @@ import dds.javatar.app.util.BusinessException;
 public class Sistema implements RepositorioRecetas {
 	
 	private List<Receta> recetaConocidas;
+	private List<String> ingredientesCaros;
 	
 	
 	protected Sistema() {
 		this.recetaConocidas = new ArrayList<Receta>();
+		this.ingredientesCaros= new ArrayList<String>();
+		agregarIngredientesCaros();
 	}
 	
 	private static class SistemaHolder {
@@ -43,6 +44,13 @@ public class Sistema implements RepositorioRecetas {
 		return this.recetaConocidas;
 	}
 
+	public List<String> getIngredientesCaros(){
+		return this.ingredientesCaros;
+	}
+	public void agregarIngredienteCaro(String ingrediente){
+		ingredientesCaros.add(ingrediente);
+	}
+	
 	public void sugerir(Receta receta, Usuario usuario)
 			throws BusinessException {
 
@@ -99,4 +107,14 @@ public class Sistema implements RepositorioRecetas {
 		return recetasQueConoce;
 	}
 
+	private void agregarIngredientesCaros() {
+		this.ingredientesCaros.add("lechon");
+		this.ingredientesCaros.add("lomo");
+		this.ingredientesCaros.add("salmon");
+		this.ingredientesCaros.add("alcaparras");
+				
+		}
+		
+	
+	
 }

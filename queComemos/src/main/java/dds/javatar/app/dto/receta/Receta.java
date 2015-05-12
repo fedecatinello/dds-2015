@@ -15,7 +15,7 @@ public interface Receta {
 	
 	public Boolean contieneIngrediente(String ingrediente) ;
 	public Boolean contieneCondimento(String condimento);
-	
+	public Integer getCalorias();
 	public void validarSiLaRecetaEsValida() throws BusinessException;
 	
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario);

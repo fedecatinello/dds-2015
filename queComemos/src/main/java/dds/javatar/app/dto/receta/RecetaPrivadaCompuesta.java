@@ -33,6 +33,14 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		this.nombre = nombre;
 	}
 	
+	public Integer getCalorias (){
+		int caloriasTotal=0;
+		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
+			Receta receta = (Receta) iterator.next();
+			caloriasTotal= caloriasTotal + receta.getCalorias();			
+		}
+		return caloriasTotal;
+	}
 
 	public Set<RecetaPrivada> getSubRecetas() {
 		return this.subRecetas;

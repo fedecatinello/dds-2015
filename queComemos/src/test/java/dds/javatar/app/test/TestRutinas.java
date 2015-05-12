@@ -3,9 +3,6 @@ package dds.javatar.app.test;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +15,7 @@ import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Vegano;
 import dds.javatar.app.util.BusinessException;
 
-public class TestRutinas {
+public class TestRutinas extends TestGeneralAbstract {
 
 	private Usuario usuario;
 
@@ -27,21 +24,6 @@ public class TestRutinas {
 		this.usuario = this.crearUsuarioBasicoValido();
 	}
 
-	private Usuario crearUsuarioBasicoValido() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -1);
-
-		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(calendar.getTime());
-		usuario.setNombre("Nombre del usuario");
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setPeso(new BigDecimal(70));
-		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-
-		return usuario;
-	}
 
 	// Punto 2: averiguar si un usuario sigue una rutina saludable.
 	@Test

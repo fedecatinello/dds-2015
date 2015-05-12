@@ -16,28 +16,29 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	private Map<String, BigDecimal> ingredientes;
 	private String nombre;
 
-	
-	/**		Builder			**/
+	/** Builder **/
 	public RecetaPrivadaCompuesta() {
 		this.subRecetas = new HashSet<RecetaPrivada>();
 
 	}
 
-	
-	
-	/**		get items			**/
+	/** get items **/
+	@Override
 	public String getNombre() {
 		return this.nombre;
 	}
+
+	@Override
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public Integer getCalorias (){
-		int caloriasTotal=0;
-		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
-			Receta receta = (Receta) iterator.next();
-			caloriasTotal= caloriasTotal + receta.getCalorias();			
+
+	@Override
+	public Integer getCalorias() {
+		int caloriasTotal = 0;
+		for (Iterator<RecetaPrivada> iterator = this.subRecetas.iterator(); iterator.hasNext();) {
+			Receta receta = iterator.next();
+			caloriasTotal = caloriasTotal + receta.getCalorias();
 		}
 		return caloriasTotal;
 	}
@@ -45,42 +46,45 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	public Set<RecetaPrivada> getSubRecetas() {
 		return this.subRecetas;
 	}
-	
+
+	@Override
 	public Map<String, BigDecimal> getCondimentos() {
-		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
-			Receta receta = (Receta) iterator.next();
-			this.condimentos.putAll(receta.getCondimentos());			
+		for (Iterator<RecetaPrivada> iterator = this.subRecetas.iterator(); iterator.hasNext();) {
+			Receta receta = iterator.next();
+			this.condimentos.putAll(receta.getCondimentos());
 		}
-		return condimentos;
+		return this.condimentos;
 	}
 
+	@Override
 	public Map<String, BigDecimal> getIngredientes() {
-		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
-			Receta receta = (Receta) iterator.next();
-			this.ingredientes.putAll(receta.getIngredientes());			
+		for (Iterator<RecetaPrivada> iterator = this.subRecetas.iterator(); iterator.hasNext();) {
+			Receta receta = iterator.next();
+			this.ingredientes.putAll(receta.getIngredientes());
 		}
-		return ingredientes;
+		return this.ingredientes;
 	}
-	
-	
-	/**		Add items	**/
+
+	/** Add items **/
 	public void agregarSubReceta(RecetaPrivada subReceta) throws BusinessException {
 		subReceta.validarSiLaRecetaEsValida();
 		this.subRecetas.add(subReceta);
 	}
 
-	
-	/**		Validadores			**/
+	/** Validadores **/
+	@Override
 	public Boolean contieneIngrediente(String ingrediente) {
 		this.getIngredientes();
 		return this.ingredientes.containsKey(ingrediente);
 	}
 
+	@Override
 	public Boolean contieneCondimento(String condimento) {
 		this.getCondimentos();
 		return this.condimentos.containsKey(condimento);
 	}
-	
+
+	@Override
 	public Boolean alimentoSobrepasaCantidad(String alimento, BigDecimal cantidad) {
 		this.getIngredientes();
 		if (!this.ingredientes.containsKey(alimento)) {
@@ -89,13 +93,15 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
 	}
 
+	@Override
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario) {
-		if(usuario.getRecetas().contains(receta)) {
+		if (usuario.getRecetas().contains(receta)) {
 			return true;
 		}
 		return false;
 	}
-	
+
+	@Override
 	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
 		return receta.chequearVisibilidad(receta, usuario);
 	}

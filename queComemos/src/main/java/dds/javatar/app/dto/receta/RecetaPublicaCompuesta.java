@@ -16,14 +16,14 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	private Map<String, BigDecimal> ingredientes;
 	private String nombre;
 
-	
+
 	/**		Builder			**/
 	public RecetaPublicaCompuesta() {
 		this.subRecetas = new HashSet<RecetaPublica>();
 	}
 
-	
-	
+
+
 	/**		get items			**/
 	public String getNombre() {
 		return this.nombre;
@@ -31,12 +31,21 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
+	public Integer getCalorias (){
+		int caloriasTotal=0;
+		for (Iterator<RecetaPublica> iterator = subRecetas.iterator(); iterator.hasNext();) {
+			Receta receta = (Receta) iterator.next();
+			caloriasTotal= caloriasTotal + receta.getCalorias();			
+		}
+		return caloriasTotal;
+	}
+
 
 	public Set<RecetaPublica> getSubRecetas() {
 		return this.subRecetas;
 	}
-	
+
 	public Map<String, BigDecimal> getCondimentos() {
 		for (Iterator<RecetaPublica> iterator = subRecetas.iterator(); iterator.hasNext();) {
 			Receta receta = (Receta) iterator.next();
@@ -52,15 +61,15 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		}
 		return ingredientes;
 	}
-	
-	
+
+
 	/**		Add items	 **/
 	public void agregarSubReceta(RecetaPublica subReceta) throws BusinessException  {
 		subReceta.validarSiLaRecetaEsValida();
 		this.subRecetas.add(subReceta);
 	}
 
-	
+
 	/**		Validadores			**/
 	public Boolean contieneIngrediente(String ingrediente) {
 		this.getIngredientes();
@@ -71,7 +80,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		this.getCondimentos();
 		return this.condimentos.containsKey(condimento);
 	}
-	
+
 	public Boolean alimentoSobrepasaCantidad(String alimento, BigDecimal cantidad) {
 		this.getIngredientes();
 		if (!this.ingredientes.containsKey(alimento)) {
@@ -86,7 +95,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		}
 		return false;
 	}
-	
+
 	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
 		return receta.chequearVisibilidad(receta, usuario);
 	}

@@ -83,15 +83,19 @@ public class Sistema implements RepositorioRecetas {
 	
 	public List<Receta> recetasQueConoceEl(Usuario usuario) {
 		List<Receta> recetasQueConoce = this.recetaConocidas;
-		for (GrupoDeUsuarios grupo : usuario.getGruposAlQuePertenece()) {
-			for (Usuario miembroDelGrupo : grupo.getUsuarios()) {
-				for (Receta recetasDelMiembro : miembroDelGrupo.getRecetas()) {
-					if (!recetasQueConoce.contains(recetasDelMiembro)) {
-						recetasQueConoce.add(recetasDelMiembro);
+		if (usuario.getGruposAlQuePertenece().isEmpty() ||usuario.getGruposAlQuePertenece()==null) {
+			recetasQueConoce.addAll(usuario.getRecetas());
+		} else {
+			for (GrupoDeUsuarios grupo : usuario.getGruposAlQuePertenece()) {
+				for (Usuario miembroDelGrupo : grupo.getUsuarios()) {
+					for (Receta recetasDelMiembro : miembroDelGrupo.getRecetas()) {
+						if (!recetasQueConoce.contains(recetasDelMiembro)) {
+							recetasQueConoce.add(recetasDelMiembro);
+						}
 					}
 				}
 			}
-		}
+		}	
 		return recetasQueConoce;
 	}
 

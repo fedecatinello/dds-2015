@@ -141,20 +141,36 @@ public class TestSistema {
 		this.sistema.sugerir(crearRecetaNoAptaParaHipertensos(), this.usuario);
 		
 	}
-//	
-//	@Test
-//	public void recetaQueLeConocePorCompartirGrupo() throws BusinessException{
-//		Sistema sistema = this.sistema.getInstance();
-//		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
-//		Usuario usuario = crearUsuarioBasicoValido();
-//		grupo.agregarUsuario(usuario);
-//		
-//		usuario.agregarReceta(crearRecetaPublicaSimpleRica());
-//		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
-//		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
-//		grupo.agregarUsuario( usuarioQueSeAgrega);
-//		assertEquals(usuario.getRecetas().size() + usuarioQueSeAgrega.getRecetas().size(),sistema.recetasQueConoceEl(usuario).size());
-//	}
+	
+	@Test
+	public void recetaQueLeConocePorCompartirGrupo() throws BusinessException{
+	    Sistema sistema = this.sistema;
+		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
+		Usuario usuario = crearUsuarioBasicoValido();
+		grupo.agregarUsuario(usuario);
+		
+		usuario.agregarReceta(crearRecetaPublicaSimpleRica());
+		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
+		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
+		grupo.agregarUsuario( usuarioQueSeAgrega);
+		
+		assertEquals(usuario.getRecetas().size() + usuarioQueSeAgrega.getRecetas().size(),sistema.recetasQueConoceEl(usuario).size());
+	}
+	
+	@Test
+	public void recetaQueNoTieneQueConocerPOrqueNoCompartenGrupo() throws BusinessException{
+	    Sistema sistema = this.sistema;
+		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
+		Usuario usuario = crearUsuarioBasicoValido();
+		grupo.agregarUsuario(usuario);
+		
+		usuario.agregarReceta(crearRecetaPublicaSimpleRica());
+		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
+		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
+		
+		
+		assertEquals(usuario.getRecetas().size(),sistema.recetasQueConoceEl(usuario).size());
+	}
 	
 	@Test
 	public void recetasQueConoce(){
@@ -163,6 +179,7 @@ public class TestSistema {
 		sistema.agregar(receta);
 		assertEquals(sistema.listarTodas(),sistema.recetasQueConoceEl(crearUsuarioBasicoValido()));
 	}
+	
 	
 	
 	// un teste con una receta compuesta que no le guta

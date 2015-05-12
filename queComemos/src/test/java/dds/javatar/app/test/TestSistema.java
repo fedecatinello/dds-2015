@@ -14,6 +14,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
@@ -102,6 +103,19 @@ public class TestSistema {
 		pizza.agregarIngrediente("Harina", new BigDecimal(100));
 		return pizza;
 	}
+	
+	private GrupoDeUsuarios crearGrupoDeUsuarios() throws BusinessException{
+		GrupoDeUsuarios grupo = new GrupoDeUsuarios();
+		grupo.setNombre("AMigos del club");
+		HashMap<String, Boolean> preferenciasAlimenticias = new HashMap<String, Boolean>();
+		preferenciasAlimenticias.put("Ravioles", true);
+		preferenciasAlimenticias.put("papa", true);
+		
+		grupo.setPreferenciasAlimenticias(preferenciasAlimenticias);
+		
+		return grupo;
+		
+	}
 
 	@Test
 	public void unaRecetaQueLeGustaPuedeSugerirseAUnUsuario() throws BusinessException {
@@ -127,13 +141,30 @@ public class TestSistema {
 		this.sistema.sugerir(crearRecetaNoAptaParaHipertensos(), this.usuario);
 		
 	}
-	
+//	
 //	@Test
-//	public void recetasQueConoce(){
-//		 Sistema p = this.sistema.getInstance();
-//		  p.agregar((Receta)crearRecetaPublicaSimpleRica());
-//		  assertEquals(p.listarTodas(),p.recetasQueConoceEl(crearUsuarioBasicoValido()));
+//	public void recetaQueLeConocePorCompartirGrupo() throws BusinessException{
+//		Sistema sistema = this.sistema.getInstance();
+//		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
+//		Usuario usuario = crearUsuarioBasicoValido();
+//		grupo.agregarUsuario(usuario);
+//		
+//		usuario.agregarReceta(crearRecetaPublicaSimpleRica());
+//		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
+//		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
+//		grupo.agregarUsuario( usuarioQueSeAgrega);
+//		assertEquals(usuario.getRecetas().size() + usuarioQueSeAgrega.getRecetas().size(),sistema.recetasQueConoceEl(usuario).size());
 //	}
+	
+	@Test
+	public void recetasQueConoce(){
+		Sistema sistema = this.sistema.getInstance();
+		Receta receta = crearRecetaPublicaSimpleRica();
+		sistema.agregar(receta);
+		assertEquals(sistema.listarTodas(),sistema.recetasQueConoceEl(crearUsuarioBasicoValido()));
+	}
+	
+	
 	// un teste con una receta compuesta que no le guta
 	// un test con una receta compuesta que le gusta
 	//un test con una receta compuesta que no este en su perfil

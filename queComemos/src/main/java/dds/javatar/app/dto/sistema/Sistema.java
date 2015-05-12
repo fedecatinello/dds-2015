@@ -1,17 +1,26 @@
 package dds.javatar.app.dto.sistema;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.usuario.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 
 
 public class Sistema implements RepositorioRecetas {
-	protected Sistema() {
-	}
+	
 	private List<Receta> recetaConocidas;
-
+	
+	
+	protected Sistema() {
+		this.recetaConocidas = new ArrayList<Receta>();
+	}
+	
 	private static class SistemaHolder {
 		private final static Sistema INSTANCE = new Sistema();
 	}
@@ -73,8 +82,7 @@ public class Sistema implements RepositorioRecetas {
 	}
 	
 	public List<Receta> recetasQueConoceEl(Usuario usuario) {
-		List<Receta> recetasQueConoce = null;
-		recetasQueConoce = this.recetaConocidas;
+		List<Receta> recetasQueConoce = this.recetaConocidas;
 		for (GrupoDeUsuarios grupo : usuario.getGruposAlQuePertenece()) {
 			for (Usuario miembroDelGrupo : grupo.getUsuarios()) {
 				for (Receta recetasDelMiembro : miembroDelGrupo.getRecetas()) {

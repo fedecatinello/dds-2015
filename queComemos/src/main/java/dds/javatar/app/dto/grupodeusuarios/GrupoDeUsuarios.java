@@ -1,5 +1,7 @@
 package dds.javatar.app.dto.grupodeusuarios;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,6 +12,12 @@ public class GrupoDeUsuarios {
 	private  String nombre;
 	private Map<String, Boolean> preferenciasAlimenticias;
 	private Set<Usuario> miembros;
+	
+	/**** Constructor ****/
+	public GrupoDeUsuarios(){
+		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
+		this.miembros = new HashSet<Usuario>();
+	}
 	
 	/**** Setters y getters ****/
 
@@ -34,10 +42,12 @@ public class GrupoDeUsuarios {
 	}
 
 	public void setUsuarios(Set<Usuario> usuarios) {
+		
 		this.miembros = usuarios;
 	}
 	
 	public void agregarUsuario(Usuario usuario) {
+		usuario.setGruposAlQuePertenece(this);
 		this.miembros.add(usuario);
 	}
 }

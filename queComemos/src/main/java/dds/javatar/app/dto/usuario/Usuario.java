@@ -39,6 +39,7 @@ public class Usuario {
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
 		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
 		this.recetas = new HashSet<Receta>();
+		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 	}
 
 	public Usuario(BigDecimal altura, BigDecimal peso) {

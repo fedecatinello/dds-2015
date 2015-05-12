@@ -6,20 +6,17 @@ import dds.javatar.app.dto.receta.Receta;
 
 public class Calorias implements Criterio {
 
+
+	@Override
 	public void ascendente() {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
 	public void descendente() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public List<Receta> ascendente(List<Receta> recetasXusuario) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

@@ -20,6 +20,7 @@ public class Usuario {
 	};
 
 	private static final Integer MIN_NAME_LENGTH = 4;
+	private static final Integer IMC_SOBREPESO = 30;
 
 	private String nombre;
 	private Sexo sexo;
@@ -101,7 +102,7 @@ public class Usuario {
 	public void setRutina(Rutina rutina) {
 		this.rutina = rutina;
 	}
-	
+
 	public Set<Receta> getRecetas() {
 		return this.recetas;
 	}
@@ -111,7 +112,7 @@ public class Usuario {
 	}
 
 	public Set<GrupoDeUsuarios> getGruposAlQuePertenece() {
-		return gruposAlQuePertenece;
+		return this.gruposAlQuePertenece;
 	}
 
 	public void setGruposAlQuePertenece(GrupoDeUsuarios grupoAlQuePertenece) {
@@ -134,20 +135,20 @@ public class Usuario {
 		this.validarFechaNacimiento();
 		this.validarCondicionesPreexistentes();
 	}
-	
+
 	/* Validadores */
 	private void validarCamposNulos() throws BusinessException {
 		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null || this.rutina == null) {
 			throw new BusinessException("El usuario tiene campos obligatorios sin completar");
 		}
 	}
-	
+
 	private void validarNombre() throws BusinessException {
 		if (this.nombre.length() <= MIN_NAME_LENGTH) {
 			throw new BusinessException("El nombre del usuario es demasido corto");
 		}
 	}
-	
+
 	private void validarFechaNacimiento() throws BusinessException {
 		Date today = new Date();
 		if (today.compareTo(this.fechaNacimiento) <= 0) {
@@ -160,10 +161,9 @@ public class Usuario {
 			condicionPreexistente.validarUsuario(this);
 		}
 	}
+
 	/* .... */
-	
-	
-	
+
 	public Boolean sigueRutinaSaludable() {
 
 		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
@@ -184,7 +184,7 @@ public class Usuario {
 	public Boolean tienePreferenciaAlimenticia(String alimento) {
 		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get(alimento));
 	}
-	
+
 	public Boolean tieneAlimentoQueLeDisguste(String alimento) {
 		return Boolean.FALSE.equals(this.preferenciasAlimenticias.get(alimento));
 	}
@@ -196,7 +196,7 @@ public class Usuario {
 	public void agregarPreferenciaAlimenticia(String alimento) {
 		this.preferenciasAlimenticias.put(alimento, Boolean.TRUE);
 	}
-	
+
 	public void agregarAlimentoQueLeDisgusta(String alimento) {
 		this.preferenciasAlimenticias.put(alimento, Boolean.FALSE);
 	}
@@ -218,19 +218,19 @@ public class Usuario {
 		}
 	}
 
-	public boolean validarSiAceptaReceta(Receta receta)  {
+	public boolean validarSiAceptaReceta(Receta receta) {
 		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-			if(!condicionPreexistente.validarReceta(receta)){
+			if (!condicionPreexistente.validarReceta(receta)) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	public Set<CondicionPreexistente> condicionesQueNoAcepta(Usuario usuario, Receta receta){
-		Set<CondicionPreexistente> condicionesQueNoAceptanReceta= new HashSet<CondicionPreexistente>();
+
+	public Set<CondicionPreexistente> condicionesQueNoAcepta(Usuario usuario, Receta receta) {
+		Set<CondicionPreexistente> condicionesQueNoAceptanReceta = new HashSet<CondicionPreexistente>();
 		for (CondicionPreexistente condicionPreexistente : usuario.condicionesPreexistentes) {
-			if(!usuario.validarSiAceptaReceta(receta)){
+			if (!usuario.validarSiAceptaReceta(receta)) {
 				condicionesQueNoAceptanReceta.add(condicionPreexistente);
 			}
 		}
@@ -238,7 +238,7 @@ public class Usuario {
 	}
 
 	public void verReceta(Receta receta) throws BusinessException {
-		if (!receta.chequearVisibilidad(receta, this)){
+		if (!receta.chequearVisibilidad(receta, this)) {
 			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
 		}
 	}
@@ -260,12 +260,16 @@ public class Usuario {
 	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws BusinessException {
 		this.verReceta(receta);
 		receta.setNombre(nuevoNombre);
-		
+
 	}
 
 	public boolean puedeModificarReceta(Receta receta) {
 		return receta.chequearModificacion(receta, this);
-		
+
+	}
+
+	public Boolean tieneSobrePeso() {
+		return (this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue() > IMC_SOBREPESO);
 	}
 
 }

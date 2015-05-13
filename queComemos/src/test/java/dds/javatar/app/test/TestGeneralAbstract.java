@@ -7,12 +7,11 @@ import java.util.Date;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.usuario.Rutina;
-import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
+import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 
 public abstract class TestGeneralAbstract {
-
 
 	protected Usuario crearUsuarioBasicoValido() {
 		Calendar calendar = Calendar.getInstance();
@@ -30,7 +29,7 @@ public abstract class TestGeneralAbstract {
 		return usuario;
 	}
 
-	protected RecetaPrivadaSimple crearRecetaPrivadaSimple(){
+	protected RecetaPrivadaSimple crearRecetaPrivadaSimple() {
 		RecetaPrivadaSimple ravioles = new RecetaPrivadaSimple(350);
 		ravioles.setNombre("Ravioles");
 		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
@@ -38,8 +37,8 @@ public abstract class TestGeneralAbstract {
 		ravioles.agregarIngrediente("Verdura", new BigDecimal(100));
 		return ravioles;
 	}
-	
-	protected RecetaPrivadaSimple crearRecetaPrivadaSimpleConMuchasCalorias(){
+
+	protected RecetaPrivadaSimple crearRecetaPrivadaSimpleConMuchasCalorias() {
 		RecetaPrivadaSimple ravioles = new RecetaPrivadaSimple(350);
 		ravioles.setNombre("Ravioles");
 		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
@@ -49,15 +48,15 @@ public abstract class TestGeneralAbstract {
 		return ravioles;
 	}
 
-	protected RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws BusinessException{
+	protected RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws BusinessException {
 
 		RecetaPrivadaSimple condimentos = new RecetaPrivadaSimple(120);
-		RecetaPrivadaSimple pure  = new RecetaPrivadaSimple(350);
-		RecetaPrivadaSimple pollo  = new RecetaPrivadaSimple(220);
-		RecetaPrivadaCompuesta polloConPure  = new RecetaPrivadaCompuesta();
+		RecetaPrivadaSimple pure = new RecetaPrivadaSimple(350);
+		RecetaPrivadaSimple pollo = new RecetaPrivadaSimple(220);
+		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
 
 		condimentos.setNombre("Condimentos");
-		condimentos.agregarIngrediente("Oregano",new BigDecimal(20));
+		condimentos.agregarIngrediente("Oregano", new BigDecimal(20));
 
 		pure.setNombre("Pure");
 		pure.agregarIngrediente("Manteca", new BigDecimal(300));
@@ -72,19 +71,17 @@ public abstract class TestGeneralAbstract {
 		return polloConPure;
 	}
 
-	protected void crearListaRecetasParaUsuarioSize20(Usuario user) throws BusinessException{
+	protected void crearListaRecetasParaUsuarioSize20(Usuario user) throws BusinessException {
 		RecetaPrivadaCompuesta recetaPrivadaCompuesta;
 		RecetaPrivadaSimple recetaPrivadaSimple;
 		for (int i = 0; i < 10; i++) {
-			recetaPrivadaCompuesta =crearRecetaPrivadaCompuesta();
-			recetaPrivadaSimple= crearRecetaPrivadaSimple();
-			
+			recetaPrivadaCompuesta = this.crearRecetaPrivadaCompuesta();
+			recetaPrivadaSimple = this.crearRecetaPrivadaSimple();
+
 			user.agregarReceta(recetaPrivadaSimple);
-			
+
 			user.agregarReceta(recetaPrivadaCompuesta);
 		}
-
 	}
-	
 
 }

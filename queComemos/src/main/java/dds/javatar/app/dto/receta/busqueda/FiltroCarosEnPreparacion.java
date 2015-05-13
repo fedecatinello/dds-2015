@@ -1,37 +1,38 @@
 package dds.javatar.app.dto.receta.busqueda;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import dds.javatar.app.dto.sistema.Sistema;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.usuario.Usuario;
 
-public class FiltroCarosEnPreparacion extends BusquedaDecorator {
+public class FiltroCarosEnPreparacion extends FiltroDeBusqueda {
+
+	private static final Set<String> ingredientesCaros = new HashSet<String>(Arrays.asList("lechon", "lomo", "salmon", "alcaparras"));
 
 	public FiltroCarosEnPreparacion(Busqueda busqueda) {
 		super(busqueda);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public List<Receta> ObtenerRecetas(Usuario usuario) {
-		List<Receta> listaRecetas= this.busqueda.ObtenerRecetas(usuario);	
-		List<Receta> listaRecetasAux = new ArrayList<Receta>();
-		// Tengo que usar una lista auxiliar porque sino me tira la excepcion de concurrence
-		for (Iterator<Receta> iterator = listaRecetas.iterator(); iterator.hasNext();) {
-			Receta receta = (Receta) iterator.next();
-			//Hay un tema con la visibilidad aca, donde ponemos los ingredientes caros?
-			//if (Collections.disjoint(receta.getIngredientes().keySet(), getIngredientesCaros) ){				
-				listaRecetasAux.add(receta);
+	public List<Receta> obtenerRecetasFiltradas(Usuario usuario) {
+		List<Receta> listaRecetas = this.busqueda.obtenerRecetasFiltradas(usuario);
+
+		Iterator<Receta> it = listaRecetas.iterator();
+
+		while (it.hasNext()) {
+			Receta receta = it.next();
+			for (String ingredienteCaro : ingredientesCaros) {
+				if (receta.contieneIngrediente(ingredienteCaro)) {
+					it.remove();
+				}
 			}
-		//}		
-		return listaRecetasAux;
+		}
+
+		return listaRecetas;
 	}
-
-
-
 
 }

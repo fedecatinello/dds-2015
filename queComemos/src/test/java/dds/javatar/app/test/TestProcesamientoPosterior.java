@@ -11,6 +11,8 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.BuscarTodas;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.receta.procesamientoPosterior.ProcPostNulo;
+import dds.javatar.app.dto.receta.procesamientoPosterior.ProcPostOrdenarPorAlfabeto;
+import dds.javatar.app.dto.receta.procesamientoPosterior.ProcPostOrdenarPorCalorias;
 import dds.javatar.app.dto.receta.procesamientoPosterior.ProcPostPrimerosDiez;
 import dds.javatar.app.dto.receta.procesamientoPosterior.ProcPostResultadosPares;
 import dds.javatar.app.dto.receta.procesamientoPosterior.ProcesamientoPosterior;
@@ -27,6 +29,7 @@ public class TestProcesamientoPosterior extends TestGeneralAbstract {
 		this.crearListaRecetasParaUsuarioSize20(this.usuario);
 	}
 
+
 	@Test
 	public void testTomarLosPrimerosDiez() throws BusinessException {
 		ProcesamientoPosterior procPostDameLosDiez = new ProcPostPrimerosDiez(new ProcPostNulo());
@@ -40,7 +43,43 @@ public class TestProcesamientoPosterior extends TestGeneralAbstract {
 		ProcesamientoPosterior procPostDameLosPares = new ProcPostResultadosPares(new ProcPostNulo());
 		Busqueda buscador = new BuscarTodas();
 		List<Receta> listaRecetas = procPostDameLosPares.aplicarProcPost(buscador.obtenerRecetasFiltradas(this.usuario));
-		assertEquals(10, listaRecetas.size());
+		assertEquals(19, listaRecetas.size());
 	}
 
+
+	@Test
+	public void testTomarLosPrimerosDiezYqueSeanPares() throws BusinessException {
+		ProcesamientoPosterior procPostDameLosDiezYqueSeanPares = new ProcPostResultadosPares(new ProcPostPrimerosDiez(new ProcPostNulo()));	
+		Busqueda buscador = new BuscarTodas();
+		List<Receta> listaRecetas= procPostDameLosDiezYqueSeanPares.aplicarProcPost(buscador.obtenerRecetasFiltradas(usuario));
+		assertEquals(5 , listaRecetas.size());
+	}
+
+	@Test
+	public void testOrdenarPorCalorias() throws BusinessException {
+		ProcesamientoPosterior procPostOrdenarPorCalorias = new ProcPostOrdenarPorCalorias(new ProcPostNulo());	
+		Busqueda buscador = new BuscarTodas();
+		List<Receta> listaRecetas= procPostOrdenarPorCalorias.aplicarProcPost(buscador.obtenerRecetasFiltradas(usuario));
+		assertEquals(30 , listaRecetas.size());
+	}
+
+	@Test
+	public void testOrdenarPorAlfabeto() throws BusinessException {
+		ProcesamientoPosterior procPostOrdenarPorAlfabeto = new ProcPostOrdenarPorAlfabeto(new ProcPostNulo());	
+		Busqueda buscador = new BuscarTodas();
+		List<Receta> listaRecetas= procPostOrdenarPorAlfabeto.aplicarProcPost(buscador.obtenerRecetasFiltradas(usuario));
+		assertEquals(35 , listaRecetas.size());
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testOrdenarPorAlfabetoConNombreNulo() throws NullPointerException, BusinessException {
+		Usuario usuario2 = this.crearUsuarioBasicoValido();
+		crearListaRecetasParaUsuarioSize20ConNombresNulos(usuario2);	
+		ProcesamientoPosterior procPostOrdenarPorAlfabeto = new ProcPostOrdenarPorAlfabeto(new ProcPostNulo());	
+		Busqueda buscador = new BuscarTodas();
+		List<Receta> listaRecetas= procPostOrdenarPorAlfabeto.aplicarProcPost(buscador.obtenerRecetasFiltradas(usuario2));
+		assertEquals(20 , listaRecetas.size());
+	}
+
+	
 }

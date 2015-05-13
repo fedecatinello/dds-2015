@@ -6,7 +6,6 @@ import java.util.List;
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
-import dds.javatar.app.dto.usuario.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 import dds.javatar.app.util.exception.FilterException;
@@ -123,9 +122,9 @@ public class Sistema implements RepositorioRecetas {
 
 	public List<Receta> realizarBusquedaPara(Busqueda busqueda, Usuario usuario) throws FilterException{
 		
-		List<Receta> recetasXusuario = recetasQueConoceEl(usuario);
+		List<Receta> recetasXusuario = this.recetasQueConoceEl(usuario);
 		busqueda.filtrar(usuario,recetasXusuario);
--		busqueda.postProcesar(recetasXusuario);
+		busqueda.postProcesar(recetasXusuario);
 		return recetasXusuario;
 		
 	}

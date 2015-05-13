@@ -83,23 +83,6 @@ public class Sistema implements RepositorioRecetas {
 		}
 	}
 
-	// for (Iterator iterator = recetasQueConoce.iterator(); iterator
-	// .hasNext();) {
-	// Receta receta = (Receta) iterator.next();
-	// if (!(receta.getNombre().equals(recetasDelMiembro.getNombre()))) {
-	// recetasQueConoce.add(recetasDelMiembro);
-	// }
-
-	// while(Receta recetaconocida : this.recetaConocidas){
-	// if(!recetaconocida.getNombre().equals(recetasDelMiembro.getNombre())){
-	// recetasQueConocePorLosMiembrosDelGrupo.add(recetasDelMiembro);
-	// }
-	//
-	// }
-	/**
-	 * recetasQueConoce.toArray(); if(recetasQueConoce.indexOf(recetasDelMiembro)== -1){
-	 * recetasQueConocePorLosMiembrosDelGrupo.add(recetasDelMiembro); }
-	 */
 	private void purificarLista() {
 		for (int j = 0; j < this.recetaConocidas.size(); j++) {
 			Boolean flag = false;

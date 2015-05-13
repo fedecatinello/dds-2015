@@ -1,5 +1,6 @@
 package dds.javatar.app.dto.receta.busqueda;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dds.javatar.app.dto.receta.Receta;
@@ -14,6 +15,11 @@ public class Busqueda{
 
 	private PostProcesamiento postProcesamiento;
 
+	public Busqueda() {
+		this.filtros = new ArrayList<Filtro>();
+		this.postProcesamiento = null;
+	}
+	
 	
 	public void filtrar(Usuario usuario, List<Receta> recetas) throws FilterException {
 		if(!filtros.isEmpty()){

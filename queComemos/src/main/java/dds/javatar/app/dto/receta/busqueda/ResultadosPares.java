@@ -10,7 +10,7 @@ public class ResultadosPares implements PostProcesamiento {
 	public void procesar(List<Receta> recetasXusuario) {
 
 		int cantidadDeRecetas=recetasXusuario.size();
-		for(int i=1; i<=cantidadDeRecetas-1; i+=2){
+		for(int i=cantidadDeRecetas; i<=cantidadDeRecetas-1; i-=2){
 			 recetasXusuario.remove(i);
 		}		
 	}

@@ -19,12 +19,12 @@ public class Sistema implements RepositorioRecetas {
 		this.agregarIngredientesCaros();
 	}
 
-	private static class SistemaHolder {
-		private final static Sistema INSTANCE = new Sistema();
-	}
-
+	private static Sistema instance;
 	public static Sistema getInstance() {
-		return SistemaHolder.INSTANCE;
+		if (instance == null) {
+			instance = new Sistema();
+		}
+		return instance;
 	}
 
 	@Override
@@ -42,14 +42,12 @@ public class Sistema implements RepositorioRecetas {
 	}
 
 	private boolean encontre(Receta receta) {
-
-		Boolean flag = false;
 		for (int i = 0; i < this.recetaConocidas.size(); i++) {
 			if ((this.recetaConocidas.get(i).getNombre().equals(receta.getNombre()))) {
-				flag = true;
+				return true;
 			}
 		}
-		return flag;
+		return false;
 	}
 
 	@Override
@@ -66,30 +64,21 @@ public class Sistema implements RepositorioRecetas {
 	}
 
 	public void sugerir(Receta receta, Usuario usuario) throws BusinessException {
-
 		for (String ingrediente : receta.getIngredientes().keySet()) {
-
 			if (!usuario.validarSiAceptaReceta(receta) || usuario.tieneAlimentoQueLeDisguste(ingrediente)) {
-
 				throw new BusinessException("la receta: " + receta.getNombre() + " no puede ser sugerida al usuario" + usuario.getNombre());
 			}
-
 		}
-
 	}
 
 	public void sugerir(Receta receta, GrupoDeUsuarios grupo) throws BusinessException {
 		for (String preferencia : grupo.getPreferenciasAlimenticias().keySet()) {
 
 			if (!receta.contieneCondimento(preferencia) || !receta.contieneIngrediente(preferencia) || !(receta.getNombre() == preferencia)) {
-
 				throw new BusinessException("La receta:" + receta.getNombre() + " no contiene palabra clave del grupo:" + grupo.getNombre());
-
 			}
 			for (Usuario integrante : grupo.getUsuarios()) {
-
 				integrante.validarSiAceptaReceta(receta);
-
 			}
 		}
 	}
@@ -132,14 +121,12 @@ public class Sistema implements RepositorioRecetas {
 		List<Receta> recetasQueConoce = this.recetaConocidas;
 
 		List<Receta> recetasQueConocePorLosMiembrosDelGrupo = new ArrayList<Receta>();
-
 		if (usuario.getGruposAlQuePertenece().isEmpty() || usuario.getGruposAlQuePertenece() == null) {
 			recetasQueConoce.addAll(usuario.getRecetas());
 		} else {
 			for (GrupoDeUsuarios grupo : usuario.getGruposAlQuePertenece()) {
 				for (Usuario miembroDelGrupo : grupo.getUsuarios()) {
 					for (Receta recetasDelMiembro : miembroDelGrupo.getRecetas()) {
-
 						if (!recetasQueConoce.contains(recetasDelMiembro)) {
 							recetasQueConoce.add(recetasDelMiembro);
 						}

@@ -1,96 +1,114 @@
 package dds.javatar.app.dto.sistema;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
+<<<<<<< HEAD
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.CondicionPreexistente;
+=======
+>>>>>>> ec21b9689e2da185528923acf698ffadf12280b6
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 import dds.javatar.app.util.exception.FilterException;
 
-
 public class Sistema implements RepositorioRecetas {
-	
+
 	private List<Receta> recetaConocidas;
-	
-	
+
 	protected Sistema() {
 		this.recetaConocidas = new ArrayList<Receta>();
 	}
-	
-	private static class SistemaHolder {
-		private final static Sistema INSTANCE = new Sistema();
-	}
 
+	private static Sistema instance;
 	public static Sistema getInstance() {
-		return SistemaHolder.INSTANCE;
+		if (instance == null) {
+			instance = new Sistema();
+		}
+		return instance;
 	}
-	
+
+	@Override
 	public void agregar(Receta receta) {
+
 		this.recetaConocidas.add(receta);
-		
+		this.purificarLista();
 	}
 
-	public void quitar(Receta receta) {
-		this.recetaConocidas.remove(receta);
-		
+	@Override
+	public void quitar(Receta receta) throws BusinessException {
+		if (this.encontre(receta)) {
+			this.recetaConocidas.remove(receta);
+		}
 	}
 
+	private boolean encontre(Receta receta) {
+		for (int i = 0; i < this.recetaConocidas.size(); i++) {
+			if ((this.recetaConocidas.get(i).getNombre().equals(receta.getNombre()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public List<Receta> listarTodas() {
 		return this.recetaConocidas;
 	}
 
-	public void sugerir(Receta receta, Usuario usuario)
-			throws BusinessException {
-
+	public void sugerir(Receta receta, Usuario usuario) throws BusinessException {
 		for (String ingrediente : receta.getIngredientes().keySet()) {
-
-			if (!usuario.validarSiAceptaReceta(receta)
-					|| usuario.tieneAlimentoQueLeDisguste(ingrediente)) {
-
-				throw new BusinessException("la receta: " + receta.getNombre()
-						+ " no puede ser sugerida al usuario"
-						+ usuario.getNombre());
+			if (!usuario.validarSiAceptaReceta(receta) || usuario.tieneAlimentoQueLeDisguste(ingrediente)) {
+				throw new BusinessException("la receta: " + receta.getNombre() + " no puede ser sugerida al usuario" + usuario.getNombre());
 			}
-
 		}
-
 	}
 
-	public void sugerir(Receta receta, GrupoDeUsuarios grupo)
-			throws BusinessException {
+	public void sugerir(Receta receta, GrupoDeUsuarios grupo) throws BusinessException {
 		for (String preferencia : grupo.getPreferenciasAlimenticias().keySet()) {
 
-			if (!receta.contieneCondimento(preferencia)
-					|| !receta.contieneIngrediente(preferencia)
-					|| !(receta.getNombre() == preferencia)) {
-
-				throw new BusinessException("La receta:" + receta.getNombre()
-						+ " no contiene palabra clave del grupo:"
-						+ grupo.getNombre());
-
+			if (!receta.contieneCondimento(preferencia) || !receta.contieneIngrediente(preferencia) || !(receta.getNombre() == preferencia)) {
+				throw new BusinessException("La receta:" + receta.getNombre() + " no contiene palabra clave del grupo:" + grupo.getNombre());
 			}
 			for (Usuario integrante : grupo.getUsuarios()) {
-
 				integrante.validarSiAceptaReceta(receta);
-
 			}
 		}
 	}
-	
+
+	private void purificarLista() {
+		for (int j = 0; j < this.recetaConocidas.size(); j++) {
+			Boolean flag = false;
+			for (int i = 0; i < this.recetaConocidas.size(); i++) {
+				if ((this.recetaConocidas.get(i).getNombre().equals(this.recetaConocidas.get(j).getNombre()))) {
+					flag = true;
+				}
+			}
+			if (flag == true) {
+				this.recetaConocidas.remove(this.recetaConocidas.get(j));
+			}
+		}
+
+	}
+
 	public List<Receta> recetasQueConoceEl(Usuario usuario) {
+
+		this.purificarLista();
 		List<Receta> recetasQueConoce = this.recetaConocidas;
+<<<<<<< HEAD
 		if (usuario.getGruposAlQuePertenece().isEmpty() ||usuario.getGruposAlQuePertenece()==null) {
+=======
+		List<Receta> recetasQueConocePorLosMiembrosDelGrupo = new ArrayList<Receta>();
+		if (usuario.getGruposAlQuePertenece().isEmpty() || usuario.getGruposAlQuePertenece() == null) {
+>>>>>>> ec21b9689e2da185528923acf698ffadf12280b6
 			recetasQueConoce.addAll(usuario.getRecetas());
 		} else {
 			for (GrupoDeUsuarios grupo : usuario.getGruposAlQuePertenece()) {
 				for (Usuario miembroDelGrupo : grupo.getUsuarios()) {
 					for (Receta recetasDelMiembro : miembroDelGrupo.getRecetas()) {
+<<<<<<< HEAD
 						if (!recetasQueConoce.contains(recetasDelMiembro)) {
 							recetasQueConoce.add(recetasDelMiembro);
 						}
@@ -98,6 +116,23 @@ public class Sistema implements RepositorioRecetas {
 				}
 			}
 		}	
+=======
+						Boolean flag = false;
+						for (int i = 0; i < recetasQueConoce.size(); i++) {
+							if ((recetasQueConoce.get(i).getNombre().equals(recetasDelMiembro.getNombre()))) {
+								flag = true;
+							}
+						}
+						if (flag == false) {
+							recetasQueConocePorLosMiembrosDelGrupo.add(recetasDelMiembro);
+						}
+
+					}
+				}
+			}
+		}
+		recetasQueConoce.addAll(recetasQueConocePorLosMiembrosDelGrupo);
+>>>>>>> ec21b9689e2da185528923acf698ffadf12280b6
 		return recetasQueConoce;
 	}
 

@@ -16,15 +16,15 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	private Map<String, BigDecimal> ingredientes;
 	private String nombre;
 
-	
+
 	/**		Builder			**/
 	public RecetaPrivadaCompuesta() {
 		this.subRecetas = new HashSet<RecetaPrivada>();
 
 	}
 
-	
-	
+
+
 	/**		get items			**/
 	public String getNombre() {
 		return this.nombre;
@@ -32,6 +32,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+<<<<<<< HEAD
 	
 	public Integer getCalorias (){
 				int caloriasTotal=0;
@@ -44,10 +45,23 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		 
 	
 	
+=======
+
+	public Integer getCalorias (){
+		int caloriasTotal=0;
+		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
+			Receta receta = (Receta) iterator.next();
+			caloriasTotal= caloriasTotal + receta.getCalorias();			
+		}
+		return caloriasTotal;
+	}
+
+
+>>>>>>> ec21b9689e2da185528923acf698ffadf12280b6
 	public Set<RecetaPrivada> getSubRecetas() {
 		return this.subRecetas;
 	}
-	
+
 	public Map<String, BigDecimal> getCondimentos() {
 		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
 			Receta receta = (Receta) iterator.next();
@@ -63,15 +77,15 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		}
 		return ingredientes;
 	}
-	
-	
+
+
 	/**		Add items	**/
 	public void agregarSubReceta(RecetaPrivada subReceta) throws BusinessException {
 		subReceta.validarSiLaRecetaEsValida();
 		this.subRecetas.add(subReceta);
 	}
 
-	
+
 	/**		Validadores			**/
 	public Boolean contieneIngrediente(String ingrediente) {
 		this.getIngredientes();
@@ -82,7 +96,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		this.getCondimentos();
 		return this.condimentos.containsKey(condimento);
 	}
-	
+
 	public Boolean alimentoSobrepasaCantidad(String alimento, BigDecimal cantidad) {
 		this.getIngredientes();
 		if (!this.ingredientes.containsKey(alimento)) {
@@ -97,7 +111,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		}
 		return false;
 	}
-	
+
 	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
 		return receta.chequearVisibilidad(receta, usuario);
 	}

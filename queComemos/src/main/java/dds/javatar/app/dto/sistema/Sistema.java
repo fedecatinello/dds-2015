@@ -5,11 +5,8 @@ import java.util.List;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
-<<<<<<< HEAD
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.CondicionPreexistente;
-=======
->>>>>>> ec21b9689e2da185528923acf698ffadf12280b6
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 import dds.javatar.app.util.exception.FilterException;
@@ -97,26 +94,15 @@ public class Sistema implements RepositorioRecetas {
 
 		this.purificarLista();
 		List<Receta> recetasQueConoce = this.recetaConocidas;
-<<<<<<< HEAD
-		if (usuario.getGruposAlQuePertenece().isEmpty() ||usuario.getGruposAlQuePertenece()==null) {
-=======
+
 		List<Receta> recetasQueConocePorLosMiembrosDelGrupo = new ArrayList<Receta>();
 		if (usuario.getGruposAlQuePertenece().isEmpty() || usuario.getGruposAlQuePertenece() == null) {
->>>>>>> ec21b9689e2da185528923acf698ffadf12280b6
 			recetasQueConoce.addAll(usuario.getRecetas());
 		} else {
 			for (GrupoDeUsuarios grupo : usuario.getGruposAlQuePertenece()) {
 				for (Usuario miembroDelGrupo : grupo.getUsuarios()) {
 					for (Receta recetasDelMiembro : miembroDelGrupo.getRecetas()) {
-<<<<<<< HEAD
-						if (!recetasQueConoce.contains(recetasDelMiembro)) {
-							recetasQueConoce.add(recetasDelMiembro);
-						}
-					}
-				}
-			}
-		}	
-=======
+
 						Boolean flag = false;
 						for (int i = 0; i < recetasQueConoce.size(); i++) {
 							if ((recetasQueConoce.get(i).getNombre().equals(recetasDelMiembro.getNombre()))) {
@@ -132,7 +118,6 @@ public class Sistema implements RepositorioRecetas {
 			}
 		}
 		recetasQueConoce.addAll(recetasQueConocePorLosMiembrosDelGrupo);
->>>>>>> ec21b9689e2da185528923acf698ffadf12280b6
 		return recetasQueConoce;
 	}
 

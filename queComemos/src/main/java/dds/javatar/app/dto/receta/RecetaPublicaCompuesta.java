@@ -41,10 +41,6 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		return caloriasTotal;
 	}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ec21b9689e2da185528923acf698ffadf12280b6
 
 	public Set<RecetaPublica> getSubRecetas() {
 		return this.subRecetas;

@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +34,7 @@ public class Usuario {
 	private Set<Receta> recetas;
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
 
+	private List<Receta> favoritos; 
 	/**** Constructors ****/
 
 	public Usuario() {
@@ -265,7 +267,21 @@ public class Usuario {
 
 	public boolean puedeModificarReceta(Receta receta) {
 		return receta.chequearModificacion(receta, this);
-		
 	}
+	
+	public void marcarFavorita(Receta receta){
+	//	if (this.validarSiAceptaReceta(receta)) favoritos.add(receta);
+		 favoritos.add(receta);
+	}
+
+	public List<Receta> getFavoritos() {
+		return favoritos;
+	}
+
+	public void setFavoritos(List<Receta> favoritos) {
+		this.favoritos = favoritos;
+	}
+	
+	
 
 }

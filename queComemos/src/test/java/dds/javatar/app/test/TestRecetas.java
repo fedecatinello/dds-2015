@@ -1,8 +1,11 @@
 package dds.javatar.app.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,6 +14,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
@@ -374,5 +378,19 @@ public class TestRecetas {
 		this.usuario.agregarReceta(unaRecetaCompuesta);
 	}
 	*/
+	
+	@Test
+	public void testMarcarFavorita() throws BusinessException{
+	
+		RecetaPublicaSimple receta = new RecetaPublicaSimple(80);
+		receta.agregarIngrediente("pollo", new BigDecimal(80));
+		this.usuario.setFavoritos(new ArrayList<Receta>());
+		this.usuario.marcarFavorita(receta);
+		
+		assertEquals(1,this.usuario.getFavoritos().size());
+
+	}
+	
+	
 	
 }

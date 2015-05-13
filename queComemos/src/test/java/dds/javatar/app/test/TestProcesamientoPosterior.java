@@ -26,7 +26,7 @@ public class TestProcesamientoPosterior extends TestGeneralAbstract {
 	@Before
 	public void initialize() throws BusinessException {
 		this.usuario = this.crearUsuarioBasicoValido();
-		crearListaRecetasParaUsuarioSize20(this.usuario);		
+		this.crearListaRecetasParaUsuarioSize20(this.usuario);
 	}
 
 
@@ -34,23 +34,24 @@ public class TestProcesamientoPosterior extends TestGeneralAbstract {
 	public void testTomarLosPrimerosDiez() throws BusinessException {
 		ProcesamientoPosterior procPostDameLosDiez = new ProcPostPrimerosDiez(new ProcPostNulo());
 		Busqueda buscador = new BuscarTodas();
-		List<Receta> listaRecetas= procPostDameLosDiez.aplicarProcPost(buscador.ObtenerRecetas(usuario));		
-		assertEquals(10 , listaRecetas.size());
+		List<Receta> listaRecetas = procPostDameLosDiez.aplicarProcPost(buscador.obtenerRecetasFiltradas(this.usuario));
+		assertEquals(10, listaRecetas.size());
 	}
 
 	@Test
 	public void testTomarLosPares() throws BusinessException {
 		ProcesamientoPosterior procPostDameLosPares = new ProcPostResultadosPares(new ProcPostNulo());
 		Busqueda buscador = new BuscarTodas();
-		List<Receta> listaRecetas= procPostDameLosPares.aplicarProcPost(buscador.ObtenerRecetas(usuario));		
-		assertEquals(10 , listaRecetas.size());
+		List<Receta> listaRecetas = procPostDameLosPares.aplicarProcPost(buscador.obtenerRecetasFiltradas(this.usuario));
+		assertEquals(19, listaRecetas.size());
 	}
+
 
 	@Test
 	public void testTomarLosPrimerosDiezYqueSeanPares() throws BusinessException {
 		ProcesamientoPosterior procPostDameLosDiezYqueSeanPares = new ProcPostResultadosPares(new ProcPostPrimerosDiez(new ProcPostNulo()));	
 		Busqueda buscador = new BuscarTodas();
-		List<Receta> listaRecetas= procPostDameLosDiezYqueSeanPares.aplicarProcPost(buscador.ObtenerRecetas(usuario));
+		List<Receta> listaRecetas= procPostDameLosDiezYqueSeanPares.aplicarProcPost(buscador.obtenerRecetasFiltradas(usuario));
 		assertEquals(5 , listaRecetas.size());
 	}
 
@@ -58,8 +59,16 @@ public class TestProcesamientoPosterior extends TestGeneralAbstract {
 	public void testOrdenarPorCalorias() throws BusinessException {
 		ProcesamientoPosterior procPostOrdenarPorCalorias = new ProcPostOrdenarPorCalorias(new ProcPostNulo());	
 		Busqueda buscador = new BuscarTodas();
-		List<Receta> listaRecetas= procPostOrdenarPorCalorias.aplicarProcPost(buscador.ObtenerRecetas(usuario));
-		assertEquals(20 , listaRecetas.size());
+		List<Receta> listaRecetas= procPostOrdenarPorCalorias.aplicarProcPost(buscador.obtenerRecetasFiltradas(usuario));
+		assertEquals(30 , listaRecetas.size());
+	}
+
+	@Test
+	public void testOrdenarPorAlfabeto() throws BusinessException {
+		ProcesamientoPosterior procPostOrdenarPorAlfabeto = new ProcPostOrdenarPorAlfabeto(new ProcPostNulo());	
+		Busqueda buscador = new BuscarTodas();
+		List<Receta> listaRecetas= procPostOrdenarPorAlfabeto.aplicarProcPost(buscador.obtenerRecetasFiltradas(usuario));
+		assertEquals(35 , listaRecetas.size());
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -68,17 +77,9 @@ public class TestProcesamientoPosterior extends TestGeneralAbstract {
 		crearListaRecetasParaUsuarioSize20ConNombresNulos(usuario2);	
 		ProcesamientoPosterior procPostOrdenarPorAlfabeto = new ProcPostOrdenarPorAlfabeto(new ProcPostNulo());	
 		Busqueda buscador = new BuscarTodas();
-		List<Receta> listaRecetas= procPostOrdenarPorAlfabeto.aplicarProcPost(buscador.ObtenerRecetas(usuario2));
+		List<Receta> listaRecetas= procPostOrdenarPorAlfabeto.aplicarProcPost(buscador.obtenerRecetasFiltradas(usuario2));
 		assertEquals(20 , listaRecetas.size());
 	}
 
-	@Test
-	public void testOrdenarPorAlfabeto() throws BusinessException {
-		ProcesamientoPosterior procPostOrdenarPorAlfabeto = new ProcPostOrdenarPorAlfabeto(new ProcPostNulo());	
-		Busqueda buscador = new BuscarTodas();
-		List<Receta> listaRecetas= procPostOrdenarPorAlfabeto.aplicarProcPost(buscador.ObtenerRecetas(usuario));
-		assertEquals(20 , listaRecetas.size());
-	}
-
-
+	
 }

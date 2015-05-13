@@ -13,8 +13,7 @@ public class ProcPostPrimerosDiez extends ProcesamientoPosteriorDecorator {
 	
 	@Override
 	public List<Receta> aplicarProcPost(List<Receta> listaRecetas) {
-		listaRecetas=this.procesamientoPosterior.aplicarProcPost(listaRecetas);
-		
+		listaRecetas=this.procesamientoPosterior.aplicarProcPost(listaRecetas);		
 		List<Receta> subItems = new ArrayList<Receta>(listaRecetas.subList(0, 10));
 		return subItems;
 	

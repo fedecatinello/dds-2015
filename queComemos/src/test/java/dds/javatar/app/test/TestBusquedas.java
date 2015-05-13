@@ -39,12 +39,15 @@ public class TestBusquedas extends TestGeneralAbstract{
 		crearListaRecetasParaUsuarioSize20(this.usuario);
 	}
 	
+
 	
 	/* Tests de Filtros */ 
 	
 	@Test
 	public void testBuscarRecetasSinFiltro() throws FilterException {
 		Busqueda busqueda = new Busqueda();
+		List<Filtro> filtros = new ArrayList<Filtro>();
+		busqueda.setFiltros(filtros);
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(20 , listaRecetas.size());
 	}
@@ -95,6 +98,10 @@ public class TestBusquedas extends TestGeneralAbstract{
 		Busqueda busqueda = new Busqueda();
 		PostProcesamiento primerosDiez = new PrimerosDiez();
 		busqueda.setPostProcesamiento(primerosDiez);
+		
+		List<Filtro> filtros = new ArrayList<Filtro>();
+		busqueda.setFiltros(filtros);
+		
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(10, listaRecetas.size());
 	}
@@ -105,6 +112,10 @@ public class TestBusquedas extends TestGeneralAbstract{
 		Busqueda busqueda = new Busqueda();
 		PostProcesamiento soloPares = new ResultadosPares();
 		busqueda.setPostProcesamiento(soloPares);
+		
+		List<Filtro> filtros = new ArrayList<Filtro>();
+		busqueda.setFiltros(filtros);
+		
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(14, listaRecetas.size());
 	}
@@ -118,6 +129,10 @@ public class TestBusquedas extends TestGeneralAbstract{
 		
 		orden.setCriterio(alfabetico);
 		busqueda.setPostProcesamiento(orden);
+		
+		List<Filtro> filtros = new ArrayList<Filtro>();
+		busqueda.setFiltros(filtros);
+		
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(30, listaRecetas.size());
 	}
@@ -131,6 +146,10 @@ public class TestBusquedas extends TestGeneralAbstract{
 		
 		orden.setCriterio(calorias);
 		busqueda.setPostProcesamiento(orden);
+		
+		List<Filtro> filtros = new ArrayList<Filtro>();
+		busqueda.setFiltros(filtros);
+		
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(30, listaRecetas.size());
 	}

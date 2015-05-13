@@ -31,7 +31,7 @@ public class Sistema implements RepositorioRecetas {
 	public void agregar(Receta receta) {
 
 		this.recetaConocidas.add(receta);
-		this.purificarLista();
+	//	this.purificarLista();
 	}
 
 	@Override
@@ -75,24 +75,24 @@ public class Sistema implements RepositorioRecetas {
 		}
 	}
 
-	private void purificarLista() {
-		for (int j = 0; j < this.recetaConocidas.size(); j++) {
-			Boolean flag = false;
-			for (int i = 0; i < this.recetaConocidas.size(); i++) {
-				if ((this.recetaConocidas.get(i).getNombre().equals(this.recetaConocidas.get(j).getNombre()))) {
-					flag = true;
-				}
-			}
-			if (flag == true) {
-				this.recetaConocidas.remove(this.recetaConocidas.get(j));
-			}
-		}
-
-	}
+//	private void purificarLista() {
+//		for (int j = 0; j < this.recetaConocidas.size(); j++) {
+//			Boolean flag = false;
+//			for (int i = 0; i < this.recetaConocidas.size(); i++) {
+//				if ((this.recetaConocidas.get(i).getNombre().equals(this.recetaConocidas.get(j).getNombre()))) {
+//					flag = true;
+//				}
+//			}
+//			if (flag == true) {
+//				this.recetaConocidas.remove(this.recetaConocidas.get(j));
+//			}
+//		}
+//
+//	}
 
 	public List<Receta> recetasQueConoceEl(Usuario usuario) {
 
-		this.purificarLista();
+//		this.purificarLista();
 		List<Receta> recetasQueConoce = this.recetaConocidas;
 
 		List<Receta> recetasQueConocePorLosMiembrosDelGrupo = new ArrayList<Receta>();

@@ -16,15 +16,16 @@ public class Busqueda{
 
 	
 	public void filtrar(Usuario usuario, List<Receta> recetas) throws FilterException {
-		
-		for(Filtro filtro : filtros) {
-			
-			filtro.filtrarBusqueda(usuario,recetas);
+		if(!filtros.isEmpty()){
+			for(Filtro filtro : filtros) {
+
+				filtro.filtrarBusqueda(usuario,recetas);
+			}
 		}
 	}
 	
 	public void postProcesar(List<Receta> recetasXusuario){
-		postProcesamiento.procesar(recetasXusuario);
+		if(postProcesamiento!=null) postProcesamiento.procesar(recetasXusuario);
 
 	}
 	

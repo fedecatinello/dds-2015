@@ -14,10 +14,11 @@ public class Alfabeticamente implements Criterio{
 		Collections.sort(recetasXusuario, new Comparator<Receta>(){
 			@Override
 			public int compare(Receta o1, Receta o2) {
-				return o1.getNombre().compareTo(o2.getNombre());
+				return o1.getNombre().compareToIgnoreCase(o2.getNombre());
 			}
 				});
 	}
+	
 
 
 

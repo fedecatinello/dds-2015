@@ -69,6 +69,7 @@ public abstract class TestGeneralAbstract {
 		polloConPure.agregarSubReceta(pollo);
 		polloConPure.agregarSubReceta(pure);
 		polloConPure.agregarSubReceta(condimentos);
+		polloConPure.setNombre("Pollo Con Pure");
 		return polloConPure;
 	}
 

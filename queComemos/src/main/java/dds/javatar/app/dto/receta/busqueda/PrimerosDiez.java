@@ -8,7 +8,9 @@ public class PrimerosDiez implements PostProcesamiento{
 
 	@Override
 	public void procesar(List<Receta> recetasXusuario) {
-		recetasXusuario = recetasXusuario.subList(0, 9);
+		for(int i=recetasXusuario.size()-1; i>9; i--){
+			recetasXusuario.remove(i);
+		}
 	}
 
 }

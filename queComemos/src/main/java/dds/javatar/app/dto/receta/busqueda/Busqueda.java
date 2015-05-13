@@ -28,15 +28,6 @@ public class Busqueda{
 
 	}
 	
-	public List<Receta> buscarPara(Usuario usuario) throws FilterException{
-		
-		List<Receta> recetasXusuario = Sistema.getInstance().recetasQueConoceEl(usuario);
-		filtrar(usuario,recetasXusuario);
-		postProcesar(recetasXusuario);
-		return recetasXusuario;
-	
-	}
-	
 	
 	public PostProcesamiento getPostProcesamiento() {
 		return postProcesamiento;

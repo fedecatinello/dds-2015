@@ -100,7 +100,7 @@ public class Sistema implements RepositorioRecetas {
 
 	public List<Receta> recetasQueConoceEl(Usuario usuario) {
 
-		this.purificarLista();
+		//this.purificarLista();
 		List<Receta> recetasQueConoce = this.recetaConocidas;
 
 		List<Receta> recetasQueConocePorLosMiembrosDelGrupo = new ArrayList<Receta>();

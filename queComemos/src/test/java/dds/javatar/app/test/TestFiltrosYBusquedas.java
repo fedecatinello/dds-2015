@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,26 +39,47 @@ public class TestFiltrosYBusquedas extends TestGeneralAbstract {
 
 	@Test
 	public void testBuscarRecetasSinExcesoDeCalorias() throws BusinessException {
-		Busqueda buscador = new FiltroExcesoCalorias(new BuscarTodas()); // 10 de 20 recetas tienen 690 de calorias
+		Busqueda buscador = new FiltroExcesoCalorias(new BuscarTodas());
+
+		this.usuario.setPeso(new BigDecimal(200)); // sobrepeso
+
+		RecetaPrivadaSimple recetaConMuchasCalorias = this.crearRecetaPrivadaSimple();
+		recetaConMuchasCalorias.agregarIngrediente("salmon", new BigDecimal(100));
+		recetaConMuchasCalorias.setCalorias(1500);
+		recetaConMuchasCalorias.setNombre("AAA");
+		this.usuario.agregarReceta(recetaConMuchasCalorias);
+
+		RecetaPrivadaSimple recetaConPocasCalorias = this.crearRecetaPrivadaSimple();
+		recetaConPocasCalorias.agregarIngrediente("pollo", new BigDecimal(150));
+		recetaConPocasCalorias.setCalorias(100);
+		this.usuario.agregarReceta(recetaConPocasCalorias);
+
+		RecetaPrivadaSimple recetaConCaloriasJustas = this.crearRecetaPrivadaSimple();
+		recetaConCaloriasJustas.agregarIngrediente("pollo", new BigDecimal(150));
+		recetaConCaloriasJustas.setCalorias(500);
+		this.usuario.agregarReceta(recetaConCaloriasJustas);
+
 		List<Receta> listaRecetas = buscador.obtenerRecetasFiltradas(this.usuario);
-		assertEquals(10, listaRecetas.size());
+
+		Assert.assertFalse(listaRecetas.contains(recetaConMuchasCalorias));
+		Assert.assertTrue(listaRecetas.contains(recetaConPocasCalorias));
+		Assert.assertTrue(listaRecetas.contains(recetaConCaloriasJustas));
 	}
 
 	@Test
 	public void testBuscarRecetasSinIngredientesCaros() throws BusinessException {
 		Busqueda buscador = new FiltroCarosEnPreparacion(new BuscarTodas());
-		
-		Usuario usuarioBasico = this.crearUsuarioBasicoValido();
-		
+
 		RecetaPrivadaSimple recetaCara = this.crearRecetaPrivadaSimple();
-		recetaCara.agregarIngrediente("salmon",new BigDecimal(100));
-		usuarioBasico.agregarReceta(recetaCara);
+		recetaCara.agregarIngrediente("salmon", new BigDecimal(100));
+		this.usuario.agregarReceta(recetaCara);
 		RecetaPrivadaSimple recetaNoCara = this.crearRecetaPrivadaSimple();
-		recetaCara.agregarIngrediente("pollo",new BigDecimal(150));
-		usuarioBasico.agregarReceta(recetaNoCara);
-		
-		List<Receta> listaRecetas = buscador.obtenerRecetasFiltradas(usuarioBasico);
-		assertEquals(1, listaRecetas.size());
+		recetaNoCara.agregarIngrediente("pollo", new BigDecimal(150));
+		this.usuario.agregarReceta(recetaNoCara);
+
+		List<Receta> listaRecetas = buscador.obtenerRecetasFiltradas(this.usuario);
+		Assert.assertFalse(listaRecetas.contains(recetaCara));
+		Assert.assertTrue(listaRecetas.contains(recetaNoCara));
 	}
 
 }

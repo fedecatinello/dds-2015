@@ -16,11 +16,18 @@ public class FiltroExcesoCalorias extends FiltroDeBusqueda {
 	public List<Receta> obtenerRecetasFiltradas(Usuario usuario) {
 		List<Receta> listaRecetas = this.busqueda.obtenerRecetasFiltradas(usuario);
 
+		
 		if (usuario.tieneSobrePeso()) {
 			Iterator<Receta> it = listaRecetas.iterator();
-
+			
 			while (it.hasNext()) {
 				Receta receta = it.next();
+				
+				/*if ("AAA".equals(receta.getNombre())) {
+					if (receta.getCalorias() > 500) {
+						it.remove();
+					}
+				}*/
 				if (receta.getCalorias() > 500) {
 					it.remove();
 				}

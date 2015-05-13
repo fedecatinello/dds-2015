@@ -30,6 +30,7 @@ public class Diabetico extends UsuarioConPreferencia {
 //		}
 //	}
 	
+	@Override
 	public boolean validarReceta(Receta receta){
 		if (receta.alimentoSobrepasaCantidad("azucar", new BigDecimal(100))) {
 		return false; 

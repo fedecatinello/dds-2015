@@ -20,9 +20,11 @@ public abstract class RecetaSimple implements Receta{
 
 	
 	/**		Getters & Setters			**/
+	@Override
 	public String getNombre() {
 		return this.nombre;
 	}
+	@Override
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -34,6 +36,7 @@ public abstract class RecetaSimple implements Receta{
 		this.preparacion = preparacion;
 	}
 	
+	@Override
 	public Integer getCalorias() {
 		return this.calorias;
 	}
@@ -58,6 +61,7 @@ public abstract class RecetaSimple implements Receta{
 	public void agregarCondimento(String condimento, BigDecimal cantidad) {
 		this.condimentos.put(condimento, cantidad);
 	}
+	@Override
 	public Map<String, BigDecimal> getCondimentos() {
 		return this.condimentos;
 	}
@@ -65,6 +69,7 @@ public abstract class RecetaSimple implements Receta{
 	public void agregarIngrediente(String ingrediente, BigDecimal cantidad) {
 		this.ingredientes.put(ingrediente, cantidad);
 	}
+	@Override
 	public Map<String, BigDecimal> getIngredientes() {
 		return this.ingredientes;
 	}
@@ -72,6 +77,7 @@ public abstract class RecetaSimple implements Receta{
 	
 	
 	/**			Metodos			**/	
+	@Override
 	public void validarSiLaRecetaEsValida() throws BusinessException {
 		if (this.ingredientes.isEmpty()) {
 			throw new BusinessException("La receta no es valida ya que no tiene ingredientes!");
@@ -81,14 +87,17 @@ public abstract class RecetaSimple implements Receta{
 		}
 	}
 	
+	@Override
 	public Boolean contieneIngrediente(String ingrediente) {
 		return this.ingredientes.containsKey(ingrediente);
 	}
 
+	@Override
 	public Boolean contieneCondimento(String condimento) {
 		return this.condimentos.containsKey(condimento);
 	}
 
+	@Override
 	public Boolean alimentoSobrepasaCantidad(String alimento, BigDecimal cantidad) {
 		if (!this.ingredientes.containsKey(alimento)) {
 			return Boolean.FALSE;
@@ -96,6 +105,7 @@ public abstract class RecetaSimple implements Receta{
 		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
 	}
 	
+	@Override
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario) {
 		if(usuario.getRecetas().contains(receta)) {
 			return true;
@@ -103,6 +113,7 @@ public abstract class RecetaSimple implements Receta{
 		return false;
 	}
 	
+	@Override
 	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
 		return receta.chequearVisibilidad(receta, usuario);
 	}

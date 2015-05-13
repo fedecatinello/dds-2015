@@ -9,7 +9,7 @@ import dds.javatar.app.dto.receta.Receta;
 public class Alfabeticamente implements Criterio{
 
 	@Override
-	public List<Receta> ascendente(List<Receta> recetasXusuario) {
+	public void ascendente(List<Receta> recetasXusuario) {
 		
 		Collections.sort(recetasXusuario, new Comparator<Receta>(){
 			@Override
@@ -17,7 +17,6 @@ public class Alfabeticamente implements Criterio{
 				return o1.getNombre().compareTo(o2.getNombre());
 			}
 				});
-		return recetasXusuario;
 	}
 
 

@@ -9,57 +9,42 @@ import dds.javatar.app.dto.sistema.Sistema;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 
-public class Busqueda extends Sistema{
-	
-	private Usuario usuario;
-	
-	private List<Receta> recetasXusuario;
+public class Busqueda{
 	
 	private List<Filtro> filtros;
 
-	private List<PostProcesamiento> postProcesamiento;
+	private PostProcesamiento postProcesamiento;
 
 	
-	
-	public void filtrar() throws FilterException {
+	public void filtrar(List<Receta> recetas, Usuario usuario) throws FilterException {
 		
 		for(Filtro filtro : filtros) {
 			
-			filtro.filtrarBusqueda(this);
+			filtro.filtrarBusqueda(recetas,usuario);
 		}
 	}
 	
-	public List<Receta> postProcesar(){
-		recetasXusuario = recetasQueConoceEl(usuario);
-		List<Receta> recetasProcesadas = new ArrayList<Receta>();
-		for(PostProcesamiento procesamientos: postProcesamiento){
-			recetasProcesadas.addAll(procesamientos.procesar(recetasXusuario));
-		}
-		return recetasProcesadas;
+	public void postProcesar(List<Receta> recetasXusuario){
+		postProcesamiento.procesar(recetasXusuario);
+
 	}
 	
-	public List<PostProcesamiento> getPostProcesamiento() {
+	public List<Receta> buscarPara(Usuario usuario){
+		
+		List<Receta> recetasXusuario = Sistema.getInstance().recetasQueConoceEl(usuario);
+		filtrar(recetasXusuario,usuario);
+		postProcesar(recetasXusuario);
+		return recetasXusuario;
+	
+	}
+	
+	
+	public PostProcesamiento getPostProcesamiento() {
 		return postProcesamiento;
 	}
 
-	public void setPostProcesamiento(List<PostProcesamiento> postProcesamiento) {
+	public void setPostProcesamiento(PostProcesamiento postProcesamiento) {
 		this.postProcesamiento = postProcesamiento;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public List<Receta> getRecetasXusuario() {
-		return recetasXusuario;
-	}
-
-	public void setRecetasXusuario(List<Receta> recetasXusuario) {
-		this.recetasXusuario = recetasXusuario;
 	}
 
 	public List<Filtro> getFiltros() {

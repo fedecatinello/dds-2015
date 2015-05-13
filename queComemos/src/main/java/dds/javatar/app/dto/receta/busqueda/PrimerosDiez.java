@@ -7,8 +7,8 @@ import dds.javatar.app.dto.receta.Receta;
 public class PrimerosDiez implements PostProcesamiento{
 
 	@Override
-	public List<Receta> procesar(List<Receta> recetasXusuario) {
-		return recetasXusuario.subList(0, 9);
+	public void procesar(List<Receta> recetasXusuario) {
+		recetasXusuario = recetasXusuario.subList(0, 9);
 	}
 
 }

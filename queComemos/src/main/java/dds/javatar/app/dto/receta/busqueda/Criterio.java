@@ -6,7 +6,6 @@ import dds.javatar.app.dto.receta.Receta;
 
 public interface Criterio {
 
-	public List<Receta> ascendente(List<Receta> recetasXusuario);
-
+	public void ascendente(List<Receta> recetasXusuario);
 
 }

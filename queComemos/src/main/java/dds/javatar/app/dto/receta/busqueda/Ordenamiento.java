@@ -7,15 +7,13 @@ import dds.javatar.app.dto.receta.Receta;
 public class Ordenamiento implements PostProcesamiento{
 
 	private List<Criterio> criterios;
-	
-	@SuppressWarnings("null")
+
 	@Override
-	public List<Receta> procesar(List<Receta> recetasXusuario) {
-		List<Receta> recetasOrdenadas = null;
+	public void procesar(List<Receta> recetasXusuario) {
+		
 		for(Criterio criterioAAplicar: criterios){
-			recetasOrdenadas.addAll(criterioAAplicar.ascendente(recetasXusuario));
+			criterioAAplicar.ascendente(recetasXusuario);
 		}
-		return recetasOrdenadas;
 	}
 	
 	

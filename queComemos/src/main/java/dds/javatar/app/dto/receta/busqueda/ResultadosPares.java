@@ -7,12 +7,12 @@ import dds.javatar.app.dto.receta.Receta;
 public class ResultadosPares implements PostProcesamiento {
 
 	@Override
-	public List<Receta> procesar(List<Receta> recetasXusuario) {
-		List<Receta> recetasPares= null;
-		for(int i=0; i<recetasXusuario.size(); i+=2){
-			recetasPares.add(recetasXusuario.get(i));
-		}
-		return recetasPares;		
+	public void procesar(List<Receta> recetasXusuario) {
+
+		int cantidadDeRecetas=recetasXusuario.size();
+		for(int i=1; i<cantidadDeRecetas; i+=2){
+			recetasXusuario.remove(i);
+		}		
 	}
 
 }

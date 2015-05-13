@@ -7,6 +7,7 @@ import java.util.Set;
 
 import dds.javatar.app.dto.usuario.Usuario;
 
+
 public class GrupoDeUsuarios {
 
 	private  String nombre;

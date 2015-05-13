@@ -40,6 +40,8 @@ public class TestBusquedas extends TestGeneralAbstract{
 	}
 	
 	
+	/* Tests de Filtros */ 
+	
 	@Test
 	public void testBuscarRecetasSinFiltro() throws FilterException {
 		Busqueda busqueda = new Busqueda();
@@ -85,6 +87,9 @@ public class TestBusquedas extends TestGeneralAbstract{
 //		busqueda.filtrar();
 //	}
 
+	
+	/* Tests de Busquedas */ 
+	
 	@Test
 	public void testProcesarDiezPrimeros() throws FilterException {
 		Busqueda busqueda = new Busqueda();
@@ -94,14 +99,14 @@ public class TestBusquedas extends TestGeneralAbstract{
 		assertEquals(10, listaRecetas.size());
 	}
 	
-	//revisar: no tiene sentido el assert
+
 	@Test
 	public void testProcesarSoloPares() throws FilterException {
 		Busqueda busqueda = new Busqueda();
 		PostProcesamiento soloPares = new ResultadosPares();
 		busqueda.setPostProcesamiento(soloPares);
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
-		assertEquals(10, listaRecetas.size());
+		assertEquals(14, listaRecetas.size());
 	}
 	
 	//revisar: no tiene sentido el assert
@@ -114,9 +119,10 @@ public class TestBusquedas extends TestGeneralAbstract{
 		orden.setCriterio(alfabetico);
 		busqueda.setPostProcesamiento(orden);
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
-		assertEquals(10, listaRecetas.size());
+		assertEquals(30, listaRecetas.size());
 	}
 	
+	//revisar: no tiene sentido el assert
 	@Test
 	public void testProcesarOrdenCalorias() throws FilterException {
 		Busqueda busqueda = new Busqueda();
@@ -126,10 +132,12 @@ public class TestBusquedas extends TestGeneralAbstract{
 		orden.setCriterio(calorias);
 		busqueda.setPostProcesamiento(orden);
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
-		assertEquals(10, listaRecetas.size());
+		assertEquals(30, listaRecetas.size());
 	}
 	
 	
+	/* Tests de Busquedas + Filtros */ 
+
 	/*
 	 * agregar tests de filtros + postprocesamiento
 	 * combinar 2 filtros y 1 postprocesamiento de orden

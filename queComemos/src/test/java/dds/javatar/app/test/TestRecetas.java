@@ -32,7 +32,7 @@ public class TestRecetas {
 		this.usuario = this.crearUsuarioBasicoValido();
 	}
 
-	private Usuario crearUsuarioBasicoValido() {
+	public Usuario crearUsuarioBasicoValido() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, -1);
@@ -47,7 +47,7 @@ public class TestRecetas {
 
 		return usuario;
 	}
-	private RecetaPrivadaSimple crearRecetaPrivadaSimple(){
+	public RecetaPrivadaSimple crearRecetaPrivadaSimple(){
 		RecetaPrivadaSimple ravioles = new RecetaPrivadaSimple(350);
 		ravioles.setNombre("Ravioles");
 		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
@@ -55,7 +55,7 @@ public class TestRecetas {
 		ravioles.agregarIngrediente("Verdura", new BigDecimal(100));
 		return ravioles;
 	}
-	private RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws BusinessException{
+	public RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws BusinessException{
 
 		RecetaPrivadaSimple condimentos = new RecetaPrivadaSimple(120);
 		RecetaPrivadaSimple pure  = new RecetaPrivadaSimple(350);

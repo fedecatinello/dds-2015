@@ -49,6 +49,30 @@ public abstract class TestGeneralAbstract {
 		return ravioles;
 	}
 
+	protected RecetaPrivadaCompuesta crearRecetaPrivadaCompuestaConNombreNulo() throws BusinessException{
+
+		RecetaPrivadaSimple condimentos = new RecetaPrivadaSimple(120);
+		RecetaPrivadaSimple pure  = new RecetaPrivadaSimple(350);
+		RecetaPrivadaSimple pollo  = new RecetaPrivadaSimple(220);
+		RecetaPrivadaCompuesta polloConPure  = new RecetaPrivadaCompuesta();
+
+		condimentos.setNombre("Condimentos");
+		condimentos.agregarIngrediente("Oregano",new BigDecimal(20));
+
+		pure.setNombre("Pure");
+		pure.agregarIngrediente("Manteca", new BigDecimal(300));
+		pure.agregarIngrediente("Papa", new BigDecimal(300));
+
+		pollo.agregarIngrediente("pollo", new BigDecimal(290));
+		pollo.setNombre("pollo");
+		
+		
+		polloConPure.agregarSubReceta(pollo);
+		polloConPure.agregarSubReceta(pure);
+		polloConPure.agregarSubReceta(condimentos);
+		return polloConPure;
+	}
+	
 	protected RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws BusinessException{
 
 		RecetaPrivadaSimple condimentos = new RecetaPrivadaSimple(120);
@@ -65,7 +89,7 @@ public abstract class TestGeneralAbstract {
 
 		pollo.agregarIngrediente("pollo", new BigDecimal(290));
 		pollo.setNombre("pollo");
-
+		polloConPure.setNombre("polloConPure");
 		polloConPure.agregarSubReceta(pollo);
 		polloConPure.agregarSubReceta(pure);
 		polloConPure.agregarSubReceta(condimentos);
@@ -86,5 +110,18 @@ public abstract class TestGeneralAbstract {
 
 	}
 	
+	protected void crearListaRecetasParaUsuarioSize20ConNombresNulos(Usuario user) throws BusinessException{
+		RecetaPrivadaCompuesta recetaPrivadaCompuesta;
+		RecetaPrivadaSimple recetaPrivadaSimple;
+		for (int i = 0; i < 10; i++) {
+			recetaPrivadaCompuesta =crearRecetaPrivadaCompuestaConNombreNulo();
+			recetaPrivadaSimple= crearRecetaPrivadaSimple();
+			
+			user.agregarReceta(recetaPrivadaSimple);
+			
+			user.agregarReceta(recetaPrivadaCompuesta);
+		}
+
+	}
 
 }

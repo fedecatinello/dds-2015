@@ -1,6 +1,5 @@
 package dds.javatar.app.dto.receta.busqueda;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import dds.javatar.app.dto.receta.Receta;
@@ -16,11 +15,11 @@ public class Busqueda{
 	private PostProcesamiento postProcesamiento;
 
 	
-	public void filtrar(List<Receta> recetas, Usuario usuario) throws FilterException {
+	public void filtrar(Usuario usuario, List<Receta> recetas) throws FilterException {
 		
 		for(Filtro filtro : filtros) {
 			
-			filtro.filtrarBusqueda(recetas,usuario);
+			filtro.filtrarBusqueda(usuario,recetas);
 		}
 	}
 	
@@ -29,10 +28,10 @@ public class Busqueda{
 
 	}
 	
-	public List<Receta> buscarPara(Usuario usuario){
+	public List<Receta> buscarPara(Usuario usuario) throws FilterException{
 		
 		List<Receta> recetasXusuario = Sistema.getInstance().recetasQueConoceEl(usuario);
-		filtrar(recetasXusuario,usuario);
+		filtrar(usuario,recetasXusuario);
 		postProcesar(recetasXusuario);
 		return recetasXusuario;
 	

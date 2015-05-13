@@ -9,11 +9,7 @@ import dds.javatar.app.util.exception.FilterException;
 
 public abstract class FiltroTemplate implements Filtro {
 
-	public void filtrarBusqueda(Busqueda busqueda) throws FilterException {
-		
-		Usuario usuarioBusqueda = busqueda.getUsuario();
-		
-		List<Receta> recetasUsuario = busqueda.getRecetasXusuario();
+	public void filtrarBusqueda(Usuario usuarioBusqueda, List<Receta> recetasUsuario) throws FilterException {
 		
 		for(Receta receta : recetasUsuario){
 			

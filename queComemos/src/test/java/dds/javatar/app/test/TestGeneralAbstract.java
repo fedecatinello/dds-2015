@@ -73,7 +73,7 @@ public abstract class TestGeneralAbstract {
 		return polloConPure;
 	}
 
-	protected void crearListaRecetasParaUsuarioSize20(Usuario user) throws BusinessException{
+	protected void crearListaRecetasParaUsuarioSize30(Usuario user) throws BusinessException{
 		RecetaPrivadaCompuesta recetaPrivadaCompuesta;
 		RecetaPrivadaSimple recetaPrivadaSimple;
 		RecetaPrivadaSimple recetaPrivadaSimpleHipertenso; 

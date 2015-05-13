@@ -36,7 +36,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 	@Before
 	public void initialize() throws BusinessException {
 		this.usuario = this.crearUsuarioBasicoValido();
-		crearListaRecetasParaUsuarioSize20(this.usuario);
+		crearListaRecetasParaUsuarioSize30(this.usuario);
 	}
 	
 
@@ -49,7 +49,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		busqueda.setFiltros(filtros);
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
-		assertEquals(20 , listaRecetas.size());
+		assertEquals(30 , listaRecetas.size());
 	}
 	
 	@Test
@@ -59,14 +59,20 @@ public class TestBusquedas extends TestGeneralAbstract{
 		filtros.add(new FiltroCondiciones());
 		busqueda.setFiltros(filtros);
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);;
-		assertNotEquals(20, listaRecetas.size());
+		assertNotEquals(30, listaRecetas.size());
 	}
 	
 	@Test
 	public void testFiltrarRecetasConIngredientesCaros() throws FilterException {
 		Busqueda busqueda = new Busqueda(); // 10 de 20 recetas tienen 690 de calorias
 		List<Filtro> filtros = new ArrayList<Filtro>();
-		filtros.add(new FiltroPrecio());
+		FiltroPrecio filtroPrecio = new FiltroPrecio();
+		List<String> ingredientesCaros = new ArrayList<String>();
+		ingredientesCaros.add("harina");
+		ingredientesCaros.add("sal");
+		ingredientesCaros.add("ravioles");
+		filtroPrecio.setIngredientesCaros(ingredientesCaros);
+		filtros.add(filtroPrecio);
 		busqueda.setFiltros(filtros); 
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);;
 		assertEquals(20 , listaRecetas.size());

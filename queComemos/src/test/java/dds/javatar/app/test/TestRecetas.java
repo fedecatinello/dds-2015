@@ -296,6 +296,7 @@ public class TestRecetas extends TestGeneralAbstract {
 		this.usuario.agregarReceta(polloConPure);
 
 	}
+	/*
 	@Test(expected = BusinessException.class)
 	public void testAgregaRecetaConSubrecetaAjena() throws BusinessException {
 		RecetaPrivadaCompuesta unaRecetaCompuesta = crearRecetaPrivadaCompuesta();
@@ -309,8 +310,8 @@ public class TestRecetas extends TestGeneralAbstract {
 		this.usuario.agregarReceta(unaRecetaCompuesta);
 	}
 	
-	/*
-	 * Aca hay q ver lo de la clonacion. Tengo una receta privada y quiero agregar una publica
+	
+	//Aca hay q ver lo de la clonacion. Tengo una receta privada y quiero agregar una publica
 	@Test
 	public void testAgregaRecetaConSubrecetaPublica() throws BusinessException {
 		RecetaPrivadaCompuesta unaRecetaCompuesta = crearRecetaPrivadaCompuesta();

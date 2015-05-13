@@ -27,10 +27,11 @@ public class Sistema implements RepositorioRecetas {
         return instance;
     }
 
+
     @Override
     public void agregar(Receta receta) {
 
-        this.recetaConocidas.add(receta);
+		this.recetaConocidas.add(receta);
         this.purificarLista();
     }
 
@@ -96,7 +97,6 @@ public class Sistema implements RepositorioRecetas {
                 this.recetaConocidas.remove(this.recetaConocidas.get(j));
             }
         }
-
     }
 
     public List<Receta> recetasQueConoceEl(Usuario usuario) {
@@ -157,6 +157,6 @@ public class Sistema implements RepositorioRecetas {
         return recetasXusuario;
        
     }
-   
-   
+     
 }
+

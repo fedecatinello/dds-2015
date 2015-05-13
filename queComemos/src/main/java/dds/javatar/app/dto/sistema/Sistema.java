@@ -124,8 +124,8 @@ public class Sistema implements RepositorioRecetas {
 	public List<Receta> realizarBusquedaPara(Busqueda busqueda, Usuario usuario) throws FilterException{
 		
 		List<Receta> recetasXusuario = recetasQueConoceEl(usuario);
-		busqueda.filtrar(usuario,recetasXusuario);
-		busqueda.postProcesar(recetasXusuario);
+		if (!busqueda.getFiltros.isEmpty()) busqueda.filtrar(usuario,recetasXusuario);
+		if (!busqueda.getPostProcesamiento==null) busqueda.postProcesar(recetasXusuario);
 		return recetasXusuario;
 		
 	}

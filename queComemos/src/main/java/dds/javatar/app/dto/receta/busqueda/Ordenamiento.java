@@ -10,7 +10,7 @@ public class Ordenamiento implements PostProcesamiento{
 
 	@Override
 	public void procesar(List<Receta> recetasXusuario) {
-		criterio.ascendente(recetasXusuario);
+	if(criterio!=null) criterio.ascendente(recetasXusuario);
 	}
 
 	public Criterio getCriterio() {

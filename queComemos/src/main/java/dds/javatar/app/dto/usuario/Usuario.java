@@ -34,8 +34,8 @@ public class Usuario {
 	private Rutina rutina;
 	private Set<Receta> recetas;
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
+	private List<Receta> favoritos;
 
-	private List<Receta> favoritos; 
 	/**** Constructors ****/
 
 	public Usuario() {
@@ -104,7 +104,7 @@ public class Usuario {
 	public void setRutina(Rutina rutina) {
 		this.rutina = rutina;
 	}
-	
+
 	public Set<Receta> getRecetas() {
 		return this.recetas;
 	}
@@ -121,85 +121,18 @@ public class Usuario {
 		this.gruposAlQuePertenece.add(grupoAlQuePertenece);
 	}
 
-	/**** Metodos ****/
-
-	/* Obtener la masa corporal dada una presicion */
-	public BigDecimal getIMC(int precision) {
-
-		MathContext mc = new MathContext(precision, RoundingMode.HALF_DOWN);
-		BigDecimal cuadrado = this.altura.pow(2, mc);
-		return this.peso.divide(cuadrado, mc);
+	public List<Receta> getFavoritos() {
+		return favoritos;
 	}
 
-	public void validar() throws UsuarioException {
-		this.validarCamposNulos();
-		this.validarNombre();
-		this.validarFechaNacimiento();
-		this.validarCondicionesPreexistentes();
-	}
-	
-	/* Validadores */
-	private void validarCamposNulos() throws UsuarioException {
-		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null || this.rutina == null) {
-			throw new UsuarioException("El usuario tiene campos obligatorios sin completar");
-		}
-	}
-	
-	private void validarNombre() throws UsuarioException {
-		if (this.nombre.length() <= MIN_NAME_LENGTH) {
-			throw new UsuarioException("El nombre del usuario es demasido corto");
-		}
-	}
-	
-	private void validarFechaNacimiento() throws UsuarioException {
-		Date today = new Date();
-		if (today.compareTo(this.fechaNacimiento) <= 0) {
-			throw new UsuarioException("La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
-		}
-	}
-
-	private void validarCondicionesPreexistentes() throws UsuarioException {
-		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-			condicionPreexistente.validarUsuario(this);
-		}
-	}
-	/* .... */
-	
-	
-	
-	public Boolean sigueRutinaSaludable() {
-
-		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
-
-		if (userIMC < 18 || userIMC > 30) {
-			return Boolean.FALSE;
-		}
-
-		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-			if (!condicionPreexistente.usuarioSigueRutinaSaludable(this)) {
-				return Boolean.FALSE;
-			}
-		}
-
-		return Boolean.TRUE;
-	}
-
-	public Boolean tienePreferenciaAlimenticia(String alimento) {
-		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get(alimento));
-	}
-	
-	public Boolean tieneAlimentoQueLeDisguste(String alimento) {
-		return Boolean.FALSE.equals(this.preferenciasAlimenticias.get(alimento));
-	}
-
-	public Boolean tieneAlgunaPreferencia() {
-		return (this.preferenciasAlimenticias.values().contains(Boolean.TRUE));
+	public void setFavoritos(List<Receta> favoritos) {
+		this.favoritos = favoritos;
 	}
 
 	public void agregarPreferenciaAlimenticia(String alimento) {
 		this.preferenciasAlimenticias.put(alimento, Boolean.TRUE);
 	}
-	
+
 	public void agregarAlimentoQueLeDisgusta(String alimento) {
 		this.preferenciasAlimenticias.put(alimento, Boolean.FALSE);
 	}
@@ -217,72 +150,150 @@ public class Usuario {
 		if (this.recetas.contains(receta)) {
 			this.recetas.remove(receta);
 		} else {
-			throw new UsuarioException("El Usuario no tenia agregada esa receta");
+			throw new UsuarioException(
+					"El Usuario no tenia agregada esa receta");
 		}
 	}
 
-	public boolean validarSiAceptaReceta(Receta receta)  {
-		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
-			if(!condicionPreexistente.validarReceta(receta)){
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	public Set<CondicionPreexistente> condicionesQueNoAcepta(Usuario usuario, Receta receta){
-		Set<CondicionPreexistente> condicionesQueNoAceptanReceta= new HashSet<CondicionPreexistente>();
+	public Set<CondicionPreexistente> condicionesQueNoAcepta(Usuario usuario,
+			Receta receta) {
+		Set<CondicionPreexistente> condicionesQueNoAceptanReceta = new HashSet<CondicionPreexistente>();
 		for (CondicionPreexistente condicionPreexistente : usuario.condicionesPreexistentes) {
-			if(!usuario.validarSiAceptaReceta(receta)){
+			if (!usuario.validarSiAceptaReceta(receta)) {
 				condicionesQueNoAceptanReceta.add(condicionPreexistente);
 			}
 		}
 		return condicionesQueNoAceptanReceta;
 	}
 
-	public void verReceta(Receta receta) throws UsuarioException {
-		if (!receta.chequearVisibilidad(receta, this)){
-			throw new UsuarioException("El Usuario no tiene permitido ver esta receta");
+	/**** Metodos ****/
+
+	/* Validadores */
+	
+	public void validar() throws UsuarioException {
+		this.validarCamposNulos();
+		this.validarNombre();
+		this.validarFechaNacimiento();
+		this.validarCondicionesPreexistentes();
+	}
+	
+	private void validarCamposNulos() throws UsuarioException {
+		if (this.nombre == null || this.fechaNacimiento == null
+				|| this.peso == null || this.altura == null
+				|| this.rutina == null) {
+			throw new UsuarioException(
+					"El usuario tiene campos obligatorios sin completar");
 		}
+	}
+
+	private void validarNombre() throws UsuarioException {
+		if (this.nombre.length() <= MIN_NAME_LENGTH) {
+			throw new UsuarioException(
+					"El nombre del usuario es demasido corto");
+		}
+	}
+
+	private void validarFechaNacimiento() throws UsuarioException {
+		Date today = new Date();
+		if (today.compareTo(this.fechaNacimiento) <= 0) {
+			throw new UsuarioException(
+					"La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
+		}
+	}
+
+	private void validarCondicionesPreexistentes() throws UsuarioException {
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			condicionPreexistente.validarUsuario(this);
+		}
+	}
+
+	public boolean validarSiAceptaReceta(Receta receta) {
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			if (!condicionPreexistente.validarReceta(receta)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void validarModificarReceta(Receta receta) throws UsuarioException {
 		receta.chequearVisibilidad(receta, this);
 	}
 
-	public void puedeAgregarSubRecetas(Set<Receta> subRecetas) throws UsuarioException {
+	/* otros */
+
+	/* Obtener la masa corporal dada una presicion */
+	public BigDecimal getIMC(int precision) {
+
+		MathContext mc = new MathContext(precision, RoundingMode.HALF_DOWN);
+		BigDecimal cuadrado = this.altura.pow(2, mc);
+		return this.peso.divide(cuadrado, mc);
+	}
+
+	public void puedeAgregarSubRecetas(Set<Receta> subRecetas)
+			throws UsuarioException {
 		for (Receta subReceta : subRecetas) {
 			try {
 				this.verReceta(subReceta);
 			} catch (Exception e) {
-				throw new UsuarioException("El Usuario no tiene permitido agregar alguna subreceta");
+				throw new UsuarioException(
+						"El Usuario no tiene permitido agregar alguna subreceta");
 			}
 		}
-	}
-
-	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws UsuarioException {
-		this.verReceta(receta);
-		receta.setNombre(nuevoNombre);
-		
 	}
 
 	public boolean puedeModificarReceta(Receta receta) {
 		return receta.chequearModificacion(receta, this);
 	}
-	
-	public void marcarFavorita(Receta receta){
-	//	if (this.validarSiAceptaReceta(receta)) favoritos.add(receta);
-		 favoritos.add(receta);
+
+	public Boolean sigueRutinaSaludable() {
+
+		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision())
+				.intValue();
+
+		if (userIMC < 18 || userIMC > 30) {
+			return Boolean.FALSE;
+		}
+
+		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
+			if (!condicionPreexistente.usuarioSigueRutinaSaludable(this)) {
+				return Boolean.FALSE;
+			}
+		}
+
+		return Boolean.TRUE;
 	}
 
-	public List<Receta> getFavoritos() {
-		return favoritos;
+	public Boolean tienePreferenciaAlimenticia(String alimento) {
+		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get(alimento));
 	}
 
-	public void setFavoritos(List<Receta> favoritos) {
-		this.favoritos = favoritos;
+	public Boolean tieneAlimentoQueLeDisguste(String alimento) {
+		return Boolean.FALSE
+				.equals(this.preferenciasAlimenticias.get(alimento));
 	}
-	
-	
+
+	public Boolean tieneAlgunaPreferencia() {
+		return (this.preferenciasAlimenticias.values().contains(Boolean.TRUE));
+	}
+
+	public void verReceta(Receta receta) throws UsuarioException {
+		if (!receta.chequearVisibilidad(receta, this)) {
+			throw new UsuarioException(
+					"El Usuario no tiene permitido ver esta receta");
+		}
+	}
+
+	public void modificarNombreDeReceta(Receta receta, String nuevoNombre)
+			throws UsuarioException {
+		this.verReceta(receta);
+		receta.setNombre(nuevoNombre);
+
+	}
+
+	public void marcarFavorita(Receta receta) {
+		// if (this.validarSiAceptaReceta(receta)) favoritos.add(receta);
+		favoritos.add(receta);
+	}
 
 }

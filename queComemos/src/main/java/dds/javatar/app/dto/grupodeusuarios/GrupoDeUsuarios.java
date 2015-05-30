@@ -43,7 +43,6 @@ public class GrupoDeUsuarios {
 	}
 
 	public void setUsuarios(Set<Usuario> usuarios) {
-
 		this.miembros = usuarios;
 	}
 
@@ -51,4 +50,5 @@ public class GrupoDeUsuarios {
 		usuario.setGruposAlQuePertenece(this);
 		this.miembros.add(usuario);
 	}
+
 }

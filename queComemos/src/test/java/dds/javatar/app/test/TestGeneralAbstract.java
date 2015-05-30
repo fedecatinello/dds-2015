@@ -9,7 +9,7 @@ import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.RecetaException;
 
 public abstract class TestGeneralAbstract {
 
@@ -49,7 +49,7 @@ public abstract class TestGeneralAbstract {
 		return ravioles;
 	}
 
-	protected RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws BusinessException{
+	protected RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws RecetaException{
 
 		RecetaPrivadaSimple condimentos = new RecetaPrivadaSimple(120);
 		RecetaPrivadaSimple pure  = new RecetaPrivadaSimple(350);
@@ -73,7 +73,7 @@ public abstract class TestGeneralAbstract {
 		return polloConPure;
 	}
 
-	protected void crearListaRecetasParaUsuarioSize30(Usuario user) throws BusinessException{
+	protected void crearListaRecetasParaUsuarioSize30(Usuario user) throws RecetaException{
 		RecetaPrivadaCompuesta recetaPrivadaCompuesta;
 		RecetaPrivadaSimple recetaPrivadaSimple;
 		RecetaPrivadaSimple recetaPrivadaSimpleHipertenso; 

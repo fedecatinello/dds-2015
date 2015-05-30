@@ -16,7 +16,7 @@ import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Vegano;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.BusinessException;
 
 public class TestRutinas {
 

@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,12 +15,12 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
 import dds.javatar.app.dto.sistema.Sistema;
-
 import dds.javatar.app.dto.usuario.Hipertenso;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.BusinessException;
+import dds.javatar.app.util.exception.RecetaException;
 
 public class TestSistema {
 
@@ -119,7 +118,7 @@ public class TestSistema {
 	}
 
 	@Test
-	public void recetaQueLeConocePorCompartirGrupo() throws BusinessException {
+	public void recetaQueLeConocePorCompartirGrupo() throws RecetaException, BusinessException {
 		Sistema sistema = this.sistema;
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
 		Usuario usuario = crearUsuarioBasicoValido();
@@ -137,7 +136,7 @@ public class TestSistema {
 
 	@Test
 	public void recetaQueNoTieneQueConocerPOrqueNoCompartenGrupo()
-			throws BusinessException {
+			throws BusinessException, RecetaException {
 		Sistema sistema = this.sistema;
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
 		Usuario usuario = crearUsuarioBasicoValido();
@@ -161,7 +160,7 @@ public class TestSistema {
 
 	@Test
 	public void laRecetaContienePalabraClaveDePreferenciaDelGrupoYEsAptaParaTodosLosIntegrantes()
-			throws BusinessException {
+			throws BusinessException, RecetaException {
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
 		Usuario usuario = crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
@@ -172,7 +171,7 @@ public class TestSistema {
 
 	@Test(expected = BusinessException.class)
 	public void laRecetaNOContienePalabraClaveDePreferenciaDelGrupoYEsAptaParaTodosLosIntegrantes()
-			throws BusinessException {
+			throws BusinessException, RecetaException {
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
 		Usuario usuario = crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);

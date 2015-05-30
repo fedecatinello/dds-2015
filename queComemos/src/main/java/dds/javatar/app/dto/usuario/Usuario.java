@@ -12,7 +12,8 @@ import java.util.Set;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.RecetaException;
+import dds.javatar.app.util.exception.UsuarioException;
 
 public class Usuario {
 
@@ -130,7 +131,7 @@ public class Usuario {
 		return this.peso.divide(cuadrado, mc);
 	}
 
-	public void validar() throws BusinessException {
+	public void validar() throws UsuarioException {
 		this.validarCamposNulos();
 		this.validarNombre();
 		this.validarFechaNacimiento();
@@ -138,26 +139,26 @@ public class Usuario {
 	}
 	
 	/* Validadores */
-	private void validarCamposNulos() throws BusinessException {
+	private void validarCamposNulos() throws UsuarioException {
 		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null || this.rutina == null) {
-			throw new BusinessException("El usuario tiene campos obligatorios sin completar");
+			throw new UsuarioException("El usuario tiene campos obligatorios sin completar");
 		}
 	}
 	
-	private void validarNombre() throws BusinessException {
+	private void validarNombre() throws UsuarioException {
 		if (this.nombre.length() <= MIN_NAME_LENGTH) {
-			throw new BusinessException("El nombre del usuario es demasido corto");
+			throw new UsuarioException("El nombre del usuario es demasido corto");
 		}
 	}
 	
-	private void validarFechaNacimiento() throws BusinessException {
+	private void validarFechaNacimiento() throws UsuarioException {
 		Date today = new Date();
 		if (today.compareTo(this.fechaNacimiento) <= 0) {
-			throw new BusinessException("La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
+			throw new UsuarioException("La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
 		}
 	}
 
-	private void validarCondicionesPreexistentes() throws BusinessException {
+	private void validarCondicionesPreexistentes() throws UsuarioException {
 		for (CondicionPreexistente condicionPreexistente : this.condicionesPreexistentes) {
 			condicionPreexistente.validarUsuario(this);
 		}
@@ -207,16 +208,16 @@ public class Usuario {
 		this.condicionesPreexistentes.add(condicion);
 	}
 
-	public void agregarReceta(Receta receta) throws BusinessException {
+	public void agregarReceta(Receta receta) throws RecetaException {
 		receta.validarSiLaRecetaEsValida();
 		this.getRecetas().add(receta);
 	}
 
-	public void quitarReceta(Receta receta) throws BusinessException {
+	public void quitarReceta(Receta receta) throws UsuarioException {
 		if (this.recetas.contains(receta)) {
 			this.recetas.remove(receta);
 		} else {
-			throw new BusinessException("El Usuario no tenia agregada esa receta");
+			throw new UsuarioException("El Usuario no tenia agregada esa receta");
 		}
 	}
 
@@ -239,27 +240,27 @@ public class Usuario {
 		return condicionesQueNoAceptanReceta;
 	}
 
-	public void verReceta(Receta receta) throws BusinessException {
+	public void verReceta(Receta receta) throws UsuarioException {
 		if (!receta.chequearVisibilidad(receta, this)){
-			throw new BusinessException("El Usuario no tiene permitido ver esta receta");
+			throw new UsuarioException("El Usuario no tiene permitido ver esta receta");
 		}
 	}
 
-	public void validarModificarReceta(Receta receta) throws BusinessException {
+	public void validarModificarReceta(Receta receta) throws UsuarioException {
 		receta.chequearVisibilidad(receta, this);
 	}
 
-	public void puedeAgregarSubRecetas(Set<Receta> subRecetas) throws BusinessException {
+	public void puedeAgregarSubRecetas(Set<Receta> subRecetas) throws UsuarioException {
 		for (Receta subReceta : subRecetas) {
 			try {
 				this.verReceta(subReceta);
 			} catch (Exception e) {
-				throw new BusinessException("El Usuario no tiene permitido agregar alguna subreceta");
+				throw new UsuarioException("El Usuario no tiene permitido agregar alguna subreceta");
 			}
 		}
 	}
 
-	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws BusinessException {
+	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws UsuarioException {
 		this.verReceta(receta);
 		receta.setNombre(nuevoNombre);
 		

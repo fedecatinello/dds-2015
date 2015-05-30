@@ -25,7 +25,8 @@ import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Vegano;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.RecetaException;
+import dds.javatar.app.util.exception.UsuarioException;
 
 public class TestRecetas {
 
@@ -51,7 +52,8 @@ public class TestRecetas {
 
 		return usuario;
 	}
-	public RecetaPrivadaSimple crearRecetaPrivadaSimple(){
+
+	public RecetaPrivadaSimple crearRecetaPrivadaSimple() {
 		RecetaPrivadaSimple ravioles = new RecetaPrivadaSimple(350);
 		ravioles.setNombre("Ravioles");
 		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
@@ -59,15 +61,17 @@ public class TestRecetas {
 		ravioles.agregarIngrediente("Verdura", new BigDecimal(100));
 		return ravioles;
 	}
-	public RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws BusinessException{
+
+	public RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta()
+			throws RecetaException, RecetaException {
 
 		RecetaPrivadaSimple condimentos = new RecetaPrivadaSimple(120);
-		RecetaPrivadaSimple pure  = new RecetaPrivadaSimple(350);
-		RecetaPrivadaSimple pollo  = new RecetaPrivadaSimple(220);
-		RecetaPrivadaCompuesta polloConPure  = new RecetaPrivadaCompuesta();
+		RecetaPrivadaSimple pure = new RecetaPrivadaSimple(350);
+		RecetaPrivadaSimple pollo = new RecetaPrivadaSimple(220);
+		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
 
 		condimentos.setNombre("Condimentos");
-		condimentos.agregarIngrediente("Oregano",new BigDecimal(20));
+		condimentos.agregarIngrediente("Oregano", new BigDecimal(20));
 
 		pure.setNombre("Pure");
 		pure.agregarIngrediente("Manteca", new BigDecimal(300));
@@ -82,31 +86,33 @@ public class TestRecetas {
 		return polloConPure;
 	}
 
-
 	// Punto 3: Hacer que un usuario agregue una receta
 
 	@Test
-	public void testAgregarRecetaSimple() throws BusinessException {
-		RecetaPrivadaSimple unaRecetaSimple=crearRecetaPrivadaSimple();
+	public void testAgregarRecetaSimple() throws RecetaException {
+		RecetaPrivadaSimple unaRecetaSimple = crearRecetaPrivadaSimple();
 
 		this.usuario.agregarReceta(unaRecetaSimple);
 	}
-	@Test(expected = BusinessException.class)
-	public void testAgregarRecetaSimpleSinIngredientes() throws BusinessException {
+
+	@Test(expected = RecetaException.class)
+	public void testAgregarRecetaSimpleSinIngredientes() throws RecetaException {
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(350);
 		this.usuario.agregarReceta(receta);
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testAgregarRecetaMenorAlRangoDeCalorias() throws BusinessException {
-		RecetaPrivadaSimple unaRecetaSimple=crearRecetaPrivadaSimple();
+	@Test(expected = RecetaException.class)
+	public void testAgregarRecetaMenorAlRangoDeCalorias()
+			throws RecetaException {
+		RecetaPrivadaSimple unaRecetaSimple = crearRecetaPrivadaSimple();
 		unaRecetaSimple.setCalorias(2);
 		this.usuario.agregarReceta(unaRecetaSimple);
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testAgregarRecetaMayorAlRangoDeCalorias() throws BusinessException {
-		RecetaPrivadaSimple unaRecetaSimple=crearRecetaPrivadaSimple();
+	@Test(expected = RecetaException.class)
+	public void testAgregarRecetaMayorAlRangoDeCalorias()
+			throws RecetaException {
+		RecetaPrivadaSimple unaRecetaSimple = crearRecetaPrivadaSimple();
 		unaRecetaSimple.setCalorias(99999);
 		this.usuario.agregarReceta(unaRecetaSimple);
 	}
@@ -121,7 +127,9 @@ public class TestRecetas {
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		noAcepta.add(hipertenso);
-		assertEquals(noAcepta , this.usuario.condicionesQueNoAcepta(this.usuario, receta));;
+		assertEquals(noAcepta,
+				this.usuario.condicionesQueNoAcepta(this.usuario, receta));
+		;
 	}
 
 	@Test
@@ -131,13 +139,13 @@ public class TestRecetas {
 
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(350);
 		receta.agregarIngrediente("chori", new BigDecimal(120));
-		//	this.usuario.validarSiAceptaReceta(receta);
+		// this.usuario.validarSiAceptaReceta(receta);
 
 		assertFalse(this.usuario.validarSiAceptaReceta(receta));
 	}
 
 	@Test
-	public void testRecetaDiabeticoNoAcepta()  {
+	public void testRecetaDiabeticoNoAcepta() {
 		Diabetico diabetico = new Diabetico();
 		this.usuario.agregarCondicionPreexistente(diabetico);
 
@@ -146,12 +154,13 @@ public class TestRecetas {
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		noAcepta.add(diabetico);
-		assertEquals(noAcepta , this.usuario.condicionesQueNoAcepta(this.usuario, receta));
+		assertEquals(noAcepta,
+				this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 
 	}
 
 	@Test
-	public void testRecetaHipertensoAcepta()  {
+	public void testRecetaHipertensoAcepta() {
 		Hipertenso hipertenso = new Hipertenso();
 		this.usuario.agregarCondicionPreexistente(hipertenso);
 
@@ -159,12 +168,13 @@ public class TestRecetas {
 		receta.agregarIngrediente("arroz", new BigDecimal(200));
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
-		assertEquals(noAcepta , this.usuario.condicionesQueNoAcepta(this.usuario, receta));
+		assertEquals(noAcepta,
+				this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 
 	}
 
 	@Test
-	public void testRecetaVeganoAcepta() throws BusinessException {
+	public void testRecetaVeganoAcepta() throws RecetaException {
 
 		Vegano veggie = new Vegano();
 		this.usuario.agregarCondicionPreexistente(veggie);
@@ -175,7 +185,7 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testRecetaDiabeticoAceptaAzucar()  {
+	public void testRecetaDiabeticoAceptaAzucar() {
 		Diabetico diabetico = new Diabetico();
 		this.usuario.agregarCondicionPreexistente(diabetico);
 
@@ -183,29 +193,29 @@ public class TestRecetas {
 		receta.agregarIngrediente("azucar", new BigDecimal(50));
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
-		assertEquals(noAcepta , this.usuario.condicionesQueNoAcepta(this.usuario, receta));
+		assertEquals(noAcepta,
+				this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 	}
 
 	@Test
-	public void testVerRecetaPropia() throws BusinessException {
+	public void testVerRecetaPropia() throws RecetaException, UsuarioException {
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		this.usuario.agregarReceta(receta);
 		this.usuario.verReceta(receta);
 	}
 
-
 	// Punto 4: Saber si un usuario puede ver a una receta dada
 	@Test
-	public void testVerRecetaPublica() throws BusinessException {
+	public void testVerRecetaPublica() throws RecetaException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		usuario.agregarReceta(receta);
 		this.usuario.verReceta(receta);
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testVerRecetaAjena() throws BusinessException {
+	@Test(expected = RecetaException.class)
+	public void testVerRecetaAjena() throws RecetaException, UsuarioException {
 		Usuario usuarioQueQuiereVer = this.crearUsuarioBasicoValido();
 		Usuario userOwner = this.crearUsuarioBasicoValido();
 
@@ -218,7 +228,7 @@ public class TestRecetas {
 
 	// Punto4: Saber si un usuario puede modificar una receta dada
 	@Test
-	public void testPuedeModificarRecetaPublica() throws BusinessException {
+	public void testPuedeModificarRecetaPublica() throws RecetaException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 
@@ -226,7 +236,7 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testNoPuedeModificarReceta() throws BusinessException {
+	public void testNoPuedeModificarReceta() throws RecetaException {
 
 		Usuario usuarioQueQuiereModificar = this.crearUsuarioBasicoValido();
 		Usuario userOwner = this.crearUsuarioBasicoValido();
@@ -239,7 +249,8 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testPuedeModificarRecetaPropia() throws BusinessException {
+	public void testPuedeModificarRecetaPropia() throws RecetaException,
+			UsuarioException {
 
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
@@ -247,9 +258,11 @@ public class TestRecetas {
 		this.usuario.validarModificarReceta(receta);
 	}
 
-	// Punto 4: Modificar una receta dada, respetando la validación del item anterior
+	// Punto 4: Modificar una receta dada, respetando la validación del item
+	// anterior
 	@Test
-	public void testModificarRecetaPropia() throws BusinessException, CloneNotSupportedException {
+	public void testModificarRecetaPropia() throws RecetaException,
+			CloneNotSupportedException, UsuarioException {
 		RecetaPrivadaSimple receta1 = new RecetaPrivadaSimple(150);
 		receta1.agregarIngrediente("pollo", new BigDecimal(100));
 		receta1.setNombre("Nombre original");
@@ -261,7 +274,8 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testModificarRecetaPublica() throws BusinessException, CloneNotSupportedException {
+	public void testModificarRecetaPublica() throws RecetaException,
+			CloneNotSupportedException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		receta.setNombre("Nombre original");
@@ -273,8 +287,9 @@ public class TestRecetas {
 		assertNotSame(receta.getNombre(), "Nombre original");
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testModificarRecetaAjena() throws BusinessException, CloneNotSupportedException {
+	@Test(expected = RecetaException.class)
+	public void testModificarRecetaAjena() throws RecetaException,
+			CloneNotSupportedException, UsuarioException {
 
 		Usuario usuarioOwner = this.crearUsuarioBasicoValido();
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(150);
@@ -284,44 +299,47 @@ public class TestRecetas {
 		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
 	}
 
-
 	@Test
-	public void testClonarReceta() throws BusinessException, CloneNotSupportedException {
+	public void testClonarReceta() throws RecetaException,
+			CloneNotSupportedException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("papa", new BigDecimal(100));
 
-		RecetaPublicaSimple recetaClonada = (RecetaPublicaSimple) receta.clone();
+		RecetaPublicaSimple recetaClonada = (RecetaPublicaSimple) receta
+				.clone();
 		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
 
 		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
-		assertEquals(recetaClonada.getIngredientes().get("papa"), new BigDecimal(150));
+		assertEquals(recetaClonada.getIngredientes().get("papa"),
+				new BigDecimal(150));
 	}
 
-
 	// Punto 5: Poder construir una receta con sub-recetas.
-	
-	
 
 	@Test
-	public void testAgregarRecetaCompuesta() throws BusinessException{
+	public void testAgregarRecetaCompuesta() throws RecetaException {
 		RecetaPrivadaCompuesta unaRecetaCompuesta = crearRecetaPrivadaCompuesta();
 		this.usuario.agregarReceta(unaRecetaCompuesta);
 
 	}
-	@Test(expected = BusinessException.class)
-	public void testAgregarRecetaCompuestaSinSubrecetas() throws BusinessException {
-		RecetaPrivadaCompuesta polloConPure  = new RecetaPrivadaCompuesta();
+
+	@Test(expected = RecetaException.class)
+	public void testAgregarRecetaCompuestaSinSubrecetas()
+			throws RecetaException {
+		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
 		polloConPure.setNombre("PolloConPure");
 		this.usuario.agregarReceta(polloConPure);
 	}
-	@Test(expected = BusinessException.class)
-	public void testAgregarRecetaCompuestaConSubrecetaSinIngredientes() throws BusinessException {
+
+	@Test(expected = RecetaException.class)
+	public void testAgregarRecetaCompuestaConSubrecetaSinIngredientes()
+			throws RecetaException {
 		RecetaPrivadaSimple pollo = new RecetaPrivadaSimple(120);
-		RecetaPrivadaSimple pure  = new RecetaPrivadaSimple(350);
-		RecetaPrivadaCompuesta polloConPure  = new RecetaPrivadaCompuesta();
+		RecetaPrivadaSimple pure = new RecetaPrivadaSimple(350);
+		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
 
 		pollo.setNombre("pollo");
-		pollo.agregarIngrediente("Alas y pechugas",new BigDecimal(20));
+		pollo.agregarIngrediente("Alas y pechugas", new BigDecimal(20));
 
 		pure.setNombre("Pure");
 
@@ -332,13 +350,13 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testAgregaRecetaConSubrecetaPropia() throws BusinessException {
-		RecetaPrivadaSimple pure  = new RecetaPrivadaSimple(350);
-		RecetaPrivadaCompuesta polloConPure  = new RecetaPrivadaCompuesta();
+	public void testAgregaRecetaConSubrecetaPropia() throws RecetaException {
+		RecetaPrivadaSimple pure = new RecetaPrivadaSimple(350);
+		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
 		RecetaPrivadaSimple pollo = new RecetaPrivadaSimple(120);
 
 		pollo.setNombre("pollo");
-		pollo.agregarIngrediente("Alas y pechugas",new BigDecimal(20));
+		pollo.agregarIngrediente("Alas y pechugas", new BigDecimal(20));
 
 		pure.setNombre("Pure");
 		pure.agregarIngrediente("Manteca", new BigDecimal(300));
@@ -350,11 +368,12 @@ public class TestRecetas {
 		this.usuario.agregarReceta(polloConPure);
 
 	}
-	@Test(expected = BusinessException.class)
-	public void testAgregaRecetaConSubrecetaAjena() throws BusinessException {
+
+	@Test(expected = RecetaException.class)
+	public void testAgregaRecetaConSubrecetaAjena() throws RecetaException {
 		RecetaPrivadaCompuesta unaRecetaCompuesta = crearRecetaPrivadaCompuesta();
 
-		RecetaPrivadaSimple pan  = new RecetaPrivadaSimple(150);
+		RecetaPrivadaSimple pan = new RecetaPrivadaSimple(150);
 		pan.setNombre("pan");
 		pan.agregarIngrediente("harina", new BigDecimal(80));
 		pan.agregarIngrediente("agua", new BigDecimal(120));
@@ -362,35 +381,33 @@ public class TestRecetas {
 		unaRecetaCompuesta.agregarSubReceta(pan);
 		this.usuario.agregarReceta(unaRecetaCompuesta);
 	}
-	
+
 	/*
-	 * Aca hay q ver lo de la clonacion. Tengo una receta privada y quiero agregar una publica
-	@Test
-	public void testAgregaRecetaConSubrecetaPublica() throws BusinessException {
-		RecetaPrivadaCompuesta unaRecetaCompuesta = crearRecetaPrivadaCompuesta();
+	 * Aca hay q ver lo de la clonacion. Tengo una receta privada y quiero
+	 * agregar una publica
+	 * 
+	 * @Test public void testAgregaRecetaConSubrecetaPublica() throws
+	 * RecetaException { RecetaPrivadaCompuesta unaRecetaCompuesta =
+	 * crearRecetaPrivadaCompuesta();
+	 * 
+	 * RecetaPublicaSimple pan = new RecetaPublicaSimple(150);
+	 * pan.setNombre("pan"); pan.agregarIngrediente("harina", new
+	 * BigDecimal(80)); pan.agregarIngrediente("agua", new BigDecimal(120));
+	 * 
+	 * unaRecetaCompuesta.agregarSubReceta(pan);
+	 * this.usuario.agregarReceta(unaRecetaCompuesta); }
+	 */
 
-		RecetaPublicaSimple pan  = new RecetaPublicaSimple(150);
-		pan.setNombre("pan");
-		pan.agregarIngrediente("harina", new BigDecimal(80));
-		pan.agregarIngrediente("agua", new BigDecimal(120));
-
-		unaRecetaCompuesta.agregarSubReceta(pan);
-		this.usuario.agregarReceta(unaRecetaCompuesta);
-	}
-	*/
-	
 	@Test
-	public void testMarcarFavorita() throws BusinessException{
-	
+	public void testMarcarFavorita() throws RecetaException {
+
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(80);
 		receta.agregarIngrediente("pollo", new BigDecimal(80));
 		this.usuario.setFavoritos(new ArrayList<Receta>());
 		this.usuario.marcarFavorita(receta);
-		
-		assertEquals(1,this.usuario.getFavoritos().size());
+
+		assertEquals(1, this.usuario.getFavoritos().size());
 
 	}
-	
-	
-	
+
 }

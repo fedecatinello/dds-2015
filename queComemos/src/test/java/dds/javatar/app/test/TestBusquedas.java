@@ -22,8 +22,8 @@ import dds.javatar.app.dto.receta.filtro.FiltroCondiciones;
 import dds.javatar.app.dto.receta.filtro.FiltroPrecio;
 import dds.javatar.app.dto.sistema.Sistema;
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.util.BusinessException;
 import dds.javatar.app.util.exception.FilterException;
+import dds.javatar.app.util.exception.RecetaException;
 
 public class TestBusquedas extends TestGeneralAbstract{
 
@@ -31,7 +31,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 	
 	
 	@Before
-	public void initialize() throws BusinessException {
+	public void initialize() throws RecetaException {
 		this.usuario = this.crearUsuarioBasicoValido();
 		crearListaRecetasParaUsuarioSize30(this.usuario);
 	}

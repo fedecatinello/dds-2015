@@ -1,7 +1,7 @@
 package dds.javatar.app.dto.usuario;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.UsuarioException;
 
 public class Celiaco implements CondicionPreexistente {
 
@@ -12,15 +12,15 @@ public class Celiaco implements CondicionPreexistente {
 	}
 
 	@Override
-	public void validarUsuario(Usuario usuario) throws BusinessException {
+	public void validarUsuario(Usuario usuario) throws UsuarioException {
 		// TODO: no hay información al respecto, deberia solicitarse?
 	}
 
-//	@Override
-//	public void validarReceta(Receta receta) throws BusinessException {
-//		// TODO: no hay información al respecto, deberia solicitarse?
-//	}
-	public boolean validarReceta(Receta receta){
+	// @Override
+	// public void validarReceta(Receta receta) throws BusinessException {
+	// // TODO: no hay información al respecto, deberia solicitarse?
+	// }
+	public boolean validarReceta(Receta receta) {
 		return true;
 	}
 

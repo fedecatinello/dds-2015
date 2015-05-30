@@ -7,19 +7,18 @@ import java.util.Set;
 
 import dds.javatar.app.dto.usuario.Usuario;
 
-
 public class GrupoDeUsuarios {
 
-	private  String nombre;
+	private String nombre;
 	private Map<String, Boolean> preferenciasAlimenticias;
 	private Set<Usuario> miembros;
-	
+
 	/**** Constructor ****/
-	public GrupoDeUsuarios(){
+	public GrupoDeUsuarios() {
 		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
 		this.miembros = new HashSet<Usuario>();
 	}
-	
+
 	/**** Setters y getters ****/
 
 	public String getNombre() {
@@ -34,7 +33,8 @@ public class GrupoDeUsuarios {
 		return preferenciasAlimenticias;
 	}
 
-	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias) {
+	public void setPreferenciasAlimenticias(
+			Map<String, Boolean> preferenciasAlimenticias) {
 		this.preferenciasAlimenticias = preferenciasAlimenticias;
 	}
 
@@ -43,10 +43,10 @@ public class GrupoDeUsuarios {
 	}
 
 	public void setUsuarios(Set<Usuario> usuarios) {
-		
+
 		this.miembros = usuarios;
 	}
-	
+
 	public void agregarUsuario(Usuario usuario) {
 		usuario.setGruposAlQuePertenece(this);
 		this.miembros.add(usuario);

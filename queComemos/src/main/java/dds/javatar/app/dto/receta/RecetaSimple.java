@@ -3,7 +3,7 @@ package dds.javatar.app.dto.receta;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.RecetaException;
 
 public abstract class RecetaSimple implements Receta {
 
@@ -74,13 +74,13 @@ public abstract class RecetaSimple implements Receta {
 	}
 
 	/** Metodos **/
-	public void validarSiLaRecetaEsValida() throws BusinessException {
+	public void validarSiLaRecetaEsValida() throws RecetaException {
 		if (this.ingredientes.isEmpty()) {
-			throw new BusinessException(
+			throw new RecetaException(
 					"La receta no es valida ya que no tiene ingredientes!");
 		}
 		if (this.calorias < 10 || this.calorias > 5000) {
-			throw new BusinessException(
+			throw new RecetaException(
 					"La receta no es valida por su cantidad de calorias!");
 		}
 	}

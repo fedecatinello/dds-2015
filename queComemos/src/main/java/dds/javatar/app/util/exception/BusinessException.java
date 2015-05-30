@@ -1,4 +1,4 @@
-package dds.javatar.app.util;
+package dds.javatar.app.util.exception;
 
 public class BusinessException extends Exception {
 

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.RecetaException;
 
 public class RecetaPublicaCompuesta implements RecetaPublica {
 
@@ -83,7 +83,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 
 	/** Add items **/
 	public void agregarSubReceta(RecetaPublica subReceta)
-			throws BusinessException {
+			throws RecetaException {
 		subReceta.validarSiLaRecetaEsValida();
 		this.subRecetas.add(subReceta);
 	}
@@ -120,9 +120,9 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	}
 
 	@Override
-	public void validarSiLaRecetaEsValida() throws BusinessException {
+	public void validarSiLaRecetaEsValida() throws RecetaException {
 		if (this.subRecetas.isEmpty()) {
-			throw new BusinessException(
+			throw new RecetaException(
 					"La receta no es valida ya que esta vacia! (No tiene subrecetas)");
 		}
 	}

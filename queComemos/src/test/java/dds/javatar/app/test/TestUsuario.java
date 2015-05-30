@@ -17,7 +17,7 @@ import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Vegano;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.UsuarioException;
 
 public class TestUsuario {
 
@@ -48,12 +48,12 @@ public class TestUsuario {
 
 	// Punto 1: validación de usuario
 	@Test
-	public void testUsuarioValido() throws BusinessException {
+	public void testUsuarioValido() throws UsuarioException {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testFechaNacimientoPosterior() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testFechaNacimientoPosterior() throws UsuarioException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, 1);
@@ -64,7 +64,7 @@ public class TestUsuario {
 	}
 
 	@Test
-	public void testFechaNacimientoAnterior() throws BusinessException {
+	public void testFechaNacimientoAnterior() throws UsuarioException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, -1);
@@ -75,50 +75,50 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testUsuarioSinFechaNacimiento() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testUsuarioSinFechaNacimiento() throws UsuarioException {
 		this.usuario.setFechaNacimiento(null);
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testUsuarioSinNombre() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testUsuarioSinNombre() throws UsuarioException {
 		this.usuario.setNombre(null);
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testUsuarioSinPeso() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testUsuarioSinPeso() throws UsuarioException {
 		this.usuario.setPeso(null);
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testUsuarioSinAltura() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testUsuarioSinAltura() throws UsuarioException {
 		this.usuario.setAltura(null);
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testUsuarioSinRutina() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testUsuarioSinRutina() throws UsuarioException {
 		this.usuario.setRutina(null);
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testUsuarioConNombreMenorACuatroCaracters() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testUsuarioConNombreMenorACuatroCaracters() throws UsuarioException {
 		this.usuario.setNombre("Nom");
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testUsuarioConNombreIgualACuatroCaracteres() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testUsuarioConNombreIgualACuatroCaracteres() throws UsuarioException {
 		this.usuario.setNombre("Nomb");
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testVeganoConPreferenciaInvalida() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testVeganoConPreferenciaInvalida() throws UsuarioException {
 		Vegano vegano = new Vegano();
 
 		this.usuario.agregarPreferenciaAlimenticia("pollo");
@@ -127,8 +127,8 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testDiabeticoSinSexo() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testDiabeticoSinSexo() throws UsuarioException {
 		Diabetico diabetico = new Diabetico();
 
 		this.usuario.setSexo(null);
@@ -138,7 +138,7 @@ public class TestUsuario {
 	}
 
 	@Test
-	public void testDiabeticoConSexo() throws BusinessException {
+	public void testDiabeticoConSexo() throws UsuarioException {
 		Diabetico diabetico = new Diabetico();
 
 		this.usuario.agregarCondicionPreexistente(diabetico);
@@ -147,8 +147,8 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testHipertensoSinPreferencia() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testHipertensoSinPreferencia() throws UsuarioException {
 		Hipertenso hipertenso = new Hipertenso();
 
 		this.usuario.agregarCondicionPreexistente(hipertenso);
@@ -156,8 +156,8 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testDiabeticoSinPreferencia() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testDiabeticoSinPreferencia() throws UsuarioException {
 		Diabetico diabetico = new Diabetico();
 
 		this.usuario.agregarCondicionPreexistente(diabetico);
@@ -165,7 +165,7 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	public void testHipertensoConPreferencia() throws BusinessException {
+	public void testHipertensoConPreferencia() throws UsuarioException {
 		Hipertenso hipertenso = new Hipertenso();
 
 		this.usuario.agregarCondicionPreexistente(hipertenso);
@@ -175,7 +175,7 @@ public class TestUsuario {
 	}
 
 	@Test
-	public void testDiabeticoConPreferencia() throws BusinessException {
+	public void testDiabeticoConPreferencia() throws UsuarioException {
 		Diabetico diabetico = new Diabetico();
 
 		this.usuario.agregarCondicionPreexistente(diabetico);
@@ -184,8 +184,8 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testVeganoConpreferenciaPollo() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testVeganoConpreferenciaPollo() throws UsuarioException {
 		Vegano vegano = new Vegano();
 
 		this.usuario.agregarCondicionPreexistente(vegano);
@@ -194,8 +194,8 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testVeganoConpreferenciaCarne() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testVeganoConpreferenciaCarne() throws UsuarioException {
 		Vegano vegano = new Vegano();
 
 		this.usuario.agregarCondicionPreexistente(vegano);
@@ -204,8 +204,8 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testVeganoConpreferenciaChori() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testVeganoConpreferenciaChori() throws UsuarioException {
 		Vegano vegano = new Vegano();
 
 		this.usuario.agregarCondicionPreexistente(vegano);
@@ -214,8 +214,8 @@ public class TestUsuario {
 		this.usuario.validar();
 	}
 
-	@Test(expected = BusinessException.class)
-	public void testVeganoConpreferenciaChivito() throws BusinessException {
+	@Test(expected = UsuarioException.class)
+	public void testVeganoConpreferenciaChivito() throws UsuarioException {
 		Vegano vegano = new Vegano();
 
 		this.usuario.agregarCondicionPreexistente(vegano);
@@ -225,7 +225,7 @@ public class TestUsuario {
 	}
 
 	@Test
-	public void testVeganoConpreferenciaDiferenteAChivitoCarnePolloChori() throws BusinessException {
+	public void testVeganoConpreferenciaDiferenteAChivitoCarnePolloChori() throws UsuarioException {
 		Vegano vegano = new Vegano();
 
 		this.usuario.agregarCondicionPreexistente(vegano);

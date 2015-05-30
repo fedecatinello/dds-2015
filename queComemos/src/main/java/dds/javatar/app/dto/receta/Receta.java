@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.RecetaException;
 
 public interface Receta {
 	public String getNombre();
@@ -17,7 +17,7 @@ public interface Receta {
 	public Boolean contieneIngrediente(String ingrediente) ;
 	public Boolean contieneCondimento(String condimento);
 	public Integer getCalorias();
-	public void validarSiLaRecetaEsValida() throws BusinessException;
+	public void validarSiLaRecetaEsValida() throws RecetaException;
 	
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario);
 	public Boolean chequearModificacion(Receta receta, Usuario usuario);

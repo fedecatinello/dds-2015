@@ -3,7 +3,7 @@ package dds.javatar.app.dto.sistema;
 import java.util.List;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.util.BusinessException;
+import dds.javatar.app.util.exception.BusinessException;
 
 public interface RepositorioRecetas {
 	public void agregar(Receta receta);

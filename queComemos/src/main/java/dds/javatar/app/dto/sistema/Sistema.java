@@ -30,9 +30,8 @@ public class Sistema implements RepositorioRecetas {
 
     @Override
     public void agregar(Receta receta) {
-
 		this.recetaConocidas.add(receta);
-        this.purificarLista();
+       // this.purificarLista();
     }
 
     @Override
@@ -43,7 +42,7 @@ public class Sistema implements RepositorioRecetas {
     }
 
     private boolean encontre(Receta receta) {
-        this.purificarLista();
+      //  this.purificarLista();
         for (int i = 0; i < this.recetaConocidas.size(); i++) {
             if ((this.recetaConocidas.get(i).getNombre().equals(receta.getNombre()))) {
                 return true;
@@ -54,12 +53,12 @@ public class Sistema implements RepositorioRecetas {
 
     @Override
     public List<Receta> listarTodas() {
-        this.purificarLista();
+    // this.purificarLista();
         return this.recetaConocidas;
     }
 
     public void sugerir(Receta receta, Usuario usuario) throws BusinessException {
-        this.purificarLista();
+        //this.purificarLista();
         for (String ingrediente : receta.getIngredientes().keySet()) {
             if (!usuario.validarSiAceptaReceta(receta) || usuario.tieneAlimentoQueLeDisguste(ingrediente)) {
                 throw new BusinessException("la receta: " + receta.getNombre() + " no puede ser sugerida al usuario" + usuario.getNombre());
@@ -68,7 +67,7 @@ public class Sistema implements RepositorioRecetas {
     }
 
     public void sugerir(Receta receta, GrupoDeUsuarios grupo) throws BusinessException {
-        this.purificarLista();
+      // this.purificarLista();
         for (String preferencia : grupo.getPreferenciasAlimenticias().keySet()) {
 
             if (!receta.contieneCondimento(preferencia) || !receta.contieneIngrediente(preferencia) || !(receta.getNombre() == preferencia)) {
@@ -79,7 +78,7 @@ public class Sistema implements RepositorioRecetas {
             }
         }
     }
-
+/*
     private void purificarLista() {
         List<Receta> copia = this.recetaConocidas;
         for (int j = 0; j < copia.size(); j++) {
@@ -98,10 +97,10 @@ public class Sistema implements RepositorioRecetas {
             }
         }
     }
-
+*/
     public List<Receta> recetasQueConoceEl(Usuario usuario) {
 
-        this.purificarLista();
+ //       this.purificarLista();
         List<Receta> recetasQueConoce = this.recetaConocidas;
 
         List<Receta> recetasQueConocePorLosMiembrosDelGrupo = new ArrayList<Receta>();
@@ -127,36 +126,19 @@ public class Sistema implements RepositorioRecetas {
             }
         }
         recetasQueConoce.addAll(recetasQueConocePorLosMiembrosDelGrupo);
-        this.purificar(recetasQueConoce);
+       // this.purificar(recetasQueConoce);
         return recetasQueConoce;
     }
 
-    private void purificar(List<Receta> recetasQueConoce) {
-        List<Receta> copia = recetasQueConoce;
-        for (int j = 0; j < copia.size(); j++) {
-            Boolean flag = false;
-            for (int i = 0; i < recetasQueConoce.size(); i++) {
-                if(i!=j){
-                if ((recetasQueConoce.get(i).getNombre().equals(copia.get(j).getNombre()))) {
-                    flag = true;
-                    }
-                }
-            }
-            if (flag == true) {
-                recetasQueConoce.remove(recetasQueConoce.get(j));
-            }
-        }
-       
-    }
 
-    public List<Receta> realizarBusquedaPara(Busqueda busqueda, Usuario usuario) throws FilterException{
-       
-        List<Receta> recetasXusuario = recetasQueConoceEl(usuario);
-        busqueda.filtrar(usuario,recetasXusuario);
-        busqueda.postProcesar(recetasXusuario);
-        return recetasXusuario;
-       
-    }
-     
+	public List<Receta> realizarBusquedaPara(Busqueda busqueda, Usuario usuario) throws FilterException{
+		
+		List<Receta> recetasXusuario = this.recetasQueConoceEl(usuario);
+		busqueda.filtrar(usuario,recetasXusuario);
+		busqueda.postProcesar(recetasXusuario);
+		return recetasXusuario;
+		
+	}
+
 }
 

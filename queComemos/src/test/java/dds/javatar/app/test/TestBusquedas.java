@@ -9,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
-import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.busqueda.Alfabeticamente;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.receta.busqueda.Calorias;
@@ -23,7 +21,6 @@ import dds.javatar.app.dto.receta.filtro.Filtro;
 import dds.javatar.app.dto.receta.filtro.FiltroCondiciones;
 import dds.javatar.app.dto.receta.filtro.FiltroPrecio;
 import dds.javatar.app.dto.sistema.Sistema;
-import dds.javatar.app.dto.usuario.Hipertenso;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.BusinessException;
 import dds.javatar.app.util.exception.FilterException;
@@ -46,8 +43,6 @@ public class TestBusquedas extends TestGeneralAbstract{
 	@Test
 	public void testBuscarRecetasSinFiltro() throws FilterException {
 		Busqueda busqueda = new Busqueda();
-		List<Filtro> filtros = new ArrayList<Filtro>();
-		busqueda.setFiltros(filtros);
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(30 , listaRecetas.size());
 	}
@@ -123,17 +118,15 @@ public class TestBusquedas extends TestGeneralAbstract{
 		busqueda.setFiltros(filtros);
 		
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
-		assertEquals(14, listaRecetas.size());
+		assertEquals(15, listaRecetas.size());
 	}
 	
 	//revisar: no tiene sentido el assert
 	@Test
 	public void testProcesarOrdenAlfabetico() throws FilterException {
 		Busqueda busqueda = new Busqueda();
-		Ordenamiento orden = new Ordenamiento();
 		Criterio alfabetico = new Alfabeticamente();
-		
-		orden.setCriterio(alfabetico);
+		Ordenamiento orden = new Ordenamiento(alfabetico);
 		busqueda.setPostProcesamiento(orden);
 		
 		List<Filtro> filtros = new ArrayList<Filtro>();
@@ -147,10 +140,8 @@ public class TestBusquedas extends TestGeneralAbstract{
 	@Test
 	public void testProcesarOrdenCalorias() throws FilterException {
 		Busqueda busqueda = new Busqueda();
-		Ordenamiento orden = new Ordenamiento();
 		Criterio calorias = new Calorias();
-		
-		orden.setCriterio(calorias);
+		Ordenamiento orden = new Ordenamiento(calorias);
 		busqueda.setPostProcesamiento(orden);
 		
 		List<Filtro> filtros = new ArrayList<Filtro>();

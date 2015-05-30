@@ -12,6 +12,7 @@ public interface Receta {
 	
 	public Map<String, BigDecimal> getCondimentos() ;
 	public Map<String, BigDecimal> getIngredientes();
+	public Map<Integer, String> getPasosPreparacion();
 	
 	public Boolean contieneIngrediente(String ingrediente) ;
 	public Boolean contieneCondimento(String condimento);

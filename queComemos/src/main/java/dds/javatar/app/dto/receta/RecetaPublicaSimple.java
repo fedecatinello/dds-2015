@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import dds.javatar.app.dto.usuario.Usuario;
 
-public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica{
+public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica {
 
 	/**** builders ****/
 	public RecetaPublicaSimple() {
@@ -18,11 +18,11 @@ public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica{
 		this();
 		this.calorias = calorias;
 	}
-	
+
 	public Receta clone() {
 		RecetaPublicaSimple recetaClonada = new RecetaPublicaSimple();
 		recetaClonada.nombre = this.nombre;
-		recetaClonada.preparacion = this.preparacion;
+	//	recetaClonada.preparacion = this.preparacion;
 		recetaClonada.calorias = this.calorias;
 
 		recetaClonada.dificultad = this.dificultad;
@@ -36,19 +36,19 @@ public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica{
 			recetaClonada.condimentos.put(entry.getKey(), entry.getValue());
 		}
 		/*
-		for (Receta subReceta : this.subRecetas) {
-			recetaClonada.agregarSubReceta(subReceta.clone());
-		}*/
-		
+		 * for (Receta subReceta : this.subRecetas) {
+		 * recetaClonada.agregarSubReceta(subReceta.clone()); }
+		 */
+
 		return recetaClonada;
 	}
 
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario) {
 		return true;
 	}
-	
+
 	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
 		return true;
 	}
-	
+
 }

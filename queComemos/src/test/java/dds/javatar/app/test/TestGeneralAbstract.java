@@ -29,6 +29,22 @@ public abstract class TestGeneralAbstract {
 
 		return usuario;
 	}
+	
+	protected Usuario crearUsuarioConSobrepeso() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, -1);
+
+		Usuario usuario = new Usuario();
+		usuario.setFechaNacimiento(calendar.getTime());
+		usuario.setNombre("Nombre del usuario");
+		usuario.setSexo(Usuario.Sexo.MASCULINO);
+		usuario.setPeso(new BigDecimal(130));
+		usuario.setAltura(new BigDecimal(1.60));
+		usuario.setRutina(new Rutina(TipoRutina.NADA, 20));
+
+		return usuario;
+	}
 
 	protected RecetaPrivadaSimple crearRecetaPrivadaSimple(){
 		RecetaPrivadaSimple ravioles = new RecetaPrivadaSimple(350);

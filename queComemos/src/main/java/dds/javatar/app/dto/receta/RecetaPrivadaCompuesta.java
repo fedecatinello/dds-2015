@@ -1,6 +1,7 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	/** Builder **/
 	public RecetaPrivadaCompuesta() {
 		this.subRecetas = new HashSet<RecetaPrivada>();
+		this.ingredientes = new HashMap<String, BigDecimal>();
 	}
 
 	/** get items **/

@@ -49,47 +49,32 @@ public class TestBusquedas extends TestGeneralAbstract{
 	
 	@Test
 	public void testFiltrarRecetasConExcesoDeCalorias() throws FilterException {
-		Busqueda busqueda = new Busqueda(); // 10 de 20 recetas tienen 690 de calorias
+		Busqueda busqueda = new Busqueda(); 
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		filtros.add(new FiltroCondiciones());
 		busqueda.setFiltros(filtros);
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);;
-		assertNotEquals(30, listaRecetas.size());
+		
+		Usuario sobrepesado = crearUsuarioConSobrepeso();
+		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, sobrepesado);
+		assertEquals(0, listaRecetas.size());
 	}
 	
 	@Test
 	public void testFiltrarRecetasConIngredientesCaros() throws FilterException {
-		Busqueda busqueda = new Busqueda(); // 10 de 20 recetas tienen 690 de calorias
+		Busqueda busqueda = new Busqueda(); 
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		FiltroPrecio filtroPrecio = new FiltroPrecio();
 		List<String> ingredientesCaros = new ArrayList<String>();
-		ingredientesCaros.add("harina");
+		ingredientesCaros.add("Harina");
 		ingredientesCaros.add("sal");
-		ingredientesCaros.add("ravioles");
+		ingredientesCaros.add("Ravioles");
 		filtroPrecio.setIngredientesCaros(ingredientesCaros);
 		filtros.add(filtroPrecio);
 		busqueda.setFiltros(filtros); 
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);	
-		assertEquals(20 , listaRecetas.size());		
+		assertEquals(18 , listaRecetas.size());		
 	}
 	
-//	@Test (expected = FilterException.class)
-//	public final void testFiltroCondicionesNoFiltra() throws FilterException{
-//		
-//		Filtro filtroCondiciones = new FiltroCondiciones();
-//		busqueda.getUsuario().agregarCondicionPreexistente(new Hipertenso());
-//		busqueda.getFiltros().add(filtroCondiciones);
-//		busqueda.filtrar();
-//	}
-//	
-//	@Test
-//	public final void testFiltroCondicionesFiltra() throws FilterException{
-//		
-//		Filtro filtroCondiciones = new FiltroCondiciones();
-//		usuario.agregarCondicionPreexistente(new Hipertenso());
-//		busqueda.getFiltros().add(filtroCondiciones);
-//		busqueda.filtrar();
-//	}
 
 	
 	/* Tests de Busquedas */ 
@@ -107,15 +92,17 @@ public class TestBusquedas extends TestGeneralAbstract{
 		assertEquals(10, listaRecetas.size());
 	}
 	
-
+	@Test
+	public void cantidadRecetasGeneradas(){
+		assertEquals(30,this.usuario.getRecetas().size());
+	}
+	
+	
 	@Test
 	public void testProcesarSoloPares() throws FilterException {
 		Busqueda busqueda = new Busqueda();
 		PostProcesamiento soloPares = new ResultadosPares();
 		busqueda.setPostProcesamiento(soloPares);
-		
-		List<Filtro> filtros = new ArrayList<Filtro>();
-		busqueda.setFiltros(filtros);
 		
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(15, listaRecetas.size());

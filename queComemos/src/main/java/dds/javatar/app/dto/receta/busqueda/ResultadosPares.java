@@ -8,9 +8,8 @@ public class ResultadosPares implements PostProcesamiento {
 
 	@Override
 	public void procesar(List<Receta> recetasXusuario) {
-
 		int cantidadDeRecetas=recetasXusuario.size();
-		for(int i=cantidadDeRecetas; i<=cantidadDeRecetas-1; i-=2){
+		for(int i=cantidadDeRecetas-1; i>=0; i-=2){
 			 recetasXusuario.remove(i);
 		}		
 	}

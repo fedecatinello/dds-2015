@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.util.exception.RecetaException;
+import dds.javatar.app.util.exception.UsuarioException;
 
 public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 
@@ -11,6 +13,7 @@ public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 	public RecetaPrivadaSimple() {
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.condimentos = new HashMap<String, BigDecimal>();
+		this.pasosPreparacion = new HashMap<Integer, String>();
 	}
 
 	public RecetaPrivadaSimple(Integer calorias) {
@@ -25,8 +28,11 @@ public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 		return false;
 	}
 
-	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
-		return receta.chequearVisibilidad(receta, usuario);
+
+	@Override
+	public Receta privatizarSiCorresponde(Usuario usuario)
+			throws UsuarioException, RecetaException {
+		return this;
 	}
 
 }

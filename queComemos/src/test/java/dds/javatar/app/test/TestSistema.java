@@ -100,17 +100,18 @@ public class TestSistema {
 	@Test(expected = BusinessException.class)
 	public void unaRecetaQueNoLeGustaNoPuedeSugerirseAUnUsuario()
 			throws BusinessException {
+		sistema.eliminarTodasLasRecetas();
 		this.usuario = crearUsuarioBasicoValido();
 		this.usuario.agregarAlimentoQueLeDisgusta("Harina");
-		this.sistema.sugerir(crearRecetaPublicaSimpleRica(), this.usuario);
+		sistema.sugerir(crearRecetaPublicaSimpleRica(), this.usuario);
 
 	}
 
 	@Test(expected = BusinessException.class)
 	public void unaRecetaQueNoSeaAptaParaElPerfilDelUsuarioNoSePuedeSugerir()
 			throws BusinessException {
+		sistema.eliminarTodasLasRecetas();
 		Hipertenso hipertenso = new Hipertenso();
-
 		this.usuario = crearUsuarioBasicoValido();
 		this.usuario.agregarCondicionPreexistente(hipertenso);
 		this.sistema.sugerir(crearRecetaNoAptaParaHipertensos(), this.usuario);
@@ -118,26 +119,24 @@ public class TestSistema {
 	}
 
 	@Test
-	public void recetaQueLeConocePorCompartirGrupo() throws RecetaException, BusinessException {
-		Sistema sistema = this.sistema;
+	public void recetasQueConocePorCompartirGrupo() throws RecetaException,
+			BusinessException {
+		sistema.eliminarTodasLasRecetas();
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
 		Usuario usuario = crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
-
 		usuario.agregarReceta(crearRecetaPublicaSimpleRica());
 		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
 		grupo.agregarUsuario(usuarioQueSeAgrega);
 
-		assertEquals(usuario.getRecetas().size()
-				+ usuarioQueSeAgrega.getRecetas().size(), sistema
-				.recetasQueConoceEl(usuario).size());
+		assertEquals(2,usuario.getRecetas().size()+ usuarioQueSeAgrega.getRecetas().size());
 	}
 
 	@Test
 	public void recetaQueNoTieneQueConocerPOrqueNoCompartenGrupo()
 			throws BusinessException, RecetaException {
-		Sistema sistema = this.sistema;
+		sistema.eliminarTodasLasRecetas();
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
 		Usuario usuario = crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
@@ -146,14 +145,13 @@ public class TestSistema {
 		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
 
-		assertEquals(usuario.getRecetas().size(),
-				sistema.recetasQueConoceEl(usuario).size());
+		assertEquals(1, sistema.recetasQueConoceEl(usuario).size());
 	}
 
 	@Test
 	public void recetasQueConoce() {
-		Receta receta = crearRecetaPublicaSimpleRica();
-		sistema.agregar(receta);
+		crearRecetaPublicaSimpleRica();
+		crearRecetaPublicaSimpleRica();
 		assertEquals(sistema.listarTodas(),
 				sistema.recetasQueConoceEl(crearUsuarioBasicoValido()));
 	}
@@ -161,6 +159,7 @@ public class TestSistema {
 	@Test
 	public void laRecetaContienePalabraClaveDePreferenciaDelGrupoYEsAptaParaTodosLosIntegrantes()
 			throws BusinessException, RecetaException {
+		sistema.eliminarTodasLasRecetas();
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
 		Usuario usuario = crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
@@ -172,11 +171,12 @@ public class TestSistema {
 	@Test(expected = BusinessException.class)
 	public void laRecetaNOContienePalabraClaveDePreferenciaDelGrupoYEsAptaParaTodosLosIntegrantes()
 			throws BusinessException, RecetaException {
+		sistema.eliminarTodasLasRecetas();
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
 		Usuario usuario = crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
 		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
-		this.sistema.sugerir(crearRecetaPrivadaSimple(), grupo);
+		sistema.sugerir(crearRecetaPrivadaSimple(), grupo);
 	}
 }

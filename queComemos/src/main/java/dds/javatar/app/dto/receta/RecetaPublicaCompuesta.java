@@ -6,8 +6,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import dds.javatar.app.dto.sistema.Sistema;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
+import dds.javatar.app.util.exception.UsuarioException;
 
 public class RecetaPublicaCompuesta implements RecetaPublica {
 
@@ -17,12 +19,14 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	private Map<Integer, String> pasosPreparacion;
 	private String nombre;
 	private String dificultad;
+	private String temporada;
 
 	/** Builder **/
 	public RecetaPublicaCompuesta() {
 		this.subRecetas = new HashSet<RecetaPublica>();
+		this.agregarRecetaAlRepo(this);
 	}
-
+	
 	/** get items **/
 	public String getNombre() {
 		return this.nombre;
@@ -32,6 +36,14 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		this.nombre = nombre;
 	}
 
+	public String getTemporada() {
+		return this.temporada;
+	}
+
+	public void setTemporada(String temporada) {
+		this.nombre = temporada;
+	}
+	
 	public String getDificultad() {
 		return this.dificultad;
 	}
@@ -71,7 +83,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		}
 		return ingredientes;
 	}
-	
+
 	public Map<Integer, String> getPasosPreparacion() {
 		for (Iterator<RecetaPublica> iterator = subRecetas.iterator(); iterator
 				.hasNext();) {
@@ -79,13 +91,6 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 			this.pasosPreparacion.putAll(receta.getPasosPreparacion());
 		}
 		return pasosPreparacion;
-	}
-
-	/** Add items **/
-	public void agregarSubReceta(RecetaPublica subReceta)
-			throws RecetaException {
-		subReceta.validarSiLaRecetaEsValida();
-		this.subRecetas.add(subReceta);
 	}
 
 	/** Validadores **/
@@ -115,9 +120,6 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		return false;
 	}
 
-	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
-		return receta.chequearVisibilidad(receta, usuario);
-	}
 
 	@Override
 	public void validarSiLaRecetaEsValida() throws RecetaException {
@@ -127,4 +129,33 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		}
 	}
 
+	/** Add items **/
+	public void agregarSubReceta(RecetaPublica subReceta)
+			throws RecetaException {
+		subReceta.validarSiLaRecetaEsValida();
+		this.subRecetas.add(subReceta);
+	}
+
+	@Override
+	public void agregarRecetaAlRepo(RecetaPublica receta) {
+		Sistema.getInstance().agregar(receta);
+	}
+
+	public Receta privatizarSiCorresponde (Usuario user) throws UsuarioException, RecetaException{
+		RecetaPrivadaCompuesta recetaClonada = new RecetaPrivadaCompuesta();
+		recetaClonada.nombre = this.nombre;
+		recetaClonada.dificultad = this.dificultad;
+		recetaClonada.temporada = this.temporada;
+			
+		for (RecetaPublica receta : this.subRecetas) {
+			recetaClonada.agregarSubReceta((RecetaPrivada) receta.privatizarSiCorresponde(user));
+		}
+		
+		user.agregarReceta(recetaClonada);
+		user.quitarReceta(this);
+		return recetaClonada;
+		
+	}
+	
+	
 }

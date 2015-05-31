@@ -8,15 +8,17 @@ import java.util.Set;
 
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
+import dds.javatar.app.util.exception.UsuarioException;
 
 public class RecetaPrivadaCompuesta implements RecetaPrivada {
 
-	private HashSet<RecetaPrivada> subRecetas;
-	private Map<String, BigDecimal> condimentos;
-	private Map<String, BigDecimal> ingredientes;
-	private Map<Integer, String> pasosPreparacion;
-	private String nombre;
-	private String dificultad;
+	protected HashSet<RecetaPrivada> subRecetas;
+	protected Map<String, BigDecimal> condimentos;
+	protected Map<String, BigDecimal> ingredientes;
+	protected Map<Integer, String> pasosPreparacion;
+	protected String nombre;
+	protected String dificultad;
+	protected String temporada;
 
 	/** Builder **/
 	public RecetaPrivadaCompuesta() {
@@ -30,6 +32,14 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public String getTemporada() {
+		return this.temporada;
+	}
+
+	public void setTemporada(String temporada) {
+		this.nombre = temporada;
 	}
 
 	public String getDificultad() {
@@ -115,16 +125,18 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		return false;
 	}
 
-	public Boolean chequearModificacion(Receta receta, Usuario usuario) {
-		return receta.chequearVisibilidad(receta, usuario);
-	}
-
 	@Override
 	public void validarSiLaRecetaEsValida() throws RecetaException {
 		if (this.subRecetas.isEmpty()) {
 			throw new RecetaException(
 					"La receta no es valida ya que esta vacia! (No tiene subrecetas)");
 		}
+	}
+
+	@Override
+	public Receta privatizarSiCorresponde(Usuario user)
+			throws UsuarioException, RecetaException {
+		return this;
 	}
 
 }

@@ -10,17 +10,11 @@ public abstract class FiltroTemplate implements Filtro {
 
 	public void filtrarBusqueda(Usuario usuarioBusqueda, List<Receta> recetasUsuario) throws FilterException {
 		
-		for(Receta receta : recetasUsuario){
-			
-			if(!validator(usuarioBusqueda,receta)){
-				
-				recetasUsuario.remove(receta);
-				
-				throw new FilterException("No se pudo aplicar el "+ this.getClass().getName() +" en la busqueda solicitada.");
+		for(Receta receta : recetasUsuario){			
+			if(!validator(usuarioBusqueda,receta)){				
+				recetasUsuario.remove(receta);				
 			}
 		}
-
 	}
-
 }
 

@@ -69,8 +69,8 @@ public class TestBusquedas extends TestGeneralAbstract{
 		filtroPrecio.setIngredientesCaros(ingredientesCaros);
 		filtros.add(filtroPrecio);
 		busqueda.setFiltros(filtros); 
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);;
-		assertEquals(20 , listaRecetas.size());
+		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);	
+		assertEquals(20 , listaRecetas.size());		
 	}
 	
 //	@Test (expected = FilterException.class)

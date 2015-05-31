@@ -2,10 +2,8 @@ package dds.javatar.app.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,7 +12,6 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
@@ -86,7 +83,7 @@ public class TestRecetas {
 		return polloConPure;
 	}
 
-	// Punto 3: Hacer que un usuario agregue una receta
+	// Entrega 1 - Punto 3: Hacer que un usuario agregue una receta
 
 	@Test
 	public void testAgregarRecetaSimple() throws RecetaException {
@@ -202,19 +199,19 @@ public class TestRecetas {
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		this.usuario.agregarReceta(receta);
-		this.usuario.verReceta(receta);
+		this.usuario.puedeVerReceta(receta);
 	}
 
-	// Punto 4: Saber si un usuario puede ver a una receta dada
+	// Entrega 1 - Punto 4: Saber si un usuario puede ver a una receta dada
 	@Test
 	public void testVerRecetaPublica() throws RecetaException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		usuario.agregarReceta(receta);
-		this.usuario.verReceta(receta);
+		this.usuario.puedeVerReceta(receta);
 	}
 
-	@Test(expected = RecetaException.class)
+	@Test(expected = UsuarioException.class)
 	public void testVerRecetaAjena() throws RecetaException, UsuarioException {
 		Usuario usuarioQueQuiereVer = this.crearUsuarioBasicoValido();
 		Usuario userOwner = this.crearUsuarioBasicoValido();
@@ -223,20 +220,20 @@ public class TestRecetas {
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		userOwner.agregarReceta(receta);
 
-		usuarioQueQuiereVer.verReceta(receta);
+		usuarioQueQuiereVer.puedeVerReceta(receta);
 	}
 
-	// Punto4: Saber si un usuario puede modificar una receta dada
+	// Entrega 1 - Punto4: Saber si un usuario puede modificar una receta dada
 	@Test
-	public void testPuedeModificarRecetaPublica() throws RecetaException {
+	public void testPuedeModificarRecetaPublica() throws RecetaException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
-
+		usuario.agregarReceta(receta);
 		this.usuario.puedeModificarReceta(receta);
 	}
 
-	@Test
-	public void testNoPuedeModificarReceta() throws RecetaException {
+	@Test(expected = UsuarioException.class)
+	public void testNoPuedeModificarReceta() throws RecetaException, UsuarioException {
 
 		Usuario usuarioQueQuiereModificar = this.crearUsuarioBasicoValido();
 		Usuario userOwner = this.crearUsuarioBasicoValido();
@@ -244,8 +241,7 @@ public class TestRecetas {
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		userOwner.agregarReceta(receta);
-
-		assertFalse(usuarioQueQuiereModificar.puedeModificarReceta(receta));
+		usuarioQueQuiereModificar.modificarNombreDeReceta(receta, "unNombreReCopado");
 	}
 
 	@Test
@@ -258,7 +254,7 @@ public class TestRecetas {
 		this.usuario.validarModificarReceta(receta);
 	}
 
-	// Punto 4: Modificar una receta dada, respetando la validación del item
+	// Entrega 1 - Punto 4: Modificar una receta dada, respetando la validación del item
 	// anterior
 	@Test
 	public void testModificarRecetaPropia() throws RecetaException,
@@ -272,22 +268,21 @@ public class TestRecetas {
 		this.usuario.modificarNombreDeReceta(receta1, "Nuevo nombre");
 		assertEquals(receta1.getNombre(), "Nuevo nombre");
 	}
-
+	
 	@Test
 	public void testModificarRecetaPublica() throws RecetaException,
 			CloneNotSupportedException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		receta.setNombre("Nombre original");
-
-		this.usuario.validarModificarReceta(receta);
+		usuario.agregarReceta(receta);
 		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
-
+		
 		// La receta original sigue con el mismo nombre
-		assertNotSame(receta.getNombre(), "Nombre original");
+		assertEquals(receta.getNombre(), "Nombre original");
 	}
 
-	@Test(expected = RecetaException.class)
+	@Test(expected = UsuarioException.class)
 	public void testModificarRecetaAjena() throws RecetaException,
 			CloneNotSupportedException, UsuarioException {
 
@@ -305,8 +300,7 @@ public class TestRecetas {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("papa", new BigDecimal(100));
 
-		RecetaPublicaSimple recetaClonada = (RecetaPublicaSimple) receta
-				.clone();
+		RecetaPrivadaSimple recetaClonada = (RecetaPrivadaSimple) receta.clonarme();
 		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
 
 		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
@@ -314,7 +308,7 @@ public class TestRecetas {
 				new BigDecimal(150));
 	}
 
-	// Punto 5: Poder construir una receta con sub-recetas.
+	// Entrega 1 - Punto 5: Poder construir una receta con sub-recetas.
 
 	@Test
 	public void testAgregarRecetaCompuesta() throws RecetaException {
@@ -369,41 +363,13 @@ public class TestRecetas {
 
 	}
 
-	@Test(expected = RecetaException.class)
-	public void testAgregaRecetaConSubrecetaAjena() throws RecetaException {
-		RecetaPrivadaCompuesta unaRecetaCompuesta = crearRecetaPrivadaCompuesta();
-
-		RecetaPrivadaSimple pan = new RecetaPrivadaSimple(150);
-		pan.setNombre("pan");
-		pan.agregarIngrediente("harina", new BigDecimal(80));
-		pan.agregarIngrediente("agua", new BigDecimal(120));
-
-		unaRecetaCompuesta.agregarSubReceta(pan);
-		this.usuario.agregarReceta(unaRecetaCompuesta);
-	}
-
-	/*
-	 * Aca hay q ver lo de la clonacion. Tengo una receta privada y quiero
-	 * agregar una publica
-	 * 
-	 * @Test public void testAgregaRecetaConSubrecetaPublica() throws
-	 * RecetaException { RecetaPrivadaCompuesta unaRecetaCompuesta =
-	 * crearRecetaPrivadaCompuesta();
-	 * 
-	 * RecetaPublicaSimple pan = new RecetaPublicaSimple(150);
-	 * pan.setNombre("pan"); pan.agregarIngrediente("harina", new
-	 * BigDecimal(80)); pan.agregarIngrediente("agua", new BigDecimal(120));
-	 * 
-	 * unaRecetaCompuesta.agregarSubReceta(pan);
-	 * this.usuario.agregarReceta(unaRecetaCompuesta); }
-	 */
-
+	// Entrega 2 - Punto 3: Marcar una receta como favorita.
+	
 	@Test
-	public void testMarcarFavorita() throws RecetaException {
+	public void testMarcarUnaRecetaComoFavorita() throws RecetaException {
 
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(80);
 		receta.agregarIngrediente("pollo", new BigDecimal(80));
-		this.usuario.setFavoritos(new ArrayList<Receta>());
 		this.usuario.marcarFavorita(receta);
 
 		assertEquals(1, this.usuario.getFavoritos().size());

@@ -5,10 +5,8 @@ import dds.javatar.app.dto.usuario.Usuario;
 
 
 public class FiltroCondiciones extends FiltroTemplate {
-
 	
-	public boolean validator(Usuario usuario, Receta receta) {
-		
+	public boolean validator(Usuario usuario, Receta receta) {		
 		return usuario.validarSiAceptaReceta(receta);
 	}
 

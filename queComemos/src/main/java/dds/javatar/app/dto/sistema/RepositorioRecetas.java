@@ -9,5 +9,4 @@ public interface RepositorioRecetas {
 	public void agregar(Receta receta);
 	public void quitar(Receta receta) throws BusinessException;
 	public List<Receta> listarTodas();
-
 }

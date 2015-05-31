@@ -9,25 +9,23 @@ import dds.javatar.app.dto.usuario.Usuario;
 public class FiltroPrecio extends FiltroTemplate {
 
 	List<String> ingredientesCaros;
-	
+
 	@Override
 	public boolean validator(Usuario usuario, Receta receta) {
-		
-		for(String ingrediente : ingredientesCaros) {
-			
-			if(receta.contieneIngrediente(ingrediente)) {
-				
-				return false;
+		for (String ingrediente : ingredientesCaros) {
+			if (receta.contieneIngrediente(ingrediente)) {
+				return true;
 			}
-		}
+			return false;
+		}	
 		return true;
 	}
 
-	
 	/* Setters y Getters */
-	
+
 	public List<String> getIngredientesCaros() {
-		if(ingredientesCaros == null) return new ArrayList<String>();
+		if (ingredientesCaros == null)
+			return new ArrayList<String>();
 		return ingredientesCaros;
 	}
 

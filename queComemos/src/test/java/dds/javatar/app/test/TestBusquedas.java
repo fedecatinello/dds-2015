@@ -42,6 +42,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 	
 	@Test
 	public void testBuscarRecetasSinFiltro() throws FilterException {
+		Sistema.getInstance().eliminarTodasLasRecetas();
 		Busqueda busqueda = new Busqueda();
 		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(30 , listaRecetas.size());
@@ -49,6 +50,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 	
 	@Test
 	public void testFiltrarRecetasConExcesoDeCalorias() throws FilterException {
+		Sistema.getInstance().eliminarTodasLasRecetas();
 		Busqueda busqueda = new Busqueda(); 
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		filtros.add(new FiltroCondiciones());
@@ -60,7 +62,11 @@ public class TestBusquedas extends TestGeneralAbstract{
 	}
 	
 	@Test
-	public void testFiltrarRecetasConIngredientesCaros() throws FilterException {
+	public void testFiltrarRecetasConIngredientesCaros() throws FilterException, RecetaException {
+		Sistema.getInstance().eliminarTodasLasRecetas();
+		Usuario usuarioPedro = this.crearUsuarioBasicoValido();
+		crearListaRecetasParaUsuarioSize30(usuarioPedro);
+		
 		Busqueda busqueda = new Busqueda(); 
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		FiltroPrecio filtroPrecio = new FiltroPrecio();
@@ -71,8 +77,8 @@ public class TestBusquedas extends TestGeneralAbstract{
 		filtroPrecio.setIngredientesCaros(ingredientesCaros);
 		filtros.add(filtroPrecio);
 		busqueda.setFiltros(filtros); 
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);	
-		assertEquals(18 , listaRecetas.size());		
+		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuarioPedro);	
+		assertEquals(10 , listaRecetas.size());		
 	}
 	
 
@@ -111,6 +117,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 	//revisar: no tiene sentido el assert
 	@Test
 	public void testProcesarOrdenAlfabetico() throws FilterException {
+		Sistema.getInstance().eliminarTodasLasRecetas();
 		Busqueda busqueda = new Busqueda();
 		Criterio alfabetico = new Alfabeticamente();
 		Ordenamiento orden = new Ordenamiento(alfabetico);
@@ -126,6 +133,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 	//revisar: no tiene sentido el assert
 	@Test
 	public void testProcesarOrdenCalorias() throws FilterException {
+		Sistema.getInstance().eliminarTodasLasRecetas();
 		Busqueda busqueda = new Busqueda();
 		Criterio calorias = new Calorias();
 		Ordenamiento orden = new Ordenamiento(calorias);

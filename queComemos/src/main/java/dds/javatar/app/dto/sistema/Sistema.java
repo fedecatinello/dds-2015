@@ -17,7 +17,7 @@ public class Sistema implements RepositorioRecetas {
 	private List<Receta> recetaConocidas;
 
 	protected Sistema() {
-		this.recetaConocidas = new ArrayList <Receta>();
+		this.recetaConocidas = new ArrayList<Receta>();
 	}
 
 	private static Sistema instance;
@@ -29,8 +29,8 @@ public class Sistema implements RepositorioRecetas {
 		return instance;
 	}
 
-	/**		Getter & Setter		**/
-	
+	/** Getter & Setter **/
+
 	@Override
 	public void agregar(Receta receta) {
 		this.recetaConocidas.add(receta);
@@ -38,20 +38,20 @@ public class Sistema implements RepositorioRecetas {
 
 	@Override
 	public void quitar(Receta receta) throws BusinessException {
-			this.recetaConocidas.remove(receta);
+		this.recetaConocidas.remove(receta);
 	}
 
-	/**		Metodos		**/
-	
+	/** Metodos **/
+
 	@Override
 	public List<Receta> listarTodas() {
 		return this.recetaConocidas;
 	}
 
-	public void eliminarTodasLasRecetas(){
+	public void eliminarTodasLasRecetas() {
 		this.recetaConocidas.clear();
 	}
-	
+
 	public void sugerir(Receta receta, Usuario usuario)
 			throws BusinessException {
 		for (String ingrediente : receta.getIngredientes().keySet()) {
@@ -82,15 +82,17 @@ public class Sistema implements RepositorioRecetas {
 	}
 
 	public List<Receta> recetasQueConoceEl(Usuario usuario) {
-		
+
 		List<Receta> recetasQueConoceLista;
-		Set<Receta> recetasQueConoceSet = new LinkedHashSet<Receta> (this.recetaConocidas);
+		Set<Receta> recetasQueConoceSet = new LinkedHashSet<Receta>(
+				this.recetaConocidas);
 		recetasQueConoceSet.addAll(usuario.getRecetas());
-		
-		if (!usuario.getGruposAlQuePertenece().isEmpty()	|| usuario.getGruposAlQuePertenece() != null) {	
+
+		if (!usuario.getGruposAlQuePertenece().isEmpty()
+				|| usuario.getGruposAlQuePertenece() != null) {
 			for (GrupoDeUsuarios grupo : usuario.getGruposAlQuePertenece()) {
-				for (Usuario miembroDelGrupo : grupo.getUsuarios()) {					
-						recetasQueConoceSet.addAll(miembroDelGrupo.getRecetas());
+				for (Usuario miembroDelGrupo : grupo.getUsuarios()) {
+					recetasQueConoceSet.addAll(miembroDelGrupo.getRecetas());
 				}
 			}
 		}
@@ -105,7 +107,6 @@ public class Sistema implements RepositorioRecetas {
 		busqueda.filtrar(usuario, recetasXusuario);
 		busqueda.postProcesar(recetasXusuario);
 		return recetasXusuario;
-
 	}
 
 }

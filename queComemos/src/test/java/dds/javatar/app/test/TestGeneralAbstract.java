@@ -13,7 +13,6 @@ import dds.javatar.app.util.exception.RecetaException;
 
 public abstract class TestGeneralAbstract {
 
-
 	protected Usuario crearUsuarioBasicoValido() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
@@ -29,7 +28,7 @@ public abstract class TestGeneralAbstract {
 
 		return usuario;
 	}
-	
+
 	protected Usuario crearUsuarioConSobrepeso() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
@@ -46,7 +45,7 @@ public abstract class TestGeneralAbstract {
 		return usuario;
 	}
 
-	protected RecetaPrivadaSimple crearRecetaPrivadaSimple(){
+	protected RecetaPrivadaSimple crearRecetaPrivadaSimple() {
 		RecetaPrivadaSimple ravioles = new RecetaPrivadaSimple(350);
 		ravioles.setNombre("Ravioles");
 		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
@@ -54,8 +53,8 @@ public abstract class TestGeneralAbstract {
 		ravioles.agregarIngrediente("Verdura", new BigDecimal(100));
 		return ravioles;
 	}
-	
-	protected RecetaPrivadaSimple crearRecetaPrivadaSimpleConMuchasCalorias(){
+
+	protected RecetaPrivadaSimple crearRecetaPrivadaSimpleConMuchasCalorias() {
 		RecetaPrivadaSimple ravioles = new RecetaPrivadaSimple(350);
 		ravioles.setNombre("Ravioles");
 		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
@@ -65,15 +64,16 @@ public abstract class TestGeneralAbstract {
 		return ravioles;
 	}
 
-	protected RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws RecetaException{
+	protected RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta()
+			throws RecetaException {
 
 		RecetaPrivadaSimple condimentos = new RecetaPrivadaSimple(120);
-		RecetaPrivadaSimple pure  = new RecetaPrivadaSimple(350);
-		RecetaPrivadaSimple pollo  = new RecetaPrivadaSimple(220);
-		RecetaPrivadaCompuesta polloConPure  = new RecetaPrivadaCompuesta();
+		RecetaPrivadaSimple pure = new RecetaPrivadaSimple(350);
+		RecetaPrivadaSimple pollo = new RecetaPrivadaSimple(220);
+		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
 
 		condimentos.setNombre("Condimentos");
-		condimentos.agregarIngrediente("Oregano",new BigDecimal(20));
+		condimentos.agregarIngrediente("Oregano", new BigDecimal(20));
 
 		pure.setNombre("Pure");
 		pure.agregarIngrediente("Manteca", new BigDecimal(300));
@@ -89,24 +89,42 @@ public abstract class TestGeneralAbstract {
 		return polloConPure;
 	}
 
-	protected void crearListaRecetasParaUsuarioSize30(Usuario user) throws RecetaException{
+	protected void crearListaRecetasParaUsuarioSize30(Usuario user)
+			throws RecetaException {
 		RecetaPrivadaCompuesta recetaPrivadaCompuesta;
 		RecetaPrivadaSimple recetaPrivadaSimple;
-		RecetaPrivadaSimple recetaPrivadaSimpleHipertenso; 
+		RecetaPrivadaSimple recetaPrivadaSimpleHipertenso;
 		for (int i = 0; i < 10; i++) {
-			recetaPrivadaCompuesta =crearRecetaPrivadaCompuesta();
-			recetaPrivadaSimple= crearRecetaPrivadaSimple();
+			recetaPrivadaCompuesta = crearRecetaPrivadaCompuesta();
+			recetaPrivadaSimple = crearRecetaPrivadaSimple();
 			recetaPrivadaSimpleHipertenso = crearRecetaNoAptaParaHipertensos();
-			
+
 			user.agregarReceta(recetaPrivadaSimple);
-			
+
 			user.agregarReceta(recetaPrivadaCompuesta);
-			
+
 			user.agregarReceta(recetaPrivadaSimpleHipertenso);
 		}
 
 	}
-	
+
+	protected void crearListaRecetasParaUsuarioSize3(Usuario user)
+			throws RecetaException {
+		RecetaPrivadaCompuesta recetaPrivadaCompuesta;
+		RecetaPrivadaSimple recetaPrivadaSimple;
+		RecetaPrivadaSimple recetaPrivadaSimpleHipertenso;
+		recetaPrivadaCompuesta = crearRecetaPrivadaCompuesta();
+		recetaPrivadaSimple = crearRecetaPrivadaSimple();
+		recetaPrivadaSimpleHipertenso = crearRecetaNoAptaParaHipertensos();
+
+		user.agregarReceta(recetaPrivadaSimple);
+
+		user.agregarReceta(recetaPrivadaCompuesta);
+
+		user.agregarReceta(recetaPrivadaSimpleHipertenso);
+
+	}
+
 	public RecetaPrivadaSimple crearRecetaNoAptaParaHipertensos() {
 		RecetaPrivadaSimple pizza = new RecetaPrivadaSimple(350);
 		pizza.setNombre("Pizza");
@@ -115,6 +133,5 @@ public abstract class TestGeneralAbstract {
 		pizza.agregarIngrediente("Harina", new BigDecimal(100));
 		return pizza;
 	}
-	
 
 }

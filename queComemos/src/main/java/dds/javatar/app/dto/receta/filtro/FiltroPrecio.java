@@ -12,13 +12,13 @@ public class FiltroPrecio extends FiltroTemplate {
 
 	@Override
 	public boolean validator(Usuario usuario, Receta receta) {
+		boolean resultado = false;
 		for (String ingrediente : ingredientesCaros) {
 			if (receta.contieneIngrediente(ingrediente)) {
-				return true;
+				resultado= true;
 			}
-			return false;
 		}	
-		return true;
+		return resultado;
 	}
 
 	/* Setters y Getters */

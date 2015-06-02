@@ -80,7 +80,7 @@ public class Usuario extends Entity{
 	    this.condicionesPreexistentes =newCondicionesPreexistentes;
 	    this.preferenciasAlimenticias = newPreferenciasAlimenticias;
 	    this.rutina = newRutina;
-	    this.recetas = recetas;
+	    this.recetas = newRecetas;
 	    this.gruposAlQuePertenece = newGruposAlQuePertenece;
 	    this.recetasFavoritas = newRecetasFavoritas;
 	    this.setEstadoSolicitud(newEstadoSolicitud);

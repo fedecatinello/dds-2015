@@ -3,7 +3,7 @@ package dds.javatar.app.dto.receta;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-import dds.javatar.app.dto.sistema.Sistema;
+import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
@@ -43,7 +43,7 @@ public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica {
 
 	@Override
 	public void agregarRecetaAlRepo(RecetaPublica receta) {
-		Sistema.getInstance().agregar(receta);		
+		RepositorioRecetas.getInstance().agregar(receta);		
 	}
 
 	public Receta privatizarSiCorresponde (Usuario usuario) throws UsuarioException, RecetaException{

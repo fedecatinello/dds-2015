@@ -6,7 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import dds.javatar.app.dto.sistema.Sistema;
+import dds.javatar.app.dto.sistema.RepositorioRecetas;
+
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
@@ -138,7 +139,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 
 	@Override
 	public void agregarRecetaAlRepo(RecetaPublica receta) {
-		Sistema.getInstance().agregar(receta);
+		RepositorioRecetas.getInstance().agregar(receta);
 	}
 
 	public Receta privatizarSiCorresponde (Usuario user) throws UsuarioException, RecetaException{

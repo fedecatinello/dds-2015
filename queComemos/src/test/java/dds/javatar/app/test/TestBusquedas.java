@@ -20,7 +20,7 @@ import dds.javatar.app.dto.receta.busqueda.ResultadosPares;
 import dds.javatar.app.dto.receta.filtro.Filtro;
 import dds.javatar.app.dto.receta.filtro.FiltroCondiciones;
 import dds.javatar.app.dto.receta.filtro.FiltroPrecio;
-import dds.javatar.app.dto.sistema.Sistema;
+import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 import dds.javatar.app.util.exception.RecetaException;
@@ -42,28 +42,28 @@ public class TestBusquedas extends TestGeneralAbstract{
 	
 	@Test
 	public void testBuscarRecetasSinFiltro() throws FilterException {
-		Sistema.getInstance().eliminarTodasLasRecetas();
+		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Busqueda busqueda = new Busqueda();
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
+		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(30 , listaRecetas.size());
 	}
 	
 	@Test
 	public void testFiltrarRecetasConExcesoDeCalorias() throws FilterException {
-		Sistema.getInstance().eliminarTodasLasRecetas();
+		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Busqueda busqueda = new Busqueda(); 
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		filtros.add(new FiltroCondiciones());
 		busqueda.setFiltros(filtros);
 		
 		Usuario sobrepesado = crearUsuarioConSobrepeso();
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, sobrepesado);
+		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(busqueda, sobrepesado);
 		assertEquals(0, listaRecetas.size());
 	}
 	
 	@Test
 	public void testFiltrarRecetasConIngredientesCaros() throws FilterException, RecetaException {
-		Sistema.getInstance().eliminarTodasLasRecetas();
+		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Usuario usuarioPedro = this.crearUsuarioBasicoValido();
 		crearListaRecetasParaUsuarioSize30(usuarioPedro);
 		
@@ -77,7 +77,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 		filtroPrecio.setIngredientesCaros(ingredientesCaros);
 		filtros.add(filtroPrecio);
 		busqueda.setFiltros(filtros); 
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuarioPedro);	
+		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(busqueda, usuarioPedro);	
 		assertEquals(10 , listaRecetas.size());		
 	}
 	
@@ -94,7 +94,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		busqueda.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
+		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(10, listaRecetas.size());
 	}
 	
@@ -110,14 +110,14 @@ public class TestBusquedas extends TestGeneralAbstract{
 		PostProcesamiento soloPares = new ResultadosPares();
 		busqueda.setPostProcesamiento(soloPares);
 		
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
+		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(15, listaRecetas.size());
 	}
 	
 	//revisar: no tiene sentido el assert
 	@Test
 	public void testProcesarOrdenAlfabetico() throws FilterException {
-		Sistema.getInstance().eliminarTodasLasRecetas();
+		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Busqueda busqueda = new Busqueda();
 		Criterio alfabetico = new Alfabeticamente();
 		Ordenamiento orden = new Ordenamiento(alfabetico);
@@ -126,14 +126,14 @@ public class TestBusquedas extends TestGeneralAbstract{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		busqueda.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
+		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(30, listaRecetas.size());
 	}
 	
 	//revisar: no tiene sentido el assert
 	@Test
 	public void testProcesarOrdenCalorias() throws FilterException {
-		Sistema.getInstance().eliminarTodasLasRecetas();
+		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Busqueda busqueda = new Busqueda();
 		Criterio calorias = new Calorias();
 		Ordenamiento orden = new Ordenamiento(calorias);
@@ -142,7 +142,7 @@ public class TestBusquedas extends TestGeneralAbstract{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		busqueda.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = Sistema.getInstance().realizarBusquedaPara(busqueda, usuario);
+		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(busqueda, usuario);
 		assertEquals(30, listaRecetas.size());
 	}
 	

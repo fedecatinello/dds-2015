@@ -14,7 +14,8 @@ import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
-import dds.javatar.app.dto.sistema.Sistema;
+import dds.javatar.app.dto.sistema.Administrador;
+import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Hipertenso;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
@@ -25,7 +26,8 @@ import dds.javatar.app.util.exception.RecetaException;
 public class TestSistema {
 
 	private Usuario usuario;
-	private Sistema sistema = Sistema.getInstance();
+	private RepositorioRecetas sistema = RepositorioRecetas.getInstance();
+	private Administrador administrador = Administrador.getInstance();
 
 	@Before
 	public void initialize() {
@@ -92,7 +94,7 @@ public class TestSistema {
 	public void unaRecetaQueLeGustaPuedeSugerirseAUnUsuario()
 			throws BusinessException {
 		this.usuario.agregarAlimentoQueLeDisgusta("pollo");
-		this.sistema.sugerir(crearRecetaPublicaSimpleRica(),
+		this.administrador.sugerir(crearRecetaPublicaSimpleRica(),
 				crearUsuarioBasicoValido());
 
 	}
@@ -103,7 +105,7 @@ public class TestSistema {
 		sistema.eliminarTodasLasRecetas();
 		this.usuario = crearUsuarioBasicoValido();
 		this.usuario.agregarAlimentoQueLeDisgusta("Harina");
-		sistema.sugerir(crearRecetaPublicaSimpleRica(), this.usuario);
+		administrador.sugerir(crearRecetaPublicaSimpleRica(), this.usuario);
 
 	}
 
@@ -114,7 +116,7 @@ public class TestSistema {
 		Hipertenso hipertenso = new Hipertenso();
 		this.usuario = crearUsuarioBasicoValido();
 		this.usuario.agregarCondicionPreexistente(hipertenso);
-		this.sistema.sugerir(crearRecetaNoAptaParaHipertensos(), this.usuario);
+		this.administrador.sugerir(crearRecetaNoAptaParaHipertensos(), this.usuario);
 
 	}
 
@@ -177,6 +179,6 @@ public class TestSistema {
 		grupo.agregarUsuario(usuario);
 		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
-		sistema.sugerir(crearRecetaPrivadaSimple(), grupo);
+		administrador.sugerir(crearRecetaPrivadaSimple(), grupo);
 	}
 }

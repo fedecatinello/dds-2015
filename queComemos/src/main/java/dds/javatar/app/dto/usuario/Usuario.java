@@ -11,16 +11,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.uqbar.commons.model.Entity;
+
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.adapter.RecetaAdapter;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
-public class Usuario {
+public class Usuario extends Entity{
 
 	public enum Sexo {
 		MASCULINO, FEMENINO
+	};
+	
+	public enum solicitud {
+		RECHAZADA, ACEPTADA
 	};
 
 	private static final Integer MIN_NAME_LENGTH = 4;
@@ -39,7 +45,13 @@ public class Usuario {
 	private List<Receta> recetasFavoritas;
 
 	/**** Constructors ****/
-
+//	 private Usuario(Solicitud builder) {
+//    this.nombre = builder.nombre(nombre);
+//    this.sexo = builder.lastName;
+//    this.fechaNacimiento = builder.age;
+//    this.altura = builder.phone;
+//    this.peso = builder.address;
+//}
 	public Usuario() {
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
 		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
@@ -106,6 +118,10 @@ public class Usuario {
 
 	public void setRutina(Rutina rutina) {
 		this.rutina = rutina;
+	}
+	
+	public Set<CondicionPreexistente> getCondicionesPreexistentes(){
+		return this.condicionesPreexistentes;
 	}
 
 	public Set<Receta> getRecetas() {

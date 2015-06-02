@@ -6,15 +6,15 @@ import static org.junit.Assert.assertFalse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
@@ -379,5 +379,67 @@ public class TestRecetas {
 
 	}
 	
+	
+	// Entrega 3 - Punto 2: Nuevo origen para las recetas
+	
+	@Test
+	public void testConsultarRecetaExterna() throws RecetaException {
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+		palabrasClaves.add("ensalada");
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+		recetasEncontradas = this.usuario.consultarReceta("Fideos", "Dificil", palabrasClaves);
+		
+		assertEquals(3, recetasEncontradas.size());
+	}
 
+	@Test
+	public void testConsultarRecetaHiperTenso() throws RecetaException {
+		Hipertenso hipertension = new Hipertenso();
+		Usuario hipertenso = new Usuario();
+		hipertenso.agregarCondicionPreexistente(hipertension);
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+		palabrasClaves.add("bife");
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+		recetasEncontradas = hipertenso.consultarReceta("churrasco", "Facil", palabrasClaves);
+		
+		assertEquals(0, recetasEncontradas.size());
+	}
+
+	@Test
+	public void testConsultarRecetaVegano() throws RecetaException {
+		Vegano veganismo = new Vegano();
+		Usuario vegano = new Usuario();
+		vegano.agregarCondicionPreexistente(veganismo);
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+		palabrasClaves.add("arroz");
+		palabrasClaves.add("zanahoria");
+		palabrasClaves.add("tomate");
+		palabrasClaves.add("ginebra");
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+		recetasEncontradas = vegano.consultarReceta("ensalada", "Mediana", palabrasClaves);
+		
+		assertEquals(5, recetasEncontradas.size());
+	}
+	
+	@Test
+	public void testConsultarRecetaDiabetico() throws RecetaException {
+		Diabetico diabetes = new Diabetico();
+		Usuario diabetico = new Usuario();
+		diabetico.agregarCondicionPreexistente(diabetes);
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+		palabrasClaves.add("chocolate");
+		palabrasClaves.add("flan");
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+		recetasEncontradas = diabetico.consultarReceta("helado", "facil", palabrasClaves);
+		
+		assertEquals(5, recetasEncontradas.size());
+	}
 }

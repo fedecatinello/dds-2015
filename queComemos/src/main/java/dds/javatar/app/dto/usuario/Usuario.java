@@ -300,9 +300,22 @@ public class Usuario {
 		recetasFavoritas.add(receta);
 	}
 	
+	
+	// Entrega 3: Punto 2
+	
+	private void filtrarRecetasNoAptas(List<Receta>recetas){
+		List<Receta> recetasAux = recetas;
+		for(Receta receta: recetasAux){
+			if(!this.validarSiAceptaReceta(receta)){
+				recetas.remove(receta);
+			}
+		}
+	}
+	
 	public List<Receta> consultarReceta(String nombre, String dificultad, List<String> palabrasClaves) {
 		
 		List<Receta> recetas = RecetaAdapter.getInstanceReceta().consultarReceta(nombre, dificultad, palabrasClaves);
+		this.filtrarRecetasNoAptas(recetas);
 		return recetas;
 	}
 

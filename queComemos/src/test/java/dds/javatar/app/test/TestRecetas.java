@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Before;
@@ -375,5 +378,6 @@ public class TestRecetas {
 		assertEquals(1, this.usuario.getFavoritos().size());
 
 	}
+	
 
 }

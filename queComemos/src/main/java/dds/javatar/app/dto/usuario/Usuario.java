@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.receta.adapter.RecetaAdapter;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
@@ -296,6 +298,12 @@ public class Usuario {
 
 	public void marcarFavorita(Receta receta) {
 		recetasFavoritas.add(receta);
+	}
+	
+	public List<Receta> consultarReceta(String nombre, String dificultad, List<String> palabrasClaves) {
+		
+		List<Receta> recetas = RecetaAdapter.getInstanceReceta().consultarReceta(nombre, dificultad, palabrasClaves);
+		return recetas;
 	}
 
 }

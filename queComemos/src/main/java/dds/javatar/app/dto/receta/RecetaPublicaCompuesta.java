@@ -21,6 +21,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	private String nombre;
 	private String dificultad;
 	private String temporada;
+	private Integer tiempoPreparacion;
 
 	/** Builder **/
 	public RecetaPublicaCompuesta() {
@@ -92,6 +93,14 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 			this.pasosPreparacion.putAll(receta.getPasosPreparacion());
 		}
 		return pasosPreparacion;
+	}
+
+	public Integer getTiempoPreparacion() {
+		return tiempoPreparacion;
+	}
+
+	public void setTiempoPreparacion(Integer tiempoPreparacion) {
+		this.tiempoPreparacion = tiempoPreparacion;
 	}
 
 	/** Validadores **/

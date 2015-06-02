@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
 import dds.javatar.app.dto.receta.filtro.Filtro;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
@@ -13,7 +14,14 @@ public class Busqueda {
 	private List<Filtro> filtros;
 
 	private PostProcesamiento postProcesamiento;
-
+	
+	private static BusquedaAdapter instanceAdapter;
+	
+	public static BusquedaAdapter getInstanceAdapter() {
+		if (instanceAdapter == null) instanceAdapter = new BusquedaAdapter();
+		return instanceAdapter;
+	}
+	
 	public Busqueda() {
 		this.filtros = new ArrayList<Filtro>();
 		this.postProcesamiento = null;
@@ -48,6 +56,12 @@ public class Busqueda {
 
 	public void setFiltros(List<Filtro> filtros) {
 		this.filtros = filtros;
+	}
+	
+	public List<Receta> buscarRecetasExternas(Usuario usuario, String nombre, String dificultad, List<String> palabrasClaves) {
+		
+		List<Receta> recetasEncontradas = Busqueda.getInstanceAdapter().consultarRecetas(usuario, nombre, dificultad, palabrasClaves);
+		return recetasEncontradas;
 	}
 
 }

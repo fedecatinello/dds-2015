@@ -20,6 +20,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	protected String nombre;
 	protected String dificultad;
 	protected String temporada;
+	protected Integer tiempoPreparacion;
 
 	/** Builder **/
 	public RecetaPrivadaCompuesta() {
@@ -91,6 +92,14 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 			this.pasosPreparacion.putAll(receta.getPasosPreparacion());
 		}
 		return pasosPreparacion;
+	}
+
+	public Integer getTiempoPreparacion() {
+		return tiempoPreparacion;
+	}
+
+	public void setTiempoPreparacion(Integer tiempoPreparacion) {
+		this.tiempoPreparacion = tiempoPreparacion;
 	}
 
 	/** Add items **/

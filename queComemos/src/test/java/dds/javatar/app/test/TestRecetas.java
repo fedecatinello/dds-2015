@@ -389,7 +389,8 @@ public class TestRecetas {
 		palabrasClaves.add("ensalada");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		recetasEncontradas = this.usuario.consultarReceta("Fideos", "D", palabrasClaves);
+
+		recetasEncontradas = this.usuario.consultarRecetasExternas("Fideos", "D", palabrasClaves);
 		
 		assertEquals(3, recetasEncontradas.size());
 	}
@@ -404,8 +405,9 @@ public class TestRecetas {
 		palabrasClaves.add("bife");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		recetasEncontradas = hipertenso.consultarReceta("churrasco", "F", palabrasClaves);
-		
+
+		recetasEncontradas = hipertenso.consultarRecetasExternas("churrasco", "F", palabrasClaves);
+
 		assertEquals(0, recetasEncontradas.size());
 	}
 
@@ -422,8 +424,9 @@ public class TestRecetas {
 		palabrasClaves.add("ginebra");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		recetasEncontradas = vegano.consultarReceta("ensalada", "M", palabrasClaves);
 		
+		recetasEncontradas = vegano.consultarRecetasExternas("ensalada", "M", palabrasClaves);
+
 		assertEquals(5, recetasEncontradas.size());
 	}
 	
@@ -438,7 +441,8 @@ public class TestRecetas {
 		palabrasClaves.add("flan");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		recetasEncontradas = diabetico.consultarReceta("helado", "F", palabrasClaves);
+
+		recetasEncontradas = diabetico.consultarRecetasExternas("helado", "F", palabrasClaves);
 		
 		assertEquals(5, recetasEncontradas.size());
 	}

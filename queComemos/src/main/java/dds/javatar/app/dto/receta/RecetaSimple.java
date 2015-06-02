@@ -11,6 +11,9 @@ public abstract class RecetaSimple implements Receta {
 	protected Integer calorias;
 	protected String dificultad;
 	protected String temporada;
+	protected Integer tiempoPreparacion;
+	protected String autor;
+	protected Integer anioCreacion;
 
 	protected Map<String, BigDecimal> ingredientes;
 	protected Map<String, BigDecimal> condimentos;
@@ -71,6 +74,30 @@ public abstract class RecetaSimple implements Receta {
 
 	public Map<String, BigDecimal> getIngredientes() {
 		return this.ingredientes;
+	}
+
+	public Integer getTiempoPreparacion() {
+		return tiempoPreparacion;
+	}
+
+	public void setTiempoPreparacion(Integer tiempoPreparacion) {
+		this.tiempoPreparacion = tiempoPreparacion;
+	}
+
+	public String getAutor() {
+		return autor;
+	}
+
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
+
+	public Integer getAnioCreacion() {
+		return anioCreacion;
+	}
+
+	public void setAnioCreacion(Integer anioCreacion) {
+		this.anioCreacion = anioCreacion;
 	}
 
 	/** Metodos **/

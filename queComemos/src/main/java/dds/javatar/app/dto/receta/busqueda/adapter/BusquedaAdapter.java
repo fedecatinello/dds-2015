@@ -25,6 +25,7 @@ import dds.javatar.app.dto.usuario.monitoreo.ConsultaObserver;
 public class BusquedaAdapter {
 
 	private static RepoRecetas instanceRepo;
+	private static BusquedaAdapter instanceAdapter;
 	
 	private Map<String, Dificultad> dificultades;
 	private Set<ConsultaObserver> observers;
@@ -41,6 +42,11 @@ public class BusquedaAdapter {
 	public static RepoRecetas getInstanceRepo() {
 		if (instanceRepo == null) instanceRepo = new RepoRecetas();
 		return instanceRepo;
+	}
+	
+	public static BusquedaAdapter getInstanceAdapter() {
+		if (instanceAdapter == null) instanceAdapter = new BusquedaAdapter();
+		return instanceAdapter;
 	}
 	
 	public List<Receta> consultarRecetas(Usuario usuario, String nombre, String dificultadStr, List<String> palabrasClaves) {

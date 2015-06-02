@@ -15,13 +15,6 @@ public class Busqueda {
 
 	private PostProcesamiento postProcesamiento;
 	
-	private static BusquedaAdapter instanceAdapter;
-	
-	public static BusquedaAdapter getInstanceAdapter() {
-		if (instanceAdapter == null) instanceAdapter = new BusquedaAdapter();
-		return instanceAdapter;
-	}
-	
 	public Busqueda() {
 		this.filtros = new ArrayList<Filtro>();
 		this.postProcesamiento = null;
@@ -60,7 +53,7 @@ public class Busqueda {
 	
 	public List<Receta> buscarRecetasExternas(Usuario usuario, String nombre, String dificultad, List<String> palabrasClaves) {
 		
-		List<Receta> recetasEncontradas = Busqueda.getInstanceAdapter().consultarRecetas(usuario, nombre, dificultad, palabrasClaves);
+		List<Receta> recetasEncontradas = BusquedaAdapter.getInstanceAdapter().consultarRecetas(usuario, nombre, dificultad, palabrasClaves);
 		return recetasEncontradas;
 	}
 

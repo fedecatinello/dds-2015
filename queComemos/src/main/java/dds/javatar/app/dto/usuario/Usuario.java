@@ -26,7 +26,7 @@ public class Usuario extends Entity{
 		MASCULINO, FEMENINO
 	};
 	
-	public enum solicitud {
+	public enum EstadoSolicitud {
 		RECHAZADA, ACEPTADA
 	};
 
@@ -37,6 +37,7 @@ public class Usuario extends Entity{
 	private Date fechaNacimiento;
 	private BigDecimal altura;
 	private BigDecimal peso;
+	private EstadoSolicitud estadoSolicitud;
 
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	private Map<String, Boolean> preferenciasAlimenticias;
@@ -70,7 +71,7 @@ public class Usuario extends Entity{
 			Set<CondicionPreexistente> newCondicionesPreexistentes,
 			Map<String, Boolean> newPreferenciasAlimenticias, Rutina newRutina,
 			Set<Receta> newRecetas, Set<GrupoDeUsuarios> newGruposAlQuePertenece,
-			List<Receta> newRecetasFavoritas) {
+			List<Receta> newRecetasFavoritas, EstadoSolicitud newEstadoSolicitud) {
 		this.nombre = newNombre;
 	    this.sexo = sexo2;
 	    this.fechaNacimiento = newFechaNacimiento;
@@ -83,6 +84,7 @@ public class Usuario extends Entity{
 	    this.recetas = recetas;
 	    this.gruposAlQuePertenece = newGruposAlQuePertenece;
 	    this.recetasFavoritas = newRecetasFavoritas;
+	    this.setEstadoSolicitud(newEstadoSolicitud);
 	}
 	/**** Setters y getters ****/
 	public BigDecimal getAltura() {
@@ -339,6 +341,14 @@ public class Usuario extends Entity{
 		}
 
 		return Boolean.FALSE;
+	}
+
+	public EstadoSolicitud getEstadoSolicitud() {
+		return estadoSolicitud;
+	}
+
+	public void setEstadoSolicitud(EstadoSolicitud estadoSolicitud) {
+		this.estadoSolicitud = estadoSolicitud;
 	}
 
 }

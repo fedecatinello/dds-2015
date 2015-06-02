@@ -14,21 +14,19 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.usuario.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.Usuario.EstadoSolicitud;
 import dds.javatar.app.dto.usuario.Usuario.Sexo;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
 public class Solicitud {
 	
-	
-	public enum EstadoColicitud {
-		RECHAZADA, ACEPTADA
-	};
 
 	private static final Integer MIN_NAME_LENGTH = 4;
 
 	private  String nombre;
 	private  Sexo sexo;
+	private  EstadoSolicitud estadoSolicitud;
 	private  Date fechaNacimiento;
 	private  BigDecimal altura;
 	private  BigDecimal peso;
@@ -84,6 +82,11 @@ public class Solicitud {
 		this.sexo = sexo;
 		return this;
 	}
+	
+	public Solicitud solicitud(EstadoSolicitud estadoSolicitud) {
+		this.estadoSolicitud = estadoSolicitud;
+		return this;
+	}
 
 	public Solicitud fechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
@@ -122,6 +125,6 @@ public class Solicitud {
 	
 	 public Usuario build() {
          return new Usuario( nombre, sexo, altura, peso, fechaNacimiento, condicionesPreexistentes,
-        		 preferenciasAlimenticias,rutina, recetas, gruposAlQuePertenece, recetasFavoritas  );
+        		 preferenciasAlimenticias,rutina, recetas, gruposAlQuePertenece, recetasFavoritas, estadoSolicitud );
      }
 }

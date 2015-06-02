@@ -90,7 +90,7 @@ public class TestRecetas {
 
 	@Test
 	public void testAgregarRecetaSimple() throws RecetaException {
-		RecetaPrivadaSimple unaRecetaSimple = crearRecetaPrivadaSimple();
+		RecetaPrivadaSimple unaRecetaSimple = this.crearRecetaPrivadaSimple();
 
 		this.usuario.agregarReceta(unaRecetaSimple);
 	}
@@ -104,7 +104,7 @@ public class TestRecetas {
 	@Test(expected = RecetaException.class)
 	public void testAgregarRecetaMenorAlRangoDeCalorias()
 			throws RecetaException {
-		RecetaPrivadaSimple unaRecetaSimple = crearRecetaPrivadaSimple();
+		RecetaPrivadaSimple unaRecetaSimple = this.crearRecetaPrivadaSimple();
 		unaRecetaSimple.setCalorias(2);
 		this.usuario.agregarReceta(unaRecetaSimple);
 	}
@@ -112,7 +112,7 @@ public class TestRecetas {
 	@Test(expected = RecetaException.class)
 	public void testAgregarRecetaMayorAlRangoDeCalorias()
 			throws RecetaException {
-		RecetaPrivadaSimple unaRecetaSimple = crearRecetaPrivadaSimple();
+		RecetaPrivadaSimple unaRecetaSimple = this.crearRecetaPrivadaSimple();
 		unaRecetaSimple.setCalorias(99999);
 		this.usuario.agregarReceta(unaRecetaSimple);
 	}
@@ -210,7 +210,7 @@ public class TestRecetas {
 	public void testVerRecetaPublica() throws RecetaException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
-		usuario.agregarReceta(receta);
+		this.usuario.agregarReceta(receta);
 		this.usuario.puedeVerReceta(receta);
 	}
 
@@ -231,7 +231,7 @@ public class TestRecetas {
 	public void testPuedeModificarRecetaPublica() throws RecetaException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
-		usuario.agregarReceta(receta);
+		this.usuario.agregarReceta(receta);
 		this.usuario.puedeModificarReceta(receta);
 	}
 
@@ -278,7 +278,7 @@ public class TestRecetas {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		receta.setNombre("Nombre original");
-		usuario.agregarReceta(receta);
+		this.usuario.agregarReceta(receta);
 		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
 		
 		// La receta original sigue con el mismo nombre
@@ -315,7 +315,7 @@ public class TestRecetas {
 
 	@Test
 	public void testAgregarRecetaCompuesta() throws RecetaException {
-		RecetaPrivadaCompuesta unaRecetaCompuesta = crearRecetaPrivadaCompuesta();
+		RecetaPrivadaCompuesta unaRecetaCompuesta = this.crearRecetaPrivadaCompuesta();
 		this.usuario.agregarReceta(unaRecetaCompuesta);
 
 	}
@@ -389,7 +389,7 @@ public class TestRecetas {
 		palabrasClaves.add("ensalada");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		recetasEncontradas = this.usuario.consultarReceta("Fideos", "DIFICIL", palabrasClaves);
+		recetasEncontradas = this.usuario.consultarReceta("Fideos", "D", palabrasClaves);
 		
 		assertEquals(3, recetasEncontradas.size());
 	}
@@ -404,7 +404,7 @@ public class TestRecetas {
 		palabrasClaves.add("bife");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		recetasEncontradas = hipertenso.consultarReceta("churrasco", "FACIL", palabrasClaves);
+		recetasEncontradas = hipertenso.consultarReceta("churrasco", "F", palabrasClaves);
 		
 		assertEquals(0, recetasEncontradas.size());
 	}
@@ -422,7 +422,7 @@ public class TestRecetas {
 		palabrasClaves.add("ginebra");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		recetasEncontradas = vegano.consultarReceta("ensalada", "MEDIANA", palabrasClaves);
+		recetasEncontradas = vegano.consultarReceta("ensalada", "M", palabrasClaves);
 		
 		assertEquals(5, recetasEncontradas.size());
 	}
@@ -438,7 +438,7 @@ public class TestRecetas {
 		palabrasClaves.add("flan");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		recetasEncontradas = diabetico.consultarReceta("helado", "FACIL", palabrasClaves);
+		recetasEncontradas = diabetico.consultarReceta("helado", "F", palabrasClaves);
 		
 		assertEquals(5, recetasEncontradas.size());
 	}

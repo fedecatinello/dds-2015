@@ -9,17 +9,13 @@ import dds.javatar.app.util.exception.UsuarioException;
 
 public class Vegano implements CondicionPreexistente {
 
-	private static final Set<String> alimentosProhibidos = new HashSet<String>(
-			Arrays.asList("pollo", "carne", "chivito", "chori"));
+	private static final Set<String> alimentosProhibidos = new HashSet<String>(Arrays.asList("pollo", "carne", "chivito", "chori"));
 
 	@Override
 	public void validarUsuario(Usuario usuario) throws UsuarioException {
 		for (String alimentoProhibido : alimentosProhibidos) {
 			if (usuario.tienePreferenciaAlimenticia(alimentoProhibido)) {
-				throw new UsuarioException(
-						String.format(
-								"El usuario no puede tener como preferencia %s por ser vegano",
-								alimentoProhibido));
+				throw new UsuarioException(String.format("El usuario no puede tener como preferencia %s por ser vegano", alimentoProhibido));
 			}
 		}
 	}
@@ -29,16 +25,6 @@ public class Vegano implements CondicionPreexistente {
 		return usuario.tienePreferenciaAlimenticia("fruta");
 	}
 
-	// @Override
-	// public void validarReceta(Receta receta) throws BusinessException {
-	// for (String alimentoProhibido : alimentosProhibidos) {
-	// if (receta.contieneIngrediente(alimentoProhibido)) {
-	// throw new
-	// BusinessException("El usuario es vegetariano y no tolera los ingredientes dados por la receta");
-	// }
-	// }
-	// }
-
 	@Override
 	public boolean validarReceta(Receta receta) {
 		for (String alimentoProhibido : alimentosProhibidos) {
@@ -47,5 +33,10 @@ public class Vegano implements CondicionPreexistente {
 			}
 		}
 		return true;
+	}
+	
+	@Override
+	public Boolean esVegano() {
+		return Boolean.TRUE;
 	}
 }

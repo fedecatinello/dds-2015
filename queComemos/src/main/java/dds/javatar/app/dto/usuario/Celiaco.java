@@ -16,12 +16,14 @@ public class Celiaco implements CondicionPreexistente {
 		// TODO: no hay información al respecto, deberia solicitarse?
 	}
 
-	// @Override
-	// public void validarReceta(Receta receta) throws BusinessException {
-	// // TODO: no hay información al respecto, deberia solicitarse?
-	// }
+	@Override
 	public boolean validarReceta(Receta receta) {
 		return true;
+	}
+
+	@Override
+	public Boolean esVegano() {
+		return Boolean.FALSE;
 	}
 
 }

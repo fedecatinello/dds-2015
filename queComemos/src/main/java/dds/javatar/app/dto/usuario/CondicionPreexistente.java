@@ -9,8 +9,8 @@ public interface CondicionPreexistente {
 
 	Boolean usuarioSigueRutinaSaludable(Usuario usuario);
 
-	// TODO: analizar si hacerlo con boolean o con exception, para mi no es una
-	// regla de negocio sino algo que se quiere conocer
 	boolean validarReceta(Receta receta);
+	
+	Boolean esVegano();
 
 }

@@ -20,24 +20,21 @@ public class Diabetico extends UsuarioConPreferencia {
 
 	@Override
 	public Boolean usuarioSigueRutinaSaludable(Usuario usuario) {
-		return (usuario.getPeso().intValue() <= MAX_PESO || usuario.getRutina()
-				.esActiva());
+		return (usuario.getPeso().intValue() <= MAX_PESO || usuario.getRutina().esActiva());
 	}
 
-	// @Override
-	// public void validarReceta(Receta receta) throws BusinessException {
-	// if (receta.alimentoSobrepasaCantidad("azucar", new BigDecimal(100))) {
-	// throw new
-	// BusinessException("El usuario es diabetico y no puede consumir mas de 100gr de azucar");
-	// }
-	// }
-
+	@Override
 	public boolean validarReceta(Receta receta) {
 		if (receta.alimentoSobrepasaCantidad("azucar", new BigDecimal(100))) {
 			return false;
 		} else {
 			return true;
 		}
+	}
+	
+	@Override
+	public Boolean esVegano() {
+		return Boolean.FALSE;
 	}
 
 }

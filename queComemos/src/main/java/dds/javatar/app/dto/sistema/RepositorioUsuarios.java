@@ -21,12 +21,12 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario>{
 		return instance;
 	}
 
-	public void add(Usuario usuario){
-		create(usuario);
+	public  void add(Usuario usuario){
+		effectiveCreate(usuario);
 	}
 	
 	public void remove(Usuario usuario){
-		delete(usuario);
+		effectiveDelete(usuario);
 	}
 	
 	public void update(Usuario usuario){

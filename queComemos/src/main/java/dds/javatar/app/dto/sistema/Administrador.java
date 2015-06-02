@@ -4,13 +4,15 @@ package dds.javatar.app.dto.sistema;
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.Usuario.EstadoSolicitud;
 import dds.javatar.app.util.exception.BusinessException;
 
 
 public class Administrador {
 	
 	private static Administrador instance;
-
+	private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
+	
 	public static Administrador getInstance() {
 		if (instance == null) {
 			instance = new Administrador();
@@ -48,12 +50,14 @@ public class Administrador {
 	}
 
 	public void aceptar(Solicitud solicitud){
-		//constructor de usuario
-		//RepositorioUsuarios.add(usuario);
+		Usuario usuario = solicitud.build();
+		usuario.setEstadoSolicitud(EstadoSolicitud.ACEPTADA);
+		repositorioUsuarios.add(usuario);
 	}
 
 	public void rechazar(Solicitud solicitud){
-		//constructor de usuario
-		//RepositorioUsuarios.add(usuario);
+		Usuario usuario = solicitud.build();
+		usuario.setEstadoSolicitud(EstadoSolicitud.RECHAZADA);
+		repositorioUsuarios.add(usuario);
 	}
 }

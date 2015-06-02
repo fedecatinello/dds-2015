@@ -16,6 +16,7 @@ import org.uqbar.commons.model.Entity;
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
+import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 

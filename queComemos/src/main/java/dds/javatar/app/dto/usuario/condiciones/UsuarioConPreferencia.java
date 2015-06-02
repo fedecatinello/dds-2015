@@ -1,5 +1,6 @@
-package dds.javatar.app.dto.usuario;
+package dds.javatar.app.dto.usuario.condiciones;
 
+import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.UsuarioException;
 
 public abstract class UsuarioConPreferencia implements CondicionPreexistente {

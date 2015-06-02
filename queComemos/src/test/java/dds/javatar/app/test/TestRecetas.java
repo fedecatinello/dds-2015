@@ -18,13 +18,13 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
-import dds.javatar.app.dto.usuario.CondicionPreexistente;
-import dds.javatar.app.dto.usuario.Diabetico;
-import dds.javatar.app.dto.usuario.Hipertenso;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
+import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
+import dds.javatar.app.dto.usuario.condiciones.Diabetico;
+import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
+import dds.javatar.app.dto.usuario.condiciones.Vegano;
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.dto.usuario.Vegano;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 

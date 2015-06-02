@@ -8,11 +8,11 @@ import java.util.Set;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.usuario.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Usuario.EstadoSolicitud;
 import dds.javatar.app.dto.usuario.Usuario.Sexo;
+import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 
 public class Solicitud {
 

@@ -14,7 +14,7 @@ import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Usuario.Sexo;
-import dds.javatar.app.dto.usuario.Vegano;
+import dds.javatar.app.dto.usuario.condiciones.Vegano;
 import dds.javatar.app.dto.usuario.monitoreo.MonitorMasConsultadas;
 import dds.javatar.app.dto.usuario.monitoreo.MonitorMasConsultadasPorSexo;
 import dds.javatar.app.dto.usuario.monitoreo.MonitorPorHora;

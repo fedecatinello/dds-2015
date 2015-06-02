@@ -1,8 +1,9 @@
-package dds.javatar.app.dto.usuario;
+package dds.javatar.app.dto.usuario.condiciones;
 
 import java.math.BigDecimal;
 
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.UsuarioException;
 
 public class Diabetico extends UsuarioConPreferencia {

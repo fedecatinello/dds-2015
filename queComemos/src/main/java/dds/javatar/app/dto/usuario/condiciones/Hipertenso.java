@@ -1,10 +1,11 @@
-package dds.javatar.app.dto.usuario;
+package dds.javatar.app.dto.usuario.condiciones;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.usuario.Usuario;
 
 public class Hipertenso extends UsuarioConPreferencia {
 

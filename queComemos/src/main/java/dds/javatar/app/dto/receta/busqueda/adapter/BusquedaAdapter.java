@@ -4,10 +4,8 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import queComemos.entrega3.dominio.Dificultad;
 import queComemos.entrega3.repositorio.BusquedaRecetas;
@@ -20,7 +18,7 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
 import dds.javatar.app.dto.receta.RecetaSimple;
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.dto.usuario.monitoreo.ConsultaObserver;
+import dds.javatar.app.dto.usuario.monitoreo.MonitorConsultas;
 
 public class BusquedaAdapter {
 
@@ -28,10 +26,9 @@ public class BusquedaAdapter {
 	private static BusquedaAdapter instanceAdapter;
 
 	private Map<String, Dificultad> dificultades;
-	private Set<ConsultaObserver> observers;
+	private MonitorConsultas monitorConsultas;
 
 	public BusquedaAdapter() {
-		this.observers = new HashSet<ConsultaObserver>();
 		this.dificultades = new HashMap<String, Dificultad>();
 		this.dificultades.put("F", Dificultad.FACIL);
 		this.dificultades.put("M", Dificultad.MEDIANA);
@@ -56,7 +53,9 @@ public class BusquedaAdapter {
 
 		Dificultad dificultad = this.dificultades.get(dificultadStr);
 
-		this.observers.forEach(observer -> observer.notificarConsulta(usuario, nombre, dificultad));
+		if (this.monitorConsultas != null) {
+			this.monitorConsultas.actualizarInformacionDeConsultas(usuario, nombre, dificultad);
+		}
 
 		BusquedaRecetas busqueda = this.crearBusqueda(nombre, dificultad, palabrasClaves);
 
@@ -115,8 +114,12 @@ public class BusquedaAdapter {
 		recetasUsuario.add(recetaUsuario);
 	}
 
-	public void addObserver(ConsultaObserver observer) {
-		this.observers.add(observer);
+	public MonitorConsultas getMonitorConsultas() {
+		return this.monitorConsultas;
+	}
+
+	public void setMonitorConsultas(MonitorConsultas monitorConsultas) {
+		this.monitorConsultas = monitorConsultas;
 	}
 
 }

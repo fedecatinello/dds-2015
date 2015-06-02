@@ -26,6 +26,7 @@ public class MonitorMasConsultadas implements ConsultaObserver {
 
 		for (String nombre : this.consultasPorNombre.keySet()) {
 			if (this.consultasPorNombre.get(nombre) > maxValue) {
+				maxValue = this.consultasPorNombre.get(nombre);
 				maxKey = nombre;
 			}
 		}
@@ -34,7 +35,12 @@ public class MonitorMasConsultadas implements ConsultaObserver {
 	}
 
 	private void sumarUnoPara(String nombre) {
-		this.consultasPorNombre.put(nombre, this.consultasPorNombre.get(nombre) + 1);
+		Integer currentValue = this.consultasPorNombre.get(nombre);
+		if (currentValue == null) {
+			currentValue = 0;
+		}
+		
+		this.consultasPorNombre.put(nombre, currentValue + 1);
 	}
 
 }

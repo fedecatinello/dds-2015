@@ -27,7 +27,6 @@ public class RecetaAdapter {
 	// TODO faltaria ver si realmente hace falta usar estas constantes
 	// pg: para mi hay que hacer un mapita porque el de ellos no son letras sino palabras, no?
 
-	
 	private Map<String, Dificultad> dificultades;
 	private Set<ConsultaObserver> observers;
 
@@ -54,7 +53,7 @@ public class RecetaAdapter {
 	public List<Receta> consultarReceta(Usuario usuario, String nombre, String dificultadStr, List<String> palabrasClaves) {
 
 		Dificultad dificultad = this.dificultades.get(dificultadStr);
-		
+
 		this.observers.forEach(observer -> observer.notificarConsulta(usuario, nombre, dificultad));
 
 		RepoRecetas repo = RecetaAdapter.getInstanceRepo();
@@ -85,6 +84,10 @@ public class RecetaAdapter {
 		return busqueda;
 	}
 
+	public void addObserver(ConsultaObserver observer) {
+		this.observers.add(observer);
+	}
+
 	private List<Receta> mapearJsonReceta(String json) {
 
 		Gson gson = new Gson();
@@ -94,7 +97,5 @@ public class RecetaAdapter {
 		return listaRecetas;
 
 	}
-	
-	
 
 }

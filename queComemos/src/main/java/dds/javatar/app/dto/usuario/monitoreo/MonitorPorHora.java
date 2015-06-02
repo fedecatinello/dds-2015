@@ -31,7 +31,12 @@ public class MonitorPorHora implements ConsultaObserver {
 	}
 	
 	private void sumarUnoPara(Integer hour) {
-		this.consultasPorHora.put(hour, this.consultasPorHora.get(hour) + 1);
+		Integer currentValue = this.consultasPorHora.get(hour);
+		if (currentValue == null) {
+			currentValue = 0;
+		}
+		
+		this.consultasPorHora.put(hour, currentValue + 1);
 	}
 
 }

@@ -19,11 +19,9 @@ import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
 public class Solicitud {
-	public enum Sexo {
-		MASCULINO, FEMENINO
-	};
 	
-	public enum solicitud {
+	
+	public enum EstadoColicitud {
 		RECHAZADA, ACEPTADA
 	};
 
@@ -44,24 +42,24 @@ public class Solicitud {
 
 	/**** Constructors ****/
 
-	public Solicitud() {
-		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
-		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
-		this.recetas = new HashSet<Receta>();
-		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
-		this.recetasFavoritas = new ArrayList<Receta>();
-	}
-
-	public Solicitud(BigDecimal altura, BigDecimal peso) {
-		this();
-		this.altura = altura;
-		this.peso = peso;
-	}
-
-	public Solicitud(BigDecimal altura, BigDecimal peso, Sexo sexo) {
-		this(altura, peso);
-		this.sexo = sexo;
-	}
+//	public Solicitud() {
+//		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
+//		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
+//		this.recetas = new HashSet<Receta>();
+//		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
+//		this.recetasFavoritas = new ArrayList<Receta>();
+//	}
+//
+//	public Solicitud(BigDecimal altura, BigDecimal peso) {
+//		this();
+//		this.altura = altura;
+//		this.peso = peso;
+//	}
+//
+//	public Solicitud(BigDecimal altura, BigDecimal peso, Sexo sexo) {
+//		this(altura, peso);
+//		this.sexo = sexo;
+//	}
 
 	/**** Setters y getters ****/
 	
@@ -121,8 +119,9 @@ public class Solicitud {
 		this.condicionesPreexistentes.add(condicion);
 		return this;
 	}
-//	
-//	 public Usuario build() {
-//         return new Usuario(this);
-//     }
+	
+	 public Usuario build() {
+         return new Usuario( nombre, sexo, altura, peso, fechaNacimiento, condicionesPreexistentes,
+        		 preferenciasAlimenticias,rutina, recetas, gruposAlQuePertenece, recetasFavoritas  );
+     }
 }

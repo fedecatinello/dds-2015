@@ -16,6 +16,7 @@ import org.uqbar.commons.model.Entity;
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.adapter.RecetaAdapter;
+import dds.javatar.app.dto.sistema.Solicitud;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
@@ -45,13 +46,6 @@ public class Usuario extends Entity{
 	private List<Receta> recetasFavoritas;
 
 	/**** Constructors ****/
-//	 private Usuario(Solicitud builder) {
-//    this.nombre = builder.nombre(nombre);
-//    this.sexo = builder.lastName;
-//    this.fechaNacimiento = builder.age;
-//    this.altura = builder.phone;
-//    this.peso = builder.address;
-//}
 	public Usuario() {
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
 		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
@@ -71,6 +65,25 @@ public class Usuario extends Entity{
 		this.sexo = sexo;
 	}
 
+	public Usuario(String newNombre, Sexo sexo2, BigDecimal newAltura,
+			BigDecimal newPeso, Date newFechaNacimiento,
+			Set<CondicionPreexistente> newCondicionesPreexistentes,
+			Map<String, Boolean> newPreferenciasAlimenticias, Rutina newRutina,
+			Set<Receta> newRecetas, Set<GrupoDeUsuarios> newGruposAlQuePertenece,
+			List<Receta> newRecetasFavoritas) {
+		this.nombre = newNombre;
+	    this.sexo = sexo2;
+	    this.fechaNacimiento = newFechaNacimiento;
+	    this.altura = newAltura;
+	    this.peso = newPeso;
+	    
+	    this.condicionesPreexistentes =newCondicionesPreexistentes;
+	    this.preferenciasAlimenticias = newPreferenciasAlimenticias;
+	    this.rutina = newRutina;
+	    this.recetas = recetas;
+	    this.gruposAlQuePertenece = newGruposAlQuePertenece;
+	    this.recetasFavoritas = newRecetasFavoritas;
+	}
 	/**** Setters y getters ****/
 	public BigDecimal getAltura() {
 		return this.altura;

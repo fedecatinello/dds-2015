@@ -1,10 +1,7 @@
 package dds.javatar.app.dto.sistema;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,57 +13,50 @@ import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Usuario.EstadoSolicitud;
 import dds.javatar.app.dto.usuario.Usuario.Sexo;
-import dds.javatar.app.util.exception.RecetaException;
-import dds.javatar.app.util.exception.UsuarioException;
 
 public class Solicitud {
-	
 
-	private static final Integer MIN_NAME_LENGTH = 4;
+	private String nombre;
+	private Sexo sexo;
+	private EstadoSolicitud estadoSolicitud;
+	private Date fechaNacimiento;
+	private BigDecimal altura;
+	private BigDecimal peso;
 
-	private  String nombre;
-	private  Sexo sexo;
-	private  EstadoSolicitud estadoSolicitud;
-	private  Date fechaNacimiento;
-	private  BigDecimal altura;
-	private  BigDecimal peso;
-
-	private  Set<CondicionPreexistente> condicionesPreexistentes;
-	private  Map<String, Boolean> preferenciasAlimenticias;
-	private  Rutina rutina;
-	private  Set<Receta> recetas;
-	private  Set<GrupoDeUsuarios> gruposAlQuePertenece;
-	private  List<Receta> recetasFavoritas;
+	private Set<CondicionPreexistente> condicionesPreexistentes;
+	private Map<String, Boolean> preferenciasAlimenticias;
+	private Rutina rutina;
+	private Set<Receta> recetas;
+	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
+	private List<Receta> recetasFavoritas;
 
 	/**** Constructors ****/
 
-//	public Solicitud() {
-//		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
-//		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
-//		this.recetas = new HashSet<Receta>();
-//		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
-//		this.recetasFavoritas = new ArrayList<Receta>();
-//	}
-//
-//	public Solicitud(BigDecimal altura, BigDecimal peso) {
-//		this();
-//		this.altura = altura;
-//		this.peso = peso;
-//	}
-//
-//	public Solicitud(BigDecimal altura, BigDecimal peso, Sexo sexo) {
-//		this(altura, peso);
-//		this.sexo = sexo;
-//	}
+	// public Solicitud() {
+	// this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
+	// this.preferenciasAlimenticias = new HashMap<String, Boolean>();
+	// this.recetas = new HashSet<Receta>();
+	// this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
+	// this.recetasFavoritas = new ArrayList<Receta>();
+	// }
+	//
+	// public Solicitud(BigDecimal altura, BigDecimal peso) {
+	// this();
+	// this.altura = altura;
+	// this.peso = peso;
+	// }
+	//
+	// public Solicitud(BigDecimal altura, BigDecimal peso, Sexo sexo) {
+	// this(altura, peso);
+	// this.sexo = sexo;
+	// }
 
 	/**** Setters y getters ****/
-	
 
 	public Solicitud altura(BigDecimal altura) {
 		this.altura = altura;
 		return this;
 	}
-
 
 	public Solicitud setPeso(BigDecimal peso) {
 		this.peso = peso;
@@ -74,7 +64,7 @@ public class Solicitud {
 	}
 
 	public Solicitud nombre(String nombre) {
-		 this.nombre =nombre;
+		this.nombre = nombre;
 		return this;
 	}
 
@@ -82,7 +72,7 @@ public class Solicitud {
 		this.sexo = sexo;
 		return this;
 	}
-	
+
 	public Solicitud solicitud(EstadoSolicitud estadoSolicitud) {
 		this.estadoSolicitud = estadoSolicitud;
 		return this;
@@ -122,9 +112,9 @@ public class Solicitud {
 		this.condicionesPreexistentes.add(condicion);
 		return this;
 	}
-	
-	 public Usuario build() {
-         return new Usuario( nombre, sexo, altura, peso, fechaNacimiento, condicionesPreexistentes,
-        		 preferenciasAlimenticias,rutina, recetas, gruposAlQuePertenece, recetasFavoritas, estadoSolicitud );
-     }
+
+	public Usuario build() {
+		return new Usuario(this.nombre, this.sexo, this.altura, this.peso, this.fechaNacimiento, this.condicionesPreexistentes, this.preferenciasAlimenticias, this.rutina, this.recetas,
+				this.gruposAlQuePertenece, this.recetasFavoritas, this.estadoSolicitud);
+	}
 }

@@ -26,7 +26,7 @@ public class BusquedaAdapter {
 
 	private static RepoRecetas instanceRepo;
 	private static BusquedaAdapter instanceAdapter;
-	
+
 	private Map<String, Dificultad> dificultades;
 	private Set<ConsultaObserver> observers;
 
@@ -38,69 +38,71 @@ public class BusquedaAdapter {
 		this.dificultades.put("D", Dificultad.DIFICIL);
 	}
 
-	
 	public static RepoRecetas getInstanceRepo() {
-		if (instanceRepo == null) instanceRepo = new RepoRecetas();
+		if (instanceRepo == null)
+			instanceRepo = new RepoRecetas();
 		return instanceRepo;
 	}
-	
-	public static BusquedaAdapter getInstanceAdapter() {
-		if (instanceAdapter == null) instanceAdapter = new BusquedaAdapter();
+
+	public static BusquedaAdapter getInstance() {
+		if (instanceAdapter == null)
+			instanceAdapter = new BusquedaAdapter();
 		return instanceAdapter;
 	}
-	
+
 	public List<Receta> consultarRecetas(Usuario usuario, String nombre, String dificultadStr, List<String> palabrasClaves) {
-		
+
 		RepoRecetas repo = BusquedaAdapter.getInstanceRepo();
-		
+
 		Dificultad dificultad = this.dificultades.get(dificultadStr);
 
 		this.observers.forEach(observer -> observer.notificarConsulta(usuario, nombre, dificultad));
-		
-		BusquedaRecetas busqueda = crearBusqueda(nombre, dificultad, palabrasClaves);
-		
+
+		BusquedaRecetas busqueda = this.crearBusqueda(nombre, dificultad, palabrasClaves);
+
 		String jsonReceta = repo.getRecetas(busqueda);
-		
+
 		List<Receta> recetas = new ArrayList<Receta>();
-		
-		recetas = mapearJsonReceta(jsonReceta);
-		
+
+		recetas = this.mapearJsonReceta(jsonReceta);
+
 		return recetas;
-		
+
 	}
-	
+
 	private BusquedaRecetas crearBusqueda(String nombre, Dificultad dificultad, List<String> palabrasClaves) {
-		
+
 		BusquedaRecetas busqueda = new BusquedaRecetas();
-		
+
 		busqueda.setNombre(nombre);
-		
+
 		busqueda.setDificultad(dificultad);
-		
-		for(String palabra : palabrasClaves) {
+
+		for (String palabra : palabrasClaves) {
 			busqueda.agregarPalabraClave(palabra);
 		}
-		
+
 		return busqueda;
 	}
-	
+
 	private List<Receta> mapearJsonReceta(String json) {
-		
+
 		Gson gson = new Gson();
-		Type listType = new TypeToken<List<queComemos.entrega3.dominio.Receta>>() {}.getType();
-		
-		List<queComemos.entrega3.dominio.Receta> listaRecetas = gson.fromJson(json, listType); 
-		
+		Type listType = new TypeToken<List<queComemos.entrega3.dominio.Receta>>() {
+		}.getType();
+
+		List<queComemos.entrega3.dominio.Receta> listaRecetas = gson.fromJson(json, listType);
+
 		List<Receta> recetasUsuario = new ArrayList<Receta>();
-		
+
 		listaRecetas.forEach(receta -> this.agregarReceta(receta, recetasUsuario));
-		
+
 		return recetasUsuario;
-		
+
 	}
-	
+
 	public void agregarReceta(queComemos.entrega3.dominio.Receta receta, List<Receta> recetasUsuario) {
-		
+
 		RecetaSimple recetaUsuario = new RecetaPublicaSimple();
 		recetaUsuario.setNombre(receta.getNombre());
 		receta.getIngredientes().forEach(ingrediente -> recetaUsuario.agregarIngrediente(ingrediente, new BigDecimal(0)));
@@ -109,9 +111,12 @@ public class BusquedaAdapter {
 		recetaUsuario.setDificultad(receta.getDificultadReceta().toString());
 		recetaUsuario.setAutor(receta.getAutor());
 		recetaUsuario.setAnioCreacion(receta.getAnioReceta());
-		
+
 		recetasUsuario.add(recetaUsuario);
 	}
-	
-	
+
+	public void addObserver(ConsultaObserver observer) {
+		this.observers.add(observer);
+	}
+
 }

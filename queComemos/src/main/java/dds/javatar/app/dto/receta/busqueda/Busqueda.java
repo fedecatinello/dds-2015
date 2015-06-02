@@ -14,29 +14,28 @@ public class Busqueda {
 	private List<Filtro> filtros;
 
 	private PostProcesamiento postProcesamiento;
-	
+
 	public Busqueda() {
 		this.filtros = new ArrayList<Filtro>();
 		this.postProcesamiento = null;
 	}
 
-	public void filtrar(Usuario usuario, List<Receta> recetas)
-			throws FilterException {
-		if (!filtros.isEmpty()) {
-			for (Filtro filtro : filtros) {
+	public void filtrar(Usuario usuario, List<Receta> recetas) throws FilterException {
+		if (!this.filtros.isEmpty()) {
+			for (Filtro filtro : this.filtros) {
 				filtro.filtrarBusqueda(usuario, recetas);
 			}
 		}
 	}
 
 	public void postProcesar(List<Receta> recetasXusuario) {
-		if (postProcesamiento != null)
-			postProcesamiento.procesar(recetasXusuario);
+		if (this.postProcesamiento != null)
+			this.postProcesamiento.procesar(recetasXusuario);
 
 	}
 
 	public PostProcesamiento getPostProcesamiento() {
-		return postProcesamiento;
+		return this.postProcesamiento;
 	}
 
 	public void setPostProcesamiento(PostProcesamiento postProcesamiento) {
@@ -44,16 +43,16 @@ public class Busqueda {
 	}
 
 	public List<Filtro> getFiltros() {
-		return filtros;
+		return this.filtros;
 	}
 
 	public void setFiltros(List<Filtro> filtros) {
 		this.filtros = filtros;
 	}
-	
+
 	public List<Receta> buscarRecetasExternas(Usuario usuario, String nombre, String dificultad, List<String> palabrasClaves) {
-		
-		List<Receta> recetasEncontradas = BusquedaAdapter.getInstanceAdapter().consultarRecetas(usuario, nombre, dificultad, palabrasClaves);
+
+		List<Receta> recetasEncontradas = BusquedaAdapter.getInstance().consultarRecetas(usuario, nombre, dificultad, palabrasClaves);
 		return recetasEncontradas;
 	}
 

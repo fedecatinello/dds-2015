@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.receta.adapter.RecetaAdapter;
+import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
@@ -49,25 +49,25 @@ public class TestMonitoresConsultas {
 	@Test
 	public void testConsultasPorHora() {
 		MonitorPorHora observer = new MonitorPorHora();
-		RecetaAdapter.getInstanceReceta().addObserver(observer);
+		BusquedaAdapter.getInstance().addObserver(observer);
 
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 
 		Assert.assertEquals(Integer.valueOf(3), observer.getConsultasPorHora().get(this.horaActual()));
 	}
 
 	@Test
 	public void testConsultasPorHoraAgregadoDespues() {
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 
 		MonitorPorHora observer = new MonitorPorHora();
-		RecetaAdapter.getInstanceReceta().addObserver(observer);
+		BusquedaAdapter.getInstance().addObserver(observer);
 
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 
 		Assert.assertEquals(Integer.valueOf(2), observer.getConsultasPorHora().get(this.horaActual()));
 	}
@@ -75,28 +75,28 @@ public class TestMonitoresConsultas {
 	@Test
 	public void testRecetasMasConsultada() {
 		MonitorMasConsultadas observer = new MonitorMasConsultadas();
-		RecetaAdapter.getInstanceReceta().addObserver(observer);
+		BusquedaAdapter.getInstance().addObserver(observer);
 
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Fideos", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Fideos", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
 
 		Assert.assertEquals("Pollo", observer.getNombreMasConsultado());
 	}
 
 	@Test
 	public void testRecetasMasConsultadaAgregadoDespues() {
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 
 		MonitorMasConsultadas observer = new MonitorMasConsultadas();
-		RecetaAdapter.getInstanceReceta().addObserver(observer);
+		BusquedaAdapter.getInstance().addObserver(observer);
 
-		this.usuario.consultarReceta("Fideos", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Pollo", "D", new ArrayList<String>());
-		this.usuario.consultarReceta("Fideos", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		this.usuario.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
 
 		Assert.assertEquals("Fideos", observer.getNombreMasConsultado());
 	}
@@ -109,19 +109,19 @@ public class TestMonitoresConsultas {
 		mujer.setSexo(Sexo.FEMENINO);
 
 		MonitorMasConsultadasPorSexo observer = new MonitorMasConsultadasPorSexo();
-		RecetaAdapter.getInstanceReceta().addObserver(observer);
+		BusquedaAdapter.getInstance().addObserver(observer);
 
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		hombre.consultarReceta("Fideos", "D", new ArrayList<String>());
-		hombre.consultarReceta("Pollo", "D", new ArrayList<String>());
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
 
-		mujer.consultarReceta("Pollo", "D", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		mujer.consultarReceta("Fideos", "D", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
 		Assert.assertEquals("Mollejas al verdeo", observer.getNombreMasConsultadoPorHombres());
 		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", observer.getNombreMasConsultadoPorMujeres());
@@ -134,21 +134,21 @@ public class TestMonitoresConsultas {
 		Usuario mujer = this.crearUsuarioBasicoValido();
 		mujer.setSexo(Sexo.FEMENINO);
 
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
 
 		MonitorMasConsultadasPorSexo observer = new MonitorMasConsultadasPorSexo();
-		RecetaAdapter.getInstanceReceta().addObserver(observer);
-		hombre.consultarReceta("Fideos", "D", new ArrayList<String>());
-		hombre.consultarReceta("Fideos", "D", new ArrayList<String>());
-		hombre.consultarReceta("Pollo", "D", new ArrayList<String>());
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
+		BusquedaAdapter.getInstance().addObserver(observer);
+		hombre.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
 
-		mujer.consultarReceta("Pollo", "D", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		mujer.consultarReceta("Fideos", "D", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
 		Assert.assertEquals("Fideos", observer.getNombreMasConsultadoPorHombres());
 		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", observer.getNombreMasConsultadoPorMujeres());
@@ -160,19 +160,19 @@ public class TestMonitoresConsultas {
 		usuarioVegano.agregarCondicionPreexistente(new Vegano());
 
 		MonitorVeganos observer = new MonitorVeganos();
-		RecetaAdapter.getInstanceReceta().addObserver(observer);
+		BusquedaAdapter.getInstance().addObserver(observer);
 
-		usuarioVegano.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Fideos", "F", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Fideos", "F", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Pollo", "M", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Pollo", "M", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Fideos", "F", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
 		Assert.assertEquals(Integer.valueOf(6), observer.getCantidad());
 	}
@@ -191,41 +191,41 @@ public class TestMonitoresConsultas {
 		MonitorPorHora monitorPorHora = new MonitorPorHora();
 		MonitorMasConsultadas monitorMasConsultados = new MonitorMasConsultadas();
 
-		RecetaAdapter.getInstanceReceta().addObserver(monitorVeganos);
-		RecetaAdapter.getInstanceReceta().addObserver(monitorPorSexo);
-		RecetaAdapter.getInstanceReceta().addObserver(monitorPorHora);
-		RecetaAdapter.getInstanceReceta().addObserver(monitorMasConsultados);
+		BusquedaAdapter.getInstance().addObserver(monitorVeganos);
+		BusquedaAdapter.getInstance().addObserver(monitorPorSexo);
+		BusquedaAdapter.getInstance().addObserver(monitorPorHora);
+		BusquedaAdapter.getInstance().addObserver(monitorMasConsultados);
 
-		hombre.consultarReceta("Pollo", "M", new ArrayList<String>());
-		hombre.consultarReceta("Pollo", "M", new ArrayList<String>());
-		hombre.consultarReceta("Fideos", "F", new ArrayList<String>());
-		hombre.consultarReceta("Pollo", "M", new ArrayList<String>());
-		hombre.consultarReceta("Fideos", "F", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
 
-		usuarioVegano.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Fideos", "F", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Fideos", "F", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Pollo", "M", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Pollo", "M", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Fideos", "F", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		usuarioVegano.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
-		hombre.consultarReceta("Fideos", "F", new ArrayList<String>());
-		hombre.consultarReceta("Fideos", "F", new ArrayList<String>());
-		hombre.consultarReceta("Pollo", "D", new ArrayList<String>());
-		hombre.consultarReceta("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
 
-		mujer.consultarReceta("Pollo", "D", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		mujer.consultarReceta("Fideos", "F", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
-		mujer.consultarReceta("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
 		Assert.assertEquals(Integer.valueOf(6), monitorVeganos.getCantidad());
 		Assert.assertEquals("Fideos", monitorPorSexo.getNombreMasConsultadoPorHombres());

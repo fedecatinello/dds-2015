@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections15.Predicate;
-import org.uqbar.commons.model.*;
+import org.uqbar.commons.model.CollectionBasedHome;
 
 import dds.javatar.app.dto.usuario.Usuario;
 
-public class RepositorioUsuarios extends CollectionBasedHome<Usuario>{
+public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 
-	
-	
 	private static RepositorioUsuarios instance;
 
 	public static RepositorioUsuarios getInstance() {
@@ -21,57 +19,61 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario>{
 		return instance;
 	}
 
-	public  void add(Usuario usuario){
-		effectiveCreate(usuario);
-	}
-	
-	public void remove(Usuario usuario){
-		effectiveDelete(usuario);
-	}
-	
-	public void update(Usuario usuario){
-		update(usuario);
-	}
-	
-	public Usuario get(Usuario Usuario){
-		return searchByName(Usuario).get(0);
-		
+	public void add(Usuario usuario) {
+		this.effectiveCreate(usuario);
 	}
 
-	public List<Usuario> searchByName(Usuario usuario){
+	public void remove(Usuario usuario) {
+		this.effectiveDelete(usuario);
+	}
+
+	@Override
+	public void update(Usuario usuario) {
+		this.update(usuario);
+	}
+
+	public Usuario get(Usuario Usuario) {
+		return this.searchByName(Usuario).get(0);
+
+	}
+
+	public List<Usuario> searchByName(Usuario usuario) {
 		List<Usuario> listaUsuariosConElMismoNombre = new ArrayList<Usuario>();
-		for (Usuario usuarioEnSistema : super.getObjects()){
-			if(usuarioEnSistema.getNombre().equals(usuario.getNombre())){
+		for (Usuario usuarioEnSistema : super.getObjects()) {
+			if (usuarioEnSistema.getNombre().equals(usuario.getNombre())) {
 				listaUsuariosConElMismoNombre.add(usuarioEnSistema);
 			}
 		}
 		return null;
 	}
-	
-	public List<Usuario> list(Usuario usuario){
+
+	public List<Usuario> list(Usuario usuario) {
 		List<Usuario> listaUsuariosConElMismoNombreyCondicionesPreexistentes = new ArrayList<Usuario>();
-		for( Usuario usuarioConElMismoNombre : searchByName( usuario)){
-			if(usuarioConElMismoNombre.getCondicionesPreexistentes().containsAll(usuario.getCondicionesPreexistentes())
-					&& usuarioConElMismoNombre.getCondicionesPreexistentes().size()==usuario.getCondicionesPreexistentes().size() ){
+		for (Usuario usuarioConElMismoNombre : this.searchByName(usuario)) {
+			if (usuarioConElMismoNombre.getCondicionesPreexistentes().containsAll(usuario.getCondicionesPreexistentes())
+					&& usuarioConElMismoNombre.getCondicionesPreexistentes().size() == usuario.getCondicionesPreexistentes().size()) {
 				listaUsuariosConElMismoNombreyCondicionesPreexistentes.add(usuarioConElMismoNombre);
 			}
 		}
 		return listaUsuariosConElMismoNombreyCondicionesPreexistentes;
 	}
+
 	@Override
 	public Class<Usuario> getEntityType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public Usuario createExample() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	protected Predicate getCriterio(Usuario example) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

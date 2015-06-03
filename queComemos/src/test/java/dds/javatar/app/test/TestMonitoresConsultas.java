@@ -51,7 +51,7 @@ public class TestMonitoresConsultas {
 		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(3), BusquedaAdapter.getInstance().getMonitorConsultas().getConsultasPorHora().get(this.horaActual()));
+		Assert.assertEquals(3, BusquedaAdapter.getInstance().getMonitorConsultas().getConsultasPorHora().get(this.horaActual()).intValue());
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class TestMonitoresConsultas {
 		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(2), BusquedaAdapter.getInstance().getMonitorConsultas().getConsultasPorHora().get(this.horaActual()));
+		Assert.assertEquals(2, BusquedaAdapter.getInstance().getMonitorConsultas().getConsultasPorHora().get(this.horaActual()).intValue());
 	}
 
 	@Test
@@ -116,7 +116,8 @@ public class TestMonitoresConsultas {
 		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
 		Assert.assertEquals("Mollejas al verdeo", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultadoPorHombres());
-		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultadoPorMujeres());
+		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", BusquedaAdapter.getInstance().getMonitorConsultas()
+				.getNombreMasConsultadoPorMujeres());
 	}
 
 	@Test
@@ -130,7 +131,7 @@ public class TestMonitoresConsultas {
 		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
 
 		BusquedaAdapter.getInstance().setMonitorConsultas(new MonitorConsultas());
-		
+
 		hombre.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
 		hombre.consultarRecetasExternas("Fideos", "D", new ArrayList<String>());
 		hombre.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
@@ -143,7 +144,8 @@ public class TestMonitoresConsultas {
 		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
 		Assert.assertEquals("Fideos", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultadoPorHombres());
-		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultadoPorMujeres());
+		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", BusquedaAdapter.getInstance().getMonitorConsultas()
+				.getNombreMasConsultadoPorMujeres());
 	}
 
 	@Test
@@ -165,7 +167,7 @@ public class TestMonitoresConsultas {
 		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(6), BusquedaAdapter.getInstance().getMonitorConsultas().getCantidadDeConsultasDificilesPorVeganos());
+		Assert.assertEquals(6, BusquedaAdapter.getInstance().getMonitorConsultas().getCantidadDeConsultasDificilesPorVeganos().intValue());
 	}
 
 	@Test
@@ -210,10 +212,11 @@ public class TestMonitoresConsultas {
 		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(6), BusquedaAdapter.getInstance().getMonitorConsultas().getCantidadDeConsultasDificilesPorVeganos());
+		Assert.assertEquals(6, BusquedaAdapter.getInstance().getMonitorConsultas().getCantidadDeConsultasDificilesPorVeganos().intValue());
 		Assert.assertEquals("Fideos", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultadoPorHombres());
-		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultadoPorMujeres());
-		Assert.assertEquals(Integer.valueOf(27), BusquedaAdapter.getInstance().getMonitorConsultas().getConsultasPorHora().get(this.horaActual()));
+		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", BusquedaAdapter.getInstance().getMonitorConsultas()
+				.getNombreMasConsultadoPorMujeres());
+		Assert.assertEquals(27, BusquedaAdapter.getInstance().getMonitorConsultas().getConsultasPorHora().get(this.horaActual()).intValue());
 		Assert.assertEquals("Fideos", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultado());
 	}
 

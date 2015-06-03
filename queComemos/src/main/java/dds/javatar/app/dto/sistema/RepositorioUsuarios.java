@@ -78,7 +78,7 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 	}
 
 	@Override
-	protected Predicate getCriterio(Usuario example) {
+	protected Predicate<?> getCriterio(Usuario example) {
 		// TODO Auto-generated method stub
 		return null;
 	}

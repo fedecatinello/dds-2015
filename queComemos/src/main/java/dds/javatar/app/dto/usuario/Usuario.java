@@ -20,6 +20,7 @@ import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
+@SuppressWarnings("serial")
 public class Usuario extends Entity{
 
 	public enum Sexo {

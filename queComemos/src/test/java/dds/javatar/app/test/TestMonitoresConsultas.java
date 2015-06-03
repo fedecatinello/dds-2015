@@ -155,7 +155,7 @@ public class TestMonitoresConsultas {
 	}
 
 	@Test
-	public void testConsultasDicilesVeganos() {
+	public void testConsultasDificilesVeganos() {
 		Usuario usuarioVegano = this.crearUsuarioBasicoValido();
 		usuarioVegano.agregarCondicionPreexistente(new Vegano());
 
@@ -233,6 +233,67 @@ public class TestMonitoresConsultas {
 		Assert.assertEquals(Integer.valueOf(27), monitorPorHora.getConsultasPorHora().get(this.horaActual()));
 		Assert.assertEquals("Fideos", monitorMasConsultados.getNombreMasConsultado());
 	}
+	
+	@Test
+	public void testTodosLosObserversEnDistintoOrden() {
+		Usuario usuarioVegano = this.crearUsuarioBasicoValido();
+		usuarioVegano.agregarCondicionPreexistente(new Vegano());
+		Usuario hombre = this.crearUsuarioBasicoValido();
+		hombre.setSexo(Sexo.MASCULINO);
+		Usuario mujer = this.crearUsuarioBasicoValido();
+		mujer.setSexo(Sexo.FEMENINO);
+
+		MonitorVeganos monitorVeganos = new MonitorVeganos();
+		MonitorMasConsultadasPorSexo monitorPorSexo = new MonitorMasConsultadasPorSexo();
+		MonitorPorHora monitorPorHora = new MonitorPorHora();
+		MonitorMasConsultadas monitorMasConsultados = new MonitorMasConsultadas();
+
+		BusquedaAdapter.getInstance().addObserver(monitorMasConsultados);
+		BusquedaAdapter.getInstance().addObserver(monitorPorHora);
+		BusquedaAdapter.getInstance().addObserver(monitorPorSexo);
+		BusquedaAdapter.getInstance().addObserver(monitorVeganos);
+
+
+
+
+		hombre.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		hombre.consultarRecetasExternas("Mollejas al verdeo", "D", new ArrayList<String>());
+
+		mujer.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Fideos", "F", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
+
+		Assert.assertEquals(Integer.valueOf(6), monitorVeganos.getCantidad());
+		Assert.assertEquals("Fideos", monitorPorSexo.getNombreMasConsultadoPorHombres());
+		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", monitorPorSexo.getNombreMasConsultadoPorMujeres());
+		Assert.assertEquals(Integer.valueOf(27), monitorPorHora.getConsultasPorHora().get(this.horaActual()));
+		Assert.assertEquals("Fideos", monitorMasConsultados.getNombreMasConsultado());
+	}
+	
 
 	private Integer horaActual() {
 		Calendar calendar = Calendar.getInstance();

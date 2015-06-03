@@ -27,9 +27,8 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 		this.effectiveDelete(usuario);
 	}
 
-	@Override
-	public void update(Usuario usuario) {
-		this.update(usuario);
+	public void updateUsuario(Usuario usuario) {
+		update(usuario);
 	}
 
 	public Usuario get(Usuario Usuario) {
@@ -44,20 +43,28 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 				listaUsuariosConElMismoNombre.add(usuarioEnSistema);
 			}
 		}
-		return null;
+		return listaUsuariosConElMismoNombre;
 	}
 
 	public List<Usuario> list(Usuario usuario) {
-		List<Usuario> listaUsuariosConElMismoNombreyCondicionesPreexistentes = new ArrayList<Usuario>();
-		for (Usuario usuarioConElMismoNombre : this.searchByName(usuario)) {
-			if (usuarioConElMismoNombre.getCondicionesPreexistentes().containsAll(usuario.getCondicionesPreexistentes())
-					&& usuarioConElMismoNombre.getCondicionesPreexistentes().size() == usuario.getCondicionesPreexistentes().size()) {
-				listaUsuariosConElMismoNombreyCondicionesPreexistentes.add(usuarioConElMismoNombre);
-			}
-		}
+		List<Usuario> listaUsuariosConElMismoNombreyCondicionesPreexistentes = this.searchByName(usuario);
+		listaUsuariosConElMismoNombreyCondicionesPreexistentes.forEach(usuarioConElMismoNombre -> addToUsersList(usuarioConElMismoNombre, usuario, listaUsuariosConElMismoNombreyCondicionesPreexistentes));
 		return listaUsuariosConElMismoNombreyCondicionesPreexistentes;
 	}
 
+	public boolean matchConditions(Usuario usuarioConMismoNombre, Usuario usuarioBaseAComparar) {
+		
+		return (usuarioConMismoNombre.getCondicionesPreexistentes().containsAll(usuarioBaseAComparar.getCondicionesPreexistentes()))
+		&& (usuarioConMismoNombre.getCondicionesPreexistentes().size() == usuarioBaseAComparar.getCondicionesPreexistentes().size());
+	}
+	
+	public void addToUsersList(Usuario usuarioConMismoNombre, Usuario usuarioAComparar,  List<Usuario> lista) {
+		
+		if (matchConditions(usuarioConMismoNombre, usuarioAComparar)) {
+			lista.add(usuarioConMismoNombre);
+		}
+	}
+	
 	@Override
 	public Class<Usuario> getEntityType() {
 		// TODO Auto-generated method stub

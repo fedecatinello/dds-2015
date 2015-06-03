@@ -395,6 +395,18 @@ public class TestRecetas {
 	}
 	
 	@Test
+	public void testConsultarRecetaExternaPorNombreQueNoExiste() throws RecetaException {
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+
+		recetasEncontradas = this.usuario.consultarRecetasExternas("omelette", null, palabrasClaves);
+		
+		assertEquals(0, recetasEncontradas.size());
+	}
+	
+	@Test
 	public void testConsultarRecetaExternaConDificultadFacil() throws RecetaException {
 		
 		List<String> palabrasClaves = new ArrayList<String>();
@@ -449,7 +461,6 @@ public class TestRecetas {
 	
 	@Test
 	public void testConsultarRecetasPorTresCampos() throws RecetaException {
-		Usuario usuario = new Usuario();
 			
 		List<String> palabrasClaves = new ArrayList<String>();
 		palabrasClaves.add("helado de chocolate");
@@ -457,14 +468,13 @@ public class TestRecetas {
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		recetasEncontradas = usuario.consultarRecetasExternas("cassatta", "F", palabrasClaves);
+		recetasEncontradas = this.usuario.consultarRecetasExternas("cassatta", "F", palabrasClaves);
 		
 		assertEquals(1, recetasEncontradas.size());
 	}
 	
 	@Test
 	public void testConsultarRecetaCarnicera() throws RecetaException {
-		Usuario carnivoro = new Usuario();
 		
 		List<String> palabrasClaves = new ArrayList<String>();
 		palabrasClaves.add("bife angosto");
@@ -472,15 +482,14 @@ public class TestRecetas {
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		recetasEncontradas = carnivoro.consultarRecetasExternas("churrasco a la sal", "F", palabrasClaves);
+		recetasEncontradas = this.usuario.consultarRecetasExternas("churrasco a la sal", "F", palabrasClaves);
 
 		assertEquals(1, recetasEncontradas.size());
 	}
 
 	@Test
 	public void testConsultarRecetasconVerduras() throws RecetaException {
-		Usuario verdulero = new Usuario();
-		
+	
 		List<String> palabrasClaves = new ArrayList<String>();
 		palabrasClaves.add("lechuga");
 		palabrasClaves.add("zanahoria");
@@ -493,15 +502,14 @@ public class TestRecetas {
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 		
-		recetasEncontradas = verdulero.consultarRecetasExternas(null, null, palabrasClaves);
+		recetasEncontradas = this.usuario.consultarRecetasExternas(null, null, palabrasClaves);
 
 		assertEquals(7, recetasEncontradas.size());
 	}
 		
 	@Test
 	public void testConsultarRecetasDulces() throws RecetaException {
-		Usuario goloso = new Usuario();
-			
+		
 		List<String> palabrasClaves = new ArrayList<String>();
 	 	palabrasClaves.add("leche");
 	 	palabrasClaves.add("azucar");
@@ -509,9 +517,22 @@ public class TestRecetas {
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		recetasEncontradas = goloso.consultarRecetasExternas(null, null, palabrasClaves);
+		recetasEncontradas = this.usuario.consultarRecetasExternas(null, null, palabrasClaves);
 		
 		assertEquals(2, recetasEncontradas.size());
 	}
 	
+	
+	@Test
+	public void testConsultarRecetasDeMar() throws RecetaException {
+		List<String> palabrasClaves = new ArrayList<String>();
+	 	palabrasClaves.add("salmon");
+	 	palabrasClaves.add("mejillones");
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+
+		recetasEncontradas = this.usuario.consultarRecetasExternas(null, null, palabrasClaves);
+		
+		assertEquals(3, recetasEncontradas.size());
+	}
 }

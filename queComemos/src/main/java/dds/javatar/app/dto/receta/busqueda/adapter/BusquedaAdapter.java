@@ -63,8 +63,6 @@ public class BusquedaAdapter {
 		BusquedaRecetas busqueda = this.crearBusqueda(nombre, dificultad, palabrasClaves);
 
 		String jsonReceta = repo.getRecetas(busqueda);
-		
-		System.out.println(jsonReceta);
 
 		List<Receta> recetas = new ArrayList<Receta>();
 

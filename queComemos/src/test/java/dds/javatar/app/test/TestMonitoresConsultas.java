@@ -219,7 +219,7 @@ public class TestMonitoresConsultas {
 		Assert.assertEquals(27, BusquedaAdapter.getInstance().getMonitorConsultas().getConsultasPorHora().get(this.horaActual()).intValue());
 		Assert.assertEquals("Fideos", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultado());
 	}
-	
+
 	@Test
 	public void testTodosLosObserversEnDistintoOrden() {
 		Usuario usuarioVegano = this.crearUsuarioBasicoValido();
@@ -229,18 +229,7 @@ public class TestMonitoresConsultas {
 		Usuario mujer = this.crearUsuarioBasicoValido();
 		mujer.setSexo(Sexo.FEMENINO);
 
-		MonitorVeganos monitorVeganos = new MonitorVeganos();
-		MonitorMasConsultadasPorSexo monitorPorSexo = new MonitorMasConsultadasPorSexo();
-		MonitorPorHora monitorPorHora = new MonitorPorHora();
-		MonitorMasConsultadas monitorMasConsultados = new MonitorMasConsultadas();
-
-		BusquedaAdapter.getInstance().addObserver(monitorMasConsultados);
-		BusquedaAdapter.getInstance().addObserver(monitorPorHora);
-		BusquedaAdapter.getInstance().addObserver(monitorPorSexo);
-		BusquedaAdapter.getInstance().addObserver(monitorVeganos);
-
-
-
+		BusquedaAdapter.getInstance().setMonitorConsultas(new MonitorConsultas());
 
 		hombre.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
 		hombre.consultarRecetasExternas("Pollo", "M", new ArrayList<String>());
@@ -273,13 +262,13 @@ public class TestMonitoresConsultas {
 		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(6), monitorVeganos.getCantidad());
-		Assert.assertEquals("Fideos", monitorPorSexo.getNombreMasConsultadoPorHombres());
-		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", monitorPorSexo.getNombreMasConsultadoPorMujeres());
-		Assert.assertEquals(Integer.valueOf(27), monitorPorHora.getConsultasPorHora().get(this.horaActual()));
-		Assert.assertEquals("Fideos", monitorMasConsultados.getNombreMasConsultado());
+		Assert.assertEquals(6, BusquedaAdapter.getInstance().getMonitorConsultas().getCantidadDeConsultasDificilesPorVeganos().intValue());
+		Assert.assertEquals("Fideos", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultadoPorHombres());
+		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", BusquedaAdapter.getInstance().getMonitorConsultas()
+				.getNombreMasConsultadoPorMujeres());
+		Assert.assertEquals(27, BusquedaAdapter.getInstance().getMonitorConsultas().getConsultasPorHora().get(this.horaActual()).intValue());
+		Assert.assertEquals("Fideos", BusquedaAdapter.getInstance().getMonitorConsultas().getNombreMasConsultado());
 	}
-	
 
 	private Integer horaActual() {
 		Calendar calendar = Calendar.getInstance();

@@ -55,7 +55,7 @@ public class TestMonitoresConsultas {
 		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(3), observer.getConsultasPorHora().get(this.horaActual()));
+		Assert.assertEquals(3, observer.getConsultasPorHora().get(this.horaActual()).intValue());
 	}
 
 	@Test
@@ -69,7 +69,7 @@ public class TestMonitoresConsultas {
 		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 		this.usuario.consultarRecetasExternas("Pollo", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(2), observer.getConsultasPorHora().get(this.horaActual()));
+		Assert.assertEquals(2, observer.getConsultasPorHora().get(this.horaActual()).intValue());
 	}
 
 	@Test
@@ -174,7 +174,7 @@ public class TestMonitoresConsultas {
 		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 		usuarioVegano.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(6), observer.getCantidad());
+		Assert.assertEquals(6, observer.getCantidad().intValue());
 	}
 
 	@Test
@@ -227,10 +227,10 @@ public class TestMonitoresConsultas {
 		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 		mujer.consultarRecetasExternas("Matambre tiernizado de cerdo con papas noisette", "D", new ArrayList<String>());
 
-		Assert.assertEquals(Integer.valueOf(6), monitorVeganos.getCantidad());
+		Assert.assertEquals(6, monitorVeganos.getCantidad().intValue());
 		Assert.assertEquals("Fideos", monitorPorSexo.getNombreMasConsultadoPorHombres());
 		Assert.assertEquals("Matambre tiernizado de cerdo con papas noisette", monitorPorSexo.getNombreMasConsultadoPorMujeres());
-		Assert.assertEquals(Integer.valueOf(27), monitorPorHora.getConsultasPorHora().get(this.horaActual()));
+		Assert.assertEquals(27, monitorPorHora.getConsultasPorHora().get(this.horaActual()).intValue());
 		Assert.assertEquals("Fideos", monitorMasConsultados.getNombreMasConsultado());
 	}
 

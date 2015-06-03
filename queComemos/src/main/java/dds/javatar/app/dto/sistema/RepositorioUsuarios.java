@@ -27,9 +27,8 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 		this.effectiveDelete(usuario);
 	}
 
-	@Override
-	public void update(Usuario usuario) {
-		this.update(usuario);
+	public void updateUsuario(Usuario usuario) {
+		update(usuario);
 	}
 
 	public Usuario get(Usuario Usuario) {
@@ -44,7 +43,7 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 				listaUsuariosConElMismoNombre.add(usuarioEnSistema);
 			}
 		}
-		return null;
+		return listaUsuariosConElMismoNombre;
 	}
 
 	public List<Usuario> list(Usuario usuario) {

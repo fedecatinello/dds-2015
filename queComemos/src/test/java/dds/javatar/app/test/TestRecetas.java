@@ -20,11 +20,11 @@ import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
+import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.condiciones.Diabetico;
 import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
 import dds.javatar.app.dto.usuario.condiciones.Vegano;
-import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
@@ -383,18 +383,72 @@ public class TestRecetas {
 	// Entrega 3 - Punto 2: Nuevo origen para las recetas
 	
 	@Test
-	public void testConsultarRecetaExterna() throws RecetaException {
+	public void testConsultarRecetaExternaPorNombre() throws RecetaException {
 		
 		List<String> palabrasClaves = new ArrayList<String>();
-		palabrasClaves.add("ensalada");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		recetasEncontradas = this.usuario.consultarRecetasExternas("Fideos", "D", palabrasClaves);
+		recetasEncontradas = this.usuario.consultarRecetasExternas("ensalada", null, palabrasClaves);
 		
 		assertEquals(3, recetasEncontradas.size());
 	}
+	
+	@Test
+	public void testConsultarRecetaExternaConDificultadFacil() throws RecetaException {
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
+		recetasEncontradas = this.usuario.consultarRecetasExternas(null, "F", palabrasClaves);
+		
+		assertEquals(6, recetasEncontradas.size());
+	}
+	
+	@Test
+	public void testConsultarRecetaExternaConDificultadMediana() throws RecetaException {
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+
+		recetasEncontradas = this.usuario.consultarRecetasExternas(null, "M", palabrasClaves);
+		
+		assertEquals(4, recetasEncontradas.size());
+	}
+	
+	@Test
+	public void testConsultarRecetaExternaConDificultadDificil() throws RecetaException {
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+
+		recetasEncontradas = this.usuario.consultarRecetasExternas(null, "D", palabrasClaves);
+		
+		assertEquals(2, recetasEncontradas.size());
+	}
+	
+	@Test
+	public void testConsultarRecetaExternaPorPalabrasClaves() throws RecetaException {
+		
+		List<String> palabrasClaves = new ArrayList<String>();
+		palabrasClaves.add("tomate");
+		palabrasClaves.add("parmesano");
+		palabrasClaves.add("salmon");
+		palabrasClaves.add("zanahoria");
+		palabrasClaves.add("acelga");
+			
+		List<Receta> recetasEncontradas = new ArrayList<Receta>();
+
+		recetasEncontradas = this.usuario.consultarRecetasExternas(null, null, palabrasClaves);
+		
+		assertEquals(8, recetasEncontradas.size());
+	}
+	
+	//Tests por condiciones preexistentes del usuario
+	
 	@Test
 	public void testConsultarRecetaHiperTenso() throws RecetaException {
 		Hipertenso hipertension = new Hipertenso();
@@ -402,13 +456,13 @@ public class TestRecetas {
 		hipertenso.agregarCondicionPreexistente(hipertension);
 		
 		List<String> palabrasClaves = new ArrayList<String>();
-		palabrasClaves.add("bife");
+		palabrasClaves.add("bife angosto");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		recetasEncontradas = hipertenso.consultarRecetasExternas("churrasco", "F", palabrasClaves);
+		recetasEncontradas = hipertenso.consultarRecetasExternas("churrasco a la sal", "F", palabrasClaves);
 
-		assertEquals(0, recetasEncontradas.size());
+		assertEquals(1, recetasEncontradas.size());
 	}
 
 	@Test
@@ -437,13 +491,14 @@ public class TestRecetas {
 		diabetico.agregarCondicionPreexistente(diabetes);
 		
 		List<String> palabrasClaves = new ArrayList<String>();
-		palabrasClaves.add("chocolate");
-		palabrasClaves.add("flan");
+		palabrasClaves.add("helado de americana");
+		palabrasClaves.add("helado de chocolate");
 			
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		recetasEncontradas = diabetico.consultarRecetasExternas("helado", "F", palabrasClaves);
+		recetasEncontradas = diabetico.consultarRecetasExternas("cassatta", "F", palabrasClaves);
 		
-		assertEquals(5, recetasEncontradas.size());
+		assertEquals(1, recetasEncontradas.size());
 	}
+	
 }

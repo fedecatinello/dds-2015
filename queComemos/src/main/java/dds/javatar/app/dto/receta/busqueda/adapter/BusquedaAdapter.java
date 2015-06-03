@@ -1,10 +1,10 @@
 package dds.javatar.app.dto.receta.busqueda.adapter;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +14,9 @@ import queComemos.entrega3.repositorio.BusquedaRecetas;
 import queComemos.entrega3.repositorio.RepoRecetas;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
@@ -61,6 +63,8 @@ public class BusquedaAdapter {
 		BusquedaRecetas busqueda = this.crearBusqueda(nombre, dificultad, palabrasClaves);
 
 		String jsonReceta = repo.getRecetas(busqueda);
+		
+		System.out.println(jsonReceta);
 
 		List<Receta> recetas = new ArrayList<Receta>();
 
@@ -88,11 +92,20 @@ public class BusquedaAdapter {
 	private List<Receta> mapearJsonReceta(String json) {
 
 		Gson gson = new Gson();
-		Type listType = new TypeToken<List<queComemos.entrega3.dominio.Receta>>() {
-		}.getType();
-
-		List<queComemos.entrega3.dominio.Receta> listaRecetas = gson.fromJson(json, listType);
-
+		
+		//Creo json parser
+		JsonParser parser = new JsonParser();
+		//Obtengo json array
+	    JsonArray array = parser.parse(json).getAsJsonArray();
+		
+	    //Creo lista de recetas del componente y un iterador para obtenerlas del json
+		List<queComemos.entrega3.dominio.Receta> listaRecetas = new ArrayList<queComemos.entrega3.dominio.Receta>();
+		
+	    Iterator<JsonElement> iterator = array.iterator();
+	    
+	    iterator.forEachRemaining(element -> obtenerReceta(element,gson,listaRecetas));
+	    
+	    //Creo listas de recetas del usuario y mapeo recetas para agregarlas a esta lista
 		List<Receta> recetasUsuario = new ArrayList<Receta>();
 
 		listaRecetas.forEach(receta -> this.agregarReceta(receta, recetasUsuario));
@@ -113,6 +126,13 @@ public class BusquedaAdapter {
 		recetaUsuario.setAnioCreacion(receta.getAnioReceta());
 
 		recetasUsuario.add(recetaUsuario);
+	}
+	
+	public void obtenerReceta(JsonElement element, Gson gson, List<queComemos.entrega3.dominio.Receta> listaRecetas) {
+		
+		queComemos.entrega3.dominio.Receta receta = gson.fromJson(element, queComemos.entrega3.dominio.Receta.class);
+		
+		listaRecetas.add(receta);
 	}
 
 	public void addObserver(ConsultaObserver observer) {

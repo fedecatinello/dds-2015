@@ -114,7 +114,6 @@ public class Solicitud {
 	}
 
 	public Usuario build() {
-		return new Usuario(this.nombre, this.sexo, this.altura, this.peso, this.fechaNacimiento, this.condicionesPreexistentes, this.preferenciasAlimenticias, this.rutina, this.recetas,
-				this.gruposAlQuePertenece, this.recetasFavoritas, this.estadoSolicitud);
+		return new Usuario.UsuarioBuilder().nombre(this.nombre).sexo(this.sexo).altura(this.altura).peso(this.peso).fechaNacimiento(this.fechaNacimiento).rutina(this.rutina).estadoSolicitud(this.estadoSolicitud).build();
 	}
 }

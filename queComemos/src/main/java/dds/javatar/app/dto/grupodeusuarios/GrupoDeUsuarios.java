@@ -47,7 +47,7 @@ public class GrupoDeUsuarios {
 	}
 
 	public void agregarUsuario(Usuario usuario) {
-		usuario.setGruposAlQuePertenece(this);
+		usuario.agregarGruposAlQuePertenece(this);
 		this.miembros.add(usuario);
 	}
 

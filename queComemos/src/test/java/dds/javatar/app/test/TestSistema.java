@@ -3,8 +3,6 @@ package dds.javatar.app.test;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.junit.Before;
@@ -16,8 +14,6 @@ import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
 import dds.javatar.app.dto.sistema.Administrador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
-import dds.javatar.app.dto.usuario.Rutina;
-import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.BusinessException;
@@ -31,23 +27,7 @@ public class TestSistema {
 
 	@Before
 	public void initialize() {
-		this.usuario = this.crearUsuarioBasicoValido();
-	}
-
-	private Usuario crearUsuarioBasicoValido() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -1);
-
-		Usuario usuario = new Usuario();
-		usuario.setFechaNacimiento(calendar.getTime());
-		usuario.setNombre("Nombre del usuario");
-		usuario.setSexo(Usuario.Sexo.MASCULINO);
-		usuario.setPeso(new BigDecimal(70));
-		usuario.setAltura(new BigDecimal(1.77));
-		usuario.setRutina(new Rutina(TipoRutina.FUERTE, 20));
-
-		return usuario;
+		this.usuario = TestFactory.crearUsuarioBasicoValido();
 	}
 
 	private RecetaPrivadaSimple crearRecetaPrivadaSimple() {
@@ -94,8 +74,7 @@ public class TestSistema {
 	public void unaRecetaQueLeGustaPuedeSugerirseAUnUsuario()
 			throws BusinessException {
 		this.usuario.agregarAlimentoQueLeDisgusta("pollo");
-		this.administrador.sugerir(crearRecetaPublicaSimpleRica(),
-				crearUsuarioBasicoValido());
+		this.administrador.sugerir(crearRecetaPublicaSimpleRica(),	TestFactory.crearUsuarioBasicoValido());
 
 	}
 
@@ -103,7 +82,7 @@ public class TestSistema {
 	public void unaRecetaQueNoLeGustaNoPuedeSugerirseAUnUsuario()
 			throws BusinessException {
 		sistema.eliminarTodasLasRecetas();
-		this.usuario = crearUsuarioBasicoValido();
+		this.usuario = TestFactory.crearUsuarioBasicoValido();
 		this.usuario.agregarAlimentoQueLeDisgusta("Harina");
 		administrador.sugerir(crearRecetaPublicaSimpleRica(), this.usuario);
 
@@ -114,7 +93,7 @@ public class TestSistema {
 			throws BusinessException {
 		sistema.eliminarTodasLasRecetas();
 		Hipertenso hipertenso = new Hipertenso();
-		this.usuario = crearUsuarioBasicoValido();
+		this.usuario = TestFactory.crearUsuarioBasicoValido();
 		this.usuario.agregarCondicionPreexistente(hipertenso);
 		this.administrador.sugerir(crearRecetaNoAptaParaHipertensos(), this.usuario);
 
@@ -125,10 +104,10 @@ public class TestSistema {
 			BusinessException {
 		sistema.eliminarTodasLasRecetas();
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
-		Usuario usuario = crearUsuarioBasicoValido();
+		Usuario usuario = TestFactory.crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
 		usuario.agregarReceta(crearRecetaPublicaSimpleRica());
-		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
+		Usuario usuarioQueSeAgrega = TestFactory.crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
 		grupo.agregarUsuario(usuarioQueSeAgrega);
 
@@ -140,11 +119,11 @@ public class TestSistema {
 			throws BusinessException, RecetaException {
 		sistema.eliminarTodasLasRecetas();
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
-		Usuario usuario = crearUsuarioBasicoValido();
+		Usuario usuario = TestFactory.crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
 
 		usuario.agregarReceta(crearRecetaPublicaSimpleRica());
-		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
+		Usuario usuarioQueSeAgrega = TestFactory.crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
 
 		assertEquals(1, sistema.recetasQueConoceEl(usuario).size());
@@ -155,7 +134,7 @@ public class TestSistema {
 		crearRecetaPublicaSimpleRica();
 		crearRecetaPublicaSimpleRica();
 		assertEquals(sistema.listarTodas(),
-				sistema.recetasQueConoceEl(crearUsuarioBasicoValido()));
+				sistema.recetasQueConoceEl(TestFactory.crearUsuarioBasicoValido()));
 	}
 
 	@Test
@@ -163,9 +142,9 @@ public class TestSistema {
 			throws BusinessException, RecetaException {
 		sistema.eliminarTodasLasRecetas();
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
-		Usuario usuario = crearUsuarioBasicoValido();
+		Usuario usuario = TestFactory.crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
-		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
+		Usuario usuarioQueSeAgrega = TestFactory.crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
 
 	}
@@ -175,9 +154,9 @@ public class TestSistema {
 			throws BusinessException, RecetaException {
 		sistema.eliminarTodasLasRecetas();
 		GrupoDeUsuarios grupo = this.crearGrupoDeUsuarios();
-		Usuario usuario = crearUsuarioBasicoValido();
+		Usuario usuario = TestFactory.crearUsuarioBasicoValido();
 		grupo.agregarUsuario(usuario);
-		Usuario usuarioQueSeAgrega = crearUsuarioBasicoValido();
+		Usuario usuarioQueSeAgrega = TestFactory.crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
 		administrador.sugerir(crearRecetaPrivadaSimple(), grupo);
 	}

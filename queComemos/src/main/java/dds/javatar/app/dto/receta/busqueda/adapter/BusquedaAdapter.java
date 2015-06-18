@@ -21,6 +21,7 @@ import com.google.gson.JsonParser;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
 import dds.javatar.app.dto.receta.RecetaSimple;
+import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.monitoreo.ConsultaObserver;
 
@@ -52,17 +53,17 @@ public class BusquedaAdapter {
 		return instanceAdapter;
 	}
 
-	public List<Receta> consultarRecetas(Usuario usuario, String nombre, String dificultadStr, List<String> palabrasClaves) {
+	public List<Receta> consultarRecetas(Usuario usuario, Busqueda busqueda) {
 
 		RepoRecetas repo = BusquedaAdapter.getInstanceRepo();
 
-		Dificultad dificultad = this.dificultades.get(dificultadStr);
+		Dificultad dificultad = this.dificultades.get(busqueda.dificultad());
 
-		this.observers.forEach(observer -> observer.notificarConsulta(usuario, nombre, dificultad));
+		this.observers.forEach(observer -> observer.notificarConsulta(usuario, busqueda.nombre(), dificultad));
 
-		BusquedaRecetas busqueda = this.crearBusqueda(nombre, dificultad, palabrasClaves);
+		BusquedaRecetas busquedaRecetas = this.crearBusqueda(busqueda.nombre(), dificultad, busqueda.palabrasClave());
 
-		String jsonReceta = repo.getRecetas(busqueda);
+		String jsonReceta = repo.getRecetas(busquedaRecetas);
 
 		List<Receta> recetas = new ArrayList<Receta>();
 

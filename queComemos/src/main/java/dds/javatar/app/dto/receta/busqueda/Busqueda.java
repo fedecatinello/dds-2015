@@ -1,59 +1,54 @@
 package dds.javatar.app.dto.receta.busqueda;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
-import dds.javatar.app.dto.receta.filtro.Filtro;
-import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.util.exception.FilterException;
-
 public class Busqueda {
+	private final String nombre;
+	private final String dificultad;
+	private final List<String> palabrasClave;
 
-	private List<Filtro> filtros;
-
-	private PostProcesamiento postProcesamiento;
-
-	public Busqueda() {
-		this.filtros = new ArrayList<Filtro>();
-		this.postProcesamiento = null;
+	private Busqueda(BusquedaBuilder builder) {
+		this.nombre = builder.nombre;
+		this.dificultad = builder.dificultad;
+		this.palabrasClave = builder.palabrasClave;
 	}
 
-	public void filtrar(Usuario usuario, List<Receta> recetas) throws FilterException {
-		if (!this.filtros.isEmpty()) {
-			for (Filtro filtro : this.filtros) {
-				filtro.filtrarBusqueda(usuario, recetas);
-			}
+	public String nombre() {
+		return nombre;
+	}
+
+	public String dificultad() {
+		return dificultad;
+	}
+
+	public List<String> palabrasClave() {
+		return palabrasClave;
+	}
+
+	public static class BusquedaBuilder {
+		private String nombre;
+		private String dificultad;
+		private List<String> palabrasClave;
+
+		public BusquedaBuilder nombre(String nombre) {
+			this.nombre = nombre;
+			return this;
 		}
-	}
 
-	public void postProcesar(List<Receta> recetasXusuario) {
-		if (this.postProcesamiento != null)
-			this.postProcesamiento.procesar(recetasXusuario);
+		public BusquedaBuilder dificultad(String dificultad) {
+			this.dificultad = dificultad;
+			return this;
+		}
 
-	}
+		public BusquedaBuilder palabrasClave(List<String> palabrasClave) {
+			this.palabrasClave = palabrasClave;
+			return this;
+		}
 
-	public PostProcesamiento getPostProcesamiento() {
-		return this.postProcesamiento;
-	}
+		public Busqueda build() {
+			return new Busqueda(this);
+		}
 
-	public void setPostProcesamiento(PostProcesamiento postProcesamiento) {
-		this.postProcesamiento = postProcesamiento;
-	}
-
-	public List<Filtro> getFiltros() {
-		return this.filtros;
-	}
-
-	public void setFiltros(List<Filtro> filtros) {
-		this.filtros = filtros;
-	}
-
-	public List<Receta> buscarRecetasExternas(Usuario usuario, String nombre, String dificultad, List<String> palabrasClaves) {
-
-		List<Receta> recetasEncontradas = BusquedaAdapter.getInstance().consultarRecetas(usuario, nombre, dificultad, palabrasClaves);
-		return recetasEncontradas;
 	}
 
 }

@@ -7,7 +7,7 @@ import java.util.Set;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.busqueda.Busqueda;
+import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.BusinessException;
 import dds.javatar.app.util.exception.FilterException;
@@ -71,12 +71,12 @@ public class RepositorioRecetas implements InterfazRepositorioRecetas {
 		return recetasQueConoceLista;
 	}
 
-	public List<Receta> realizarBusquedaPara(Busqueda busqueda, Usuario usuario)
+	public List<Receta> realizarBusquedaPara(Buscador buscador, Usuario usuario)
 			throws FilterException {
 
 		List<Receta> recetasXusuario = this.recetasQueConoceEl(usuario);
-		busqueda.filtrar(usuario, recetasXusuario);
-		busqueda.postProcesar(recetasXusuario);
+		buscador.filtrar(usuario, recetasXusuario);
+		buscador.postProcesar(recetasXusuario);
 		return recetasXusuario;
 	}
 

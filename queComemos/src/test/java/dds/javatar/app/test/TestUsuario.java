@@ -27,7 +27,8 @@ public class TestUsuario {
 
 	@Before
 	public void initialize() {
-		this.mc = new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_DOWN);
+		this.mc = new MathContext(MathContext.DECIMAL32.getPrecision(),
+				RoundingMode.HALF_DOWN);
 		this.usuario = TestFactory.crearUsuarioBasicoValido();
 		calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
@@ -46,14 +47,14 @@ public class TestUsuario {
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, 1);
 		Date fechaPosterior = calendar.getTime();
-		this.usuario= new Usuario.UsuarioBuilder()
-		.nombre("DonJuan")
-		.fechaNacimiento(fechaPosterior)
-		.sexo(Usuario.Sexo.MASCULINO)
-		.peso(new BigDecimal(70))
-		.altura(new BigDecimal(1.77))
-		.rutina(new Rutina(TipoRutina.FUERTE, 20))
-		.build();
+		this.usuario = new Usuario.UsuarioBuilder()
+			.nombre("DonJuan")
+				.fechaNacimiento(fechaPosterior)
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
+				.altura(new BigDecimal(1.77))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 		this.usuario.validar();
 	}
 
@@ -64,100 +65,102 @@ public class TestUsuario {
 		calendar.add(Calendar.YEAR, -1);
 		Date fechaAnterior = calendar.getTime();
 
-		this.usuario= new Usuario.UsuarioBuilder()
-		.nombre("DonJuan")
-		.fechaNacimiento(fechaAnterior)
-		.sexo(Usuario.Sexo.MASCULINO)
-		.peso(new BigDecimal(70))
-		.altura(new BigDecimal(1.77))
-		.rutina(new Rutina(TipoRutina.FUERTE, 20))
-		.build();
+		this.usuario = new Usuario.UsuarioBuilder()
+			.nombre("DonJuan")
+				.fechaNacimiento(fechaAnterior)
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
+				.altura(new BigDecimal(1.77))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 		this.usuario.validar();
 	}
 
 	@Test(expected = UsuarioException.class)
 	public void testUsuarioSinFechaNacimiento() throws UsuarioException {
 		this.usuario = new Usuario.UsuarioBuilder()
-		.nombre("DonJuan")
-		.sexo(Usuario.Sexo.MASCULINO)
-		.peso(new BigDecimal(70))
-		.altura(new BigDecimal(1.77))
-		.rutina(new Rutina(TipoRutina.FUERTE, 20))
-		.build();
+			.nombre("DonJuan")
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
+				.altura(new BigDecimal(1.77))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 		this.usuario.validar();
 	}
 
 	@Test(expected = UsuarioException.class)
 	public void testUsuarioSinNombre() throws UsuarioException {
 		this.usuario = new Usuario.UsuarioBuilder()
-		.fechaNacimiento(calendar.getTime())
-		.sexo(Usuario.Sexo.MASCULINO)
-		.peso(new BigDecimal(70))
-		.altura(new BigDecimal(1.77))
-		.rutina(new Rutina(TipoRutina.FUERTE, 20))
-		.build();
+			.fechaNacimiento(calendar.getTime())
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
+				.altura(new BigDecimal(1.77))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 		this.usuario.validar();
 	}
 
 	@Test(expected = UsuarioException.class)
 	public void testUsuarioSinPeso() throws UsuarioException {
 		this.usuario = new Usuario.UsuarioBuilder()
-		.nombre("DonJuan")
-		.fechaNacimiento(calendar.getTime())
-		.sexo(Usuario.Sexo.MASCULINO)
-		.altura(new BigDecimal(1.77))
-		.rutina(new Rutina(TipoRutina.FUERTE, 20))
-		.build();
+			.nombre("DonJuan")
+				.fechaNacimiento(calendar.getTime())
+				.sexo(Usuario.Sexo.MASCULINO)
+				.altura(new BigDecimal(1.77))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 		this.usuario.validar();
 	}
 
 	@Test(expected = UsuarioException.class)
 	public void testUsuarioSinAltura() throws UsuarioException {
 		this.usuario = new Usuario.UsuarioBuilder()
-		.nombre("DonJuan")
-		.fechaNacimiento(calendar.getTime())
-		.sexo(Usuario.Sexo.MASCULINO)
-		.peso(new BigDecimal(70))
-		.rutina(new Rutina(TipoRutina.FUERTE, 20))
-		.build();
+			.nombre("DonJuan")
+				.fechaNacimiento(calendar.getTime())
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 		this.usuario.validar();
 	}
 
 	@Test(expected = UsuarioException.class)
 	public void testUsuarioSinRutina() throws UsuarioException {
 		this.usuario = new Usuario.UsuarioBuilder()
-		.nombre("DonJuan")
-		.fechaNacimiento(calendar.getTime())
-		.sexo(Usuario.Sexo.MASCULINO)
-		.peso(new BigDecimal(70))
-		.altura(new BigDecimal(1.77))
-		.build();
+			.nombre("DonJuan")
+				.fechaNacimiento(calendar.getTime())
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
+				.altura(new BigDecimal(1.77))
+				.build();
 		this.usuario.validar();
 	}
 
 	@Test(expected = UsuarioException.class)
-	public void testUsuarioConNombreMenorACuatroCaracters() throws UsuarioException {
-		this.usuario=new Usuario.UsuarioBuilder()
-		.nombre("Nom")
-		.fechaNacimiento(calendar.getTime())
-		.sexo(Usuario.Sexo.MASCULINO)
-		.peso(new BigDecimal(70))
-		.altura(new BigDecimal(1.77))
-		.rutina(new Rutina(TipoRutina.FUERTE, 20))
-		.build();
+	public void testUsuarioConNombreMenorACuatroCaracters()
+			throws UsuarioException {
+		this.usuario = new Usuario.UsuarioBuilder()
+			.nombre("Nom")
+				.fechaNacimiento(calendar.getTime())
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
+				.altura(new BigDecimal(1.77))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 		this.usuario.validar();
 	}
 
 	@Test(expected = UsuarioException.class)
-	public void testUsuarioConNombreIgualACuatroCaracteres() throws UsuarioException {
-		this.usuario=new Usuario.UsuarioBuilder()
-		.nombre("Nomb")
-		.fechaNacimiento(calendar.getTime())
-		.sexo(Usuario.Sexo.MASCULINO)
-		.peso(new BigDecimal(70))
-		.altura(new BigDecimal(1.77))
-		.rutina(new Rutina(TipoRutina.FUERTE, 20))
-		.build();
+	public void testUsuarioConNombreIgualACuatroCaracteres()
+			throws UsuarioException {
+		this.usuario = new Usuario.UsuarioBuilder()
+			.nombre("Nomb")
+				.fechaNacimiento(calendar.getTime())
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
+				.altura(new BigDecimal(1.77))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 		this.usuario.validar();
 	}
 
@@ -259,7 +262,8 @@ public class TestUsuario {
 	}
 
 	@Test
-	public void testVeganoConpreferenciaDiferenteAChivitoCarnePolloChori() throws UsuarioException {
+	public void testVeganoConpreferenciaDiferenteAChivitoCarnePolloChori()
+			throws UsuarioException {
 		Vegano vegano = new Vegano();
 
 		this.usuario.agregarCondicionPreexistente(vegano);
@@ -267,41 +271,56 @@ public class TestUsuario {
 
 		this.usuario.validar();
 	}
-	
 
 	// Punto 2: averiguar el índice de masa corporal o IMC de un usuario
 	private void assertIMC(Usuario usuario, double expectedValue) {
 		BigDecimal expected = new BigDecimal(expectedValue, this.mc);
-		assertEquals(expected.doubleValue(), usuario.getIMC(this.mc.getPrecision()).doubleValue(), 0.1);
+		assertEquals(expected.doubleValue(),
+				usuario.getIMC(this.mc.getPrecision()).doubleValue(), 0.1);
 	}
 
 	@Test
 	public final void testPabloGomez() {
-		Usuario usuario = new Usuario.UsuarioBuilder().altura(new BigDecimal(1.75)).peso(new BigDecimal(65)).build();
+		Usuario usuario = new Usuario.UsuarioBuilder()
+			.altura(new BigDecimal(1.75))
+				.peso(new BigDecimal(65))
+				.build();
 		this.assertIMC(usuario, 21.2244898);
 	}
 
 	@Test
 	public void testMelinaMacko() {
-		Usuario meli = new Usuario.UsuarioBuilder().altura(new BigDecimal(1.47)).peso(new BigDecimal(42)).build();
+		Usuario meli = new Usuario.UsuarioBuilder()
+			.altura(new BigDecimal(1.47))
+				.peso(new BigDecimal(42))
+				.build();
 		this.assertIMC(meli, 19.43635);
 	}
 
 	@Test
 	public final void testFedericoCatinello() {
-		Usuario fede = new Usuario.UsuarioBuilder().altura(new BigDecimal(1.72)).peso(new BigDecimal(75)).build();
+		Usuario fede = new Usuario.UsuarioBuilder()
+			.altura(new BigDecimal(1.72))
+				.peso(new BigDecimal(75))
+				.build();
 		this.assertIMC(fede, 25.35154137);
 	}
 
 	@Test
 	public final void testElianaLuguerosSinatra() {
-		Usuario eliana = new Usuario.UsuarioBuilder().altura(new BigDecimal(1.66)).peso(new BigDecimal(62)).build();
+		Usuario eliana = new Usuario.UsuarioBuilder()
+			.altura(new BigDecimal(1.66))
+				.peso(new BigDecimal(62))
+				.build();
 		this.assertIMC(eliana, 22.49964);
 	}
 
 	@Test
 	public final void testNicolasGarcia() {
-		Usuario nico = new Usuario.UsuarioBuilder().altura(new BigDecimal(1.79)).peso(new BigDecimal(81)).build();
+		Usuario nico = new Usuario.UsuarioBuilder()
+			.altura(new BigDecimal(1.79))
+				.peso(new BigDecimal(81))
+				.build();
 		this.assertIMC(nico, 25.28010);
 	}
 

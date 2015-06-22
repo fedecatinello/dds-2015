@@ -12,6 +12,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import queComemos.entrega3.dominio.Dificultad;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
@@ -408,8 +409,7 @@ public class TestRecetas {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.nombre(null)
-				.dificultad("F")
+			.dificultad(Dificultad.FACIL)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 
@@ -424,8 +424,7 @@ public class TestRecetas {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.nombre(null)
-				.dificultad("M")
+			.dificultad(Dificultad.MEDIANA)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 
@@ -440,8 +439,7 @@ public class TestRecetas {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.nombre(null)
-				.dificultad("D")
+			.dificultad(Dificultad.DIFICIL)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 
@@ -462,9 +460,8 @@ public class TestRecetas {
 		palabrasClaves.add("acelga");
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-				.palabrasClave(palabrasClaves)
-				.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(
+				palabrasClaves).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -481,7 +478,7 @@ public class TestRecetas {
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
 			.nombre("cassatta")
-				.dificultad("F")
+				.dificultad(Dificultad.FACIL)
 				.palabrasClave(palabrasClaves)
 				.build();
 
@@ -500,7 +497,7 @@ public class TestRecetas {
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
 			.nombre("churrasco a la sal")
-				.dificultad("F")
+				.dificultad(Dificultad.FACIL)
 				.palabrasClave(palabrasClaves)
 				.build();
 

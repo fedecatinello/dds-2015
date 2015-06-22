@@ -56,14 +56,13 @@ public class BusquedaAdapter {
 	public List<Receta> consultarRecetas(Usuario usuario, Busqueda busqueda) {
 
 		RepoRecetas repo = BusquedaAdapter.getInstanceRepo();
+	//	Dificultad dificultad = this.dificultades.get(busqueda.dificultad());	
 
-		Dificultad dificultad = this.dificultades.get(busqueda.dificultad());
+		this.observers.forEach(observer -> observer.notificarConsulta(usuario, busqueda));
 
-		this.observers.forEach(observer -> observer.notificarConsulta(usuario, busqueda.nombre(), dificultad));
+		BusquedaRecetas busquedaRecetasRepo = this.crearBusquedaRepo(busqueda);
 
-		BusquedaRecetas busquedaRecetas = this.crearBusqueda(busqueda.nombre(), dificultad, busqueda.palabrasClave());
-
-		String jsonReceta = repo.getRecetas(busquedaRecetas);
+		String jsonReceta = repo.getRecetas(busquedaRecetasRepo);
 
 		List<Receta> recetas = new ArrayList<Receta>();
 
@@ -73,19 +72,18 @@ public class BusquedaAdapter {
 
 	}
 
-	private BusquedaRecetas crearBusqueda(String nombre, Dificultad dificultad, List<String> palabrasClaves) {
+	private BusquedaRecetas crearBusquedaRepo(Busqueda busqueda) {
 
-		BusquedaRecetas busqueda = new BusquedaRecetas();
+		BusquedaRecetas busquedaRepo = new BusquedaRecetas();
+		
+		busquedaRepo.setNombre(busqueda.nombre());
+		busquedaRepo.setDificultad(busqueda.dificultad());
 
-		busqueda.setNombre(nombre);
-
-		busqueda.setDificultad(dificultad);
-
-		for (String palabra : palabrasClaves) {
-			busqueda.agregarPalabraClave(palabra);
+		for (String palabra : busqueda.palabrasClave()) {
+			busquedaRepo.agregarPalabraClave(palabra);
 		}
 
-		return busqueda;
+		return busquedaRepo;
 	}
 
 	private List<Receta> mapearJsonReceta(String json) {

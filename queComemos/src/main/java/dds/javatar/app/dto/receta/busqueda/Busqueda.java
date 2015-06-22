@@ -2,9 +2,11 @@ package dds.javatar.app.dto.receta.busqueda;
 
 import java.util.List;
 
+import queComemos.entrega3.dominio.Dificultad;
+
 public class Busqueda {
 	private final String nombre;
-	private final String dificultad;
+	private final Dificultad dificultad;
 	private final List<String> palabrasClave;
 
 	private Busqueda(BusquedaBuilder builder) {
@@ -17,7 +19,7 @@ public class Busqueda {
 		return nombre;
 	}
 
-	public String dificultad() {
+	public Dificultad dificultad() {
 		return dificultad;
 	}
 
@@ -27,7 +29,7 @@ public class Busqueda {
 
 	public static class BusquedaBuilder {
 		private String nombre;
-		private String dificultad;
+		private Dificultad dificultad;
 		private List<String> palabrasClave;
 
 		public BusquedaBuilder nombre(String nombre) {
@@ -35,7 +37,7 @@ public class Busqueda {
 			return this;
 		}
 
-		public BusquedaBuilder dificultad(String dificultad) {
+		public BusquedaBuilder dificultad(Dificultad dificultad) {
 			this.dificultad = dificultad;
 			return this;
 		}

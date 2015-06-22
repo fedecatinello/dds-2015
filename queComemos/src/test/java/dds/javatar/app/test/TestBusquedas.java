@@ -36,7 +36,6 @@ public class TestBusquedas{
 		TestFactory.crearListaRecetasParaUsuarioSize30(this.usuario);
 	}
 	
-
 	
 	/* Tests de Filtros */ 
 	
@@ -56,8 +55,8 @@ public class TestBusquedas{
 		filtros.add(new FiltroCondiciones());
 		buscador.setFiltros(filtros);
 		
-		Usuario sobrepesado = TestFactory.crearUsuarioConSobrepeso();
-		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, sobrepesado);
+		Usuario userSobrepesado = TestFactory.crearUsuarioConSobrepeso();
+		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, userSobrepesado);
 		assertEquals(0, listaRecetas.size());
 	}
 	

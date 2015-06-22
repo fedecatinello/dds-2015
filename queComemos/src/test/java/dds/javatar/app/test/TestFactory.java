@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import queComemos.entrega3.dominio.Dificultad;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
@@ -16,9 +17,7 @@ import dds.javatar.app.util.exception.RecetaException;
 public class TestFactory {
 
 	/**
-	 * 
-	 * Habria q subclasificar esto?
-	 * 
+	 *  subclasificar esto
 	 * */
 	private TestFactory() {
 
@@ -102,7 +101,7 @@ public class TestFactory {
 	public static Busqueda crearBusquedaDificilPollo() {
 		return new Busqueda.BusquedaBuilder()
 			.nombre("Pollo")
-				.dificultad("D")
+				.dificultad(Dificultad.DIFICIL)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 	}
@@ -110,7 +109,7 @@ public class TestFactory {
 	public static Busqueda crearBusquedaDificilFideos() {
 		return new Busqueda.BusquedaBuilder()
 			.nombre("fideos")
-				.dificultad("D")
+				.dificultad(Dificultad.DIFICIL)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 	}
@@ -118,7 +117,7 @@ public class TestFactory {
 	public static Busqueda crearBusquedaDificilMollejas() {
 		return new Busqueda.BusquedaBuilder()
 			.nombre("Mollejas al verdeo")
-				.dificultad("D")
+				.dificultad(Dificultad.DIFICIL)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 	}
@@ -126,7 +125,7 @@ public class TestFactory {
 	public static Busqueda crearBusquedaDificilMatambre() {
 		return new Busqueda.BusquedaBuilder()
 			.nombre("Matambre tiernizado de cerdo con papas noisette")
-				.dificultad("D")
+				.dificultad(Dificultad.DIFICIL)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 	}
@@ -134,7 +133,7 @@ public class TestFactory {
 	public static Busqueda crearBusquedaFacilFideos() {
 		return new Busqueda.BusquedaBuilder()
 			.nombre("fideos")
-				.dificultad("F")
+				.dificultad(Dificultad.FACIL)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 	}
@@ -142,7 +141,7 @@ public class TestFactory {
 	public static Busqueda crearBusquedaMediaPollo() {
 		return new Busqueda.BusquedaBuilder()
 			.nombre("Pollo")
-				.dificultad("M")
+				.dificultad(Dificultad.MEDIANA)
 				.palabrasClave(new ArrayList<String>())
 				.build();
 	}

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import queComemos.entrega3.dominio.Dificultad;
+import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.Usuario;
 
 public class MonitorPorHora implements ConsultaObserver {
@@ -18,7 +18,7 @@ public class MonitorPorHora implements ConsultaObserver {
 	}
 	
 	@Override
-	public void notificarConsulta(Usuario usuario, String nombre, Dificultad dificultad) {
+	public void notificarConsulta(Usuario usuario, Busqueda busqueda) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		int currentHours = calendar.get(Calendar.HOUR_OF_DAY);

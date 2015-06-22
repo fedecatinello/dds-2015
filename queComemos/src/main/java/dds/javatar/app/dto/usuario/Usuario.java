@@ -342,7 +342,7 @@ public class Usuario extends Entity {
 		Buscador buscador = new Buscador();
 		List<Receta> recetas = buscador.buscarRecetasExternas(this, busqueda);
 		return recetas;
-
+		
 	}
 
 	public Boolean esVegano() {

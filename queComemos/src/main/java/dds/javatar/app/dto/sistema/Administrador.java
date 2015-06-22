@@ -60,4 +60,5 @@ public class Administrador {
 		usuario.setEstadoSolicitud(EstadoSolicitud.RECHAZADA);
 		repositorioUsuarios.add(usuario);
 	}
+
 }

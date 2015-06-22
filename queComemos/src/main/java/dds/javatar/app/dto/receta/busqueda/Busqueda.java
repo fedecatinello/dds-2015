@@ -1,5 +1,6 @@
 package dds.javatar.app.dto.receta.busqueda;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import queComemos.entrega3.dominio.Dificultad;
@@ -48,6 +49,9 @@ public class Busqueda {
 		}
 
 		public Busqueda build() {
+			if (palabrasClave==null) {
+				palabrasClave = new ArrayList<String>();
+			}
 			return new Busqueda(this);
 		}
 

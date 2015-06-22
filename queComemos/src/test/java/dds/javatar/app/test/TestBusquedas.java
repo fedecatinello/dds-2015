@@ -43,8 +43,8 @@ public class TestBusquedas{
 	public void testBuscarRecetasSinFiltro() throws FilterException {
 		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Buscador buscador = new Buscador();
-		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, usuario);
-		assertEquals(30 , listaRecetas.size());
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		assertEquals(42 , listaRecetas.size()); 	// Son 30 locales + 12 externas
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class TestBusquedas{
 		buscador.setFiltros(filtros);
 		
 		Usuario userSobrepesado = TestFactory.crearUsuarioConSobrepeso();
-		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, userSobrepesado);
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(userSobrepesado);
 		assertEquals(0, listaRecetas.size());
 	}
 	
@@ -76,8 +76,8 @@ public class TestBusquedas{
 		filtroPrecio.setIngredientesCaros(ingredientesCaros);
 		filtros.add(filtroPrecio);
 		buscador.setFiltros(filtros); 
-		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, usuarioPedro);	
-		assertEquals(10 , listaRecetas.size());		
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuarioPedro);	
+		assertEquals(22 , listaRecetas.size());		// Son 10 locales + 12 externas
 	}
 	
 
@@ -93,7 +93,7 @@ public class TestBusquedas{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		buscador.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, usuario);
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
 		assertEquals(10, listaRecetas.size());
 	}
 	
@@ -105,12 +105,13 @@ public class TestBusquedas{
 	
 	@Test
 	public void testProcesarSoloPares() throws FilterException {
+		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Buscador buscador = new Buscador();
 		PostProcesamiento soloPares = new ResultadosPares();
 		buscador.setPostProcesamiento(soloPares);
 		
-		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, usuario);
-		assertEquals(15, listaRecetas.size());
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		assertEquals(21, listaRecetas.size());		// Son 30 locales + 12 externas = 42 /2 =21
 	}
 	
 	//revisar: no tiene sentido el assert
@@ -125,8 +126,8 @@ public class TestBusquedas{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		buscador.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, usuario);
-		assertEquals(30, listaRecetas.size());
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		assertEquals(42, listaRecetas.size()); 		// Son 30 locales + 12 externas
 	}
 	
 	//revisar: no tiene sentido el assert
@@ -141,17 +142,8 @@ public class TestBusquedas{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		buscador.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = RepositorioRecetas.getInstance().realizarBusquedaPara(buscador, usuario);
-		assertEquals(30, listaRecetas.size());
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		assertEquals(42, listaRecetas.size());		// Son 30 locales + 12 externas
 	}
 	
-	
-	/* Tests de Busquedas + Filtros */ 
-
-	/*
-	 * agregar tests de filtros + postprocesamiento
-	 * combinar 2 filtros y 1 postprocesamiento de orden
-	 * ej: filtro de ingredientes caros y exceso de calorias
-	 * 		y un post procesamiento de ordenar por calorias
-	 */
 }

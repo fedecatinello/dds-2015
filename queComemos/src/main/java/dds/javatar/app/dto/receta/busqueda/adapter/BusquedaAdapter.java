@@ -56,7 +56,6 @@ public class BusquedaAdapter {
 	public List<Receta> consultarRecetas(Usuario usuario, Busqueda busqueda) {
 
 		RepoRecetas repo = BusquedaAdapter.getInstanceRepo();
-	//	Dificultad dificultad = this.dificultades.get(busqueda.dificultad());	
 
 		this.observers.forEach(observer -> observer.notificarConsulta(usuario, busqueda));
 

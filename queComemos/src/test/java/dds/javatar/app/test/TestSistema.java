@@ -12,6 +12,7 @@ import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
+import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.sistema.Administrador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
@@ -24,10 +25,12 @@ public class TestSistema {
 	private Usuario usuario;
 	private RepositorioRecetas sistema = RepositorioRecetas.getInstance();
 	private Administrador administrador = Administrador.getInstance();
+	private Buscador buscador;
 
 	@Before
 	public void initialize() {
 		this.usuario = TestFactory.crearUsuarioBasicoValido();
+		buscador = new Buscador();
 	}
 
 	private RecetaPrivadaSimple crearRecetaPrivadaSimple() {
@@ -126,7 +129,7 @@ public class TestSistema {
 		Usuario usuarioQueSeAgrega = TestFactory.crearUsuarioBasicoValido();
 		usuarioQueSeAgrega.agregarReceta(crearRecetaPrivadaSimple());
 
-		assertEquals(1, sistema.recetasQueConoceEl(usuario).size());
+		assertEquals(1, buscador.recetasQueConoceEl(usuario).size());
 	}
 
 	@Test
@@ -134,7 +137,7 @@ public class TestSistema {
 		crearRecetaPublicaSimpleRica();
 		crearRecetaPublicaSimpleRica();
 		assertEquals(sistema.listarTodas(),
-				sistema.recetasQueConoceEl(TestFactory.crearUsuarioBasicoValido()));
+				buscador.recetasQueConoceEl(TestFactory.crearUsuarioBasicoValido()));
 	}
 
 	@Test

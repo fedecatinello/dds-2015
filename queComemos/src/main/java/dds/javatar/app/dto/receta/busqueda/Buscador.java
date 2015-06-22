@@ -1,11 +1,15 @@
 package dds.javatar.app.dto.receta.busqueda;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
 import dds.javatar.app.dto.receta.filtro.Filtro;
+import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 
@@ -52,6 +56,35 @@ public class Buscador {
 	public List<Receta> buscarRecetasExternas(Usuario usuario, Busqueda busqueda) {
 		List<Receta> recetasEncontradas = BusquedaAdapter.getInstance().consultarRecetas(usuario,busqueda);
 		return recetasEncontradas;
+	}
+	
+	public List<Receta> recetasQueConoceEl(Usuario usuario) {
+
+		List<Receta> recetasQueConoceLista;
+		Set<Receta> recetasQueConoceSet = new LinkedHashSet<Receta>(RepositorioRecetas.getInstance().recetaConocidas);
+		recetasQueConoceSet.addAll(usuario.getRecetas());
+
+		if (!usuario.getGruposAlQuePertenece().isEmpty()
+				|| usuario.getGruposAlQuePertenece() != null) {
+			for (GrupoDeUsuarios grupo : usuario.getGruposAlQuePertenece()) {
+				for (Usuario miembroDelGrupo : grupo.getUsuarios()) {
+					recetasQueConoceSet.addAll(miembroDelGrupo.getRecetas());
+				}
+			}
+		}
+		recetasQueConoceLista = new ArrayList<Receta>(recetasQueConoceSet);
+		return recetasQueConoceLista;
+	}
+
+	public List<Receta> realizarBusquedaPara(Usuario usuario)
+			throws FilterException {
+
+		List<Receta> recetasXusuario = this.recetasQueConoceEl(usuario);
+		List<Receta> recetasRepoExterno = this.buscarRecetasExternas(usuario, new Busqueda.BusquedaBuilder().build());
+		recetasXusuario.addAll(recetasRepoExterno);
+		this.filtrar(usuario, recetasXusuario);
+		this.postProcesar(recetasXusuario);
+		return recetasXusuario;
 	}
 
 }

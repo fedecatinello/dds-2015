@@ -1,6 +1,6 @@
 package dds.javatar.app.dto.usuario.monitoreo;
 
-import queComemos.entrega3.dominio.Dificultad;
+import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Usuario.Sexo;
 
@@ -15,11 +15,11 @@ public class MonitorMasConsultadasPorSexo implements ConsultaObserver {
 	}
 
 	@Override
-	public void notificarConsulta(Usuario usuario, String nombre, Dificultad dificultad) {
+	public void notificarConsulta(Usuario usuario, Busqueda busqueda) {
 		if (Sexo.FEMENINO.equals(usuario.getSexo())) {
-			this.monitorMujeres.notificarConsulta(usuario, nombre, dificultad);
+			this.monitorMujeres.notificarConsulta(usuario, busqueda);
 		} else if (Sexo.MASCULINO.equals(usuario.getSexo())) {
-			this.monitorHombres.notificarConsulta(usuario, nombre, dificultad);
+			this.monitorHombres.notificarConsulta(usuario, busqueda);
 		}
 		// Si no tiene el sexo definido? No pasa nada.
 	}

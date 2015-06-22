@@ -1,8 +1,11 @@
 package dds.javatar.app.dto.sistema;
 
 
+import java.util.List;
+
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.tareasPendientes.TareaPendiente;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Usuario.EstadoSolicitud;
 import dds.javatar.app.util.exception.BusinessException;
@@ -12,6 +15,7 @@ public class Administrador {
 	
 	private static Administrador instance;
 	private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
+	private List<TareaPendiente> tareasPendientes; 
 	
 	public static Administrador getInstance() {
 		if (instance == null) {
@@ -59,6 +63,10 @@ public class Administrador {
 		Usuario usuario = solicitud.build();
 		usuario.setEstadoSolicitud(EstadoSolicitud.RECHAZADA);
 		repositorioUsuarios.add(usuario);
+	}
+	
+	public void agregarTareaPendiente (TareaPendiente tareaPendiente){
+		tareasPendientes.add(tareaPendiente);
 	}
 
 }

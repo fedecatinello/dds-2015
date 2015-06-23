@@ -19,6 +19,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	protected Map<Integer, String> pasosPreparacion;
 	protected String nombre;
 	protected String dificultad;
+	protected Integer calorias;
 	protected String temporada;
 	protected Integer tiempoPreparacion;
 
@@ -62,6 +63,11 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		}
 		return caloriasTotal;
 	}
+	
+	public void setCalorias(Integer calorias) {
+		this.calorias = calorias;
+		
+	}
 
 	public Set<RecetaPrivada> getSubRecetas() {
 		return this.subRecetas;
@@ -76,6 +82,11 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		return condimentos;
 	}
 
+	public void setCondimentos(Map<String, BigDecimal> condimentos) {
+		this.condimentos = condimentos;
+		
+	}
+	
 	public Map<String, BigDecimal> getIngredientes() {
 		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator
 				.hasNext();) {
@@ -83,6 +94,11 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 			this.ingredientes.putAll(receta.getIngredientes());
 		}
 		return ingredientes;
+	}
+	
+	public void setIngredientes(Map<String, BigDecimal> ingredientes) {
+		this.ingredientes = ingredientes;
+		
 	}
 	
 	public Map<Integer, String> getPasosPreparacion() {
@@ -93,6 +109,12 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		}
 		return pasosPreparacion;
 	}
+	
+	public void setPasosPreparacion(Map<Integer, String> pasosPreparacion) {
+		this.pasosPreparacion = pasosPreparacion;
+		
+	}
+	
 
 	public Integer getTiempoPreparacion() {
 		return tiempoPreparacion;
@@ -149,5 +171,5 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 			throws UsuarioException, RecetaException {
 		return this;
 	}
-
+	
 }

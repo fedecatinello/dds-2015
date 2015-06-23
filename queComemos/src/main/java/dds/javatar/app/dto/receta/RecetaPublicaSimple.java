@@ -2,6 +2,7 @@ package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Usuario;
@@ -63,5 +64,22 @@ public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica {
 		
 	}
 
+	
+	//Getters & Setters
+	
+	public void setCondimentos(Map<String, BigDecimal> condimentos) {
+		this.condimentos = condimentos;
+		
+	}
+
+	public void setIngredientes(Map<String, BigDecimal> ingredientes) {
+		this.ingredientes = ingredientes;
+		
+	}
+
+	public void setPasosPreparacion(Map<Integer, String> pasosPreparacion) {
+		this.pasosPreparacion = pasosPreparacion;
+		
+	}
 
 }

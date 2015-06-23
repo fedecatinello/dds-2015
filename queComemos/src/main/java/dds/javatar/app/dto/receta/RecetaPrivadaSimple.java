@@ -2,6 +2,7 @@ package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
@@ -33,6 +34,23 @@ public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 	public Receta privatizarSiCorresponde(Usuario usuario)
 			throws UsuarioException, RecetaException {
 		return this;
+	}
+
+	//Getters & Setters
+	
+	public void setCondimentos(Map<String, BigDecimal> condimentos) {
+		this.condimentos = condimentos;
+		
+	}
+
+	public void setIngredientes(Map<String, BigDecimal> ingredientes) {
+		this.ingredientes = ingredientes;
+		
+	}
+
+	public void setPasosPreparacion(Map<Integer, String> pasosPreparacion) {
+		this.pasosPreparacion = pasosPreparacion;
+		
 	}
 
 }

@@ -43,7 +43,7 @@ public class TestBusquedas{
 	public void testBuscarRecetasSinFiltro() throws FilterException {
 		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Buscador buscador = new Buscador();
-		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario, null);
 		assertEquals(42 , listaRecetas.size()); 	// Son 30 locales + 12 externas
 	}
 	
@@ -56,7 +56,7 @@ public class TestBusquedas{
 		buscador.setFiltros(filtros);
 		
 		Usuario userSobrepesado = TestFactory.crearUsuarioConSobrepeso();
-		List<Receta> listaRecetas = buscador.realizarBusquedaPara(userSobrepesado);
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(userSobrepesado, null);
 		assertEquals(0, listaRecetas.size());
 	}
 	
@@ -76,7 +76,7 @@ public class TestBusquedas{
 		filtroPrecio.setIngredientesCaros(ingredientesCaros);
 		filtros.add(filtroPrecio);
 		buscador.setFiltros(filtros); 
-		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuarioPedro);	
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuarioPedro, null);	
 		assertEquals(22 , listaRecetas.size());		// Son 10 locales + 12 externas
 	}
 	
@@ -93,7 +93,7 @@ public class TestBusquedas{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		buscador.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario, null);
 		assertEquals(10, listaRecetas.size());
 	}
 	
@@ -110,7 +110,7 @@ public class TestBusquedas{
 		PostProcesamiento soloPares = new ResultadosPares();
 		buscador.setPostProcesamiento(soloPares);
 		
-		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario, null);
 		assertEquals(21, listaRecetas.size());		// Son 30 locales + 12 externas = 42 /2 =21
 	}
 	
@@ -126,7 +126,7 @@ public class TestBusquedas{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		buscador.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario, null);
 		assertEquals(42, listaRecetas.size()); 		// Son 30 locales + 12 externas
 	}
 	
@@ -142,7 +142,7 @@ public class TestBusquedas{
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		buscador.setFiltros(filtros);
 		
-		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
+		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario, null);
 		assertEquals(42, listaRecetas.size());		// Son 30 locales + 12 externas
 	}
 	

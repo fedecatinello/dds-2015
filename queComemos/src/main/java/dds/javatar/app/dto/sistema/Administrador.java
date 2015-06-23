@@ -1,6 +1,5 @@
 package dds.javatar.app.dto.sistema;
 
-
 import java.util.List;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
@@ -67,6 +66,13 @@ public class Administrador {
 	
 	public void agregarTareaPendiente (TareaPendiente tareaPendiente){
 		tareasPendientes.add(tareaPendiente);
+	}
+	
+	public void realizarTareasPendientes (){
+		for (TareaPendiente tareaPendiente : tareasPendientes) {
+			tareaPendiente.execute();
+		}
+		tareasPendientes.clear();
 	}
 
 }

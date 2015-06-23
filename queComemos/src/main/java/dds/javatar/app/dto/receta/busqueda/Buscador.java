@@ -9,7 +9,9 @@ import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
 import dds.javatar.app.dto.receta.filtro.Filtro;
+import dds.javatar.app.dto.sistema.Administrador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
+import dds.javatar.app.dto.tareasPendientes.LogMuchosResultados;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 
@@ -76,13 +78,24 @@ public class Buscador {
 		return recetasQueConoceLista;
 	}
 
-	public List<Receta> realizarBusquedaPara(Usuario usuario)
+	public List<Receta> realizarBusquedaPara(Usuario usuario, Busqueda busqueda)
 			throws FilterException {
+		if (busqueda==null) {
+			busqueda=new Busqueda.BusquedaBuilder().build();
+		}
 		List<Receta> recetasXusuario = this.recetasQueConoceEl(usuario);
-		List<Receta> recetasRepoExterno = this.buscarRecetasExternas(usuario, new Busqueda.BusquedaBuilder().build());
+		List<Receta> recetasRepoExterno = this.buscarRecetasExternas(usuario, busqueda);
 		recetasXusuario.addAll(recetasRepoExterno);
 		this.filtrar(usuario, recetasXusuario);
-		this.postProcesar(recetasXusuario);	
+		this.postProcesar(recetasXusuario);
+		
+		//Validamos aca ? O dentro del command?
+		if (recetasXusuario.size()>100) {
+			LogMuchosResultados logMuchosResultados = new LogMuchosResultados(usuario);
+			Administrador.getInstance().agregarTareaPendiente(logMuchosResultados);
+		}
+
+		
 		return recetasXusuario;
 	}
 

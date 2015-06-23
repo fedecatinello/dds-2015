@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
-
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
@@ -20,6 +19,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	private Map<Integer, String> pasosPreparacion;
 	private String nombre;
 	private String dificultad;
+	private Integer calorias;
 	private String temporada;
 	private Integer tiempoPreparacion;
 
@@ -37,7 +37,7 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
 	public String getTemporada() {
 		return this.temporada;
 	}
@@ -63,6 +63,12 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		}
 		return caloriasTotal;
 	}
+	
+
+	public void setCalorias(Integer calorias) {
+		this.calorias = calorias;
+	}
+
 
 	public Set<RecetaPublica> getSubRecetas() {
 		return this.subRecetas;
@@ -77,6 +83,11 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		return condimentos;
 	}
 
+	public void setCondimentos(Map<String, BigDecimal> condimentos) {
+		this.condimentos = condimentos;
+		
+	}
+
 	public Map<String, BigDecimal> getIngredientes() {
 		for (Iterator<RecetaPublica> iterator = subRecetas.iterator(); iterator
 				.hasNext();) {
@@ -86,6 +97,11 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		return ingredientes;
 	}
 
+
+	public void setIngredientes(Map<String, BigDecimal> ingredientes) {
+		this.ingredientes = ingredientes;		
+	}
+	
 	public Map<Integer, String> getPasosPreparacion() {
 		for (Iterator<RecetaPublica> iterator = subRecetas.iterator(); iterator
 				.hasNext();) {
@@ -95,6 +111,10 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		return pasosPreparacion;
 	}
 
+	public void setPasosPreparacion(Map<Integer, String> pasosPreparacion) {
+		this.pasosPreparacion = pasosPreparacion;		
+	}
+		
 	public Integer getTiempoPreparacion() {
 		return tiempoPreparacion;
 	}
@@ -166,6 +186,6 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 		return recetaClonada;
 		
 	}
-	
-	
+
+		
 }

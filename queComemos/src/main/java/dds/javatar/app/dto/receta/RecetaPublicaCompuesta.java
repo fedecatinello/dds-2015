@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta.RecetaPrivadaCompuestaBuilder;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
@@ -23,10 +24,87 @@ public class RecetaPublicaCompuesta implements RecetaPublica {
 	private String temporada;
 	private Integer tiempoPreparacion;
 
+//	/** Builder **/
+//	public RecetaPublicaCompuesta() {
+//		this.subRecetas = new HashSet<RecetaPublica>();
+//		this.agregarRecetaAlRepo(this);
+//	}
+	
 	/** Builder **/
-	public RecetaPublicaCompuesta() {
-		this.subRecetas = new HashSet<RecetaPublica>();
-		this.agregarRecetaAlRepo(this);
+
+	public RecetaPublicaCompuesta(RecetaPublicaCompuestaBuilder recetaPUblicaCompuestaBuilder) {
+		this.nombre = recetaPUblicaCompuestaBuilder.nombre;
+		this.subRecetas = recetaPUblicaCompuestaBuilder.subRecetas;
+		this.condimentos = recetaPUblicaCompuestaBuilder.condimentos;
+		this.ingredientes = recetaPUblicaCompuestaBuilder.ingredientes;
+		this.pasosPreparacion = recetaPUblicaCompuestaBuilder.pasosPreparacion;
+		this.dificultad = recetaPUblicaCompuestaBuilder.dificultad;
+
+		this.temporada = recetaPUblicaCompuestaBuilder.temporada;		
+		this.tiempoPreparacion = recetaPUblicaCompuestaBuilder.tiempoPreparacion;
+		
+	}
+
+	public static class RecetaPublicaCompuestaBuilder{
+		private HashSet<RecetaPrivada> subRecetas;
+		private Map<String, BigDecimal> condimentos;
+		private Map<String, BigDecimal> ingredientes;
+		private Map<Integer, String> pasosPreparacion;
+		private String nombre;
+		private String dificultad;
+		private Integer calorias;
+		private String temporada;
+		private Integer tiempoPreparacion;
+				
+		public RecetaPublicaCompuestaBuilder subRecetas(HashSet<RecetaPrivada> subRecetas) {
+			this.subRecetas = subRecetas;
+			return this;
+		}
+
+		public RecetaPublicaCompuestaBuilder condimentos(Map<String, BigDecimal> condimentos) {
+			this.condimentos = condimentos;
+			return this;
+		}
+
+		public RecetaPublicaCompuestaBuilder ingredientes(Map<String, BigDecimal> ingredientes) {
+			this.ingredientes = ingredientes;
+			return this;
+		}
+
+		public RecetaPublicaCompuestaBuilder pasosPreparacion(Map<Integer, String> pasosPreparacion) {
+			this.pasosPreparacion = pasosPreparacion;
+			return this;
+		}
+
+		public RecetaPublicaCompuestaBuilder nombre(String nombre) {
+			this.nombre = nombre;
+			return this;
+		}
+		
+		public RecetaPublicaCompuestaBuilder dificultad(String dificultad) {
+			this.dificultad = dificultad;
+			return this;
+		}
+
+		public RecetaPublicaCompuestaBuilder calorias(Integer calorias) {
+			this.calorias = calorias;
+			return this;
+		}
+
+		public RecetaPublicaCompuestaBuilder temporada(String temporada) {
+			this.temporada = temporada;
+			return this;
+		}
+
+		public RecetaPublicaCompuestaBuilder tiempoPreparacion(Integer tiempoPreparacion) {
+			this.tiempoPreparacion = tiempoPreparacion;
+			return this;
+		}
+		
+		public Receta build() {
+			return new RecetaPublicaCompuesta(this);
+		}
+		
 	}
 	
 	/** get items **/

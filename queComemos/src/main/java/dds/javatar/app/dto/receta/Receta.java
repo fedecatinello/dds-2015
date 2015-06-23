@@ -35,6 +35,7 @@ public interface Receta {
 	public void setPasosPreparacion(Map<Integer, String> pasosPreparacion);
 	
 	
+	
 	public Boolean contieneIngrediente(String ingrediente) ;
 	public Boolean contieneCondimento(String condimento);
 	public void validarSiLaRecetaEsValida() throws RecetaException;

@@ -7,70 +7,40 @@ import java.util.Map;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivada;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
+import dds.javatar.app.dto.receta.RecetaPublicaCompuesta;
+import dds.javatar.app.util.exception.RecetaException;
 
-public class RecetaPublicaCompuestaBuilder implements StrategyBuilderReceta{
+public class RecetaPublicaCompuestaBuilder implements RecetaBuilder{
 
-	private HashSet<RecetaPrivada> subRecetas;
-	private Map<String, BigDecimal> condimentos;
-	private Map<String, BigDecimal> ingredientes;
-	private Map<Integer, String> pasosPreparacion;
-	private String nombre;
-	private String dificultad;
-	private Integer calorias;
-	private String temporada;
-	private Integer tiempoPreparacion;
-
-	/**** Setters y getters ****/
-	public RecetaPublicaCompuestaBuilder subRecetas(HashSet<RecetaPrivada> subRecetas) {
-		this.subRecetas = subRecetas;
-		return this;
-	}
-
-	public RecetaPublicaCompuestaBuilder condimentos(Map<String, BigDecimal> condimentos) {
-		this.condimentos = condimentos;
-		return this;
-	}
-
-	public RecetaPublicaCompuestaBuilder ingredientes(Map<String, BigDecimal> ingredientes) {
-		this.ingredientes = ingredientes;
-		return this;
-	}
-
-	public RecetaPublicaCompuestaBuilder pasosPreparacion(Map<Integer, String> pasosPreparacion) {
-		this.pasosPreparacion = pasosPreparacion;
-		return this;
-	}
-
-	public RecetaPublicaCompuestaBuilder nombre(String nombre) {
-		this.nombre = nombre;
-		return this;
+private RecetaPublicaCompuesta recetaPrivadaCompuesta;
+	
+	public RecetaPublicaCompuestaBuilder(String nombre) {
+		recetaPrivadaCompuesta = new RecetaPublicaCompuesta();
+		recetaPrivadaCompuesta.setNombre(nombre);
 	}
 	
 	public RecetaPublicaCompuestaBuilder dificultad(String dificultad) {
-		this.dificultad = dificultad;
+		recetaPrivadaCompuesta.setDificultad(dificultad);
 		return this;
 	}
-
-	public RecetaPublicaCompuestaBuilder calorias(Integer calorias) {
-		this.calorias = calorias;
+	
+	public RecetaPublicaCompuestaBuilder totalCalorias(Integer calorias) {
+		recetaPrivadaCompuesta.setCalorias(calorias);
 		return this;
 	}
 
 	public RecetaPublicaCompuestaBuilder temporada(String temporada) {
-		this.temporada = temporada;
+		recetaPrivadaCompuesta.setTemporada(temporada);
 		return this;
 	}
 
 	public RecetaPublicaCompuestaBuilder tiempoPreparacion(Integer tiempoPreparacion) {
-		this.tiempoPreparacion = tiempoPreparacion;
+		recetaPrivadaCompuesta.setTiempoPreparacion(tiempoPreparacion);
 		return this;
 	}
 
-
-	@Override
 	public Receta buildReceta() {
-		return new RecetaPrivadaCompuesta.RecetaPrivadaCompuestaBuilder().nombre(this.nombre).subRecetas(this.subRecetas).condimentos(this.condimentos).ingredientes(this.ingredientes).pasosPreparacion(this.pasosPreparacion).dificultad(this.dificultad).calorias(this.calorias).temporada(this.temporada).tiempoPreparacion(this.tiempoPreparacion).build();
-
+		return recetaPrivadaCompuesta;
 	}
 
 }

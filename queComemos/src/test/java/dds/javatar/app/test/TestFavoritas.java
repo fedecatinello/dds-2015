@@ -79,7 +79,7 @@ public class TestFavoritas {
 		Busqueda busqueda = new Busqueda.BusquedaBuilder().palabrasClave(palabrasClave)
 			.build();
 		
-		this.user.setFavearTodasLasConsultas(true);
+		this.user.habilitarOpcionFavearTodas();
 		List<Receta> resultadoBusqueda = this.buscador.realizarBusquedaPara(this.user, busqueda);
 		Administrador.getInstance().realizarTareasPendientes();
 		

@@ -13,6 +13,7 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
+import dds.javatar.app.dto.receta.busqueda.builder.RecetaPrivadaSimpleBuilder;
 import dds.javatar.app.dto.sistema.Administrador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
@@ -33,13 +34,8 @@ public class TestSistema {
 		buscador = new Buscador();
 	}
 
-	private RecetaPrivadaSimple crearRecetaPrivadaSimple() {
-		RecetaPrivadaSimple ravioles = new RecetaPrivadaSimple(350);
-		ravioles.setNombre("Ravioles");
-		ravioles.agregarIngrediente("Harina", new BigDecimal(300));
-		ravioles.agregarIngrediente("Agua", new BigDecimal(70));
-		ravioles.agregarIngrediente("Verdura", new BigDecimal(100));
-		return ravioles;
+	public RecetaPrivadaSimple crearRecetaPrivadaSimple() {
+		return new RecetaPrivadaSimpleBuilder("Ravioles").totalCalorias(350).agregarIngrediente("Harina", new BigDecimal(300)).agregarIngrediente("Agua", new BigDecimal(70)).agregarIngrediente("Verdura", new BigDecimal(100)).buildReceta();
 	}
 
 	private Receta crearRecetaPublicaSimpleRica() {

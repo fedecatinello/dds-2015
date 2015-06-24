@@ -322,10 +322,6 @@ public class Usuario extends Entity {
 		receta.setNombre(nuevoNombre);
 	}
 
-	public void marcarFavorita(Receta receta) {
-		this.recetasFavoritas.add(receta);
-	}
-
 	// Entrega 3: Punto 2
 
 	public List<Receta> consultarRecetasExternas(Busqueda busqueda) {
@@ -362,6 +358,19 @@ public class Usuario extends Entity {
 		this.favearTodasLasConsultas = favearTodasLasConsultas;
 	}
 
+	// Entrega 4 - PUnto 5 
+	
+	public void marcarFavorita(Receta receta) {
+		this.recetasFavoritas.add(receta);
+	}
+
+	public boolean tieneReceta(Receta receta){
+		boolean laTiene = false;
+		for(Receta recetaUser: this.getFavoritos()){
+			if(recetaUser.getNombre().equals(receta.getNombre())) laTiene=true;
+		}
+		return laTiene;
+	}
 	
 	
 }

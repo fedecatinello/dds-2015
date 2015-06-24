@@ -13,6 +13,7 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.sistema.Administrador;
+import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 
@@ -31,6 +32,7 @@ public class TestFavoritas {
 	public void limpiar(){
 		List<Receta> faveadas = this.user.getFavoritos();
 		this.user.getFavoritos().removeAll(faveadas);
+		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 	}
 
 	@Test
@@ -75,7 +77,7 @@ public class TestFavoritas {
 	public void testNoAgregaRepetidas() throws FilterException {
 		
 		List<String> palabrasClave = new ArrayList<String>();
-		palabrasClave.add("helado de vainilla");
+		palabrasClave.add("helado de chocolate");
 		Busqueda busqueda = new Busqueda.BusquedaBuilder().palabrasClave(palabrasClave)
 			.build();
 		
@@ -89,6 +91,7 @@ public class TestFavoritas {
 		/*Se favea esa sola*/
 		assertEquals(1, user.getFavoritos().size());
 		
+		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		List<Receta> resultadoSegundaBusqueda = this.buscador.realizarBusquedaPara(this.user, busqueda);
 		Administrador.getInstance().realizarTareasPendientes();
 		

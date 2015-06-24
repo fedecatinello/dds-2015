@@ -20,8 +20,8 @@ public class AgregarFavoritas implements TareaPendiente {
 	public void execute() {
 		if(this.usuario.isFavearTodasLasConsultas()){
 			for(Receta receta: this.recetas){
-				if(!usuario.getFavoritos().contains(receta)){
-					usuario.getFavoritos().add(receta);
+				if(!this.usuario.tieneReceta(receta)){
+					this.usuario.getFavoritos().add(receta);
 				}
 			}
 		}

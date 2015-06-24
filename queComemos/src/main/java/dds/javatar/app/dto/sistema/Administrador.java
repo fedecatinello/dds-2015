@@ -1,6 +1,7 @@
 package dds.javatar.app.dto.sistema;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
@@ -13,7 +14,11 @@ public class Administrador {
 
 	private static Administrador instance;
 	private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
-	private List<TareaPendiente> tareasPendientes;
+	private Set<TareaPendiente> tareasPendientes;
+
+	private Administrador() {
+		this.tareasPendientes = new HashSet<TareaPendiente>();
+	}
 
 	public static Administrador getInstance() {
 		if (instance == null) {

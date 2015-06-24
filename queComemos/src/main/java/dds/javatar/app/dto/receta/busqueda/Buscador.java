@@ -12,6 +12,7 @@ import dds.javatar.app.dto.receta.filtro.Filtro;
 import dds.javatar.app.dto.sistema.Administrador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.tareasPendientes.LogMuchosResultados;
+import dds.javatar.app.dto.tareasPendientes.MailBusqueda;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 
@@ -81,7 +82,7 @@ public class Buscador {
 		Busqueda busqueda = new Busqueda.BusquedaBuilder().build();
 		return this.realizarBusquedaPara(usuario, busqueda);
 	}
-	
+
 	public List<Receta> realizarBusquedaPara(Usuario usuario, Busqueda busqueda) throws FilterException {
 		List<Receta> recetasXusuario = this.recetasQueConoceEl(usuario);
 		List<Receta> recetasRepoExterno = this.buscarRecetasExternas(usuario, busqueda);
@@ -94,6 +95,8 @@ public class Buscador {
 			LogMuchosResultados logMuchosResultados = new LogMuchosResultados(usuario);
 			Administrador.getInstance().agregarTareaPendiente(logMuchosResultados);
 		}
+
+		Administrador.getInstance().agregarTareaPendiente(new MailBusqueda(usuario, busqueda, recetasXusuario));
 
 		return recetasXusuario;
 	}

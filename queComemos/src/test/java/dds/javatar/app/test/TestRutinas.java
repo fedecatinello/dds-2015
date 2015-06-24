@@ -20,11 +20,9 @@ public class TestRutinas {
 	@Before
 	public void initialize() {
 		this.usuarioComun = TestFactory.crearUsuarioBasicoValido();
-		this.usuarioSobrePeso = TestFactory.crearUsuarioConSobrepeso();		
+		this.usuarioSobrePeso = TestFactory.crearUsuarioConSobrepeso();
 	}
 
-
-	
 	// Punto 2: averiguar si un usuario sigue una rutina saludable.
 	@Test
 	public void testUsuarioConRutinaSaludableFuegaDelRangoDelIMC() throws BusinessException {

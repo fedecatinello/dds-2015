@@ -31,7 +31,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public String getAutor() {
 		return autor;
 	}
@@ -39,7 +39,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
-	
+
 	public String getTemporada() {
 		return this.temporada;
 	}
@@ -58,17 +58,16 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 
 	public Integer getCalorias() {
 		int caloriasTotal = 0;
-		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
 			Receta receta = (Receta) iterator.next();
 			caloriasTotal = caloriasTotal + receta.getCalorias();
 		}
 		return caloriasTotal;
 	}
-	
+
 	public void setCalorias(Integer calorias) {
 		this.calorias = calorias;
-		
+
 	}
 
 	public Set<RecetaPrivada> getSubRecetas() {
@@ -76,8 +75,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	}
 
 	public Map<String, BigDecimal> getCondimentos() {
-		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
 			Receta receta = (Receta) iterator.next();
 			this.condimentos.putAll(receta.getCondimentos());
 		}
@@ -86,37 +84,34 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 
 	public void setCondimentos(Map<String, BigDecimal> condimentos) {
 		this.condimentos = condimentos;
-		
+
 	}
-	
+
 	public Map<String, BigDecimal> getIngredientes() {
-		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
 			Receta receta = (Receta) iterator.next();
 			this.ingredientes.putAll(receta.getIngredientes());
 		}
 		return ingredientes;
 	}
-	
+
 	public void setIngredientes(Map<String, BigDecimal> ingredientes) {
 		this.ingredientes = ingredientes;
-		
+
 	}
-	
+
 	public Map<Integer, String> getPasosPreparacion() {
-		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<RecetaPrivada> iterator = subRecetas.iterator(); iterator.hasNext();) {
 			Receta receta = (Receta) iterator.next();
 			this.pasosPreparacion.putAll(receta.getPasosPreparacion());
 		}
 		return pasosPreparacion;
 	}
-	
+
 	public void setPasosPreparacion(Map<Integer, String> pasosPreparacion) {
 		this.pasosPreparacion = pasosPreparacion;
-		
+
 	}
-	
 
 	public Integer getTiempoPreparacion() {
 		return tiempoPreparacion;
@@ -127,8 +122,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	}
 
 	/** Add items **/
-	public void agregarSubReceta(RecetaPrivada subReceta)
-			throws RecetaException {
+	public void agregarSubReceta(RecetaPrivada subReceta) throws RecetaException {
 		subReceta.validarSiLaRecetaEsValida();
 		this.subRecetas.add(subReceta);
 	}
@@ -144,8 +138,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 		return this.condimentos.containsKey(condimento);
 	}
 
-	public Boolean alimentoSobrepasaCantidad(String alimento,
-			BigDecimal cantidad) {
+	public Boolean alimentoSobrepasaCantidad(String alimento, BigDecimal cantidad) {
 		this.getIngredientes();
 		if (!this.ingredientes.containsKey(alimento)) {
 			return Boolean.FALSE;
@@ -163,13 +156,11 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	@Override
 	public void validarSiLaRecetaEsValida() throws RecetaException {
 		if (this.subRecetas.isEmpty()) {
-			throw new RecetaException(
-					"La receta no es valida ya que esta vacia! (No tiene subrecetas)");
+			throw new RecetaException("La receta no es valida ya que esta vacia! (No tiene subrecetas)");
 		}
 	}
 
-	public Receta privatizarSiCorresponde(Usuario user)
-			throws UsuarioException, RecetaException {
+	public Receta privatizarSiCorresponde(Usuario user) throws UsuarioException, RecetaException {
 		return this;
 	}
 
@@ -182,7 +173,7 @@ public class RecetaPrivadaCompuesta implements RecetaPrivada {
 	}
 
 	public void agregarCondimento(String condimento, BigDecimal cantidad) {
-		this.condimentos.put(condimento, cantidad);	
+		this.condimentos.put(condimento, cantidad);
 	}
-	
+
 }

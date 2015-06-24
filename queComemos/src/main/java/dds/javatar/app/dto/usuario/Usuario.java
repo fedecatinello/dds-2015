@@ -48,7 +48,6 @@ public class Usuario extends Entity {
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
 	private List<Receta> recetasFavoritas;
 
-		
 	/**** Constructors ****/
 
 	public Usuario(UsuarioBuilder usuarioBuilder) {
@@ -59,7 +58,7 @@ public class Usuario extends Entity {
 		this.peso = usuarioBuilder.peso;
 		this.estadoSolicitud = usuarioBuilder.estadoSolicitud;
 
-		this.rutina = usuarioBuilder.rutina;		
+		this.rutina = usuarioBuilder.rutina;
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
 		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
 		this.recetas = new HashSet<Receta>();
@@ -67,7 +66,7 @@ public class Usuario extends Entity {
 		this.recetasFavoritas = new ArrayList<Receta>();
 	}
 
-	public static class UsuarioBuilder{
+	public static class UsuarioBuilder {
 		private String nombre;
 		private Sexo sexo;
 		private Date fechaNacimiento;
@@ -75,49 +74,48 @@ public class Usuario extends Entity {
 		private BigDecimal peso;
 		private EstadoSolicitud estadoSolicitud;
 		private Rutina rutina;
-				
+
 		public UsuarioBuilder nombre(String nombre) {
 			this.nombre = nombre;
 			return this;
 		}
-		
+
 		public UsuarioBuilder sexo(Sexo sexo) {
 			this.sexo = sexo;
 			return this;
 		}
-		
+
 		public UsuarioBuilder fechaNacimiento(Date fechaNacimiento) {
 			this.fechaNacimiento = fechaNacimiento;
 			return this;
 		}
-		
+
 		public UsuarioBuilder altura(BigDecimal altura) {
 			this.altura = altura;
 			return this;
 		}
-		
+
 		public UsuarioBuilder peso(BigDecimal peso) {
 			this.peso = peso;
 			return this;
 		}
-		
+
 		public UsuarioBuilder estadoSolicitud(EstadoSolicitud estadoSolicitud) {
 			this.estadoSolicitud = estadoSolicitud;
 			return this;
 		}
-		
+
 		public UsuarioBuilder rutina(Rutina rutina) {
 			this.rutina = rutina;
 			return this;
 		}
-		
+
 		public Usuario build() {
 			return new Usuario(this);
 		}
-		
+
 	}
 
-	
 	/**** Setters y getters ****/
 	public BigDecimal getAltura() {
 		return this.altura;
@@ -151,14 +149,14 @@ public class Usuario extends Entity {
 		return this.gruposAlQuePertenece;
 	}
 
-	public Set<CondicionPreexistente> getCondicionesPreexistentes(){
+	public Set<CondicionPreexistente> getCondicionesPreexistentes() {
 		return this.condicionesPreexistentes;
 	}
-	
+
 	public List<Receta> getFavoritos() {
 		return this.recetasFavoritas;
 	}
-	
+
 	public void agregarGruposAlQuePertenece(GrupoDeUsuarios grupoAlQuePertenece) {
 		this.gruposAlQuePertenece.add(grupoAlQuePertenece);
 	}
@@ -184,13 +182,11 @@ public class Usuario extends Entity {
 		if (this.recetas.contains(receta)) {
 			this.recetas.remove(receta);
 		} else {
-			throw new UsuarioException(
-					"El Usuario no tenia agregada esa receta");
+			throw new UsuarioException("El Usuario no tenia agregada esa receta");
 		}
 	}
 
-	public Set<CondicionPreexistente> condicionesQueNoAcepta(Usuario usuario,
-			Receta receta) {
+	public Set<CondicionPreexistente> condicionesQueNoAcepta(Usuario usuario, Receta receta) {
 		Set<CondicionPreexistente> condicionesQueNoAceptanReceta = new HashSet<CondicionPreexistente>();
 		for (CondicionPreexistente condicionPreexistente : usuario.condicionesPreexistentes) {
 			if (!usuario.validarSiAceptaReceta(receta)) {
@@ -212,26 +208,21 @@ public class Usuario extends Entity {
 	}
 
 	private void validarCamposNulos() throws UsuarioException {
-		if (this.nombre == null || this.fechaNacimiento == null
-				|| this.peso == null || this.altura == null
-				|| this.rutina == null) {
-			throw new UsuarioException(
-					"El usuario tiene campos obligatorios sin completar");
+		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null || this.rutina == null) {
+			throw new UsuarioException("El usuario tiene campos obligatorios sin completar");
 		}
 	}
 
 	private void validarNombre() throws UsuarioException {
 		if (this.nombre.length() <= MIN_NAME_LENGTH) {
-			throw new UsuarioException(
-					"El nombre del usuario es demasido corto");
+			throw new UsuarioException("El nombre del usuario es demasido corto");
 		}
 	}
 
 	private void validarFechaNacimiento() throws UsuarioException {
 		Date today = new Date();
 		if (today.compareTo(this.fechaNacimiento) <= 0) {
-			throw new UsuarioException(
-					"La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
+			throw new UsuarioException("La fecha de nacimiento del usuario no puede posterior al dia de hoy.");
 		}
 	}
 
@@ -264,23 +255,19 @@ public class Usuario extends Entity {
 		return this.peso.divide(cuadrado, mc);
 	}
 
-	public void puedeAgregarSubRecetas(Set<Receta> subRecetas)
-			throws UsuarioException {
+	public void puedeAgregarSubRecetas(Set<Receta> subRecetas) throws UsuarioException {
 		for (Receta subReceta : subRecetas) {
 			try {
 				this.puedeVerReceta(subReceta);
 			} catch (Exception e) {
-				throw new UsuarioException(
-						"El Usuario no tiene permitido agregar alguna subreceta");
+				throw new UsuarioException("El Usuario no tiene permitido agregar alguna subreceta");
 			}
 		}
 	}
 
 	public Boolean sigueRutinaSaludable() {
 
-		int userIMC = this
-			.getIMC(MathContext.DECIMAL32.getPrecision())
-				.intValue();
+		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
 
 		if (userIMC < 18 || userIMC > 30) {
 			return Boolean.FALSE;
@@ -300,8 +287,7 @@ public class Usuario extends Entity {
 	}
 
 	public Boolean tieneAlimentoQueLeDisguste(String alimento) {
-		return Boolean.FALSE
-			.equals(this.preferenciasAlimenticias.get(alimento));
+		return Boolean.FALSE.equals(this.preferenciasAlimenticias.get(alimento));
 	}
 
 	public Boolean tieneAlgunaPreferencia() {
@@ -310,23 +296,19 @@ public class Usuario extends Entity {
 
 	public void puedeVerReceta(Receta receta) throws UsuarioException {
 		if (!receta.chequearVisibilidad(receta, this)) {
-			throw new UsuarioException(
-					"El Usuario no tiene permitido ver esta receta");
+			throw new UsuarioException("El Usuario no tiene permitido ver esta receta");
 		}
 	}
 
-	public Receta puedeModificarReceta(Receta receta) throws UsuarioException,
-			RecetaException {
+	public Receta puedeModificarReceta(Receta receta) throws UsuarioException, RecetaException {
 		if (!receta.chequearVisibilidad(receta, this)) {
-			throw new UsuarioException(
-					"El Usuario no tiene permitido modificar esta receta");
+			throw new UsuarioException("El Usuario no tiene permitido modificar esta receta");
 		} else {
 			return receta.privatizarSiCorresponde(this);
 		}
 	}
 
-	public void modificarNombreDeReceta(Receta receta, String nuevoNombre)
-			throws UsuarioException, RecetaException {
+	public void modificarNombreDeReceta(Receta receta, String nuevoNombre) throws UsuarioException, RecetaException {
 		receta = this.puedeModificarReceta(receta);
 		receta.setNombre(nuevoNombre);
 	}
@@ -342,7 +324,7 @@ public class Usuario extends Entity {
 		Buscador buscador = new Buscador();
 		List<Receta> recetas = buscador.buscarRecetasExternas(this, busqueda);
 		return recetas;
-		
+
 	}
 
 	public Boolean esVegano() {

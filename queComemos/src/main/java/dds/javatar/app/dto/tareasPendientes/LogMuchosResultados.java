@@ -33,8 +33,7 @@ public class LogMuchosResultados implements TareaPendiente {
 	} catch (URISyntaxException e) {
 		e.printStackTrace();
 	}
-//		PropertyConfigurator.configure(this.getClass().getResource(
-//			    "queComemos/src/main/java/log4j.properties"));
+
 		if (listaDeResultados.size()>100) {
 			LOG.info("Consulta de: "+ usuario.getNombre().toString() +" devuelve mas de 100 resultados.(" + String.valueOf(listaDeResultados.size())  + " resultados)");	
 		}

@@ -1,11 +1,5 @@
 package dds.javatar.app.test;
 
-//import java.io.PrintStream;
-//
-//import org.apache.log4j.Appender;
-//import org.apache.log4j.Level;
-//import org.apache.log4j.LogManager;
-//import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;

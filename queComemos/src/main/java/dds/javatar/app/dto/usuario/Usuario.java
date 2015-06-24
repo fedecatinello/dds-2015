@@ -47,6 +47,7 @@ public class Usuario extends Entity {
 	private Set<Receta> recetas;
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
 	private List<Receta> recetasFavoritas;
+	private boolean favearTodasLasConsultas;
 
 	/**** Constructors ****/
 
@@ -345,4 +346,14 @@ public class Usuario extends Entity {
 		this.estadoSolicitud = estadoSolicitud;
 	}
 
+	public boolean isFavearTodasLasConsultas() {
+		return favearTodasLasConsultas;
+	}
+
+	public void setFavearTodasLasConsultas(boolean favearTodasLasConsultas) {
+		this.favearTodasLasConsultas = favearTodasLasConsultas;
+	}
+
+	
+	
 }

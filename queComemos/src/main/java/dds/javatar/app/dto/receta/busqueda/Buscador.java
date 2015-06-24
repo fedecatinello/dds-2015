@@ -11,6 +11,7 @@ import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
 import dds.javatar.app.dto.receta.filtro.Filtro;
 import dds.javatar.app.dto.sistema.Administrador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
+import dds.javatar.app.dto.tareasPendientes.AgregarFavoritas;
 import dds.javatar.app.dto.tareasPendientes.LogMuchosResultados;
 import dds.javatar.app.dto.tareasPendientes.MailBusqueda;
 import dds.javatar.app.dto.usuario.Usuario;
@@ -97,7 +98,7 @@ public class Buscador {
 		}
 
 		Administrador.getInstance().agregarTareaPendiente(new MailBusqueda(usuario, busqueda, recetasXusuario));
-
+		Administrador.getInstance().agregarTareaPendiente(new AgregarFavoritas(usuario, recetasXusuario));
 		return recetasXusuario;
 	}
 

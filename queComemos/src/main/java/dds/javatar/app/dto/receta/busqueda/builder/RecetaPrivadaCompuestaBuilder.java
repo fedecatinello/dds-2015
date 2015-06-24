@@ -7,7 +7,7 @@ import dds.javatar.app.dto.receta.RecetaPrivada;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.util.exception.RecetaException;
 
-public class RecetaPrivadaCompuestaBuilder implements RecetaBuilder {
+public class RecetaPrivadaCompuestaBuilder {
 
 	private RecetaPrivadaCompuesta recetaPrivadaCompuesta;
 
@@ -36,32 +36,37 @@ public class RecetaPrivadaCompuestaBuilder implements RecetaBuilder {
 		return this;
 	}
 
-	public RecetaPrivadaCompuestaBuilder agregarSubReceta(RecetaPrivada subReceta) throws RecetaException {
+	public RecetaPrivadaCompuestaBuilder agregarSubReceta(
+			RecetaPrivada subReceta) throws RecetaException {
 		recetaPrivadaCompuesta.agregarSubReceta(subReceta);
 		return this;
 	}
 
-	public RecetaPrivadaCompuestaBuilder agregarCondimentos(String condimento, BigDecimal cantidad) {
+	public RecetaPrivadaCompuestaBuilder agregarCondimentos(String condimento,
+			BigDecimal cantidad) {
 		recetaPrivadaCompuesta.agregarCondimento(condimento, cantidad);
 		return this;
 	}
 
-	public RecetaPrivadaCompuestaBuilder agregarIngrediente(String ingrediente, BigDecimal cantidad) {
+	public RecetaPrivadaCompuestaBuilder agregarIngrediente(String ingrediente,
+			BigDecimal cantidad) {
 		recetaPrivadaCompuesta.agregarIngrediente(ingrediente, cantidad);
 		return this;
 	}
 
-	public RecetaPrivadaCompuestaBuilder agregarPaso(Integer nroPaso, String pasoPreparacion) {
+	public RecetaPrivadaCompuestaBuilder agregarPaso(Integer nroPaso,
+			String pasoPreparacion) {
 		recetaPrivadaCompuesta.agregarPasoPreparacion(nroPaso, pasoPreparacion);
 		return this;
 	}
 
-	public RecetaPrivadaCompuestaBuilder tiempoPreparacion(Integer tiempoPreparacion) {
+	public RecetaPrivadaCompuestaBuilder tiempoPreparacion(
+			Integer tiempoPreparacion) {
 		recetaPrivadaCompuesta.setTiempoPreparacion(tiempoPreparacion);
 		return this;
 	}
 
-	public Receta buildReceta() {
+	public RecetaPrivadaCompuesta buildReceta() {
 		return recetaPrivadaCompuesta;
 	}
 

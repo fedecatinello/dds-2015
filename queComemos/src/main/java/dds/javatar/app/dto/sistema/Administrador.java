@@ -50,24 +50,22 @@ public class Administrador {
 	public void aceptar(Solicitud solicitud) {
 		Usuario usuario = solicitud.build();
 		usuario.setEstadoSolicitud(EstadoSolicitud.ACEPTADA);
-		repositorioUsuarios.add(usuario);
+		this.repositorioUsuarios.add(usuario);
 	}
 
 	public void rechazar(Solicitud solicitud) {
 		Usuario usuario = solicitud.build();
 		usuario.setEstadoSolicitud(EstadoSolicitud.RECHAZADA);
-		repositorioUsuarios.add(usuario);
+		this.repositorioUsuarios.add(usuario);
 	}
 
 	public void agregarTareaPendiente(TareaPendiente tareaPendiente) {
-		tareasPendientes.add(tareaPendiente);
+		this.tareasPendientes.add(tareaPendiente);
 	}
 
 	public void realizarTareasPendientes() {
-		for (TareaPendiente tareaPendiente : tareasPendientes) {
-			tareaPendiente.execute();
-		}
-		tareasPendientes.clear();
+		this.tareasPendientes.forEach((tareaPendiente) -> tareaPendiente.execute());
+		this.tareasPendientes.clear();
 	}
 
 }

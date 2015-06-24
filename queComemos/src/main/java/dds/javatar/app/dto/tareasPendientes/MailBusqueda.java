@@ -7,11 +7,16 @@ import java.util.Set;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
+import dds.javatar.app.dto.tareasPendientes.mail.MailSender;
+import dds.javatar.app.dto.tareasPendientes.mail.MailSenderImpl;
 import dds.javatar.app.dto.usuario.Usuario;
 
 public class MailBusqueda implements TareaPendiente {
 
 	private static final Set<String> usuariosAEnviar = new HashSet<String>(Arrays.asList("jcontardo"));
+	private static final String SEND_TO = "ddsutn@gmail.com";
+	
+	private static MailSender mailSender;
 
 	private Usuario usuario;
 	private Busqueda busqueda;
@@ -25,8 +30,13 @@ public class MailBusqueda implements TareaPendiente {
 
 	@Override
 	public void execute() {
+		if (mailSender == null) {
+			// Sets default
+			MailBusqueda.mailSender = new MailSenderImpl();
+		}
+		
 		for (String usuarioAEnviar : usuariosAEnviar) {
-			if (usuarioAEnviar.equals(usuario.getNombre())) {
+			if (usuarioAEnviar.equals(this.usuario.getNombre())) {
 				StringBuilder mensaje = new StringBuilder();
 				mensaje.append("Parametros de busqueda:\n");
 				mensaje.append("\t Nombre: " + this.busqueda.nombre() + "\n");
@@ -35,12 +45,19 @@ public class MailBusqueda implements TareaPendiente {
 				for (String palabraClave : this.busqueda.palabrasClave()) {
 					mensaje.append("\t\t " + palabraClave + "\n");
 				}
-				mensaje.append("Cantidad de resultados: " + resultados.size());
+				mensaje.append("Cantidad de resultados: " + this.resultados.size());
 
-				System.out.println(mensaje);
-				// TODO, ver bien que hacer con el mensaje, y como validarlo desde el lado de los tests.
+				MailBusqueda.mailSender.send(SEND_TO, mensaje.toString());
 			}
 		}
+	}
+
+	public static MailSender getMailSender() {
+		return mailSender;
+	}
+
+	public static void setMailSender(MailSender mailSender) {
+		MailBusqueda.mailSender = mailSender;
 	}
 
 }

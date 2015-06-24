@@ -51,7 +51,7 @@ public class Usuario extends Entity {
 
 	/**** Constructors ****/
 
-	public Usuario(UsuarioBuilder usuarioBuilder) {
+	private Usuario(UsuarioBuilder usuarioBuilder) {
 		this.nombre = usuarioBuilder.nombre;
 		this.sexo = usuarioBuilder.sexo;
 		this.fechaNacimiento = usuarioBuilder.fechaNacimiento;
@@ -176,7 +176,8 @@ public class Usuario extends Entity {
 
 	public void agregarReceta(Receta receta) throws RecetaException {
 		receta.validarSiLaRecetaEsValida();
-		this.getRecetas().add(receta);
+		this.getRecetas()
+			.add(receta);
 	}
 
 	public void quitarReceta(Receta receta) throws UsuarioException {
@@ -196,12 +197,12 @@ public class Usuario extends Entity {
 		}
 		return condicionesQueNoAceptanReceta;
 	}
-	
-	public void habilitarOpcionFavearTodas(){
+
+	public void habilitarOpcionFavearTodas() {
 		this.setFavearTodasLasConsultas(true);
 	}
-	
-	public void desHabilitarOpcionFavearTodas(){
+
+	public void desHabilitarOpcionFavearTodas() {
 		this.setFavearTodasLasConsultas(false);
 	}
 
@@ -276,7 +277,8 @@ public class Usuario extends Entity {
 
 	public Boolean sigueRutinaSaludable() {
 
-		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
+		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision())
+			.intValue();
 
 		if (userIMC < 18 || userIMC > 30) {
 			return Boolean.FALSE;
@@ -343,7 +345,7 @@ public class Usuario extends Entity {
 	}
 
 	public EstadoSolicitud getEstadoSolicitud() {
-		return estadoSolicitud;
+		return this.estadoSolicitud;
 	}
 
 	public void setEstadoSolicitud(EstadoSolicitud estadoSolicitud) {
@@ -351,26 +353,27 @@ public class Usuario extends Entity {
 	}
 
 	public boolean isFavearTodasLasConsultas() {
-		return favearTodasLasConsultas;
+		return this.favearTodasLasConsultas;
 	}
 
 	public void setFavearTodasLasConsultas(boolean favearTodasLasConsultas) {
 		this.favearTodasLasConsultas = favearTodasLasConsultas;
 	}
 
-	// Entrega 4 - PUnto 5 
-	
+	// Entrega 4 - PUnto 5
+
 	public void marcarFavorita(Receta receta) {
 		this.recetasFavoritas.add(receta);
 	}
 
-	public boolean tieneReceta(Receta receta){
+	public boolean tieneReceta(Receta receta) {
 		boolean laTiene = false;
-		for(Receta recetaUser: this.getFavoritos()){
-			if(recetaUser.getNombre().equals(receta.getNombre())) laTiene=true;
+		for (Receta recetaUser : this.getFavoritos()) {
+			if (recetaUser.getNombre()
+				.equals(receta.getNombre()))
+				laTiene = true;
 		}
 		return laTiene;
 	}
-	
-	
+
 }

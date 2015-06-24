@@ -30,11 +30,14 @@ public class TestFactory {
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, -1);
 
-		return new Usuario.UsuarioBuilder().nombre("DonJuan")
+		return new Usuario.UsuarioBuilder()
+			.nombre("DonJuan")
 				.fechaNacimiento(calendar.getTime())
-				.sexo(Usuario.Sexo.MASCULINO).peso(new BigDecimal(70))
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
 				.altura(new BigDecimal(1.77))
-				.rutina(new Rutina(TipoRutina.FUERTE, 20)).build();
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 	}
 
 	public static Usuario crearUsuarioBasicoValidoDiferente() {
@@ -42,11 +45,14 @@ public class TestFactory {
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, -1);
 
-		return new Usuario.UsuarioBuilder().nombre("Nombre")
+		return new Usuario.UsuarioBuilder()
+			.nombre("Nombre")
 				.fechaNacimiento(calendar.getTime())
-				.sexo(Usuario.Sexo.FEMENINO).peso(new BigDecimal(70))
+				.sexo(Usuario.Sexo.FEMENINO)
+				.peso(new BigDecimal(70))
 				.altura(new BigDecimal(1.77))
-				.rutina(new Rutina(TipoRutina.LEVE, 20)).build();
+				.rutina(new Rutina(TipoRutina.LEVE, 20))
+				.build();
 	}
 
 	public static Usuario crearUsuarioHombre() {
@@ -54,11 +60,14 @@ public class TestFactory {
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, -1);
 
-		return new Usuario.UsuarioBuilder().nombre("DonJuan")
+		return new Usuario.UsuarioBuilder()
+			.nombre("DonJuan")
 				.fechaNacimiento(calendar.getTime())
-				.sexo(Usuario.Sexo.MASCULINO).peso(new BigDecimal(70))
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(70))
 				.altura(new BigDecimal(1.77))
-				.rutina(new Rutina(TipoRutina.FUERTE, 20)).build();
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 	}
 
 	public static Usuario crearUsuarioMujer() {
@@ -66,11 +75,14 @@ public class TestFactory {
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, -1);
 
-		return new Usuario.UsuarioBuilder().nombre("DonJuan")
+		return new Usuario.UsuarioBuilder()
+			.nombre("DonJuan")
 				.fechaNacimiento(calendar.getTime())
-				.sexo(Usuario.Sexo.FEMENINO).peso(new BigDecimal(70))
+				.sexo(Usuario.Sexo.FEMENINO)
+				.peso(new BigDecimal(70))
 				.altura(new BigDecimal(1.77))
-				.rutina(new Rutina(TipoRutina.FUERTE, 20)).build();
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
 	}
 
 	public static Usuario crearUsuarioConSobrepeso() {
@@ -78,52 +90,67 @@ public class TestFactory {
 		calendar.setTime(new Date());
 		calendar.add(Calendar.YEAR, -1);
 
-		return new Usuario.UsuarioBuilder().nombre("DonPedro")
+		return new Usuario.UsuarioBuilder()
+			.nombre("DonPedro")
 				.fechaNacimiento(calendar.getTime())
-				.sexo(Usuario.Sexo.MASCULINO).peso(new BigDecimal(130))
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(130))
 				.altura(new BigDecimal(1.60))
-				.rutina(new Rutina(TipoRutina.NADA, 20)).build();
+				.rutina(new Rutina(TipoRutina.NADA, 20))
+				.build();
 	}
 
 	public static Busqueda crearBusquedaDificilPollo() {
-		return new Busqueda.BusquedaBuilder().nombre("Pollo")
+		return new Busqueda.BusquedaBuilder()
+			.nombre("Pollo")
 				.dificultad(Dificultad.DIFICIL)
-				.palabrasClave(new ArrayList<String>()).build();
+				.palabrasClave(new ArrayList<String>())
+				.build();
 	}
 
 	public static Busqueda crearBusquedaDificilFideos() {
-		return new Busqueda.BusquedaBuilder().nombre("fideos")
+		return new Busqueda.BusquedaBuilder()
+			.nombre("fideos")
 				.dificultad(Dificultad.DIFICIL)
-				.palabrasClave(new ArrayList<String>()).build();
+				.palabrasClave(new ArrayList<String>())
+				.build();
 	}
 
 	public static Busqueda crearBusquedaDificilMollejas() {
-		return new Busqueda.BusquedaBuilder().nombre("Mollejas al verdeo")
+		return new Busqueda.BusquedaBuilder()
+			.nombre("Mollejas al verdeo")
 				.dificultad(Dificultad.DIFICIL)
-				.palabrasClave(new ArrayList<String>()).build();
+				.palabrasClave(new ArrayList<String>())
+				.build();
 	}
 
 	public static Busqueda crearBusquedaDificilMatambre() {
 		return new Busqueda.BusquedaBuilder()
-				.nombre("Matambre tiernizado de cerdo con papas noisette")
+			.nombre("Matambre tiernizado de cerdo con papas noisette")
 				.dificultad(Dificultad.DIFICIL)
-				.palabrasClave(new ArrayList<String>()).build();
+				.palabrasClave(new ArrayList<String>())
+				.build();
 	}
 
 	public static Busqueda crearBusquedaFacilFideos() {
-		return new Busqueda.BusquedaBuilder().nombre("fideos")
+		return new Busqueda.BusquedaBuilder()
+			.nombre("fideos")
 				.dificultad(Dificultad.FACIL)
-				.palabrasClave(new ArrayList<String>()).build();
+				.palabrasClave(new ArrayList<String>())
+				.build();
 	}
 
 	public static Busqueda crearBusquedaMediaPollo() {
-		return new Busqueda.BusquedaBuilder().nombre("Pollo")
+		return new Busqueda.BusquedaBuilder()
+			.nombre("Pollo")
 				.dificultad(Dificultad.MEDIANA)
-				.palabrasClave(new ArrayList<String>()).build();
+				.palabrasClave(new ArrayList<String>())
+				.build();
 	}
 
 	public static RecetaPrivadaSimple crearRecetaPrivadaSimple() {
-		return new RecetaPrivadaSimpleBuilder("Ravioles").totalCalorias(350)
+		return new RecetaPrivadaSimpleBuilder("Ravioles")
+			.totalCalorias(350)
 				.agregarIngrediente("Harina", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Verdura", new BigDecimal(100))
@@ -131,7 +158,8 @@ public class TestFactory {
 	}
 
 	public static RecetaPrivadaSimple crearRecetaPrivadaSimpleConMuchasCalorias() {
-		return new RecetaPrivadaSimpleBuilder("Ravioles").totalCalorias(900)
+		return new RecetaPrivadaSimpleBuilder("Ravioles")
+			.totalCalorias(900)
 				.agregarIngrediente("Harina", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Verdura", new BigDecimal(100))
@@ -143,21 +171,27 @@ public class TestFactory {
 			throws RecetaException {
 
 		RecetaPrivadaSimple recetaPrivadaSimplePure = new RecetaPrivadaSimpleBuilder(
-				"Pure").totalCalorias(350)
+				"Pure")
+			.totalCalorias(350)
 				.agregarIngrediente("Manteca", new BigDecimal(300))
-				.agregarIngrediente("Papa", new BigDecimal(300)).buildReceta();
+				.agregarIngrediente("Papa", new BigDecimal(300))
+				.buildReceta();
 		RecetaPrivadaSimple recetaPrivadaSimplePollo = new RecetaPrivadaSimpleBuilder(
-				"Pollo").totalCalorias(220)
-				.agregarIngrediente("pollo", new BigDecimal(280)).buildReceta();
+				"Pollo")
+			.totalCalorias(220)
+				.agregarIngrediente("pollo", new BigDecimal(280))
+				.buildReceta();
 		RecetaPrivadaSimple recetaPrivadaSimpleCondimentos = new RecetaPrivadaSimpleBuilder(
-				"Condimentos").totalCalorias(120)
+				"Condimentos")
+			.totalCalorias(120)
 				.agregarIngrediente("Oregano", new BigDecimal(20))
 				.buildReceta();
 
 		return new RecetaPrivadaCompuestaBuilder("pollo con pure")
-				.agregarSubReceta(recetaPrivadaSimplePollo)
+			.agregarSubReceta(recetaPrivadaSimplePollo)
 				.agregarSubReceta(recetaPrivadaSimpleCondimentos)
-				.agregarSubReceta(recetaPrivadaSimplePure).buildReceta();
+				.agregarSubReceta(recetaPrivadaSimplePure)
+				.buildReceta();
 
 	}
 
@@ -176,6 +210,22 @@ public class TestFactory {
 			user.agregarReceta(recetaPrivadaSimpleHipertenso);
 		}
 
+	}
+	
+	public static void crearListaRecetasParaUsuarioSize101(Usuario user)
+			throws RecetaException {
+		RecetaPrivadaCompuesta recetaPrivadaCompuesta;
+		RecetaPrivadaSimple recetaPrivadaSimple;
+		for (int i = 0; i < 50; i++) {
+			recetaPrivadaCompuesta = crearRecetaPrivadaCompuesta();
+			recetaPrivadaSimple = crearRecetaPrivadaSimple();
+
+			user.agregarReceta(recetaPrivadaSimple);
+			user.agregarReceta(recetaPrivadaCompuesta);
+		}
+		
+		recetaPrivadaSimple = crearRecetaPrivadaSimple();
+		user.agregarReceta(recetaPrivadaSimple);
 	}
 
 	public static void crearListaRecetasParaUsuarioSize3(Usuario user)
@@ -196,7 +246,8 @@ public class TestFactory {
 	}
 
 	public static RecetaPrivadaSimple crearRecetaNoAptaParaHipertensos() {
-		return new RecetaPrivadaSimpleBuilder("Pizza").totalCalorias(350)
+		return new RecetaPrivadaSimpleBuilder("Pizza")
+			.totalCalorias(350)
 				.agregarIngrediente("sal", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Harina", new BigDecimal(100))

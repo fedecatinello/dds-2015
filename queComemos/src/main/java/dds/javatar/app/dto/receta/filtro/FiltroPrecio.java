@@ -15,9 +15,9 @@ public class FiltroPrecio extends FiltroTemplate {
 		boolean resultado = false;
 		for (String ingrediente : ingredientesCaros) {
 			if (receta.contieneIngrediente(ingrediente)) {
-				resultado= true;
+				resultado = true;
 			}
-		}	
+		}
 		return resultado;
 	}
 

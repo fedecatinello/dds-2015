@@ -6,21 +6,20 @@ import dds.javatar.app.dto.usuario.Usuario;
 public class FiltroSobrepeso extends FiltroTemplate {
 
 	Boolean superaSobrepeso;
-	
+
 	Integer limiteCalorias;
-	
+
 	public boolean validator(Usuario usuario, Receta receta) {
-		
-		superaSobrepeso = usuario.getIMC(0).intValue()>30;
-		
+
+		superaSobrepeso = usuario.getIMC(0).intValue() > 30;
+
 		Integer caloriasExtra = receta.getCalorias() - limiteCalorias;
-		
+
 		return superaSobrepeso && caloriasExtra > 500;
 	}
 
-	
 	/* Setters y Getters */
-	
+
 	public Boolean getSuperaSobrepeso() {
 		return superaSobrepeso;
 	}

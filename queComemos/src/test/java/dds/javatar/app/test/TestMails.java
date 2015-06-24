@@ -2,7 +2,7 @@ package dds.javatar.app.test;
 
 import org.junit.Before;
 
-public class TestLogs {
+public class TestMails {
 
 	@Before
 	public void initialize() {

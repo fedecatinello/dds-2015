@@ -45,8 +45,7 @@ public class TestRecetas {
 		return ravioles;
 	}
 
-	public RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta()
-			throws RecetaException, RecetaException {
+	public RecetaPrivadaCompuesta crearRecetaPrivadaCompuesta() throws RecetaException, RecetaException {
 
 		RecetaPrivadaSimple condimentos = new RecetaPrivadaSimple(120);
 		RecetaPrivadaSimple pure = new RecetaPrivadaSimple(350);
@@ -85,16 +84,14 @@ public class TestRecetas {
 	}
 
 	@Test(expected = RecetaException.class)
-	public void testAgregarRecetaMenorAlRangoDeCalorias()
-			throws RecetaException {
+	public void testAgregarRecetaMenorAlRangoDeCalorias() throws RecetaException {
 		RecetaPrivadaSimple unaRecetaSimple = this.crearRecetaPrivadaSimple();
 		unaRecetaSimple.setCalorias(2);
 		this.usuario.agregarReceta(unaRecetaSimple);
 	}
 
 	@Test(expected = RecetaException.class)
-	public void testAgregarRecetaMayorAlRangoDeCalorias()
-			throws RecetaException {
+	public void testAgregarRecetaMayorAlRangoDeCalorias() throws RecetaException {
 		RecetaPrivadaSimple unaRecetaSimple = this.crearRecetaPrivadaSimple();
 		unaRecetaSimple.setCalorias(99999);
 		this.usuario.agregarReceta(unaRecetaSimple);
@@ -110,8 +107,7 @@ public class TestRecetas {
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		noAcepta.add(hipertenso);
-		assertEquals(noAcepta,
-				this.usuario.condicionesQueNoAcepta(this.usuario, receta));
+		assertEquals(noAcepta, this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 		;
 	}
 
@@ -137,8 +133,7 @@ public class TestRecetas {
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		noAcepta.add(diabetico);
-		assertEquals(noAcepta,
-				this.usuario.condicionesQueNoAcepta(this.usuario, receta));
+		assertEquals(noAcepta, this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 
 	}
 
@@ -151,8 +146,7 @@ public class TestRecetas {
 		receta.agregarIngrediente("arroz", new BigDecimal(200));
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
-		assertEquals(noAcepta,
-				this.usuario.condicionesQueNoAcepta(this.usuario, receta));
+		assertEquals(noAcepta, this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 
 	}
 
@@ -176,8 +170,7 @@ public class TestRecetas {
 		receta.agregarIngrediente("azucar", new BigDecimal(50));
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
-		assertEquals(noAcepta,
-				this.usuario.condicionesQueNoAcepta(this.usuario, receta));
+		assertEquals(noAcepta, this.usuario.condicionesQueNoAcepta(this.usuario, receta));
 	}
 
 	@Test
@@ -211,8 +204,7 @@ public class TestRecetas {
 
 	// Entrega 1 - Punto4: Saber si un usuario puede modificar una receta dada
 	@Test
-	public void testPuedeModificarRecetaPublica() throws RecetaException,
-			UsuarioException {
+	public void testPuedeModificarRecetaPublica() throws RecetaException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		this.usuario.agregarReceta(receta);
@@ -220,23 +212,19 @@ public class TestRecetas {
 	}
 
 	@Test(expected = UsuarioException.class)
-	public void testNoPuedeModificarReceta() throws RecetaException,
-			UsuarioException {
+	public void testNoPuedeModificarReceta() throws RecetaException, UsuarioException {
 
-		Usuario usuarioQueQuiereModificar = TestFactory
-			.crearUsuarioBasicoValido();
+		Usuario usuarioQueQuiereModificar = TestFactory.crearUsuarioBasicoValido();
 		Usuario userOwner = TestFactory.crearUsuarioBasicoValido();
 
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		userOwner.agregarReceta(receta);
-		usuarioQueQuiereModificar.modificarNombreDeReceta(receta,
-				"unNombreReCopado");
+		usuarioQueQuiereModificar.modificarNombreDeReceta(receta, "unNombreReCopado");
 	}
 
 	@Test
-	public void testPuedeModificarRecetaPropia() throws RecetaException,
-			UsuarioException {
+	public void testPuedeModificarRecetaPropia() throws RecetaException, UsuarioException {
 
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
@@ -248,8 +236,7 @@ public class TestRecetas {
 	// del item
 	// anterior
 	@Test
-	public void testModificarRecetaPropia() throws RecetaException,
-			CloneNotSupportedException, UsuarioException {
+	public void testModificarRecetaPropia() throws RecetaException, CloneNotSupportedException, UsuarioException {
 		RecetaPrivadaSimple receta1 = new RecetaPrivadaSimple(150);
 		receta1.agregarIngrediente("pollo", new BigDecimal(100));
 		receta1.setNombre("Nombre original");
@@ -261,8 +248,7 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testModificarRecetaPublica() throws RecetaException,
-			CloneNotSupportedException, UsuarioException {
+	public void testModificarRecetaPublica() throws RecetaException, CloneNotSupportedException, UsuarioException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("pollo", new BigDecimal(100));
 		receta.setNombre("Nombre original");
@@ -274,8 +260,7 @@ public class TestRecetas {
 	}
 
 	@Test(expected = UsuarioException.class)
-	public void testModificarRecetaAjena() throws RecetaException,
-			CloneNotSupportedException, UsuarioException {
+	public void testModificarRecetaAjena() throws RecetaException, CloneNotSupportedException, UsuarioException {
 
 		Usuario usuarioOwner = TestFactory.crearUsuarioBasicoValido();
 		RecetaPrivadaSimple receta = new RecetaPrivadaSimple(150);
@@ -286,41 +271,35 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testClonarReceta() throws RecetaException,
-			CloneNotSupportedException {
+	public void testClonarReceta() throws RecetaException, CloneNotSupportedException {
 		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
 		receta.agregarIngrediente("papa", new BigDecimal(100));
 
-		RecetaPrivadaSimple recetaClonada = (RecetaPrivadaSimple) receta
-			.clonarme();
+		RecetaPrivadaSimple recetaClonada = (RecetaPrivadaSimple) receta.clonarme();
 		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
 
 		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
-		assertEquals(recetaClonada.getIngredientes().get("papa"),
-				new BigDecimal(150));
+		assertEquals(recetaClonada.getIngredientes().get("papa"), new BigDecimal(150));
 	}
 
 	// Entrega 1 - Punto 5: Poder construir una receta con sub-recetas.
 
 	@Test
 	public void testAgregarRecetaCompuesta() throws RecetaException {
-		RecetaPrivadaCompuesta unaRecetaCompuesta = this
-			.crearRecetaPrivadaCompuesta();
+		RecetaPrivadaCompuesta unaRecetaCompuesta = this.crearRecetaPrivadaCompuesta();
 		this.usuario.agregarReceta(unaRecetaCompuesta);
 
 	}
 
 	@Test(expected = RecetaException.class)
-	public void testAgregarRecetaCompuestaSinSubrecetas()
-			throws RecetaException {
+	public void testAgregarRecetaCompuestaSinSubrecetas() throws RecetaException {
 		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
 		polloConPure.setNombre("PolloConPure");
 		this.usuario.agregarReceta(polloConPure);
 	}
 
 	@Test(expected = RecetaException.class)
-	public void testAgregarRecetaCompuestaConSubrecetaSinIngredientes()
-			throws RecetaException {
+	public void testAgregarRecetaCompuestaConSubrecetaSinIngredientes() throws RecetaException {
 		RecetaPrivadaSimple pollo = new RecetaPrivadaSimple(120);
 		RecetaPrivadaSimple pure = new RecetaPrivadaSimple(350);
 		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
@@ -376,27 +355,18 @@ public class TestRecetas {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.nombre("ensalada")
-				.dificultad(null)
-				.palabrasClave(new ArrayList<String>())
-				.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().nombre("ensalada").dificultad(null).palabrasClave(new ArrayList<String>()).build();
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
 		assertEquals(3, recetasEncontradas.size());
 	}
 
 	@Test
-	public void testConsultarRecetaExternaPorNombreQueNoExiste()
-			throws RecetaException {
+	public void testConsultarRecetaExternaPorNombreQueNoExiste() throws RecetaException {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.nombre("omelette")
-				.dificultad(null)
-				.palabrasClave(new ArrayList<String>())
-				.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().nombre("omelette").dificultad(null).palabrasClave(new ArrayList<String>()).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -404,14 +374,10 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testConsultarRecetaExternaConDificultadFacil()
-			throws RecetaException {
+	public void testConsultarRecetaExternaConDificultadFacil() throws RecetaException {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.dificultad(Dificultad.FACIL)
-				.palabrasClave(new ArrayList<String>())
-				.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().dificultad(Dificultad.FACIL).palabrasClave(new ArrayList<String>()).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -419,14 +385,10 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testConsultarRecetaExternaConDificultadMediana()
-			throws RecetaException {
+	public void testConsultarRecetaExternaConDificultadMediana() throws RecetaException {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.dificultad(Dificultad.MEDIANA)
-				.palabrasClave(new ArrayList<String>())
-				.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().dificultad(Dificultad.MEDIANA).palabrasClave(new ArrayList<String>()).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -434,14 +396,10 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testConsultarRecetaExternaConDificultadDificil()
-			throws RecetaException {
+	public void testConsultarRecetaExternaConDificultadDificil() throws RecetaException {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.dificultad(Dificultad.DIFICIL)
-				.palabrasClave(new ArrayList<String>())
-				.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().dificultad(Dificultad.DIFICIL).palabrasClave(new ArrayList<String>()).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -449,8 +407,7 @@ public class TestRecetas {
 	}
 
 	@Test
-	public void testConsultarRecetaExternaPorPalabrasClaves()
-			throws RecetaException {
+	public void testConsultarRecetaExternaPorPalabrasClaves() throws RecetaException {
 
 		List<String> palabrasClaves = new ArrayList<String>();
 		palabrasClaves.add("tomate");
@@ -460,8 +417,7 @@ public class TestRecetas {
 		palabrasClaves.add("acelga");
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(
-				palabrasClaves).build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(palabrasClaves).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -476,11 +432,7 @@ public class TestRecetas {
 		palabrasClaves.add("helado de frutilla");
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.nombre("cassatta")
-				.dificultad(Dificultad.FACIL)
-				.palabrasClave(palabrasClaves)
-				.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().nombre("cassatta").dificultad(Dificultad.FACIL).palabrasClave(palabrasClaves).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -495,11 +447,7 @@ public class TestRecetas {
 		palabrasClaves.add("tomillo");
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
-			.nombre("churrasco a la sal")
-				.dificultad(Dificultad.FACIL)
-				.palabrasClave(palabrasClaves)
-				.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().nombre("churrasco a la sal").dificultad(Dificultad.FACIL).palabrasClave(palabrasClaves).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -520,8 +468,7 @@ public class TestRecetas {
 		palabrasClaves.add("palta");
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(
-				palabrasClaves).build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(palabrasClaves).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -538,8 +485,7 @@ public class TestRecetas {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(
-				palabrasClaves).build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(palabrasClaves).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 
@@ -554,8 +500,7 @@ public class TestRecetas {
 
 		List<Receta> recetasEncontradas = new ArrayList<Receta>();
 
-		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(
-				palabrasClaves).build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder().palabrasClave(palabrasClaves).build();
 
 		recetasEncontradas = this.usuario.consultarRecetasExternas(unaBusqueda);
 

@@ -49,7 +49,7 @@ public class Busqueda {
 		}
 
 		public Busqueda build() {
-			if (palabrasClave==null) {
+			if (palabrasClave == null) {
 				palabrasClave = new ArrayList<String>();
 			}
 			return new Busqueda(this);

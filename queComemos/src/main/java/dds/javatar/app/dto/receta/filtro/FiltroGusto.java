@@ -28,5 +28,5 @@ public class FiltroGusto extends FiltroTemplate {
 		}
 		return true;
 	}
-	
+
 }

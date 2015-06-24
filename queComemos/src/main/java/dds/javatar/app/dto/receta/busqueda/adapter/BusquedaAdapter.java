@@ -74,7 +74,7 @@ public class BusquedaAdapter {
 	private BusquedaRecetas crearBusquedaRepo(Busqueda busqueda) {
 
 		BusquedaRecetas busquedaRepo = new BusquedaRecetas();
-		
+
 		busquedaRepo.setNombre(busqueda.nombre());
 		busquedaRepo.setDificultad(busqueda.dificultad());
 
@@ -88,20 +88,22 @@ public class BusquedaAdapter {
 	private List<Receta> mapearJsonReceta(String json) {
 
 		Gson gson = new Gson();
-		
-		//Creo json parser
+
+		// Creo json parser
 		JsonParser parser = new JsonParser();
-		//Obtengo json array
-	    JsonArray array = parser.parse(json).getAsJsonArray();
-		
-	    //Creo lista de recetas del componente y un iterador para obtenerlas del json
+		// Obtengo json array
+		JsonArray array = parser.parse(json).getAsJsonArray();
+
+		// Creo lista de recetas del componente y un iterador para obtenerlas
+		// del json
 		List<queComemos.entrega3.dominio.Receta> listaRecetas = new ArrayList<queComemos.entrega3.dominio.Receta>();
-		
-	    Iterator<JsonElement> iterator = array.iterator();
-	    
-	    iterator.forEachRemaining(element -> obtenerReceta(element,gson,listaRecetas));
-	    
-	    //Creo listas de recetas del usuario y mapeo recetas para agregarlas a esta lista
+
+		Iterator<JsonElement> iterator = array.iterator();
+
+		iterator.forEachRemaining(element -> obtenerReceta(element, gson, listaRecetas));
+
+		// Creo listas de recetas del usuario y mapeo recetas para agregarlas a
+		// esta lista
 		List<Receta> recetasUsuario = new ArrayList<Receta>();
 
 		listaRecetas.forEach(receta -> this.agregarReceta(receta, recetasUsuario));
@@ -123,11 +125,11 @@ public class BusquedaAdapter {
 
 		recetasUsuario.add(recetaUsuario);
 	}
-	
+
 	public void obtenerReceta(JsonElement element, Gson gson, List<queComemos.entrega3.dominio.Receta> listaRecetas) {
-		
+
 		queComemos.entrega3.dominio.Receta receta = gson.fromJson(element, queComemos.entrega3.dominio.Receta.class);
-		
+
 		listaRecetas.add(receta);
 	}
 

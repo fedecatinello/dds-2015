@@ -1,4 +1,4 @@
-package dds.javatar.app.dto.receta.busqueda.builder;
+package dds.javatar.app.dto.receta.builder;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPublicaSimple;

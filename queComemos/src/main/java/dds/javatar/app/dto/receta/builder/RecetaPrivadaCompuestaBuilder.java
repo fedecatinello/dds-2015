@@ -1,4 +1,4 @@
-package dds.javatar.app.dto.receta.busqueda.builder;
+package dds.javatar.app.dto.receta.builder;
 
 import java.math.BigDecimal;
 

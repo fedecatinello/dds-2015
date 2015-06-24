@@ -1,50 +1,63 @@
 package dds.javatar.app.test;
 
-import org.apache.log4j.AppenderSkeleton;
+//import java.io.PrintStream;
+//
+//import org.apache.log4j.Appender;
+//import org.apache.log4j.Level;
+//import org.apache.log4j.LogManager;
+//import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.spi.LoggingEvent;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import dds.javatar.app.dto.receta.busqueda.Buscador;
+import static org.mockito.Mockito.*;
+ import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.sistema.Administrador;
+import dds.javatar.app.dto.tareasPendientes.LogMuchosResultados;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 import dds.javatar.app.util.exception.RecetaException;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 
 
 
-class TestAppender extends AppenderSkeleton {
-    private final List<LoggingEvent> log = new ArrayList<LoggingEvent>();
 
-    @Override
-    public boolean requiresLayout() {
-        return false;
-    }
 
-    @Override
-    protected void append(final LoggingEvent loggingEvent) {
-        log.add(loggingEvent);
-    }
-
-    @Override
-    public void close() {
-    }
-
-    public List<LoggingEvent> getLog() {
-        return new ArrayList<LoggingEvent>(log);
-    }
-}
-
+@RunWith(MockitoJUnitRunner.class)
 public class TestLogs {
-	
 	Usuario usuario1, usuario2;
+
+	@Mock
+	private Appender mockAppender;
+
+	@Captor
+	private ArgumentCaptor captorLoggingEvent;
+
+	@Before
+	public void initialize() {
+		usuario1 = TestFactory.crearUsuarioBasicoValido();
+		usuario2 = TestFactory.crearUsuarioBasicoValido();
+		LogManager.getRootLogger().addAppender(mockAppender);
+
+	}
+
+	@After
+	public void teardown() {
+		LogManager.getRootLogger().removeAppender(mockAppender);
+	}
 
 	@Test
 	public void logueaTresConsultas() throws FilterException, RecetaException {
@@ -57,24 +70,18 @@ public class TestLogs {
 		buscador.realizarBusquedaPara(usuario2);
 		Administrador.getInstance().realizarTareasPendientes();
 		
-		  final TestAppender appender = new TestAppender();
-	        final Logger logger = Logger.getRootLogger();
-	        logger.addAppender(appender);
-	        try {
-	            Logger.getLogger(TestLogs.class).info("Test");
-	        }
-	        finally {
-	            logger.removeAppender(appender);
-	        }
 
-	        final List<LoggingEvent> log = appender.getLog();
-	        final LoggingEvent firstLogEntry = log.get(0);
-	        assertThat(firstLogEntry.getLevel(), is(Level.INFO));
-	        assertThat((String) firstLogEntry.getMessage(), is("Test"));
-	        assertThat(firstLogEntry.getLoggerName(), is("MyTest"));
+		verify(mockAppender,times(3)).doAppend(
+				(LoggingEvent) captorLoggingEvent.capture());
+		LoggingEvent loggingEvent = (LoggingEvent) captorLoggingEvent
+				.getValue();
+		assertThat(loggingEvent.getLevel(), is(Level.INFO));
+		assertThat(
+				loggingEvent.getRenderedMessage(),
+				is("Consulta de: DonJuan devuelve mas de 100 resultados.(113 resultados)"));
 	}
 
-	@Test
+	@Test(expected=Exception.class)
 	public void noLogueaConsultas() throws FilterException, RecetaException {
 		TestFactory.crearListaRecetasParaUsuarioSize3(usuario1);
 		TestFactory.crearListaRecetasParaUsuarioSize3(usuario2);
@@ -84,22 +91,14 @@ public class TestLogs {
 		buscador.realizarBusquedaPara(usuario2);
 		Administrador.getInstance().realizarTareasPendientes();
 		
-		final TestAppender appender = new TestAppender();
-        final Logger logger = Logger.getRootLogger();
-        logger.addAppender(appender);
-        try {
-            Logger.getLogger(TestLogs.class).info("Test");
-        }
-        finally {
-            logger.removeAppender(appender);
-        }
-
-        final List<LoggingEvent> log = appender.getLog();
-        final LoggingEvent firstLogEntry = log.get(0);
-        assertThat(firstLogEntry.getLevel(), is(Level.INFO));
-        assertThat((String) firstLogEntry.getMessage(), is("Test"));
-        assertThat(firstLogEntry.getLoggerName(), is("MyTest"));
-
+		verify(mockAppender, times(0)).doAppend(
+				(LoggingEvent) captorLoggingEvent.capture());
+		LoggingEvent loggingEvent = (LoggingEvent) captorLoggingEvent
+				.getValue();
+		assertThat(loggingEvent.getLevel(), is(Level.INFO));
+		assertThat(
+				loggingEvent.getRenderedMessage(),
+				is("Consulta de: DonJuan devuelve mas de 100 resultados.(113 resultados)"));
 	}
 
 }

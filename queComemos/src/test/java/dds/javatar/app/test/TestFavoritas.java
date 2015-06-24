@@ -23,12 +23,12 @@ public class TestFavoritas {
 	
 	@Before
 	public void initialize() {
-		this.user = new Usuario.UsuarioBuilder().nombre("Usuarin").build();
+		this.user = new Usuario.UsuarioBuilder().nombre("Usuarin Testero").build();
 		this.buscador = new Buscador();
 	}
 	
 	@After
-	public void limpiarUsuario(){
+	public void limpiar(){
 		List<Receta> faveadas = this.user.getFavoritos();
 		this.user.getFavoritos().removeAll(faveadas);
 	}
@@ -37,7 +37,7 @@ public class TestFavoritas {
 	public void testQuiereAgregarAFavoritas() throws FilterException {
 		
 		List<String> palabrasClave = new ArrayList<String>();
-		palabrasClave.add("helado de chocolate");
+		palabrasClave.add("whisky");
 		Busqueda busqueda = new Busqueda.BusquedaBuilder().palabrasClave(palabrasClave)
 			.build();
 		
@@ -55,18 +55,20 @@ public class TestFavoritas {
 	@Test
 	public void testNoQuiereAgregarAFavoritas() throws FilterException {
 		
-		Busqueda busqueda = new Busqueda.BusquedaBuilder().nombre("ensalada")
-			.build();
+		Busqueda unaBusqueda = new Busqueda.BusquedaBuilder()
+		.nombre("ensalada")
+		.palabrasClave(new ArrayList<String>())
+		.build();
 		
 		this.user.setFavearTodasLasConsultas(false);
-		List<Receta> resultadoBusqueda = this.buscador.realizarBusquedaPara(this.user, busqueda);
+		List<Receta> resultadoBusqueda = this.buscador.realizarBusquedaPara(this.user, unaBusqueda);
 		Administrador.getInstance().realizarTareasPendientes();
-		
+	
 		/*La búsqueda devuelve todas las ensaladas*/
-		assertEquals(4, resultadoBusqueda.size());
+		assertEquals(3, resultadoBusqueda.size());
 		
 		/*pero no favea ninguna porque no modificó esta opción en su perfil*/
-		assertEquals(0, user.getFavoritos().size());
+		assertEquals(0, user.getFavoritos().size());		
 	}
 	
 	@Test
@@ -91,7 +93,7 @@ public class TestFavoritas {
 		Administrador.getInstance().realizarTareasPendientes();
 		
 		/*La búsqueda devuelve una, la misma*/
-		assertEquals(1, resultadoBusqueda.size());
+		assertEquals(1, resultadoSegundaBusqueda.size());
 		
 		/*No se vuelve a agregar porque ya estaba*/
 		assertEquals(1, user.getFavoritos().size());

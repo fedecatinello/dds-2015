@@ -1,30 +1,31 @@
 package dds.javatar.app.dto.tareasPendientes;
 
+import java.util.List;
+
+import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.usuario.Usuario;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 
 public class LogMuchosResultados implements TareaPendiente {
 
 	private Usuario usuario;
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(LogMuchosResultados.class);
+	private List<Receta>  listaDeResultados;
+	private static final Logger logger = LogManager.getLogger(LogMuchosResultados.class);
 
-	public LogMuchosResultados(Usuario usuario) {
+	public LogMuchosResultados(Usuario usuario, List<Receta>  listaDeResultados) {
 		this.usuario = usuario;
+		this.listaDeResultados = listaDeResultados;
 	}
 
 	@Override
 	public void execute() {
-	
+		if (listaDeResultados.size()>100) {
+			logger.debug("Consulta de: "+ usuario.getNombre() +" devuelve mas de 100 resultados.(" + String.valueOf(listaDeResultados.size())  + " resultados)");	
+		}
 		
-		LOGGER.info("La siguiente consulta devuelve mas de 100 resultados:");
-		
-		// Falta determinar si hago el control de +100 aca o en el buscador
-
-		// hagoElLogConElFramework, agarre el log4j 2
-
 	}
-
 }

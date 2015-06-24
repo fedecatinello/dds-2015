@@ -3,6 +3,7 @@ package dds.javatar.app.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,36 +22,34 @@ public class TestAdministrador {
 	private Administrador administrador = Administrador.getInstance();
 	private Usuario usuario;
 
-	@Before
-	public void init() {
-		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		this.repositorioUsuarios.setObjects(listaUsuarios);
-		usuario = TestFactory.crearUsuarioBasicoValido();
-	}
-
 	@Test
 	public void agregarUsuario() {
 		this.repositorioUsuarios.add(usuario);
-		assertEquals(1, this.repositorioUsuarios.allInstances().size());
+		assertEquals(2, this.repositorioUsuarios.allInstances().size());
 	}
 
 	@Test
 	public void eliminarUsuario() {
+		usuario = TestFactory.crearUsuarioBasicoValido();
 		this.repositorioUsuarios.add(usuario);
-		assertEquals(1, this.repositorioUsuarios.allInstances().size());
+		assertEquals(3, this.repositorioUsuarios.allInstances().size());
 		this.repositorioUsuarios.delete(usuario);
-		assertEquals(0, this.repositorioUsuarios.allInstances().size());
+		assertEquals(2, this.repositorioUsuarios.allInstances().size());
 
 	}
 
 	@Test
 	public void updateUsuario() {
 		this.repositorioUsuarios.updateUsuario(usuario);
-		assertEquals(1, this.repositorioUsuarios.allInstances().size());
+		assertEquals(2, this.repositorioUsuarios.allInstances().size());
 	}
 
 	@Test
 	public void getUsuario() {
+		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		this.repositorioUsuarios.setObjects(listaUsuarios);
+		usuario = TestFactory.crearUsuarioBasicoValido();
+		usuario = TestFactory.crearUsuarioBasicoValido();
 		this.repositorioUsuarios.add(usuario);
 		assertTrue(usuario.getNombre().equals(
 				this.repositorioUsuarios
@@ -64,11 +63,14 @@ public class TestAdministrador {
 		this.repositorioUsuarios.add(usuario);
 		Usuario otherUsr = TestFactory.crearUsuarioBasicoValidoDiferente();
 		this.repositorioUsuarios.add(otherUsr);
-		assertEquals(2, this.repositorioUsuarios.allInstances().size());
+		assertEquals(4, this.repositorioUsuarios.allInstances().size());
 	}
 
 	@Test
 	public void solicitudAceptadaPorSistema() {
+		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		this.repositorioUsuarios.setObjects(listaUsuarios);
+		usuario = TestFactory.crearUsuarioBasicoValido();
 		Solicitud solicitud = new Solicitud();
 		this.administrador.aceptar(solicitud);
 		assertEquals("ACEPTADA", this.repositorioUsuarios

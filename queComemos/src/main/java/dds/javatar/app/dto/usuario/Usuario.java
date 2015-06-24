@@ -196,6 +196,14 @@ public class Usuario extends Entity {
 		}
 		return condicionesQueNoAceptanReceta;
 	}
+	
+	public void habilitarOpcionFavearTodas(){
+		this.setFavearTodasLasConsultas(true);
+	}
+	
+	public void desHabilitarOpcionFavearTodas(){
+		this.setFavearTodasLasConsultas(false);
+	}
 
 	/**** Metodos ****/
 

@@ -35,92 +35,35 @@ public class RecetaBuilder {
 		this.subrecetas = new HashSet<Receta>();
 	}
 
-	/** Setters & Getters **/
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = new String(nombre);
-	}
-
-	public String getDificultad() {
-		return dificultad;
-	}
-
-	public void setDificultad(String dificultad) {
-		this.dificultad = new String(dificultad);
-	}
-
-	public Integer getCalorias() {
-		return calorias;
-	}
-
-	public void setCalorias(Integer calorias) {
-		this.calorias = new Integer(calorias.intValue());
-	}
-
-	public String getTemporada() {
-		return temporada;
-	}
-
-	public void setTemporada(String temporada) {
-		this.temporada = new String(temporada);
-	}
-
-	public Integer getTiempoPreparacion() {
-		return tiempoPreparacion;
-	}
-
-	public void setTiempoPreparacion(Integer tiempoPreparacion) {
-		this.tiempoPreparacion = new Integer(tiempoPreparacion.intValue());
-	}
-
-	public Integer getAnioCreacion() {
-		return anioCreacion;
-	}
-
-	public void setAnioCreacion(Integer anioCreacion) {
-		this.anioCreacion = new Integer(anioCreacion.intValue());
-	}
-	
-	public String getAutor() {
-		return autor;
-	}
-
-	public void setAutor(String autor) {
-		this.autor = new String(autor);
-	}
-
 	
 	/** Builder methods **/ 
 	public RecetaBuilder dificultad(String dificultad) {
-		this.setDificultad(dificultad);
+		this.dificultad = dificultad;
 		return this;
 	}
 
 	public RecetaBuilder totalCalorias(Integer calorias) {
-		this.setCalorias(calorias);
+		this.calorias = calorias;
 		return this;
 	}
 
 	public RecetaBuilder temporada(String temporada) {
-		this.setTemporada(temporada);
+		this.temporada = temporada;
 		return this;
 	}
 
 	public RecetaBuilder tiempoPreparacion(Integer tiempoPreparacion) {
-		this.setTiempoPreparacion(tiempoPreparacion);
+		this.tiempoPreparacion = tiempoPreparacion;
 		return this;
 	}
 	
 	public RecetaBuilder inventadaPor(String autor) {
-		this.setAutor(autor);
+		this.autor = autor;
 		return this;
 	}
 	
 	public RecetaBuilder inventadaEn(Integer anio) {
-		this.setAnioCreacion(anio);
+		this.anioCreacion = anio;
 		return this;
 	}
 

@@ -41,7 +41,7 @@ public abstract class RecetaSimple implements Receta {
 	}
 
 	public void setCalorias(Integer calorias) {
-		this.calorias = new Integer(calorias.intValue());
+		this.calorias = calorias;
 	}
 
 	public String getDificultad() {

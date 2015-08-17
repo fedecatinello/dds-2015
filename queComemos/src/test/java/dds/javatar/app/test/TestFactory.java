@@ -194,6 +194,7 @@ public class TestFactory {
 			.agregarSubReceta(recetaPrivadaSimplePollo)
 				.agregarSubReceta(recetaPrivadaSimpleCondimentos)
 				.agregarSubReceta(recetaPrivadaSimplePure)
+				.inventadaPor("Juana")
 				.buildReceta();
 
 	}

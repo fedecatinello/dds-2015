@@ -220,6 +220,7 @@ public class TestRecetas {
 		Receta receta = new RecetaBuilder("paella")
 				.totalCalorias(50)
 				.agregarIngrediente("pollo", new BigDecimal(100))
+				.inventadaPor("UserOwner")
 				.buildReceta();
 		userOwner.agregarReceta(receta);
 

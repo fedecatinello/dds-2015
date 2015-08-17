@@ -152,6 +152,7 @@ public class TestFactory {
 				.agregarIngrediente("Harina", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Verdura", new BigDecimal(100))
+				.inventadaPor("Fede")
 				.buildReceta();
 	}
 
@@ -161,6 +162,7 @@ public class TestFactory {
 				.agregarIngrediente("Harina", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Verdura", new BigDecimal(100))
+				.inventadaPor("Juan Carlos")
 				.buildReceta();
 
 	}
@@ -173,16 +175,19 @@ public class TestFactory {
 			.totalCalorias(350)
 				.agregarIngrediente("Manteca", new BigDecimal(300))
 				.agregarIngrediente("Papa", new BigDecimal(300))
+				.inventadaPor("Pepe")
 				.buildReceta();
 		Receta recetaPrivadaSimplePollo = new RecetaBuilder(
 				"Pollo")
 			.totalCalorias(220)
 				.agregarIngrediente("pollo", new BigDecimal(280))
+				.inventadaPor("Juan")
 				.buildReceta();
 		Receta recetaPrivadaSimpleCondimentos = new RecetaBuilder(
 				"Condimentos")
 			.totalCalorias(120)
 				.agregarIngrediente("Oregano", new BigDecimal(20))
+				.inventadaPor("Gabriel")
 				.buildReceta();
 
 		return new RecetaBuilder("pollo con pure")
@@ -249,6 +254,7 @@ public class TestFactory {
 				.agregarIngrediente("sal", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Harina", new BigDecimal(100))
+				.inventadaPor("Pepito")
 				.buildReceta();
 	}
 

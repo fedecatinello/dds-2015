@@ -43,6 +43,7 @@ public class TestSistema {
 
 	private Receta crearRecetaPublicaSimpleRica() {
 		return new RecetaBuilder("Ñoquis")
+			.totalCalorias(new Integer(400))
 			.agregarIngrediente("Harina", new BigDecimal(300))
 			.agregarIngrediente("Agua", new BigDecimal(70))
 			.agregarIngrediente("Papa", new BigDecimal(100))
@@ -52,6 +53,7 @@ public class TestSistema {
 
 	private Receta crearRecetaNoAptaParaHipertensos() {
 		return new RecetaBuilder("Pizza")
+			.totalCalorias(new Integer(470))
 			.agregarIngrediente("Sal", new BigDecimal(300))
 			.agregarIngrediente("Agua", new BigDecimal(70))
 			.agregarIngrediente("Harina", new BigDecimal(100))

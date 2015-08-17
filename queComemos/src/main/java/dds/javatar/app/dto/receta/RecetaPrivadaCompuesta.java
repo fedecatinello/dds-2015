@@ -12,11 +12,15 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 	
 	/** Constructor **/
 		public RecetaPrivadaCompuesta(
+				String autor,
+				Integer calorias,
 				HashMap<String, BigDecimal> condimentos,
 				HashMap<String, BigDecimal> ingredientes,
 				HashMap<Integer, String> pasosPreparacion,
 				HashSet<Receta> subRecetas)
 		{
+			this.autor = autor;
+			this.calorias = calorias;
 			this.condimentos = new HashMap<String, BigDecimal>();
 			this.condimentos.putAll(condimentos);
 			this.ingredientes = new HashMap<String, BigDecimal>();

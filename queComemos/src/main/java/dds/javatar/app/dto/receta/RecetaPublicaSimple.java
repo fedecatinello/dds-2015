@@ -13,10 +13,12 @@ public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica {
 
 	/**** Constructor ****/
 	public RecetaPublicaSimple(
+			Integer calorias,
 			HashMap<String, BigDecimal> ingredientes,
 			HashMap<String, BigDecimal> condimentos,
 			HashMap<Integer, String> pasosPreparacion) 
 	{
+		this.calorias = calorias;
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.ingredientes.putAll(ingredientes);
 		this.condimentos = new HashMap<String, BigDecimal>();

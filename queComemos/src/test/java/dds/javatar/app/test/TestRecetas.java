@@ -265,6 +265,7 @@ public class TestRecetas {
 			CloneNotSupportedException, UsuarioException {
 		Receta receta1 = new RecetaBuilder("Nombre original")
 					.totalCalorias(350)
+					.inventadaPor("Mi")
 					.agregarIngrediente("pollo", new BigDecimal(100))
 					.buildReceta();
 	
@@ -334,10 +335,17 @@ public class TestRecetas {
 	@Test(expected = RecetaException.class)
 	public void testAgregarRecetaCompuestaConSubrecetaSinIngredientes()
 			throws RecetaException {
-		  Receta pollo = new RecetaBuilder("pollo").totalCalorias(120).agregarIngrediente("Alas y pechugas", new BigDecimal(20)).buildReceta();
-		 Receta pure = new RecetaBuilder("pure").totalCalorias(350).buildReceta();
-		Receta polloConPure = new RecetaBuilder("PolloConPure").agregarSubReceta(pollo).agregarSubReceta(pure).buildReceta();
-
+		  Receta pollo = new RecetaBuilder("pollo")
+		  			.totalCalorias(120)
+		  			.agregarIngrediente("Alas y pechugas", new BigDecimal(20))
+		  			.buildReceta();
+		 Receta pure = new RecetaBuilder("pure")
+		 			.totalCalorias(350)
+		 			.buildReceta();
+		 Receta polloConPure = new RecetaBuilder("PolloConPure")
+		 			.agregarSubReceta(pollo)
+		 			.agregarSubReceta(pure)
+		 			.buildReceta();
 
 		this.usuario.agregarReceta(polloConPure);
 	}

@@ -11,7 +11,8 @@ import dds.javatar.app.util.exception.UsuarioException;
 public class RecetaPublicaCompuesta extends RecetaCompuesta implements RecetaPublica {
 
 	/** Constructor **/
-	public RecetaPublicaCompuesta(Integer calorias, HashSet<Receta> subrecetas) {
+	public RecetaPublicaCompuesta(String nombre, Integer calorias, HashSet<Receta> subrecetas) {
+		this.nombre = nombre;
 		this.calorias = calorias;
 		this.subRecetas = new HashSet<Receta>();
 		this.subRecetas.addAll(subrecetas);

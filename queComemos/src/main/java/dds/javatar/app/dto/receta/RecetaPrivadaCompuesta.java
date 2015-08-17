@@ -12,6 +12,7 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 	
 	/** Constructor **/
 		public RecetaPrivadaCompuesta(
+				String nombre,
 				String autor,
 				Integer calorias,
 				HashMap<String, BigDecimal> condimentos,
@@ -19,6 +20,7 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 				HashMap<Integer, String> pasosPreparacion,
 				HashSet<Receta> subRecetas)
 		{
+			this.nombre = nombre;
 			this.autor = autor;
 			this.calorias = calorias;
 			this.condimentos = new HashMap<String, BigDecimal>();

@@ -3,6 +3,7 @@ package dds.javatar.app.dto.receta.builder;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
@@ -98,13 +99,28 @@ public class RecetaBuilder {
 	}
 	
 	public RecetaBuilder agregarSubReceta(Receta subReceta) throws RecetaException {
+		subReceta.validarSiLaRecetaEsValida();
 		this.subrecetas.add(subReceta);
 		return this;
 	}
 	
 	public RecetaBuilder agregarSubRecetas(HashSet<Receta> subRecetas) throws RecetaException {
+		
+		validarSubrecetas(subRecetas);
 		this.subrecetas.addAll(subRecetas);
 		return this;
+	}
+	
+	/** Util **/
+	public void validarSubrecetas(HashSet<Receta> subRecetas) throws RecetaException {
+		
+		Iterator<Receta> iteratorRecetas = subRecetas.iterator();
+		
+		while(iteratorRecetas.hasNext()) {
+			Receta receta = iteratorRecetas.next();
+			receta.validarSiLaRecetaEsValida();
+		}
+		
 	}
 	
 	public Receta buildReceta() {
@@ -112,16 +128,16 @@ public class RecetaBuilder {
 		if(this.autor.isEmpty()) { /** Receta Publica **/			
 			
 			if(esCompuesta())
-				return new RecetaPublicaCompuesta(this.calorias, this.subrecetas);
+				return new RecetaPublicaCompuesta(this.nombre, this.calorias, this.subrecetas);
 			else
-				return new RecetaPublicaSimple(this.calorias, this.ingredientes, this.condimentos,this.pasosPreparacion);
+				return new RecetaPublicaSimple(this.nombre, this.calorias, this.ingredientes, this.condimentos,this.pasosPreparacion);
 		}	
 		else {                    /** Receta Privada **/
 			
 			if(esCompuesta())
-				return new RecetaPrivadaCompuesta(this.autor, this.calorias, this.condimentos, this.ingredientes, this.pasosPreparacion, this.subrecetas);
+				return new RecetaPrivadaCompuesta(this.nombre, this.autor, this.calorias, this.condimentos, this.ingredientes, this.pasosPreparacion, this.subrecetas);
 			else
-				return new RecetaPrivadaSimple(this.autor, this.calorias, this.ingredientes, this.condimentos, this.pasosPreparacion);
+				return new RecetaPrivadaSimple(this.nombre, this.autor, this.calorias, this.ingredientes, this.condimentos, this.pasosPreparacion);
 		}
 			
 			

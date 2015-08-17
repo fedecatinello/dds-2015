@@ -25,9 +25,8 @@ public class RecetaBuilder {
     private HashSet<Receta> subrecetas;
     
 	
-	public RecetaBuilder nombre(String nombre) {
+	public RecetaBuilder (String nombre) {
 		this.nombre = nombre;
-		return this;
 	}
 
 	public RecetaBuilder dificultad(String dificultad) {

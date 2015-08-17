@@ -1,6 +1,6 @@
 package dds.javatar.app.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -10,14 +10,12 @@ import org.junit.Test;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
-import dds.javatar.app.dto.receta.RecetaPublicaSimple;
-import dds.javatar.app.dto.receta.builder.RecetaPrivadaSimpleBuilder;
+import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.sistema.Administrador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
-import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
 import dds.javatar.app.util.exception.BusinessException;
 import dds.javatar.app.util.exception.RecetaException;
 
@@ -34,26 +32,30 @@ public class TestSistema {
 		buscador = new Buscador();
 	}
 
-	public RecetaPrivadaSimple crearRecetaPrivadaSimple() {
-		return new RecetaPrivadaSimpleBuilder("Ravioles").totalCalorias(350).agregarIngrediente("Harina", new BigDecimal(300)).agregarIngrediente("Agua", new BigDecimal(70)).agregarIngrediente("Verdura", new BigDecimal(100)).buildReceta();
+	public Receta crearRecetaPrivadaSimple() {
+		return new RecetaBuilder("Ravioles")
+			.totalCalorias(350)
+			.agregarIngrediente("Harina", new BigDecimal(300))
+			.agregarIngrediente("Agua", new BigDecimal(70))
+			.agregarIngrediente("Verdura", new BigDecimal(100))
+			.buildReceta();
 	}
 
 	private Receta crearRecetaPublicaSimpleRica() {
-		RecetaPublicaSimple nioquis = new RecetaPublicaSimple(350);
-		nioquis.setNombre("Nioquis");
-		nioquis.agregarIngrediente("Harina", new BigDecimal(300));
-		nioquis.agregarIngrediente("Agua", new BigDecimal(70));
-		nioquis.agregarIngrediente("papa", new BigDecimal(100));
-		return nioquis;
+		return new RecetaBuilder("Ñoquis")
+			.agregarIngrediente("Harina", new BigDecimal(300))
+			.agregarIngrediente("Agua", new BigDecimal(70))
+			.agregarIngrediente("Papa", new BigDecimal(100))
+			.buildReceta();
+		
 	}
 
 	private Receta crearRecetaNoAptaParaHipertensos() {
-		RecetaPublicaSimple pizza = new RecetaPublicaSimple(350);
-		pizza.setNombre("Pizza");
-		pizza.agregarIngrediente("sal", new BigDecimal(300));
-		pizza.agregarIngrediente("Agua", new BigDecimal(70));
-		pizza.agregarIngrediente("Harina", new BigDecimal(100));
-		return pizza;
+		return new RecetaBuilder("Pizza")
+			.agregarIngrediente("Sal", new BigDecimal(300))
+			.agregarIngrediente("Agua", new BigDecimal(70))
+			.agregarIngrediente("Harina", new BigDecimal(100))
+			.buildReceta();
 	}
 
 	private GrupoDeUsuarios crearGrupoDeUsuarios() throws BusinessException {

@@ -1,11 +1,15 @@
 package dds.javatar.app.test;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.spi.LoggingEvent;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,17 +18,11 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.*;
- import dds.javatar.app.dto.receta.busqueda.Buscador;
+import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.sistema.Administrador;
-import dds.javatar.app.dto.tareasPendientes.LogMuchosResultados;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 import dds.javatar.app.util.exception.RecetaException;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
 
 
 

@@ -1,7 +1,7 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
-import java.util.Map;
+import java.util.HashMap;
 
 import dds.javatar.app.util.exception.RecetaException;
 
@@ -15,9 +15,9 @@ public abstract class RecetaSimple implements Receta {
 	protected String autor;
 	protected Integer anioCreacion;
 
-	protected Map<String, BigDecimal> ingredientes;
-	protected Map<String, BigDecimal> condimentos;
-	protected Map<Integer, String> pasosPreparacion;
+	protected HashMap<String, BigDecimal> ingredientes;
+	protected HashMap<String, BigDecimal> condimentos;
+	protected HashMap<Integer, String> pasosPreparacion;
 
 	/** Getters & Setters **/
 	public String getNombre() {
@@ -28,7 +28,7 @@ public abstract class RecetaSimple implements Receta {
 		this.nombre = nombre;
 	}
 
-	public Map<Integer, String> getPasosPreparacion() {
+	public HashMap<Integer, String> getPasosPreparacion() {
 		return this.pasosPreparacion;
 	}
 
@@ -41,7 +41,7 @@ public abstract class RecetaSimple implements Receta {
 	}
 
 	public void setCalorias(Integer calorias) {
-		this.calorias = calorias;
+		this.calorias = new Integer(calorias.intValue());
 	}
 
 	public String getDificultad() {
@@ -64,7 +64,7 @@ public abstract class RecetaSimple implements Receta {
 		this.condimentos.put(condimento, cantidad);
 	}
 
-	public Map<String, BigDecimal> getCondimentos() {
+	public HashMap<String, BigDecimal> getCondimentos() {
 		return this.condimentos;
 	}
 
@@ -72,7 +72,7 @@ public abstract class RecetaSimple implements Receta {
 		this.ingredientes.put(ingrediente, cantidad);
 	}
 
-	public Map<String, BigDecimal> getIngredientes() {
+	public HashMap<String, BigDecimal> getIngredientes() {
 		return this.ingredientes;
 	}
 
@@ -106,7 +106,7 @@ public abstract class RecetaSimple implements Receta {
 			throw new RecetaException(
 					"La receta no es valida ya que no tiene ingredientes!");
 		}
-		if (this.calorias < 10 || this.calorias > 5000) {
+		if (this.calorias.intValue() < 10 || this.calorias.intValue() > 5000) {
 			throw new RecetaException(
 					"La receta no es valida por su cantidad de calorias!");
 		}

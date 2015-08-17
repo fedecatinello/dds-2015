@@ -2,6 +2,7 @@ package dds.javatar.app.dto.receta;
 
 import java.util.HashSet;
 
+import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
@@ -9,9 +10,10 @@ import dds.javatar.app.util.exception.UsuarioException;
 
 public class RecetaPublicaCompuesta extends RecetaCompuesta implements RecetaPublica {
 
-	/** Builder **/
-	public RecetaPublicaCompuesta() {
+	/** Constructor **/
+	public RecetaPublicaCompuesta(HashSet<Receta> subrecetas) {
 		this.subRecetas = new HashSet<Receta>();
+		this.subRecetas.addAll(subrecetas);
 		this.agregarRecetaAlRepo(this);
 	}
 	
@@ -21,19 +23,39 @@ public class RecetaPublicaCompuesta extends RecetaCompuesta implements RecetaPub
 	}
 
 	public Receta privatizarSiCorresponde (Usuario user) throws UsuarioException, RecetaException{
-		RecetaCompuesta recetaClonada = new RecetaPrivadaCompuesta();
-		recetaClonada.nombre = this.nombre;
-		recetaClonada.dificultad = this.dificultad;
-		recetaClonada.temporada = this.temporada;
-			
+		
+		HashSet<Receta> recetasPrivatizadas = new HashSet<Receta>();
+		
 		for (Receta receta : this.subRecetas) {
-			recetaClonada.agregarSubReceta((RecetaPrivada) receta.privatizarSiCorresponde(user));
+			recetasPrivatizadas.add((RecetaPrivada) receta.privatizarSiCorresponde(user));
 		}
 		
+		Receta recetaClonada = new RecetaBuilder(this.nombre)
+						.dificultad(this.dificultad)
+						.temporada(this.temporada)
+						.agregarSubRecetas(recetasPrivatizadas)
+						.buildReceta();
+					
 		user.agregarReceta(recetaClonada);
 		user.quitarReceta(this);
 		return recetaClonada;
 		
+	}
+
+	@Override
+	public RecetaPrivada clonarme(String autor) throws RecetaException {
+		RecetaPrivada recetaClonada = (RecetaPrivada) new RecetaBuilder(this.nombre)
+							.totalCalorias(this.calorias)
+							.dificultad(this.dificultad)
+							.temporada(this.temporada)
+							.agregarSubRecetas(this.subRecetas)
+							.agregarIngredientes(this.ingredientes)
+							.agregarCondimentos(this.condimentos)
+							.agregarPasos(this.pasosPreparacion)
+							.inventadaPor(autor)
+							.buildReceta();
+
+		return recetaClonada;
 	}
 
 		

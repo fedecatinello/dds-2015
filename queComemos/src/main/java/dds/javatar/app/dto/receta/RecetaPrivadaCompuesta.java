@@ -11,11 +11,20 @@ import dds.javatar.app.util.exception.UsuarioException;
 public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPrivada {
 	
 	/** Constructor **/
-		public RecetaPrivadaCompuesta(){
+		public RecetaPrivadaCompuesta(
+				HashMap<String, BigDecimal> condimentos,
+				HashMap<String, BigDecimal> ingredientes,
+				HashMap<Integer, String> pasosPreparacion,
+				HashSet<Receta> subRecetas)
+		{
 			this.condimentos = new HashMap<String, BigDecimal>();
+			this.condimentos.putAll(condimentos);
 			this.ingredientes = new HashMap<String, BigDecimal>();
+			this.ingredientes.putAll(ingredientes);
 			this.pasosPreparacion = new HashMap<Integer, String>();
+			this.pasosPreparacion.putAll(pasosPreparacion);
 			this.subRecetas = new HashSet<Receta>();
+			this.subRecetas.addAll(subRecetas);
 		}
 
 	public Receta privatizarSiCorresponde(Usuario user) throws UsuarioException, RecetaException {
@@ -33,5 +42,6 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 	public void agregarCondimento(String condimento, BigDecimal cantidad) {
 		this.condimentos.put(condimento, cantidad);
 	}
+
 
 }

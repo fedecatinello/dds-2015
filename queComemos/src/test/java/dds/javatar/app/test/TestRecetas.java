@@ -14,9 +14,8 @@ import org.junit.Test;
 
 import queComemos.entrega3.dominio.Dificultad;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
-import dds.javatar.app.dto.receta.RecetaPublicaSimple;
+import dds.javatar.app.dto.receta.RecetaPublica;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.Usuario;
@@ -124,7 +123,10 @@ public class TestRecetas {
 		Hipertenso hipertenso = new Hipertenso();
 		this.usuario.agregarCondicionPreexistente(hipertenso);
 
-		Receta receta = new RecetaBuilder("papas fritas").totalCalorias(350).agregarIngrediente("sal", new BigDecimal(50)).buildReceta();
+		Receta receta = new RecetaBuilder("papas fritas")
+					.totalCalorias(350)
+					.agregarIngrediente("sal", new BigDecimal(50))
+					.buildReceta();
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		noAcepta.add(hipertenso);
 		assertEquals(noAcepta, this.usuario.condicionesQueNoAcepta(this.usuario, receta));
@@ -189,7 +191,10 @@ public class TestRecetas {
 
 	@Test
 	public void testVerRecetaPropia() throws RecetaException, UsuarioException {
-		Receta receta = new RecetaBuilder("paella").totalCalorias(350).agregarIngrediente("pollo", new BigDecimal(100)).buildReceta();
+		Receta receta = new RecetaBuilder("Paella")
+					.totalCalorias(new Integer(350))
+					.agregarIngrediente("pollo", new BigDecimal(100))
+					.buildReceta();
 		this.usuario.agregarReceta(receta);
 		this.usuario.puedeVerReceta(receta);
 	}
@@ -197,8 +202,12 @@ public class TestRecetas {
 	// Entrega 1 - Punto 4: Saber si un usuario puede ver a una receta dada
 	@Test
 	public void testVerRecetaPublica() throws RecetaException, UsuarioException {
-		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
-		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		
+		Receta receta = new RecetaBuilder("Pollo con pure")
+				.totalCalorias(150)
+				.agregarIngrediente("pollo", new BigDecimal(100))
+				.buildReceta();
+		
 		this.usuario.agregarReceta(receta);
 		this.usuario.puedeVerReceta(receta);
 	}
@@ -208,7 +217,10 @@ public class TestRecetas {
 		Usuario usuarioQueQuiereVer = TestFactory.crearUsuarioBasicoValido();
 		Usuario userOwner = TestFactory.crearUsuarioBasicoValido();
 
-		Receta receta = new RecetaBuilder("paella").totalCalorias(50).agregarIngrediente("pollo", new BigDecimal(100)).buildReceta();
+		Receta receta = new RecetaBuilder("paella")
+				.totalCalorias(50)
+				.agregarIngrediente("pollo", new BigDecimal(100))
+				.buildReceta();
 		userOwner.agregarReceta(receta);
 
 		usuarioQueQuiereVer.puedeVerReceta(receta);
@@ -217,8 +229,11 @@ public class TestRecetas {
 	// Entrega 1 - Punto4: Saber si un usuario puede modificar una receta dada
 	@Test
 	public void testPuedeModificarRecetaPublica() throws RecetaException, UsuarioException {
-		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
-		receta.agregarIngrediente("pollo", new BigDecimal(100));
+		Receta receta = new RecetaBuilder("Pollo con pure")
+					.totalCalorias(150)
+					.agregarIngrediente("pollo", new BigDecimal(100))
+					.buildReceta();
+		
 		this.usuario.agregarReceta(receta);
 		this.usuario.puedeModificarReceta(receta);
 	}
@@ -248,7 +263,10 @@ public class TestRecetas {
 	@Test
 	public void testModificarRecetaPropia() throws RecetaException,
 			CloneNotSupportedException, UsuarioException {
-		Receta receta1 = new RecetaBuilder("Nombre original").totalCalorias(350).agregarIngrediente("pollo", new BigDecimal(100)).buildReceta();
+		Receta receta1 = new RecetaBuilder("Nombre original")
+					.totalCalorias(350)
+					.agregarIngrediente("pollo", new BigDecimal(100))
+					.buildReceta();
 	
 
 		this.usuario.agregarReceta(receta1);
@@ -260,14 +278,17 @@ public class TestRecetas {
 
 	@Test
 	public void testModificarRecetaPublica() throws RecetaException, CloneNotSupportedException, UsuarioException {
-		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
-		receta.agregarIngrediente("pollo", new BigDecimal(100));
-		receta.setNombre("Nombre original");
+		
+		Receta receta = new RecetaBuilder("Pollo con pure")
+					.totalCalorias(150)
+					.agregarIngrediente("pollo", new BigDecimal(100))
+					.buildReceta();
+		
 		this.usuario.agregarReceta(receta);
-		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
+		this.usuario.modificarNombreDeReceta(receta, "Paella");
 
 		// La receta original sigue con el mismo nombre
-		assertEquals(receta.getNombre(), "Nombre original");
+		assertEquals(receta.getNombre(), "Pollo con pure");
 	}
 
 	@Test(expected = UsuarioException.class)
@@ -282,10 +303,12 @@ public class TestRecetas {
 
 	@Test
 	public void testClonarReceta() throws RecetaException, CloneNotSupportedException {
-		RecetaPublicaSimple receta = new RecetaPublicaSimple(150);
-		receta.agregarIngrediente("papa", new BigDecimal(100));
-
-		RecetaPrivadaSimple recetaClonada = (RecetaPrivadaSimple) receta.clonarme();
+		RecetaPublica receta = (RecetaPublica) new RecetaBuilder("Papas españolas")
+					.totalCalorias(new Integer(150))
+					.agregarIngrediente("papa", new BigDecimal(100))
+					.buildReceta();
+		
+		RecetaPrivadaSimple recetaClonada = (RecetaPrivadaSimple) receta.clonarme("Usuario");
 		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
 
 		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
@@ -303,8 +326,8 @@ public class TestRecetas {
 
 	@Test(expected = RecetaException.class)
 	public void testAgregarRecetaCompuestaSinSubrecetas() throws RecetaException {
-		RecetaPrivadaCompuesta polloConPure = new RecetaPrivadaCompuesta();
-		polloConPure.setNombre("PolloConPure");
+		
+		Receta polloConPure = new RecetaBuilder("PolloConPure").buildReceta();
 		this.usuario.agregarReceta(polloConPure);
 	}
 
@@ -333,8 +356,11 @@ public class TestRecetas {
 	@Test
 	public void testMarcarUnaRecetaComoFavorita() throws RecetaException {
 
-		RecetaPublicaSimple receta = new RecetaPublicaSimple(80);
-		receta.agregarIngrediente("pollo", new BigDecimal(80));
+		Receta receta = new RecetaBuilder("Pollo a la mostaza")
+					.totalCalorias(80)
+					.agregarIngrediente("pollo", new BigDecimal(80))
+					.buildReceta();
+		
 		this.usuario.marcarFavorita(receta);
 
 		assertEquals(1, this.usuario.getFavoritos().size());

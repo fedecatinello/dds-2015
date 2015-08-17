@@ -1,7 +1,7 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
-import java.util.Map;
+import java.util.HashMap;
 
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
@@ -25,14 +25,14 @@ public interface Receta {
 	public Integer getTiempoPreparacion();
 	public void setTiempoPreparacion(Integer tiempoPreparacion);
 	
-	public Map<String, BigDecimal> getCondimentos();
-	public void setCondimentos(Map<String, BigDecimal> condimentos);
+	public HashMap<String, BigDecimal> getCondimentos();
+	public void setCondimentos(HashMap<String, BigDecimal> condimentos);
 	
-	public Map<String, BigDecimal> getIngredientes();
-	public void setIngredientes(Map<String, BigDecimal> ingredientes);
+	public HashMap<String, BigDecimal> getIngredientes();
+	public void setIngredientes(HashMap<String, BigDecimal> ingredientes);
 	
-	public Map<Integer, String> getPasosPreparacion();
-	public void setPasosPreparacion(Map<Integer, String> pasosPreparacion);
+	public HashMap<Integer, String> getPasosPreparacion();
+	public void setPasosPreparacion(HashMap<Integer, String> pasosPreparacion);
 	
 	
 	

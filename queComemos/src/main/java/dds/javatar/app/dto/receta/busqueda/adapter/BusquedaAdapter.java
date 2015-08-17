@@ -19,9 +19,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
-import dds.javatar.app.dto.receta.RecetaPublicaSimple;
-import dds.javatar.app.dto.receta.RecetaSimple;
+import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.monitoreo.ConsultaObserver;
@@ -115,15 +113,21 @@ public class BusquedaAdapter {
 
 	public void agregarReceta(queComemos.entrega3.dominio.Receta receta, List<Receta> recetasUsuario) {
 
-		RecetaSimple recetaUsuario = new RecetaPrivadaSimple();
-		recetaUsuario.setNombre(receta.getNombre());
-		receta.getIngredientes().forEach(ingrediente -> recetaUsuario.agregarIngrediente(ingrediente, new BigDecimal(0)));
-		recetaUsuario.setTiempoPreparacion(receta.getTiempoPreparacion());
-		recetaUsuario.setCalorias(receta.getTotalCalorias());
-		recetaUsuario.setDificultad(receta.getDificultadReceta().toString());
-		recetaUsuario.setAutor(receta.getAutor());
-		recetaUsuario.setAnioCreacion(receta.getAnioReceta());
+		/** Me guardo los ingredientes **/
+		HashMap<String, BigDecimal> ingredientesReceta = new HashMap<String, BigDecimal>();
+		receta.getIngredientes().forEach(ingrediente -> ingredientesReceta.put(ingrediente, new BigDecimal(0)));
 
+		
+		Receta recetaUsuario = new RecetaBuilder(receta.getNombre())
+							.tiempoPreparacion(receta.getTiempoPreparacion())
+							.totalCalorias(receta.getTotalCalorias())
+							.dificultad(receta.getDificultadReceta().toString())
+							.inventadaPor(receta.getAutor())
+							.inventadaEn(receta.getAnioReceta())
+							.agregarIngredientes(ingredientesReceta)
+							.buildReceta();
+		
+		
 		recetasUsuario.add(recetaUsuario);
 	}
 

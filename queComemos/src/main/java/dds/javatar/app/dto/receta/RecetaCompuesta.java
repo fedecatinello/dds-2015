@@ -1,8 +1,8 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
@@ -10,9 +10,9 @@ import dds.javatar.app.util.exception.RecetaException;
 public abstract class RecetaCompuesta implements Receta {
 
 	protected HashSet<Receta> subRecetas;
-	protected Map<String, BigDecimal> condimentos;
-	protected Map<String, BigDecimal> ingredientes;
-	protected Map<Integer, String> pasosPreparacion;
+	protected HashMap<String, BigDecimal> condimentos;
+	protected HashMap<String, BigDecimal> ingredientes;
+	protected HashMap<Integer, String> pasosPreparacion;
 	protected String nombre;
 	protected String autor;
 	protected String dificultad;
@@ -29,22 +29,22 @@ public abstract class RecetaCompuesta implements Receta {
 	public void setSubRecetas(HashSet<Receta> subRecetas) {
 		this.subRecetas = subRecetas;
 	}
-	public Map<String, BigDecimal> getCondimentos() {
+	public HashMap<String, BigDecimal> getCondimentos() {
 		return condimentos;
 	}
-	public void setCondimentos(Map<String, BigDecimal> condimentos) {
+	public void setCondimentos(HashMap<String, BigDecimal> condimentos) {
 		this.condimentos = condimentos;
 	}
-	public Map<String, BigDecimal> getIngredientes() {
+	public HashMap<String, BigDecimal> getIngredientes() {
 		return ingredientes;
 	}
-	public void setIngredientes(Map<String, BigDecimal> ingredientes) {
+	public void setIngredientes(HashMap<String, BigDecimal> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
-	public Map<Integer, String> getPasosPreparacion() {
+	public HashMap<Integer, String> getPasosPreparacion() {
 		return pasosPreparacion;
 	}
-	public void setPasosPreparacion(Map<Integer, String> pasosPreparacion) {
+	public void setPasosPreparacion(HashMap<Integer, String> pasosPreparacion) {
 		this.pasosPreparacion = pasosPreparacion;
 	}
 	public String getNombre() {

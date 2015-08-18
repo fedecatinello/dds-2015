@@ -1,7 +1,5 @@
 package dds.javatar.app.ui.home;
 
-import java.awt.Color;
-
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -16,6 +14,12 @@ import org.uqbar.lacar.ui.model.Action;
 import dds.javatar.app.dto.receta.Receta;
 
 public class HomeWindow extends MainWindow<Home>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	public HomeWindow(WindowOwner parent) {
 		super(new Home());

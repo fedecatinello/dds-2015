@@ -7,7 +7,6 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
-import org.uqbar.arena.windows.MainWindow;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.lacar.ui.model.Action;
@@ -25,23 +24,41 @@ public class HomeWindow extends SimpleWindow<Home>{
 	public HomeWindow(WindowOwner parent) {
 		super(parent, new Home());
 	}
+	
 
-
-
-	public void createContents(Panel mainPanel) {
+	/** PANEL PRINCIPAL DE LA VENTANA **/
+	
+	@Override
+	protected void createMainTemplate(Panel mainPanel) {
+		
 		this.setTitle("Bienvenidos a ¿Qué Comemos?");
+		
+		super.createMainTemplate(mainPanel);
+	}
+
+	/** FORMULARIO PRINCIPAL DE CONSULTA DE RECETAS **/
+	
+	@Override
+	protected void createFormPanel(Panel mainPanel) {
+		
 		new Label(mainPanel).bindValueToProperty("mensajeInicio");
 		mainPanel.setLayout(new VerticalLayout());
 
 		this.generateTable(mainPanel);
 
-		Button view = new Button(mainPanel);
+	}
+	
+	/** ACTION BUTTONS **/
+	
+	@Override
+	protected void addActions(Panel actionsPanel) {
+
+		Button view = new Button(actionsPanel);
 		view.setCaption("Ver");
 		view.onClick(this.verReceta());
 		NotNullObservable elementSelected = new NotNullObservable("recetaSelect");
 		view.bindEnabled(elementSelected);
-
-
+	
 	}
 
 	private Action verReceta() {
@@ -98,23 +115,6 @@ public class HomeWindow extends SimpleWindow<Home>{
 		.setFixedSize(70)
 		.bindContentsToProperty("temporada");
 	}
-
-
-
-	@Override
-	protected void addActions(Panel actionsPanel) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	protected void createFormPanel(Panel mainPanel) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 
 

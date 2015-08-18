@@ -1,4 +1,8 @@
+******************************
+*    Project Configuration   *
+******************************
 .project
 .classpath
 .settings
+.directory
 /target/

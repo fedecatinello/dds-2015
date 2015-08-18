@@ -1,4 +1,4 @@
-package queComemosUI;
+package dds.javatar.app.ui.home;
 
 import java.awt.Color;
 

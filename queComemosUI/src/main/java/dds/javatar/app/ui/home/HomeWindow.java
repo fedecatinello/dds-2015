@@ -8,12 +8,13 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.MainWindow;
+import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.lacar.ui.model.Action;
 
 import dds.javatar.app.dto.receta.Receta;
 
-public class HomeWindow extends MainWindow<Home>{
+public class HomeWindow extends SimpleWindow<Home>{
 
 	/**
 	 * 
@@ -22,7 +23,7 @@ public class HomeWindow extends MainWindow<Home>{
 
 
 	public HomeWindow(WindowOwner parent) {
-		super(new Home());
+		super(parent, new Home());
 	}
 
 
@@ -96,6 +97,22 @@ public class HomeWindow extends MainWindow<Home>{
 		.setTitle("Temporada")
 		.setFixedSize(70)
 		.bindContentsToProperty("temporada");
+	}
+
+
+
+	@Override
+	protected void addActions(Panel actionsPanel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	protected void createFormPanel(Panel mainPanel) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

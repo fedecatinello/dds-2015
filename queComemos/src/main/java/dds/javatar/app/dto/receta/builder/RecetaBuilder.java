@@ -29,11 +29,16 @@ public class RecetaBuilder {
 	
 	public RecetaBuilder (String nombre) {
 		this.nombre = nombre;
-		this.autor = new String();
+		initializeComparatorFields();
 		this.condimentos = new HashMap<String, BigDecimal>();
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.pasosPreparacion = new HashMap<Integer, String>();
 		this.subrecetas = new HashSet<Receta>();
+	}
+	
+	public void initializeComparatorFields() {  /** To avoid null pointer exception in comparisons **/
+		this.autor = new String();
+		this.calorias = 0;
 	}
 
 	

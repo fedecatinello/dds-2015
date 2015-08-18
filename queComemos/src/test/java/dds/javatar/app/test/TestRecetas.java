@@ -46,7 +46,13 @@ public class TestRecetas {
 	}*/
 	
 	public Receta crearRecetaPrivadaSimple() {
-		return new RecetaBuilder("Ravioles").totalCalorias(350).agregarIngrediente("Harina", new BigDecimal(300)).agregarIngrediente("Agua", new BigDecimal(70)).agregarIngrediente("Verdura", new BigDecimal(100)).buildReceta();
+		return new RecetaBuilder("Ravioles")
+					.totalCalorias(350)
+					.agregarIngrediente("Harina", new BigDecimal(300))
+					.agregarIngrediente("Agua", new BigDecimal(70))
+					.agregarIngrediente("Verdura", new BigDecimal(100))
+					.inventadaPor("Santi")
+					.buildReceta();
 	}
 
 
@@ -82,11 +88,29 @@ public class TestRecetas {
 	public Receta crearRecetaPrivadaCompuesta()
 			throws RecetaException{
 		
-		 Receta recetaPrivadaSimplePure = new RecetaBuilder("Pure").totalCalorias(350).agregarIngrediente("Manteca", new BigDecimal(300)).agregarIngrediente("Papa", new BigDecimal(300)).buildReceta();
-		 Receta recetaPrivadaSimplePollo = new RecetaBuilder("Pollo").totalCalorias(220).agregarIngrediente("pollo", new BigDecimal(280)).buildReceta();
-		 Receta recetaPrivadaSimpleCondimentos = new RecetaBuilder("Condimentos").totalCalorias(120).agregarIngrediente("Oregano", new BigDecimal(20)).buildReceta();
+		 Receta recetaPrivadaSimplePure = new RecetaBuilder("Pure")
+		 						.totalCalorias(350)
+		 						.agregarIngrediente("Manteca", new BigDecimal(300))
+		 						.agregarIngrediente("Papa", new BigDecimal(300))
+		 						.inventadaPor("Joni")
+		 						.buildReceta();
+		 Receta recetaPrivadaSimplePollo = new RecetaBuilder("Pollo")
+		 						.totalCalorias(220)
+		 						.agregarIngrediente("pollo", new BigDecimal(280))
+		 						.inventadaPor("Mati")
+		 						.buildReceta();
+		 Receta recetaPrivadaSimpleCondimentos = new RecetaBuilder("Condimentos")
+		 						.totalCalorias(120)
+		 						.agregarIngrediente("Oregano", new BigDecimal(20))
+		 						.inventadaPor("Mariano")
+		 						.buildReceta();
 		
-		 return new RecetaBuilder("pollo con pure").agregarSubReceta(recetaPrivadaSimplePollo).agregarSubReceta(recetaPrivadaSimpleCondimentos).agregarSubReceta(recetaPrivadaSimplePure).buildReceta();
+		 return new RecetaBuilder("pollo con pure")
+		 						.agregarSubReceta(recetaPrivadaSimplePollo)
+		 						.agregarSubReceta(recetaPrivadaSimpleCondimentos)
+		 						.agregarSubReceta(recetaPrivadaSimplePure)
+		 						.inventadaPor("Donato")
+		 						.buildReceta();
 	}
 
 	// Entrega 1 - Punto 3: Hacer que un usuario agregue una receta
@@ -100,7 +124,11 @@ public class TestRecetas {
 
 	@Test(expected = RecetaException.class)
 	public void testAgregarRecetaSimpleSinIngredientes() throws RecetaException {
-		Receta receta = new RecetaBuilder("papas fritas").totalCalorias(350).buildReceta();
+		Receta receta = new RecetaBuilder("papas fritas")
+							.totalCalorias(350)
+							.inventadaPor("Lean")
+							.buildReceta();
+		
 		this.usuario.agregarReceta(receta);
 	}
 
@@ -126,6 +154,7 @@ public class TestRecetas {
 		Receta receta = new RecetaBuilder("papas fritas")
 					.totalCalorias(350)
 					.agregarIngrediente("sal", new BigDecimal(50))
+					.inventadaPor("Cami")
 					.buildReceta();
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		noAcepta.add(hipertenso);
@@ -138,7 +167,11 @@ public class TestRecetas {
 		Vegano veggie = new Vegano();
 		this.usuario.agregarCondicionPreexistente(veggie);
 
-		Receta receta = new RecetaBuilder("papas fritas").totalCalorias(350).agregarIngrediente("chori", new BigDecimal(120)).buildReceta();
+		Receta receta = new RecetaBuilder("papas fritas")
+					.totalCalorias(350)
+					.agregarIngrediente("chori", new BigDecimal(120))
+					.inventadaPor("Nico")
+					.buildReceta();
 				
 		assertFalse(this.usuario.validarSiAceptaReceta(receta));
 	}
@@ -148,7 +181,11 @@ public class TestRecetas {
 		Diabetico diabetico = new Diabetico();
 		this.usuario.agregarCondicionPreexistente(diabetico);
 
-		Receta receta = new RecetaBuilder("chocolate").totalCalorias(250).agregarIngrediente("azucar", new BigDecimal(120)).buildReceta();
+		Receta receta = new RecetaBuilder("chocolate")
+					.totalCalorias(250)
+					.agregarIngrediente("azucar", new BigDecimal(120))
+					.inventadaPor("Pablo")
+					.buildReceta();
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		noAcepta.add(diabetico);
@@ -161,7 +198,11 @@ public class TestRecetas {
 		Hipertenso hipertenso = new Hipertenso();
 		this.usuario.agregarCondicionPreexistente(hipertenso);
 
-		Receta receta = new RecetaBuilder("paella").totalCalorias(350).agregarIngrediente("arroz", new BigDecimal(200)).buildReceta();
+		Receta receta = new RecetaBuilder("paella")
+					.totalCalorias(350)
+					.agregarIngrediente("arroz", new BigDecimal(200))
+					.inventadaPor("Ale")
+					.buildReceta();
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		assertEquals(noAcepta, this.usuario.condicionesQueNoAcepta(this.usuario, receta));
@@ -174,7 +215,12 @@ public class TestRecetas {
 		Vegano veggie = new Vegano();
 		this.usuario.agregarCondicionPreexistente(veggie);
 
-		Receta receta = new RecetaBuilder("paella").totalCalorias(350).agregarIngrediente("tomate", new BigDecimal(80)).buildReceta();
+		Receta receta = new RecetaBuilder("paella")
+					.totalCalorias(350)
+					.agregarIngrediente("tomate", new BigDecimal(80))
+					.inventadaPor("Carlos")
+					.buildReceta();
+		
 		this.usuario.validarSiAceptaReceta(receta);
 	}
 
@@ -183,7 +229,11 @@ public class TestRecetas {
 		Diabetico diabetico = new Diabetico();
 		this.usuario.agregarCondicionPreexistente(diabetico);
 
-		Receta receta = new RecetaBuilder("chocolate").totalCalorias(150).agregarIngrediente("azucar", new BigDecimal(50)).buildReceta();
+		Receta receta = new RecetaBuilder("chocolate")
+					.totalCalorias(150)
+					.agregarIngrediente("azucar", new BigDecimal(50))
+					.inventadaPor("Jose")
+					.buildReceta();
 
 		Set<CondicionPreexistente> noAcepta = new HashSet<CondicionPreexistente>();
 		assertEquals(noAcepta, this.usuario.condicionesQueNoAcepta(this.usuario, receta));
@@ -194,6 +244,7 @@ public class TestRecetas {
 		Receta receta = new RecetaBuilder("Paella")
 					.totalCalorias(new Integer(350))
 					.agregarIngrediente("pollo", new BigDecimal(100))
+					.inventadaPor(this.usuario.getNombre())
 					.buildReceta();
 		this.usuario.agregarReceta(receta);
 		this.usuario.puedeVerReceta(receta);
@@ -220,7 +271,7 @@ public class TestRecetas {
 		Receta receta = new RecetaBuilder("paella")
 				.totalCalorias(50)
 				.agregarIngrediente("pollo", new BigDecimal(100))
-				.inventadaPor("UserOwner")
+				.inventadaPor(userOwner.getNombre())
 				.buildReceta();
 		userOwner.agregarReceta(receta);
 
@@ -245,7 +296,12 @@ public class TestRecetas {
 		Usuario usuarioQueQuiereModificar = TestFactory.crearUsuarioBasicoValido();
 		Usuario userOwner = TestFactory.crearUsuarioBasicoValido();
 
-		Receta receta = new RecetaBuilder("paella").totalCalorias(150).agregarIngrediente("pollo", new BigDecimal(100)).buildReceta();
+		Receta receta = new RecetaBuilder("paella")
+					.totalCalorias(150)
+					.agregarIngrediente("pollo", new BigDecimal(100))
+					.inventadaPor("OtraPersona")
+					.buildReceta();
+		
 		userOwner.agregarReceta(receta);
 		usuarioQueQuiereModificar.modificarNombreDeReceta(receta, "unNombreReCopado");
 	}
@@ -253,7 +309,12 @@ public class TestRecetas {
 	@Test
 	public void testPuedeModificarRecetaPropia() throws RecetaException, UsuarioException {
 
-		Receta receta = new RecetaBuilder("paella").totalCalorias(150).agregarIngrediente("pollo", new BigDecimal(100)).buildReceta();
+		Receta receta = new RecetaBuilder("paella")
+					.totalCalorias(150)
+					.agregarIngrediente("pollo", new BigDecimal(100))
+					.inventadaPor(this.usuario.getNombre())
+					.buildReceta();
+		
 		this.usuario.agregarReceta(receta);
 		this.usuario.validarModificarReceta(receta);
 	}
@@ -266,7 +327,7 @@ public class TestRecetas {
 			CloneNotSupportedException, UsuarioException {
 		Receta receta1 = new RecetaBuilder("Nombre original")
 					.totalCalorias(350)
-					.inventadaPor("Mi")
+					.inventadaPor(this.usuario.getNombre())
 					.agregarIngrediente("pollo", new BigDecimal(100))
 					.buildReceta();
 	
@@ -297,7 +358,12 @@ public class TestRecetas {
 	public void testModificarRecetaAjena() throws RecetaException, CloneNotSupportedException, UsuarioException {
 
 		Usuario usuarioOwner = TestFactory.crearUsuarioBasicoValido();
-		Receta receta = new RecetaBuilder("paella").totalCalorias(150).agregarIngrediente("papa", new BigDecimal(100)).buildReceta();
+		Receta receta = new RecetaBuilder("paella")
+					.totalCalorias(150)
+					.agregarIngrediente("papa", new BigDecimal(100))
+					.inventadaPor("OtraPersona")
+					.buildReceta();
+		
 		usuarioOwner.agregarReceta(receta);
 
 		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
@@ -329,7 +395,9 @@ public class TestRecetas {
 	@Test(expected = RecetaException.class)
 	public void testAgregarRecetaCompuestaSinSubrecetas() throws RecetaException {
 		
-		Receta polloConPure = new RecetaBuilder("PolloConPure").buildReceta();
+		Receta polloConPure = new RecetaBuilder("PolloConPure")
+						.inventadaPor("German")
+						.buildReceta();
 		this.usuario.agregarReceta(polloConPure);
 	}
 
@@ -338,14 +406,17 @@ public class TestRecetas {
 			throws RecetaException {
 		  Receta pollo = new RecetaBuilder("pollo")
 		  			.totalCalorias(120)
+		  			.inventadaPor("Santi")
 		  			.agregarIngrediente("Alas y pechugas", new BigDecimal(20))
 		  			.buildReceta();
 		 Receta pure = new RecetaBuilder("pure")
 		 			.totalCalorias(350)
+		 			.inventadaPor("Joni")
 		 			.buildReceta();
 		 Receta polloConPure = new RecetaBuilder("PolloConPure")
 		 			.agregarSubReceta(pollo)
 		 			.agregarSubReceta(pure)
+		 			.inventadaPor("Pepe")
 		 			.buildReceta();
 
 		this.usuario.agregarReceta(polloConPure);
@@ -353,9 +424,25 @@ public class TestRecetas {
 
 	@Test
 	public void testAgregaRecetaConSubrecetaPropia() throws RecetaException {
-		Receta pure = new RecetaBuilder("Pure").totalCalorias(350).agregarIngrediente("Manteca", new BigDecimal(300)).agregarIngrediente("Papa", new BigDecimal(300)).buildReceta();
-		Receta pollo= new RecetaBuilder("Pollo").totalCalorias(120).agregarIngrediente("Alas y pechugas", new BigDecimal(20)).buildReceta();
-		Receta polloConPure = new RecetaBuilder("PolloConPure").agregarSubReceta(pure).agregarSubReceta(pollo).buildReceta();
+		Receta pure = new RecetaBuilder("Pure")
+					.totalCalorias(350)
+					.agregarIngrediente("Manteca", new BigDecimal(300))
+					.agregarIngrediente("Papa", new BigDecimal(300))
+					.inventadaPor("Mariano")
+					.buildReceta();
+		
+		Receta pollo= new RecetaBuilder("Pollo")
+					.totalCalorias(120)
+					.agregarIngrediente("Alas y pechugas", new BigDecimal(20))
+					.inventadaPor("Colo")
+					.buildReceta();
+		
+		Receta polloConPure = new RecetaBuilder("PolloConPure")
+					.agregarSubReceta(pure)
+					.agregarSubReceta(pollo)
+					.inventadaPor("Santi")
+					.buildReceta();
+		
 		this.usuario.agregarReceta(polloConPure);
 
 	}
@@ -368,6 +455,7 @@ public class TestRecetas {
 		Receta receta = new RecetaBuilder("Pollo a la mostaza")
 					.totalCalorias(80)
 					.agregarIngrediente("pollo", new BigDecimal(80))
+					.inventadaPor("Fede")
 					.buildReceta();
 		
 		this.usuario.marcarFavorita(receta);

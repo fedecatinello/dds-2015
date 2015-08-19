@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -24,7 +23,6 @@ import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
-import dds.javatar.app.ui.home.HomeWindow;
 
 public class RecetaWindow extends SimpleWindow<RecetaModel> {
 
@@ -36,18 +34,18 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		// TODO delete and read from the selected one.
 
 		// TODO get user authenticated.
-		Receta receta = new RecetaBuilder("Ravioles")
+		Receta receta = new RecetaBuilder("Ravioles2")
 			.totalCalorias(350)
+				.agregarIngrediente("azucar", new BigDecimal(150))
 				.agregarIngrediente("Harina", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Verdura", new BigDecimal(100))
 				.agregarCondimento("Perejil", new BigDecimal(100))
-				.agregarCondimento("Ajo", new BigDecimal(50))
 				.inventadaPor("Santi")
 				.buildReceta();
 		receta.setTemporada("Todo el año");
 		receta.setDificultad("Dificil");
-
+		
 		HashMap<Integer, String> pasos = new HashMap<Integer, String>();
 		pasos.put(1, "Agregar agua");
 		pasos.put(3, "comer");
@@ -179,16 +177,15 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		condimentosList.setWidth(300);
 		condimentosList.bindItemsToProperty("receta.condimentos.keySet");
 
-		
-		  Panel condicionesPanel = new Panel(rightMainInfoPanel); 
-		  Label condicionesTitle = new Label(condicionesPanel);
-		  condicionesTitle.setText("Condiciones Preexistentes");
-		  condicionesTitle.setFontSize(14);
-		  
-		  List<String> condicionesList = new List<String>(condicionesPanel);
-		  condicionesList.setHeight(70); condicionesList.setWidth(300);
-		  condicionesList.bindItemsToProperty("receta.condimentos.keySet");
-		  //condicionesList.bindItemsToProperty("receta.condiciones"); 
+		Panel condicionesPanel = new Panel(rightMainInfoPanel);
+		Label condicionesTitle = new Label(condicionesPanel);
+		condicionesTitle.setText("Condiciones Preexistentes");
+		condicionesTitle.setFontSize(14);
+
+		List<String> condicionesList = new List<String>(condicionesPanel);
+		condicionesList.setHeight(70);
+		condicionesList.setWidth(300);
+		condicionesList.bindItemsToProperty("condiciones");
 
 		return rightMainInfoPanel;
 	}
@@ -210,7 +207,7 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 	protected void addActions(Panel actionsPanel) {
 		Button back = new Button(actionsPanel);
 		back.setCaption("Volver");
-		//back.onClick(()->new HomeWindow(this).open());
+		// back.onClick(()->new HomeWindow(this).open());
 		// TODO bindear para volver a la pantalla anterior.
 	}
 

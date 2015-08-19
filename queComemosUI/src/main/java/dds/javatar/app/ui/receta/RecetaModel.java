@@ -1,12 +1,21 @@
 package dds.javatar.app.ui.receta;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.uqbar.commons.utils.Observable;
 
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.sistema.RepositorioCondiciones;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.condiciones.Celiaco;
+import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
+import dds.javatar.app.dto.usuario.condiciones.Diabetico;
+import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
+import dds.javatar.app.dto.usuario.condiciones.Vegano;
 
 @Observable
 public class RecetaModel {
@@ -53,6 +62,18 @@ public class RecetaModel {
 	public boolean getEsFavorita() {
 		boolean esFavorita = this.usuarioLogeado.tieneRecetaFavorita(receta);
 		return esFavorita;
+	}
+	
+	public List<String> getCondiciones(){
+			
+		List<String> condiciones = new ArrayList<String>();
+		
+		for (CondicionPreexistente condicionPreexistente : RepositorioCondiciones.getInstance().condicionesPreexistentes) {
+			if (!condicionPreexistente.validarReceta(receta)) {
+				condiciones.add(condicionPreexistente.getName());
+			}
+		}
+		return condiciones;
 	}
 
 }

@@ -85,12 +85,12 @@ public class Home {
 			this.setMensajeInicio("Estas son tus recetas favoritas");
 			return "favoritas";
 		}
-//		if(hayConsultas()){
+		if(hayConsultas()){
 			this.setMensajeInicio("Estas son tus últimas consultas");
 			return "consultas";
-		//}
-//		this.setMensajeInicio("Estas son las 10 recetas más buscadas");
-//		return "top";
+		}
+		this.setMensajeInicio("Estas son las 10 recetas más buscadas");
+		return "top";
 	}
 
 	Boolean tieneFavoritas(){

@@ -14,8 +14,9 @@ import dds.javatar.app.dto.receta.busqueda.PrimerosDiez;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Rutina;
-import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
+import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.ui.receta.RecetaContainer;
 
 
 @Observable
@@ -26,6 +27,7 @@ public class Home {
 	private List<Receta> recetasCons;
 	private List<Receta> recetasTop;
 	private Receta recetaSelect;
+	private Boolean enableButton;
 	
 	private static Buscador buscador;
 
@@ -72,6 +74,10 @@ public class Home {
 			.build();
     	RepositorioUsuarios.getInstance().add(usuario);
     	this.usuarioLogeado = usuario;
+    }
+    
+    public void loadRepository() {
+    	RepositorioRecetas.getInstance().recetaConocidas.addAll(RecetaContainer.getInstance().obtenerContainerRecetas());
     }
     
 	protected String recetasFillType(){
@@ -132,6 +138,7 @@ public class Home {
 
 	public void setRecetaSelect(Receta recetaSelect) {
 		this.recetaSelect = recetaSelect;
+		this.setEnableButton(Boolean.FALSE);
 	}
 
 
@@ -152,6 +159,16 @@ public class Home {
 
 	public static void setBuscador(Buscador buscador) {
 		Home.buscador = buscador;
+	}
+
+
+	public Boolean getEnableButton() {
+		return enableButton;
+	}
+
+
+	public void setEnableButton(Boolean enableButton) {
+		this.enableButton = enableButton;
 	}
 	
 

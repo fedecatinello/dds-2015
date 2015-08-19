@@ -14,7 +14,6 @@ import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.lacar.ui.model.Action;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.util.exception.FilterException;
 
 public class HomeWindow extends SimpleWindow<Home>{
 
@@ -58,11 +57,14 @@ public class HomeWindow extends SimpleWindow<Home>{
 	@Override
 	protected void addActions(Panel actionsPanel) {
 
-		Button view = new Button(actionsPanel);
-		view.setCaption("Ver");
-		view.onClick(this.verReceta());
+		Button viewButton = new Button(actionsPanel);
+		viewButton.setCaption("Ver");
+		viewButton.onClick(this.verReceta());
+		viewButton.setForeground(Color.BLACK);
+		viewButton.setBackground(Color.ORANGE);
+		viewButton.bindEnabledToProperty("enableButton");
 		NotNullObservable elementSelected = new NotNullObservable("recetaSelect");
-		view.bindEnabled(elementSelected);
+		viewButton.bindEnabled(elementSelected);
 	
 	}
 

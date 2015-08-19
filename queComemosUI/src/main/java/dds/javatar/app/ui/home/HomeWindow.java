@@ -1,5 +1,7 @@
 package dds.javatar.app.ui.home;
 
+import java.awt.Color;
+
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -92,14 +94,15 @@ public class HomeWindow extends SimpleWindow<Home>{
 		}
 
 	}
-
+	
 
 	protected void fillTable(Table<Receta> table) {
-		new Column<Receta>(table)
-		.setTitle("Nombre")
-		.setFixedSize(200)
-		.bindContentsToProperty("nombre");
-//		.bindBackground("nombre", Color.RED//TODO);
+		Column nombre = new Column<Receta>(table);
+//		nombre.setBackground((receta) -> receta.getAutor()==this.usuarioLogeado.getNombre()? Color.RED:Color.BLUE)
+		nombre.setTitle("Nombre");
+		nombre.setFixedSize(200);
+		nombre.bindContentsToProperty("nombre");
+
 
 		new Column<Receta>(table) 
 		.setTitle("Calorías")

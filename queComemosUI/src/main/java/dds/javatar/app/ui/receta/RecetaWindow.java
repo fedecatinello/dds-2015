@@ -1,6 +1,7 @@
 package dds.javatar.app.ui.receta;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.uqbar.arena.bindings.ObservableProperty;
@@ -20,6 +21,10 @@ import com.google.gson.reflect.TypeToken;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
+import dds.javatar.app.dto.usuario.Rutina;
+import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
+import dds.javatar.app.ui.home.HomeWindow;
 
 public class RecetaWindow extends SimpleWindow<RecetaModel> {
 
@@ -29,23 +34,45 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		super(parent, new RecetaModel());
 
 		// TODO delete and read from the selected one.
-		Receta receta = new RecetaBuilder("Ravioles").totalCalorias(350)
+
+		// TODO get user authenticated.
+		Receta receta = new RecetaBuilder("Ravioles")
+			.totalCalorias(350)
 				.agregarIngrediente("Harina", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Verdura", new BigDecimal(100))
 				.agregarCondimento("Perejil", new BigDecimal(100))
 				.agregarCondimento("Ajo", new BigDecimal(50))
-				.inventadaPor("Santi").buildReceta();
-		receta.setTemporada("Todo el aÃ±o");
-		receta.setDificultad("Dificl");
+				.inventadaPor("Santi")
+				.buildReceta();
+		receta.setTemporada("Todo el año");
+		receta.setDificultad("Dificil");
+
+		HashMap<Integer, String> pasos = new HashMap<Integer, String>();
+		pasos.put(1, "Agregar agua");
+		pasos.put(3, "comer");
+		pasos.put(2, "Agregar harina");
+		receta.setPasosPreparacion(pasos);
+
+		Usuario usuario = new Usuario.UsuarioBuilder()
+			.nombre("ElSiscador")
+				.sexo(Usuario.Sexo.MASCULINO)
+				.peso(new BigDecimal(75))
+				.altura(new BigDecimal(1.80))
+				.rutina(new Rutina(TipoRutina.FUERTE, 20))
+				.build();
+
+		usuario.marcarFavorita(receta);
 
 		this.getModelObject().setReceta(receta);
+		this.getModelObject().setUsuarioLogeado(usuario);
 	}
 
 	@Override
 	protected void createMainTemplate(Panel mainPanel) {
 		this.setTitle("Detalle de receta");
 		super.createMainTemplate(mainPanel);
+
 	}
 
 	@Override
@@ -58,21 +85,30 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		mainInfoPanel.setLayout(new HorizontalLayout());
 		this.createLeftMainPanel(mainInfoPanel);
 		this.createRightMainPanel(mainInfoPanel);
-		
+
 		this.createBottomPanel(mainPanel);
 	}
 
 	private Panel createRecetaInfoPanel(Panel mainPanel) {
 		Panel recetaInfoPanel = new Panel(mainPanel);
-		Label nombreReceta = new Label(recetaInfoPanel);
-		nombreReceta.bindValueToProperty("receta.nombre");
-		nombreReceta.setFontSize(14);
+		Label lblNombreReceta = new Label(recetaInfoPanel);
+		lblNombreReceta.bindValueToProperty("receta.nombre");
+		lblNombreReceta.setFontSize(14);
 
-		Label caloriasReceta = new Label(recetaInfoPanel);
-		caloriasReceta.bindValueToProperty("receta.calorias");
-		// TODO deberia decir "350 calorias"
+		Panel recetaDescriptionPanel = new Panel(mainPanel);
+		recetaDescriptionPanel.setLayout(new HorizontalLayout());
 
-		// TODO agregar "si es tuya" en un panel..
+		Label lblCaloriasReceta = new Label(recetaDescriptionPanel);
+		lblCaloriasReceta.bindValueToProperty("receta.calorias");
+
+		Label lblCaloriasString = new Label(recetaDescriptionPanel);
+		lblCaloriasString.setText("calorias");
+
+		// TODO se puede setAlignment en arena?
+
+		Label lblRecetaOwner = new Label(recetaDescriptionPanel);
+		lblRecetaOwner.bindValueToProperty("duenioDeReceta");
+
 		return recetaInfoPanel;
 	}
 
@@ -102,14 +138,23 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		tableIngredientes.bindItemsToProperty("receta.ingredientes.entrySet");
 
 		new Column<Entry<String, BigDecimal>>(tableIngredientes)
-				.setTitle("Dosis").setFixedSize(70)
+			.setTitle("Dosis")
+				.setFixedSize(70)
 				.bindContentsToProperty("value");
 		new Column<Entry<String, BigDecimal>>(tableIngredientes)
-				.setTitle("Ingrediente").setFixedSize(130)
+			.setTitle("Ingrediente")
+				.setFixedSize(130)
 				.bindContentsToProperty("key");
 
-		CheckBox favorita = new CheckBox(leftMainInfoPanel);
-		// TODO, setear si es favorita o no.. y poner el label!
+		Panel recetaFavoritaPanel = new Panel(leftMainInfoPanel);
+		recetaFavoritaPanel.setLayout(new HorizontalLayout());
+
+		CheckBox chkfavorita = new CheckBox(recetaFavoritaPanel);
+		chkfavorita.bindValueToProperty("esFavorita");
+
+		Label favoritaString = new Label(recetaFavoritaPanel);
+		favoritaString.setText("Favorita");
+		favoritaString.setFontSize(10);
 
 		return leftMainInfoPanel;
 	}
@@ -130,40 +175,42 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		condimentosTitle.setFontSize(14);
 
 		List<String> condimentosList = new List<String>(condimentosPanel);
-		condimentosList.setHeight(70);
+		condimentosList.setHeight(60);
 		condimentosList.setWidth(300);
 		condimentosList.bindItemsToProperty("receta.condimentos.keySet");
 
-		/*
-		 * Panel condicionesPanel = new Panel(rightMainInfoPanel); Label
-		 * condicionesTitle = new Label(condicionesPanel);
-		 * condicionesTitle.setText("Condiciones Preexistentes");
-		 * 
-		 * List<String> condicionesList = new List<String>(condicionesPanel);
-		 * condicionesList.setHeight(70); condicionesList.setWidth(300);
-		 * condicionesList.bindItemsToProperty("receta.condiciones");
-		 */
+		
+		  Panel condicionesPanel = new Panel(rightMainInfoPanel); 
+		  Label condicionesTitle = new Label(condicionesPanel);
+		  condicionesTitle.setText("Condiciones Preexistentes");
+		  condicionesTitle.setFontSize(14);
+		  
+		  List<String> condicionesList = new List<String>(condicionesPanel);
+		  condicionesList.setHeight(70); condicionesList.setWidth(300);
+		  condicionesList.bindItemsToProperty("receta.condimentos.keySet");
+		  //condicionesList.bindItemsToProperty("receta.condiciones"); 
 
 		return rightMainInfoPanel;
 	}
 
-
 	private Panel createBottomPanel(Panel mainPanel) {
 		Panel bottomPanel = new Panel(mainPanel);
-		
+
 		Label title = new Label(bottomPanel);
-		title.setText("Proceso de preparaciÃ³n");
+		title.setText("Proceso de preparación");
 		title.setFontSize(14);
-		
-		Label pasos = new Label(bottomPanel);
-		// TODO bindear a los pasos haciendo un previo String.join
+
+		Label lblPasos = new Label(bottomPanel);
+		lblPasos.bindValueToProperty("pasosPreparacion");
+
 		return bottomPanel;
 	}
-	
+
 	@Override
 	protected void addActions(Panel actionsPanel) {
 		Button back = new Button(actionsPanel);
 		back.setCaption("Volver");
+		//back.onClick(()->new HomeWindow(this).open());
 		// TODO bindear para volver a la pantalla anterior.
 	}
 

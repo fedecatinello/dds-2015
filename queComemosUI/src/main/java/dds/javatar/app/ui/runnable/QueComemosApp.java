@@ -26,6 +26,7 @@ public class QueComemosApp extends Application{
 		ApplicationContext.getInstance().configureSingleton(Receta.class, RepositorioRecetas.getInstance());
 		ContainerFactory.getInstance().agregarRecetasAlRepositorio();
 		ApplicationContext.getInstance().configureSingleton(Usuario.class, RepositorioUsuarios.getInstance());
+		ContainerFactory.getInstance().agregarUsuariosAlRepo();
 		return new HomeWindow(this);
 	}
 	

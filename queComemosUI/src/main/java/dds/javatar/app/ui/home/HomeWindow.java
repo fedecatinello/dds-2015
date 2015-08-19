@@ -58,18 +58,16 @@ public class HomeWindow extends SimpleWindow<Home> {
 		Button viewButton = new Button(actionsPanel);
 		viewButton.setCaption("Ver");
 		viewButton.onClick(() -> {
+			this.getModelObject().getRecetasCons().add(this.getModelObject().getRecetaSelect());
 			RecetaWindow recetaWindow = new RecetaWindow(this);
-			recetaWindow.getModelObject().setReceta(
-					this.getModelObject().getRecetaSelect());
-			recetaWindow.getModelObject().setUsuarioLogeado(
-					this.getModelObject().getUsuarioLogeado());
+			recetaWindow.getModelObject().setReceta(this.getModelObject().getRecetaSelect());
+			recetaWindow.getModelObject().setUsuarioLogeado(this.getModelObject().getUsuarioLogeado());
 			recetaWindow.open();
 		});
 		viewButton.setForeground(Color.BLACK);
 		viewButton.setBackground(Color.ORANGE);
 		viewButton.bindEnabledToProperty("enableButton");
-		NotNullObservable elementSelected = new NotNullObservable(
-				"recetaSelect");
+		NotNullObservable elementSelected = new NotNullObservable("recetaSelect");
 		viewButton.bindEnabled(elementSelected);
 
 	}
@@ -104,7 +102,7 @@ public class HomeWindow extends SimpleWindow<Home> {
 	}
 
 	protected void fillTable(Table<Receta> table) {
-		
+
 		Column<Receta> nombre = new Column<Receta>(table);
 		// nombre.setBackground((receta) ->
 		// receta.getAutor()==this.usuarioLogeado.getNombre()?
@@ -112,16 +110,13 @@ public class HomeWindow extends SimpleWindow<Home> {
 		nombre.setTitle("Nombre");
 		nombre.setFixedSize(200);
 		nombre.bindContentsToProperty("nombre");
-		//nombre.bindContentsToTransformer(new ColorTransformer(this.getModelObject()));
+		// nombre.bindContentsToTransformer(new ColorTransformer(this.getModelObject()));
 
-		new Column<Receta>(table).setTitle("Calorías").setFixedSize(100)
-				.bindContentsToProperty("calorias");
+		new Column<Receta>(table).setTitle("Calorías").setFixedSize(100).bindContentsToProperty("calorias");
 
-		new Column<Receta>(table).setTitle("Dificultad").setFixedSize(100)
-				.bindContentsToProperty("dificultad");
+		new Column<Receta>(table).setTitle("Dificultad").setFixedSize(100).bindContentsToProperty("dificultad");
 
-		new Column<Receta>(table).setTitle("Temporada").setFixedSize(100)
-				.bindContentsToProperty("temporada");
+		new Column<Receta>(table).setTitle("Temporada").setFixedSize(100).bindContentsToProperty("temporada");
 	}
 
 }

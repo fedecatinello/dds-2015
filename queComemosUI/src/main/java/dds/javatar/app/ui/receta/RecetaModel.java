@@ -1,7 +1,6 @@
 package dds.javatar.app.ui.receta;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -11,11 +10,8 @@ import org.uqbar.commons.utils.Observable;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.sistema.RepositorioCondiciones;
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.dto.usuario.condiciones.Celiaco;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
-import dds.javatar.app.dto.usuario.condiciones.Diabetico;
-import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
-import dds.javatar.app.dto.usuario.condiciones.Vegano;
+
 
 @Observable
 public class RecetaModel {

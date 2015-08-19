@@ -55,12 +55,8 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		recetaDescriptionPanel.setLayout(new HorizontalLayout());
 
 		Label lblCaloriasReceta = new Label(recetaDescriptionPanel);
-		lblCaloriasReceta.bindValueToProperty("receta.calorias");
-
-		Label lblCaloriasString = new Label(recetaDescriptionPanel);
-		lblCaloriasString.setText("calorias");
-
-		// TODO se puede setAlignment en arena?
+		lblCaloriasReceta.bindValueToProperty("caloriasString");
+		lblCaloriasReceta.setWidth(100);
 
 		Label lblRecetaOwner = new Label(recetaDescriptionPanel);
 		lblRecetaOwner.bindValueToProperty("duenioDeReceta");
@@ -83,8 +79,7 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		ingredientesTitle.setText("Ingredientes");
 		ingredientesTitle.setFontSize(14);
 
-		Table<Entry<String, BigDecimal>> tableIngredientes = new Table<Entry<String, BigDecimal>>(
-				leftMainInfoPanel,
+		Table<Entry<String, BigDecimal>> tableIngredientes = new Table<Entry<String, BigDecimal>>(leftMainInfoPanel,
 				(Class<Entry<String, BigDecimal>>) new TypeToken<Entry<String, BigDecimal>>() {
 				}.getRawType());
 		// TODO, arena tiene alguna clase tipo typereference ??
@@ -93,12 +88,12 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		tableIngredientes.setWidth(300);
 		tableIngredientes.bindItemsToProperty("receta.ingredientes.entrySet");
 
-		new Column<Entry<String, BigDecimal>>(tableIngredientes)
-				.setTitle("Dosis").setFixedSize(70)
-				.bindContentsToProperty("value");
-		new Column<Entry<String, BigDecimal>>(tableIngredientes)
-				.setTitle("Ingrediente").setFixedSize(130)
-				.bindContentsToProperty("key");
+		new Column<Entry<String, BigDecimal>>(tableIngredientes).setTitle("Dosis")
+			.setFixedSize(70)
+			.bindContentsToProperty("value");
+		new Column<Entry<String, BigDecimal>>(tableIngredientes).setTitle("Ingrediente")
+			.setFixedSize(130)
+			.bindContentsToProperty("key");
 
 		Panel recetaFavoritaPanel = new Panel(leftMainInfoPanel);
 		recetaFavoritaPanel.setLayout(new HorizontalLayout());

@@ -12,7 +12,6 @@ import dds.javatar.app.dto.sistema.RepositorioCondiciones;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 
-
 @Observable
 public class RecetaModel {
 
@@ -20,7 +19,7 @@ public class RecetaModel {
 	private Usuario usuarioLogeado; // TODO
 
 	public Receta getReceta() {
-		return receta;
+		return this.receta;
 	}
 
 	public void setReceta(Receta receta) {
@@ -28,7 +27,7 @@ public class RecetaModel {
 	}
 
 	public Usuario getUsuarioLogeado() {
-		return usuarioLogeado;
+		return this.usuarioLogeado;
 	}
 
 	public void setUsuarioLogeado(Usuario usuarioLogeado) {
@@ -37,7 +36,7 @@ public class RecetaModel {
 
 	public String getDuenioDeReceta() {
 		String duenioDeReceta;
-		if (this.usuarioLogeado.tieneReceta(receta)) {
+		if (this.usuarioLogeado.tieneReceta(this.receta)) {
 			duenioDeReceta = "creada por vos";
 		} else {
 			duenioDeReceta = "receta publica";
@@ -47,29 +46,27 @@ public class RecetaModel {
 	}
 
 	public String getPasosPreparacion() {
-		String pasosPreparacion;
-		Map<Integer, String> pasos = new TreeMap<Integer, String>(
-				receta.getPasosPreparacion());
-
-		pasosPreparacion = String.join(". ", pasos.values());
-		return pasosPreparacion;
+		Map<Integer, String> pasos = new TreeMap<Integer, String>(this.receta.getPasosPreparacion());
+		return String.join(". ", pasos.values());
 	}
 
 	public boolean getEsFavorita() {
-		boolean esFavorita = this.usuarioLogeado.tieneRecetaFavorita(receta);
-		return esFavorita;
+		return this.usuarioLogeado.tieneRecetaFavorita(this.receta);
 	}
-	
-	public List<String> getCondiciones(){
-			
+
+	public List<String> getCondiciones() {
 		List<String> condiciones = new ArrayList<String>();
-		
+
 		for (CondicionPreexistente condicionPreexistente : RepositorioCondiciones.getInstance().condicionesPreexistentes) {
-			if (!condicionPreexistente.validarReceta(receta)) {
+			if (!condicionPreexistente.validarReceta(this.receta)) {
 				condiciones.add(condicionPreexistente.getName());
 			}
 		}
 		return condiciones;
+	}
+
+	public String getCaloriasString() {
+		return this.receta.getCalorias() + " calorias";
 	}
 
 }

@@ -77,7 +77,7 @@ public class Home {
     }
     
     public void loadRepository() {
-    	RepositorioRecetas.getInstance().recetaConocidas.addAll(RecetaContainer.getInstance().obtenerContainerRecetas());
+    	RecetaContainer.getInstance().agregarRecetasAlRepositorio();
     }
     
 	protected String recetasFillType(){
@@ -85,12 +85,12 @@ public class Home {
 			this.setMensajeInicio("Estas son tus recetas favoritas");
 			return "favoritas";
 		}
-		if(hayConsultas()){
+//		if(hayConsultas()){
 			this.setMensajeInicio("Estas son tus últimas consultas");
 			return "consultas";
-		}
-		this.setMensajeInicio("Estas son las 10 recetas más buscadas");
-		return "top";
+		//}
+//		this.setMensajeInicio("Estas son las 10 recetas más buscadas");
+//		return "top";
 	}
 
 	Boolean tieneFavoritas(){

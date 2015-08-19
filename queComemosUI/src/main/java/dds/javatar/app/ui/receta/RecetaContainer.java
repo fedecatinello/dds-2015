@@ -1,16 +1,15 @@
 package dds.javatar.app.ui.receta;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
+import dds.javatar.app.dto.sistema.RepositorioRecetas;
 
 public class RecetaContainer {
 
-	private List<Receta> elements;
-
+	private RepositorioRecetas instanceRepositorio = RepositorioRecetas.getInstance(); 
+	
 	private static RecetaContainer instance;
 	
 	public static RecetaContainer getInstance() {
@@ -21,14 +20,7 @@ public class RecetaContainer {
 		return instance;
 	}
 	
-	public List<Receta> obtenerContainerRecetas() {
-		
-		elements = new ArrayList<Receta>();
-		agregarRecetasAlContainer();
-		return elements;
-	}
-
-	public void agregarRecetasAlContainer() {
+	public void agregarRecetasAlRepositorio() {
 		
 		Receta pure = new RecetaBuilder("Pure")
         		.totalCalorias(350)
@@ -47,7 +39,7 @@ public class RecetaContainer {
 				.agregarPaso(4, "Mezclar")
 				.buildReceta();
 		
-		elements.add(pure);
+		instanceRepositorio.agregar(pure);
 
 		//propia
 		Receta milanesas = new RecetaBuilder("Milanesa de Pollo")
@@ -64,7 +56,7 @@ public class RecetaContainer {
 				.temporada("Todo el año")
 				.buildReceta();
 		
-		elements.add(milanesas);
+		instanceRepositorio.agregar(milanesas);
 
 		//gente del grupo
 		Receta souffleVegano= new RecetaBuilder("Souffle Vegano")
@@ -83,7 +75,7 @@ public class RecetaContainer {
 				.temporada("Primavera")
 				.buildReceta();
 		
-		elements.add(souffleVegano);
+		instanceRepositorio.agregar(souffleVegano);
 
 		//publica
 		Receta tartaEspinaca = new RecetaBuilder("Tarta de Espinaca")
@@ -101,7 +93,7 @@ public class RecetaContainer {
 				.temporada("Invierno")
 				.buildReceta();
 		
-		elements.add(tartaEspinaca);
+		instanceRepositorio.agregar(tartaEspinaca);
 
 		//publica
 		Receta mousseChocolate= new RecetaBuilder("Mousse de Chocolate")
@@ -120,7 +112,7 @@ public class RecetaContainer {
 				.temporada("Todo el año")
 				.buildReceta();
 		
-		elements.add(mousseChocolate);
+		instanceRepositorio.agregar(mousseChocolate);
 
 		//publica
 		Receta arrolladoPrimavera= new RecetaBuilder("Arrollado Primavera")
@@ -139,7 +131,7 @@ public class RecetaContainer {
 				.temporada("Verano")
 				.buildReceta();
 
-		elements.add(arrolladoPrimavera);
+		instanceRepositorio.agregar(arrolladoPrimavera);
 
 		//propia
 		Receta sandwitch= new RecetaBuilder("Sanguchitos de jamón y queso")
@@ -159,7 +151,7 @@ public class RecetaContainer {
 				.temporada("Todo el año")
 				.buildReceta();
 		
-		elements.add(sandwitch);
+		instanceRepositorio.agregar(sandwitch);
 
 		Receta ensaladaPobretona = new RecetaBuilder("Ensalada Simple")
 				.totalCalorias(120)
@@ -178,7 +170,7 @@ public class RecetaContainer {
 						.agregarPaso(5, "Mezclar")
 						.buildReceta();
 		
-		elements.add(ensaladaPobretona);
+		instanceRepositorio.agregar(ensaladaPobretona);
 
 		//propia
 		Receta flan = new RecetaBuilder("Flan de Sobrecito Light")
@@ -197,7 +189,7 @@ public class RecetaContainer {
 						.agregarPaso(5, "Agregar dulce de leche en el centro.")
 						.buildReceta();
 		
-		elements.add(flan);
+		instanceRepositorio.agregar(flan);
 
 		Receta papasFritas= new RecetaBuilder("Papas fritas")
        					.totalCalorias(150)
@@ -214,6 +206,6 @@ public class RecetaContainer {
        					.agregarPaso(5, "Condimentar con sal a gusto.")
        					.buildReceta();
 		
-		elements.add(papasFritas);
+		instanceRepositorio.agregar(papasFritas);
 	}
 }

@@ -48,7 +48,7 @@ public class HomeWindow extends SimpleWindow<Home>{
 		new Label(mainPanel).bindValueToProperty("mensajeInicio");
 		mainPanel.setLayout(new VerticalLayout());
 
-		this.generateTable(mainPanel);
+		this.generateSearchResultGrid(mainPanel);
 
 	}
 	
@@ -73,7 +73,7 @@ public class HomeWindow extends SimpleWindow<Home>{
 	
 	}
 
-	protected void generateTable(Panel mainPanel){
+	protected void generateSearchResultGrid(Panel mainPanel){
 		Table<Receta> table = new Table<Receta>(mainPanel, Receta.class);
 		table.setHeight(200);
 		table.setWidth(550);

@@ -14,4 +14,6 @@ public interface CondicionPreexistente {
 	
 	Boolean esVegano();
 
+	public String getName();
+	
 }

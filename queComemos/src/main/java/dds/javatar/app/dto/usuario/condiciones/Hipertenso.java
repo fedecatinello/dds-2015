@@ -13,7 +13,8 @@ public class Hipertenso extends UsuarioConPreferencia {
 
 	@Override
 	public Boolean usuarioSigueRutinaSaludable(Usuario usuario) {
-		return usuario.getRutina().esIntensiva();
+		return usuario.getRutina()
+			.esIntensiva();
 	}
 
 	@Override
@@ -29,5 +30,10 @@ public class Hipertenso extends UsuarioConPreferencia {
 	@Override
 	public Boolean esVegano() {
 		return Boolean.FALSE;
+	}
+
+	@Override
+	public String getName() {
+		return "Hipertenso";
 	}
 }

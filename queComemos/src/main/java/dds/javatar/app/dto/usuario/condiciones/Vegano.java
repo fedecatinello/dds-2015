@@ -35,9 +35,14 @@ public class Vegano implements CondicionPreexistente {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public Boolean esVegano() {
 		return Boolean.TRUE;
+	}
+
+	@Override
+	public String getName() {
+		return "Vegano";
 	}
 }

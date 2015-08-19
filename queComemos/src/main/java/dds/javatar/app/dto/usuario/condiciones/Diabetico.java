@@ -21,7 +21,9 @@ public class Diabetico extends UsuarioConPreferencia {
 
 	@Override
 	public Boolean usuarioSigueRutinaSaludable(Usuario usuario) {
-		return (usuario.getPeso().intValue() <= MAX_PESO || usuario.getRutina().esActiva());
+		return (usuario.getPeso()
+			.intValue() <= MAX_PESO || usuario.getRutina()
+			.esActiva());
 	}
 
 	@Override
@@ -32,10 +34,15 @@ public class Diabetico extends UsuarioConPreferencia {
 			return true;
 		}
 	}
-	
+
 	@Override
 	public Boolean esVegano() {
 		return Boolean.FALSE;
+	}
+
+	@Override
+	public String getName() {
+		return "Diabetico";
 	}
 
 }

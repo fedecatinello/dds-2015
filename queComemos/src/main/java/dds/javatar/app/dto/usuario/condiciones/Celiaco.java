@@ -27,4 +27,9 @@ public class Celiaco implements CondicionPreexistente {
 		return Boolean.FALSE;
 	}
 
+	@Override
+	public String getName() {
+		return "Celiaco";
+	}
+
 }

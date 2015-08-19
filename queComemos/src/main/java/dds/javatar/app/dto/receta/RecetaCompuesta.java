@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 
 public abstract class RecetaCompuesta implements Receta {
@@ -13,6 +14,7 @@ public abstract class RecetaCompuesta implements Receta {
 	protected HashMap<String, BigDecimal> condimentos;
 	protected HashMap<String, BigDecimal> ingredientes;
 	protected HashMap<Integer, String> pasosPreparacion;
+	protected HashSet<CondicionPreexistente> condiciones;
 	protected String nombre;
 	protected String autor;
 	protected String dificultad;
@@ -41,6 +43,15 @@ public abstract class RecetaCompuesta implements Receta {
 	public void setIngredientes(HashMap<String, BigDecimal> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
+	
+	public HashSet<CondicionPreexistente> getCondiciones() {
+		return condiciones;
+	}
+
+	public void setCondiciones(HashSet<CondicionPreexistente> condiciones) {
+		this.condiciones = condiciones;
+	}
+	
 	public HashMap<Integer, String> getPasosPreparacion() {
 		return pasosPreparacion;
 	}

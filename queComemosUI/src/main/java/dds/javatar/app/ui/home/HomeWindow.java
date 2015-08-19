@@ -14,6 +14,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.lacar.ui.model.Action;
 
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.ui.receta.RecetaWindow;
 
 public class HomeWindow extends SimpleWindow<Home>{
 
@@ -69,7 +70,7 @@ public class HomeWindow extends SimpleWindow<Home>{
 	}
 
 	private Action verReceta() {
-		// TODO Auto-generated method stub
+		new RecetaWindow(this).open();
 		return null;
 	}
 

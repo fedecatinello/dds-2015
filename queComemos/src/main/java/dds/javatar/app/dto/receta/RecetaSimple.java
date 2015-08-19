@@ -2,7 +2,6 @@ package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-
 import dds.javatar.app.util.exception.RecetaException;
 
 public abstract class RecetaSimple implements Receta {
@@ -35,7 +34,7 @@ public abstract class RecetaSimple implements Receta {
 	public void agregarPasoPreparacion(Integer nroPaso,String preparacion) {
 		this.pasosPreparacion.put(nroPaso, preparacion);
 	}
-
+	
 	public Integer getCalorias() {
 		return this.calorias;
 	}
@@ -127,5 +126,6 @@ public abstract class RecetaSimple implements Receta {
 		}
 		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
 	}
+	
 
 }

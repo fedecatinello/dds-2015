@@ -10,7 +10,7 @@ import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.ui.home.HomeWindow;
-import dds.javatar.app.ui.receta.RecetaContainer;
+import dds.javatar.app.ui.utils.ContainerFactory;
 
 
 public class QueComemosApp extends Application{
@@ -24,7 +24,7 @@ public class QueComemosApp extends Application{
 	protected Window<?> createMainWindow() {
 		ApplicationContext.getInstance().configureSingleton(queComemos.entrega3.dominio.Receta.class, new RepoRecetas());
 		ApplicationContext.getInstance().configureSingleton(Receta.class, RepositorioRecetas.getInstance());
-		RecetaContainer.getInstance().agregarRecetasAlRepositorio();
+		ContainerFactory.getInstance().agregarRecetasAlRepositorio();
 		ApplicationContext.getInstance().configureSingleton(Usuario.class, RepositorioUsuarios.getInstance());
 		return new HomeWindow(this);
 	}

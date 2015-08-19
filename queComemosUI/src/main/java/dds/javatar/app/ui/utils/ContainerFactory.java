@@ -1,4 +1,4 @@
-package dds.javatar.app.ui.receta;
+package dds.javatar.app.ui.utils;
 
 import java.math.BigDecimal;
 
@@ -6,15 +6,15 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 
-public class RecetaContainer {
+public class ContainerFactory {
 
 	private RepositorioRecetas instanceRepositorio = RepositorioRecetas.getInstance(); 
 	
-	private static RecetaContainer instance;
+	private static ContainerFactory instance;
 	
-	public static RecetaContainer getInstance() {
+	public static ContainerFactory getInstance() {
 		if (instance == null) {
-			instance = new RecetaContainer();
+			instance = new ContainerFactory();
 			
 		}
 		return instance;

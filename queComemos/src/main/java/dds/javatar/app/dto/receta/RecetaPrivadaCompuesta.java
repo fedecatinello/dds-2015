@@ -15,6 +15,8 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 				String nombre,
 				String autor,
 				Integer calorias,
+				String dificultad,
+				String temporada,
 				HashMap<String, BigDecimal> condimentos,
 				HashMap<String, BigDecimal> ingredientes,
 				HashMap<Integer, String> pasosPreparacion,
@@ -23,6 +25,8 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 			this.nombre = nombre;
 			this.autor = autor;
 			this.calorias = calorias;
+			this.dificultad = dificultad;
+			this.temporada = temporada;
 			this.condimentos = new HashMap<String, BigDecimal>();
 			this.condimentos.putAll(condimentos);
 			this.ingredientes = new HashMap<String, BigDecimal>();

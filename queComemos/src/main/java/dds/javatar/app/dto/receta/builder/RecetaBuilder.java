@@ -133,16 +133,48 @@ public class RecetaBuilder {
 		if(this.autor.isEmpty()) { /** Receta Publica **/			
 			
 			if(esCompuesta())
-				return new RecetaPublicaCompuesta(this.nombre, this.calorias, this.subrecetas);
+				return new RecetaPublicaCompuesta(
+									this.nombre, 
+									this.calorias, 
+									this.dificultad, 
+									this.temporada, 
+									this.ingredientes, 
+									this.condimentos, 
+									this.pasosPreparacion,
+									this.subrecetas);
 			else
-				return new RecetaPublicaSimple(this.nombre, this.calorias, this.ingredientes, this.condimentos,this.pasosPreparacion);
+				return new RecetaPublicaSimple(
+									this.nombre, 
+									this.calorias, 
+									this.dificultad, 
+									this.temporada, 
+									this.ingredientes, 
+									this.condimentos, 
+									this.pasosPreparacion);
 		}	
 		else {                    /** Receta Privada **/
 			
 			if(esCompuesta())
-				return new RecetaPrivadaCompuesta(this.nombre, this.autor, this.calorias, this.condimentos, this.ingredientes, this.pasosPreparacion, this.subrecetas);
+				return new RecetaPrivadaCompuesta(
+									this.nombre, 
+									this.autor, 
+									this.calorias, 
+									this.dificultad, 
+									this.temporada, 
+									this.condimentos, 
+									this.ingredientes, 
+									this.pasosPreparacion, 
+									this.subrecetas);
 			else
-				return new RecetaPrivadaSimple(this.nombre, this.autor, this.calorias, this.ingredientes, this.condimentos, this.pasosPreparacion);
+				return new RecetaPrivadaSimple(
+									this.nombre, 
+									this.autor, 
+									this.calorias, 
+									this.dificultad, 
+									this.temporada, 
+									this.ingredientes, 
+									this.condimentos, 
+									this.pasosPreparacion);
 		}
 			
 			

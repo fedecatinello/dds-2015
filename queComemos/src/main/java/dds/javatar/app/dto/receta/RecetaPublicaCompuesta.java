@@ -1,5 +1,7 @@
 package dds.javatar.app.dto.receta;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
@@ -11,9 +13,26 @@ import dds.javatar.app.util.exception.UsuarioException;
 public class RecetaPublicaCompuesta extends RecetaCompuesta implements RecetaPublica {
 
 	/** Constructor **/
-	public RecetaPublicaCompuesta(String nombre, Integer calorias, HashSet<Receta> subrecetas) {
+	public RecetaPublicaCompuesta(
+					String nombre,
+					Integer calorias,
+					String dificultad,
+					String temporada,
+					HashMap<String, BigDecimal> condimentos,
+					HashMap<String, BigDecimal> ingredientes,
+					HashMap<Integer, String> pasosPreparacion,
+					HashSet<Receta> subrecetas)
+	{
 		this.nombre = nombre;
 		this.calorias = calorias;
+		this.dificultad = dificultad;
+		this.temporada = temporada;
+		this.condimentos = new HashMap<String, BigDecimal>();
+		this.condimentos.putAll(condimentos);
+		this.ingredientes = new HashMap<String, BigDecimal>();
+		this.ingredientes.putAll(ingredientes);
+		this.pasosPreparacion = new HashMap<Integer, String>();
+		this.pasosPreparacion.putAll(pasosPreparacion);
 		this.subRecetas = new HashSet<Receta>();
 		this.subRecetas.addAll(subrecetas);
 		this.agregarRecetaAlRepo(this);

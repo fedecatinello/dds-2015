@@ -14,6 +14,8 @@ public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 			String nombre,
 			String autor,
 			Integer calorias,
+			String dificultad,
+			String temporada,
 			HashMap<String, BigDecimal> ingredientes,
 			HashMap<String, BigDecimal> condimentos,
 			HashMap<Integer, String> pasosPreparacion) 
@@ -21,6 +23,8 @@ public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 		this.nombre = nombre;
 		this.autor = autor;
 		this.calorias = calorias;
+		this.dificultad = dificultad;
+		this.temporada = temporada;
 		this.ingredientes = new HashMap<String, BigDecimal>();
 		this.ingredientes.putAll(ingredientes);
 		this.condimentos = new HashMap<String, BigDecimal>();

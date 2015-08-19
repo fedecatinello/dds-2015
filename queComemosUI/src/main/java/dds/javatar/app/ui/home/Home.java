@@ -76,10 +76,6 @@ public class Home {
     	this.usuarioLogeado = usuario;
     }
     
-    public void loadRepository() {
-    	RecetaContainer.getInstance().agregarRecetasAlRepositorio();
-    }
-    
 	protected String recetasFillType(){
 		if(tieneFavoritas()){
 			this.setMensajeInicio("Estas son tus recetas favoritas");

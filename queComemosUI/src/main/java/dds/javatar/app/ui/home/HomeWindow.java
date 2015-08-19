@@ -13,7 +13,6 @@ import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.ui.binding.transformer.ColorTransformer;
 import dds.javatar.app.ui.receta.RecetaWindow;
 
 public class HomeWindow extends SimpleWindow<Home> {
@@ -104,7 +103,6 @@ public class HomeWindow extends SimpleWindow<Home> {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	protected void fillTable(Table<Receta> table) {
 		
 		Column<Receta> nombre = new Column<Receta>(table);
@@ -114,7 +112,7 @@ public class HomeWindow extends SimpleWindow<Home> {
 		nombre.setTitle("Nombre");
 		nombre.setFixedSize(200);
 		nombre.bindContentsToProperty("nombre");
-		nombre.bindContentsToTransformer(new ColorTransformer(this.getModelObject()));
+		//nombre.bindContentsToTransformer(new ColorTransformer(this.getModelObject()));
 
 		new Column<Receta>(table).setTitle("Calorías").setFixedSize(100)
 				.bindContentsToProperty("calorias");

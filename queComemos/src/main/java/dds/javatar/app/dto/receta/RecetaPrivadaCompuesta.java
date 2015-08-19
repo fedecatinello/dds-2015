@@ -53,5 +53,5 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 		this.condimentos.put(condimento, cantidad);
 	}
 
-
+	
 }

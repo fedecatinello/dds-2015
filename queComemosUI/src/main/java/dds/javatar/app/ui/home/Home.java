@@ -16,7 +16,6 @@ import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.ui.receta.RecetaContainer;
 
 
 @Observable

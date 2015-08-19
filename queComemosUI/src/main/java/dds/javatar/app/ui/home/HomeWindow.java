@@ -11,7 +11,6 @@ import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.lacar.ui.model.Action;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.ui.receta.RecetaWindow;
@@ -60,7 +59,11 @@ public class HomeWindow extends SimpleWindow<Home>{
 
 		Button viewButton = new Button(actionsPanel);
 		viewButton.setCaption("Ver");
-		viewButton.onClick(this.verReceta());
+		viewButton.onClick(() -> {
+			RecetaWindow recetaWindow = new RecetaWindow(this);
+			recetaWindow.getModelObject().setReceta(this.getModelObject().getRecetaSelect());
+			recetaWindow.open();
+		});
 		viewButton.setForeground(Color.BLACK);
 		viewButton.setBackground(Color.ORANGE);
 		viewButton.bindEnabledToProperty("enableButton");
@@ -68,12 +71,6 @@ public class HomeWindow extends SimpleWindow<Home>{
 		viewButton.bindEnabled(elementSelected);
 	
 	}
-
-	private Action verReceta() {
-		new RecetaWindow(this).open();
-		return null;
-	}
-
 
 	protected void generateTable(Panel mainPanel){
 		Table<Receta> table = new Table<Receta>(mainPanel, Receta.class);
@@ -87,7 +84,7 @@ public class HomeWindow extends SimpleWindow<Home>{
 	}
 
 	protected void suitableBinding(Table<Receta> table){  
-		switch(getModelObject().recetasFillType()){
+		switch(this.getModelObject().recetasFillType()){
 		case "favoritas": table.bindItemsToProperty("recetasFav");
 		break;
 		case "consultas": table.bindItemsToProperty("recetasCons");

@@ -21,8 +21,8 @@ import com.google.gson.reflect.TypeToken;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.usuario.Rutina;
-import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
+import dds.javatar.app.dto.usuario.Usuario;
 
 public class RecetaWindow extends SimpleWindow<RecetaModel> {
 
@@ -34,31 +34,26 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		// TODO delete and read from the selected one.
 
 		// TODO get user authenticated.
-		Receta receta = new RecetaBuilder("Ravioles2")
-			.totalCalorias(350)
+		Receta receta = new RecetaBuilder("Ravioles2").totalCalorias(350)
 				.agregarIngrediente("azucar", new BigDecimal(150))
 				.agregarIngrediente("Harina", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
 				.agregarIngrediente("Verdura", new BigDecimal(100))
 				.agregarCondimento("Perejil", new BigDecimal(100))
-				.inventadaPor("Santi")
-				.buildReceta();
-		receta.setTemporada("Todo el año");
+				.inventadaPor("Santi").buildReceta();
+		receta.setTemporada("Todo el aÃ±o");
 		receta.setDificultad("Dificil");
-		
+
 		HashMap<Integer, String> pasos = new HashMap<Integer, String>();
 		pasos.put(1, "Agregar agua");
 		pasos.put(3, "comer");
 		pasos.put(2, "Agregar harina");
 		receta.setPasosPreparacion(pasos);
 
-		Usuario usuario = new Usuario.UsuarioBuilder()
-			.nombre("ElSiscador")
-				.sexo(Usuario.Sexo.MASCULINO)
-				.peso(new BigDecimal(75))
+		Usuario usuario = new Usuario.UsuarioBuilder().nombre("ElSiscador")
+				.sexo(Usuario.Sexo.MASCULINO).peso(new BigDecimal(75))
 				.altura(new BigDecimal(1.80))
-				.rutina(new Rutina(TipoRutina.FUERTE, 20))
-				.build();
+				.rutina(new Rutina(TipoRutina.FUERTE, 20)).build();
 
 		usuario.marcarFavorita(receta);
 
@@ -70,7 +65,6 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 	protected void createMainTemplate(Panel mainPanel) {
 		this.setTitle("Detalle de receta");
 		super.createMainTemplate(mainPanel);
-
 	}
 
 	@Override
@@ -136,12 +130,10 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		tableIngredientes.bindItemsToProperty("receta.ingredientes.entrySet");
 
 		new Column<Entry<String, BigDecimal>>(tableIngredientes)
-			.setTitle("Dosis")
-				.setFixedSize(70)
+				.setTitle("Dosis").setFixedSize(70)
 				.bindContentsToProperty("value");
 		new Column<Entry<String, BigDecimal>>(tableIngredientes)
-			.setTitle("Ingrediente")
-				.setFixedSize(130)
+				.setTitle("Ingrediente").setFixedSize(130)
 				.bindContentsToProperty("key");
 
 		Panel recetaFavoritaPanel = new Panel(leftMainInfoPanel);
@@ -194,7 +186,7 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 		Panel bottomPanel = new Panel(mainPanel);
 
 		Label title = new Label(bottomPanel);
-		title.setText("Proceso de preparación");
+		title.setText("Proceso de preparacion");
 		title.setFontSize(14);
 
 		Label lblPasos = new Label(bottomPanel);
@@ -207,8 +199,7 @@ public class RecetaWindow extends SimpleWindow<RecetaModel> {
 	protected void addActions(Panel actionsPanel) {
 		Button back = new Button(actionsPanel);
 		back.setCaption("Volver");
-		// back.onClick(()->new HomeWindow(this).open());
-		// TODO bindear para volver a la pantalla anterior.
+		back.onClick(this::close);
 	}
 
 }

@@ -1,7 +1,6 @@
 package dds.javatar.app.ui.receta;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.uqbar.arena.layout.HorizontalLayout;
@@ -18,47 +17,12 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import com.google.gson.reflect.TypeToken;
 
-import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.builder.RecetaBuilder;
-import dds.javatar.app.dto.usuario.Rutina;
-import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
-import dds.javatar.app.dto.usuario.Usuario;
-
 public class RecetaWindow extends SimpleWindow<RecetaModel> {
 
 	private static final long serialVersionUID = 1L;
 
 	public RecetaWindow(WindowOwner parent) {
 		super(parent, new RecetaModel());
-
-		// TODO delete and read from the selected one.
-
-		// TODO get user authenticated.
-		Receta receta = new RecetaBuilder("Ravioles2").totalCalorias(350)
-				.agregarIngrediente("azucar", new BigDecimal(150))
-				.agregarIngrediente("Harina", new BigDecimal(300))
-				.agregarIngrediente("Agua", new BigDecimal(70))
-				.agregarIngrediente("Verdura", new BigDecimal(100))
-				.agregarCondimento("Perejil", new BigDecimal(100))
-				.inventadaPor("Santi").buildReceta();
-		receta.setTemporada("Todo el año");
-		receta.setDificultad("Dificil");
-
-		HashMap<Integer, String> pasos = new HashMap<Integer, String>();
-		pasos.put(1, "Agregar agua");
-		pasos.put(3, "comer");
-		pasos.put(2, "Agregar harina");
-		receta.setPasosPreparacion(pasos);
-
-		Usuario usuario = new Usuario.UsuarioBuilder().nombre("ElSiscador")
-				.sexo(Usuario.Sexo.MASCULINO).peso(new BigDecimal(75))
-				.altura(new BigDecimal(1.80))
-				.rutina(new Rutina(TipoRutina.FUERTE, 20)).build();
-
-		usuario.marcarFavorita(receta);
-
-		this.getModelObject().setReceta(receta);
-		this.getModelObject().setUsuarioLogeado(usuario);
 	}
 
 	@Override

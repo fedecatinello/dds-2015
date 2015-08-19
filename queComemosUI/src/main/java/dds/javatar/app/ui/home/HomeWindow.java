@@ -62,6 +62,7 @@ public class HomeWindow extends SimpleWindow<Home>{
 		viewButton.onClick(() -> {
 			RecetaWindow recetaWindow = new RecetaWindow(this);
 			recetaWindow.getModelObject().setReceta(this.getModelObject().getRecetaSelect());
+			recetaWindow.getModelObject().setUsuarioLogeado(this.getModelObject().getUsuarioLogeado());
 			recetaWindow.open();
 		});
 		viewButton.setForeground(Color.BLACK);

@@ -12,6 +12,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.lacar.ui.model.Action;
 
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.util.exception.FilterException;
 
 public class HomeWindow extends SimpleWindow<Home>{
 
@@ -23,6 +24,8 @@ public class HomeWindow extends SimpleWindow<Home>{
 
 	public HomeWindow(WindowOwner parent) {
 		super(parent, new Home());
+		this.getModelObject().loadUser();
+		this.getModelObject().searchRecetas();
 	}
 	
 
@@ -70,14 +73,12 @@ public class HomeWindow extends SimpleWindow<Home>{
 	protected void generateTable(Panel mainPanel){
 		Table<Receta> table = new Table<Receta>(mainPanel, Receta.class);
 		table.setHeight(200);
-		table.setWidth(450);
+		table.setWidth(550);
 
 		this.suitableBinding(table);		
 		table.bindValueToProperty("recetaSelect");
 
 		this.fillTable(table);
-
-
 	}
 
 	protected void suitableBinding(Table<Receta> table){  
@@ -102,17 +103,17 @@ public class HomeWindow extends SimpleWindow<Home>{
 
 		new Column<Receta>(table) 
 		.setTitle("Calorías")
-		.setFixedSize(70)
+		.setFixedSize(100)
 		.bindContentsToProperty("calorias");
 
 		new Column<Receta>(table) 
 		.setTitle("Dificultad")
-		.setFixedSize(70)
+		.setFixedSize(100)
 		.bindContentsToProperty("dificultad");
 
 		new Column<Receta>(table) 
 		.setTitle("Temporada")
-		.setFixedSize(70)
+		.setFixedSize(100)
 		.bindContentsToProperty("temporada");
 	}
 

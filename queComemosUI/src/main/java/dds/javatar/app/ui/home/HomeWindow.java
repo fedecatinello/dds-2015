@@ -2,7 +2,6 @@ package dds.javatar.app.ui.home;
 
 import java.awt.Color;
 
-import org.apache.commons.collections15.Transformer;
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -10,7 +9,6 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
-import org.uqbar.arena.widgets.tables.labelprovider.PropertyLabelProvider;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 
@@ -116,7 +114,7 @@ public class HomeWindow extends SimpleWindow<Home> {
 		nombre.setTitle("Nombre");
 		nombre.setFixedSize(200);
 		nombre.bindContentsToProperty("nombre");
-		nombre.bindContentsToTransformer(new ColorTransformer());
+		nombre.bindContentsToTransformer(new ColorTransformer(this.getModelObject()));
 
 		new Column<Receta>(table).setTitle("Calorías").setFixedSize(100)
 				.bindContentsToProperty("calorias");

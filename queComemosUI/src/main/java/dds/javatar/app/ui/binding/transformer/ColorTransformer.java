@@ -11,18 +11,19 @@ import dds.javatar.app.ui.home.Home;
 
 public class ColorTransformer implements Transformer<Receta, Color>{
 
-	private Home model = new Home();
+	private Home model;
+	
+	public ColorTransformer(Home model) {
+		this.model = model;
+	}
 	
 	@Override
 	public Color transform(Receta receta) {
-		if (model.getUsuarioLogeado().tieneReceta(receta)) {
+		if (this.model.getUsuarioLogeado().tieneReceta(receta)) {
 			return Color.RED;
 		} else {
 			return Color.BLUE;
 		}
-
 	}
-
-
 	
 }

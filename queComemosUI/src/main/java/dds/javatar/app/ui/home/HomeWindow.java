@@ -117,21 +117,6 @@ public class HomeWindow extends SimpleWindow<Home> {
 		nombre.setFixedSize(200);
 		nombre.bindContentsToProperty("nombre");
 		nombre.bindContentsToTransformer(new ColorTransformer());
-	
-	
-//
-//		new Column<Jugador>(tabla).setTitle("Handicap").setFixedSize(100)
-//				.bindContentsToProperty("handicap")
-//				.bindBackground("handicap", new Transformer<Integer, Color>() {
-//					@Override
-//					public Color transform(Integer hand) {
-//						if (hand > 8) {
-//							return Color.BLUE;
-//						} else {
-//							return Color.WHITE;
-//						}
-//					}
-//				});
 
 		new Column<Receta>(table).setTitle("Calorías").setFixedSize(100)
 				.bindContentsToProperty("calorias");

@@ -367,23 +367,21 @@ public class Usuario extends Entity {
 	}
 
 	public boolean tieneReceta(Receta receta) {
-		boolean laTiene = false;
 		for (Receta recetaUser : this.getRecetas()) {
 			if (recetaUser.getNombre()
 				.equals(receta.getNombre()))
-				laTiene = true;
+				return true;
 		}
-		return laTiene;
+		return false;
 	}
 	
 	public boolean tieneRecetaFavorita(Receta receta) {
-		boolean laTiene = false;
 		for (Receta recetaUser : this.getFavoritos()) {
 			if (recetaUser.getNombre()
 				.equals(receta.getNombre()))
-				laTiene = true;
+				return true;
 		}
-		return laTiene;
+		return false;
 	}
 
 }

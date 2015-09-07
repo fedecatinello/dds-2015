@@ -34,7 +34,7 @@
 
 <div class="container">
   <div class="page-header">
-     <h3>Este string hay q cambiarlo por una property</h3>
+     <h3>Este string hay q cambiarlo por una property</h3> <!-- mensaje inicio -->
   </div>
 
   <div class="row">
@@ -54,7 +54,7 @@
             <th>Dificultad</th>
             <th>Temporada</th>
           </tr>
-          <tr data-ng-repeat="tarea in tareasCtrl.tareas | filter:tareaBuscada" class="animate-repeat">
+           <tr data-ng-repeat="receta in recetaCtrl.receta| filter:recetasPorUsuario" class="animate-repeat">
             <td class="col-xs-4">{{receta.nombre}}</td>
             <td class="col-xs-2">{{receta.calorias}}</td>
             <td class="col-xs-3">{{receta.dificultad}}</td>
@@ -62,29 +62,19 @@
             <td class="col-xs-1"><span
               ng-class="{ 'label label-danger' : receta.esPublica == true,
                     'label label-success' : receta.esPublica == false
-            }">{{receta.esPublica | number: 2}}<span></td>
+            }">{{receta.esPublica | number: 2}}</span></td>
 
-            <td nowrap class="col-xs-2">
-              <button type="button" class="btn btn-default" 
-                      aria-label="Cumplir" ng-show="tarea.sePuedeCumplir()">
-                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-              </button>
-              <button type="button" class="btn btn-primary" 
-                      aria-label="Actualizar">
-                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-              </button>
-              <button type="button" class="btn btn-success" 
-                      aria-label="Asignarme">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              </button>
-              <button type="button" class="btn btn-danger">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              </button>
-            </td>
+      
           </tr>
           </tbody>
         </table>
       </div>
+      
+      <button type="submit" ng-click="verReceta()" 
+        class="btn btn-primary">
+        Ver
+      </button>
+      
       <div class="alert alert-danger animate-repeat" ng-repeat="error in tareasCtrl.errors">{{error}}</div>
     </div>
   </div>

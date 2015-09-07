@@ -70,7 +70,7 @@ public class TestLogs {
 		assertThat(loggingEvent.getLevel(), is(Level.INFO));
 		assertThat(
 				loggingEvent.getRenderedMessage(),
-				is("Consulta de: DonJuan devuelve mas de 100 resultados.(119 resultados)"));
+				is("Consulta de: DonJuan devuelve mas de 100 resultados.(113 resultados)"));
 	}
 
 	@Test(expected=Exception.class)

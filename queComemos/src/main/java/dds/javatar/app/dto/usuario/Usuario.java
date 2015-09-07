@@ -255,8 +255,6 @@ public class Usuario extends Entity {
 		receta.chequearVisibilidad(receta, this);
 	}
 
-	/* otros */
-
 	/* Obtener la masa corporal dada una presicion */
 	public BigDecimal getIMC(int precision) {
 

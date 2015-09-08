@@ -14,12 +14,12 @@ import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
-public class TareasController {
+public class RecetasController {
 
 	private JsonTransformer jsonTransformer;
 	private Gson gson;
 
-	public TareasController(JsonTransformer jsonTransformer, Gson gson) {
+	public RecetasController(JsonTransformer jsonTransformer, Gson gson) {
 		this.jsonTransformer = jsonTransformer;
 		this.gson = gson;
 	}

@@ -4,7 +4,7 @@ import spark.Spark;
 
 import com.google.gson.Gson;
 
-import dds.javatar.app.ui.controller.TareasController;
+import dds.javatar.app.ui.controller.RecetasController;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class Main {
@@ -16,6 +16,6 @@ public class Main {
 		Spark.port(9000);
 		Spark.staticFileLocation("/webapp");
 
-		new TareasController(jsonTransformer, gson).register();
+		new RecetasController(jsonTransformer, gson).register();
 	}
 }

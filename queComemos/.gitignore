@@ -3,5 +3,3 @@
 .settings
 /target/
 .directory
-/.idea/*
-/src/webapp/main/dds/javatar/webapp/node_modules/*

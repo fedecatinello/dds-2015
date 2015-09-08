@@ -1,4 +1,8 @@
-var Receta = function() {
+var Receta = function() { };
+
+Receta.asReceta = function (jsonReceta) {
+	return angular.extend(new Receta(), jsonReceta);
+
     this.nombre = null;
     this.dificultad = null;
     this.temporada = null;

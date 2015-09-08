@@ -7,19 +7,29 @@ var app = angular.module('queComemosApp', []);
 app.controller('RecetasController', function(recetasService) {
 	var self = this;
 	self.recetas = [];
-	self.mensajeInicio = 'lalalal';
+	self.recetaSelected ;
 
 	function transformarAReceta(jsonReceta) {
 		//return Receta.asReceta(jsonTarea);
 		return jsonReceta.parse();
 	}
 
-	this.getRecetas = function() {
+	self.getRecetas = function() {
 		recetasService.findAll(function(data) {
 			self.recetas = _.map(data, transformarAReceta);
 		});
-		return self.recetas;
+	};
+
+	$scope.setClickedRow = function(index) {
+		self.selectedRow = index;
+		self.recetaSelected = self.recetas[self.selectedRow];
 	}
+
+
+	
+
+
+	self.getRecetas();
 
 });
 

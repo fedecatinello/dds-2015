@@ -1,7 +1,7 @@
 app.service('recetasService', function($http) {
 
 	this.findAll = function(callback, errorHandler) {
-		$http.get('/recetas').success(callback).error(errorHandler);
+		$http.get('/recetas').success(callback);
 	};
 
 	this.update = function(receta, callback, errorHandler) {

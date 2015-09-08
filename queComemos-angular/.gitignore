@@ -3,5 +3,6 @@
 .classpath
 .directory
 target/
+npm-debug.log
 node_modules/
 

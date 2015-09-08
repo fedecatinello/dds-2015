@@ -53,7 +53,7 @@
 					<th>Temporada</th>
 				</tr>
 				<tr data-ng-repeat="receta in recetasCtrl.recetas" class="animate-repeat"
-					ng-class="{'selected':$index == recetasCtrl.selectedRow}" style="{{receta.esPublica}}==true? color:'red'"
+					ng-class="{'selected':$index == recetasCtrl.selectedRow , 'publicas': {{receta.esPublica()}}}" 
 					ng-click="setClickedRow($index)">
 					<td class="col-xs-4">{{receta.nombre}}</td>
 					<td class="col-xs-2">{{receta.calorias}}</td>
@@ -70,7 +70,7 @@
 		<div class="accordion" id="accordion1">
 			<div class="accordion-group">
 
-				<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo" >Ver</button>
+				<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo" >Ver Detalles</button>
 				<br>
 				<div id="demo" class="accordion-body collapse" >
 					<div class="panel panel-default">
@@ -165,6 +165,9 @@
 				background-color:black;
 				color:white;
 				font-weight:bold;
+			}
+			.publicas {
+				background-color:#FFFF66;
 			}
 		</style>
 

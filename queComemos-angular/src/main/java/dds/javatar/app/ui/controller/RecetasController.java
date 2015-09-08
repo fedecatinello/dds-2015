@@ -9,15 +9,18 @@ import com.google.gson.Gson;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
+import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
+import dds.javatar.app.ui.controller.util.ContainerFactory;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class RecetasController {
 
 	private JsonTransformer jsonTransformer;
 	private Gson gson;
+
 
 	public RecetasController(JsonTransformer jsonTransformer, Gson gson) {
 		this.jsonTransformer = jsonTransformer;
@@ -41,10 +44,12 @@ public class RecetasController {
 						.rutina(new Rutina(TipoRutina.FUERTE, 20))
 						.build();
 
-				Buscador buscador = new Buscador();
-				List<Receta> recetas = buscador.realizarBusquedaPara(usuario);
+//				Buscador buscador = new Buscador();
+//				List<Receta> recetas = buscador.realizarBusquedaPara(usuario);
+				ContainerFactory.getInstance().agregarRecetasAlRepositorio();
+				ContainerFactory.getInstance().agregarUsuariosAlRepo();
 				response.type("application/json;charset=utf-8");
-				return recetas;
+				return RepositorioRecetas.getInstance().listarTodas();
 			}, this.jsonTransformer);
 		
 		

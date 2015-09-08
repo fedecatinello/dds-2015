@@ -1,6 +1,6 @@
 var Receta = function() { 
     this.nombre = null;
-    this.autor = null;
+    this.autor = "";
     this.dificultad = null;
     this.temporada = null;
     this.calorias = 0;
@@ -12,5 +12,5 @@ Receta.asReceta = function (jsonReceta) {
 
 
 Receta.prototype.esPublica = function() {
-    return this.autor.length==0;
+    return this.autor=="";
 };

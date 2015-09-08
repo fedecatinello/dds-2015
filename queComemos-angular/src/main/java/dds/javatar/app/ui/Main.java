@@ -13,7 +13,7 @@ public class Main {
 		Gson gson = new Gson();
 		JsonTransformer jsonTransformer = new JsonTransformer(gson);
 
-		Spark.port(9000);
+		Spark.port(8080);
 		Spark.staticFileLocation("/webapp");
 
 		new RecetasController(jsonTransformer, gson).register();

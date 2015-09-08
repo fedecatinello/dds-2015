@@ -1,6 +1,7 @@
 .settings
 .project
 .classpath
+.directory
 target/
 node_modules/
 

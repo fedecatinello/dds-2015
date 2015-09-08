@@ -1,3 +1,3 @@
 'use strict';
 
-var app = angular.module('recetasApp', []);
+angular.module('recetasApp', []);

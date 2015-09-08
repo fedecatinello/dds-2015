@@ -4,15 +4,14 @@ var app = angular.module('queComemosApp', []);
 
 /** Controllers* */
 
-app.controller('RecetasController', function(recetasService) {
+app.controller('RecetasController', function(recetasService, $scope) {
 	var self = this;
 	self.recetas = [];
 	self.recetaSelected ;
 
-	function transformarAReceta(jsonReceta) {
-		//return Receta.asReceta(jsonTarea);
-		return jsonReceta.parse();
-	}
+	function transformarAReceta(jsonTarea) {
+		return Receta.asReceta(jsonTarea);
+	};
 
 	self.getRecetas = function() {
 		recetasService.findAll(function(data) {
@@ -26,19 +25,18 @@ app.controller('RecetasController', function(recetasService) {
 	}
 
 
-	
+
 
 
 	self.getRecetas();
 
 });
 
-app.controller('ContentController', function($scope) {
+app.controller('ContentController', function() {
 
-	$scope.mensajeInicio = 'Bienvenido a QueComemos';
-	$scope.selectedRow = null;
+	var self = this;
+	self.mensajeInicio = 'Bienvenido a QueComemos';
 
-	$scope.setClickedRow = function(index) {
-		$scope.selectedRow = index;
-	}
+
+
 });

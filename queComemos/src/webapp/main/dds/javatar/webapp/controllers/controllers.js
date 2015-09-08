@@ -12,7 +12,7 @@ function transformarAReceta(jsonTarea) {
 		return Receta.asReceta(jsonTarea);
 	}
 
-this.getTareas = function () {
+this.getRecetas = function () {
 		recetasService.findAll(function (data) {
 		    self.recetas = _.map(data, transformarAReceta);
             });
@@ -23,4 +23,9 @@ this.getTareas = function () {
 recetas_app.controller('ContentController', function($scope) {
 
 	$scope.mensajeInicio = 'Bienvenido a QueComemos';
+	$scope.selectedRow = null;
+
+	$scope.setClickedRow = function(index){
+		$scope.selectedRow = index;
+	}
 });

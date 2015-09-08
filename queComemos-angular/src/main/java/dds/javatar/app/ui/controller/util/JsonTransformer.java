@@ -1,6 +1,7 @@
-package dds.javatar.app.dto.receta.util.transformer;
+package dds.javatar.app.ui.controller.util;
 
 import spark.ResponseTransformer;
+
 import com.google.gson.Gson;
 
 public class JsonTransformer implements ResponseTransformer {

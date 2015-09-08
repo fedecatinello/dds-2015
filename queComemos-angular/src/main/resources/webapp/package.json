@@ -1,0 +1,14 @@
+{
+  "name": "receta-dds",
+  "description": "Aplicacion de recetas RESTful",
+  "author": "Javatar",
+  "dependencies": {
+    "angular-animate": "^1.4.1",
+    "bootstrap": "^3.3.5",
+    "jquery": "^2.1.4",
+    "underscore": "^1.8.3",
+    "angular": "^1.4.1",
+    "bootbox": "^4.4.0",
+    "angular-loading-bar": "^0.8.0"
+  }
+}

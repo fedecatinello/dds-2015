@@ -25,13 +25,12 @@ app.controller('RecetasController', function(recetasService, $scope) {
 	}
 
 
-	
+
 
 
 	self.getRecetas();
 
 });
-
 
 app.controller('ContentController', function() {
 

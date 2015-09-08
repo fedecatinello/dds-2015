@@ -5,4 +5,5 @@
 target/
 npm-debug.log
 node_modules/
-
+/.idea
+/src/main/resources/webapp/node_modules

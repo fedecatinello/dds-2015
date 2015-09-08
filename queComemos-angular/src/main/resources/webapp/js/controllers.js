@@ -6,9 +6,8 @@ var app = angular.module('queComemosApp', []);
 
 app.controller('RecetasController', function(recetasService, $scope) {
 	var self = this;
-	$scope.recetas = [{'nombre' : 'Ensalada Caesar', 'autor': 'Santi', 'calorias' : 100},
-					  {'nombre' : 'Pollo', 'autor': 'Fede', 'calorias' : 400}];
-	$scope.recetaSelected =null;
+	self.recetas = [];
+	self.recetaSelected =null;
 
 	function transformarAReceta(jsonTarea) {
 		return Receta.asReceta(jsonTarea);
@@ -16,17 +15,17 @@ app.controller('RecetasController', function(recetasService, $scope) {
 
 	self.getRecetas = function() {
 		recetasService.findAll(function(data) {
-			$scope.recetas = _.map(data, transformarAReceta);
+			self.recetas = _.map(data, transformarAReceta);
 		});
 	};
 
 	$scope.setClickedRow = function(index) {
-		$scope.selectedRow = index;
-		$scope.recetaSelected = $scope.recetas[$scope.selectedRow];
+		self.selectedRow = index;
+		self.recetaSelected = self.recetas[self.selectedRow];
 	}
 
 
-	//self.getRecetas();
+	self.getRecetas();
 
 });
 

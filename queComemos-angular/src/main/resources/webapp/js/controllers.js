@@ -7,7 +7,7 @@ var app = angular.module('queComemosApp', []);
 app.controller('RecetasController', function(recetasService, $scope) {
 	var self = this;
 	self.recetas = [];
-	self.recetaSelected ;
+	self.recetaSelected =null;
 
 	function transformarAReceta(jsonTarea) {
 		return Receta.asReceta(jsonTarea);
@@ -23,9 +23,6 @@ app.controller('RecetasController', function(recetasService, $scope) {
 		self.selectedRow = index;
 		self.recetaSelected = self.recetas[self.selectedRow];
 	}
-
-
-
 
 
 	self.getRecetas();

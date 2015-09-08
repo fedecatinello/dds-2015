@@ -52,7 +52,7 @@
 							<th>Dificultad</th>
 							<th>Temporada</th>
 						</tr>
-						<tr data-ng-repeat="receta in recetaCtrl.receta| filter:receta.getRecetas" class="animate-repeat"
+						<tr data-ng-repeat="receta in recetasCtrl.getRecetas()" class="animate-repeat"
 							ng-class="{ 'label label-danger' : receta.esPublica == true,
                     'label label-success' : receta.esPublica == false, 'selected':$index == selectedRow}"
 							ng-click="setClickedRow($index)">

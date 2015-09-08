@@ -67,10 +67,12 @@
 
 		<br>
 		<!-- Boton desplegable -->
-		<div class="container">
-			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Ver</button>
+		<div class="accordion" id="accordion1">
+		 <div class="accordion-group">
+		 
+			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo" >Ver</button>
 			<br>
-			<div id="demo" class="collapse in">
+			<div id="demo" class="accordion-body collapse" >
 				<div class="panel panel-default">
 
 					<!-- Panel de arriba de toodo con datos principales -->
@@ -78,7 +80,7 @@
 						<h4>{{recetasCtrl.recetaSelected.nombre}}</h4>
 						<h6>{{recetasCtrl.recetaSelected.calorias}} calorías. Creado por {{recetasCtrl.recetaSelected.autor}}</h6>
 						<!-- no tenemos autor en publicas! -->
-						
+
 
 
 						<div class="col-lg-6">

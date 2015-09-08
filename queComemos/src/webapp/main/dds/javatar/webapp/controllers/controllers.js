@@ -1,4 +1,4 @@
-app.controller('RecetasController', function(recetasService) {
+angular.module('recetasApp', []).controller('RecetasController', function(recetasService) {
 	var self = this;
 	self.recetas = [];
 
@@ -12,4 +12,9 @@ this.getTareas = function () {
             });
 	}
 
-}
+});
+
+angular.module('recetasApp', []).controller('ContentController', function($scope) {
+
+	$scope.mensajeInicio = 'Bienvenido a QueComemos';
+});

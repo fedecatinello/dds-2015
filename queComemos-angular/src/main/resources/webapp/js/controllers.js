@@ -46,8 +46,9 @@ app.controller('RecetasController', function(recetasService, $scope) {
 app.controller('ContentController', function() {
 
 	var self = this;
-	self.mensajeInicio = 'Estas son tus ultimas recetas consultadas';
-	//Este mensaje depende si son ultimas consultadas, favoritas, etc
 
+	self.getInitMessage(function(data) {
+		self.mensajeInicio = data.toString();
+	});
 
 });

@@ -1,0 +1,10 @@
+.selected {
+    background-color:black;
+    color:white;
+    font-weight:bold;
+}
+.publicas {
+    background-color:blue;
+    color:white;
+    font-style: italic;
+}

@@ -28,7 +28,7 @@ app.controller('RecetasController', function(recetasService, $scope) {
 	};
 
 	self.getPasos = function() {
-		var a = self.recetaSelected.pasosPreparacion
+		var a = self.recetaSelected.pasosPreparacion;
 		var array_values = new Array();
 
 		for (var key in a) {
@@ -52,7 +52,8 @@ app.controller('RecetasController', function(recetasService, $scope) {
 app.controller('ContentController', function() {
 
 	var self = this;
-	self.mensajeInicio = 'Bienvenido a QueComemos';
-	
+	self.mensajeInicio = 'Estas son tus ultimas recetas consultadas';
+	//Este mensaje depende si son ultimas consultadas, favoritas, etc
+
 
 });

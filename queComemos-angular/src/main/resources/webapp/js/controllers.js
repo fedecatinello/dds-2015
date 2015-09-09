@@ -6,19 +6,20 @@ var username = 'Maru Botana';
 
 /** Controllers* */
 
-app.controller('RecetasController', function(recetasService, $scope) {
+app.controller('RecetasController', function(recetasService, messageService, $scope) {
 	var self = this;
 	self.recetas = [];
-	self.recetasFavoritas =[];
-	self.recetaSelected =null;
-	self.esFavorita=false;
+	self.recetasFavoritas = [];
+	self.recetaSelected = null;
+	self.esFavorita = false;
 
 	function transformarAReceta(jsonTarea) {
 		return Receta.asReceta(jsonTarea);
-	};
+	}
+	;
 
 	self.getRecetas = function() {
-		recetasService.findAllByUsername(username,function(data) {
+		recetasService.findAllByUsername(username, function(data) {
 			self.recetas = _.map(data, transformarAReceta);
 		});
 	};
@@ -27,7 +28,7 @@ app.controller('RecetasController', function(recetasService, $scope) {
 		var a = self.recetaSelected.pasosPreparacion;
 		var array_values = new Array();
 
-		for (var key in a) {
+		for ( var key in a) {
 			array_values.push(a[key]);
 		}
 
@@ -35,7 +36,7 @@ app.controller('RecetasController', function(recetasService, $scope) {
 	};
 
 	self.getRecetasFavoritas = function() {
-		recetasService.findFavoritasByUsername(username,function(data) {
+		recetasService.findFavoritasByUsername(username, function(data) {
 			self.recetasFavoritas = _.map(data, transformarAReceta);
 		});
 	};
@@ -44,27 +45,29 @@ app.controller('RecetasController', function(recetasService, $scope) {
 		self.selectedRow = index;
 		self.recetaSelected = self.recetas[self.selectedRow];
 
-		self.esFavorita = self.recetasFavoritas.filter(function ( obj ) {
+		self.esFavorita = self.recetasFavoritas.filter(function(obj) {
 			return obj.autor == self.recetaSelected.autor;
-		}).length >0;
+		}).length > 0;
 	}
-
-
-	self.getRecetas();
-	self.getRecetasFavoritas();
-
-});
-
-app.controller('ContentController', function(messageService) {
-
-	var self = this;
 
 	self.obtenerMensajeInicio = function() {
 		messageService.getInitMessage(username, function(data) {
-			self.mensajeInicio = JSON.stringify(data);
-		});
+			self.mensajeInicio = data;
+		}, notificarError);
+	}
+
+	function notificarError(mensaje) {
+		self.getTareas();
+		self.errors.push(mensaje);
+		$timeout(function() {
+			while (self.errors.length > 0) {
+				self.errors.pop();
+			}
+		}, 10000);
 	}
 
 	self.obtenerMensajeInicio();
+	self.getRecetas();
+	self.getRecetasFavoritas();
 
 });

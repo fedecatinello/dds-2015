@@ -1,6 +1,5 @@
 package dds.javatar.app.ui.controller;
 
-
 import spark.Spark;
 
 import com.google.gson.Gson;
@@ -12,11 +11,12 @@ import dds.javatar.app.ui.controller.util.JsonTransformer;
 public class UsuariosController {
 
 	private JsonTransformer jsonTransformer;
-	private Gson gson;
-	
+
+	// private Gson gson;
+
 	public UsuariosController(JsonTransformer jsonTransformer, Gson gson) {
 		this.jsonTransformer = jsonTransformer;
-		this.gson = gson;
+		// this.gson = gson;
 	}
 
 	public void register() {
@@ -26,35 +26,29 @@ public class UsuariosController {
 			response.body(ex.getMessage());
 		});
 
-
-		Spark.get("/recetasFavoritas/:username", "application/json;charset=utf-8",(request, response) -> {
+		Spark.get("/recetasFavoritas/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			Usuario usuarioLogueado;
-			usuarioLogueado = RepositorioUsuarios.getInstance().get(
-					new Usuario.UsuarioBuilder()
-						.nombre(username)
-							.build());
+			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 
 			return usuarioLogueado.getFavoritos();
 
-			}, this.jsonTransformer);
-		
-		Spark.get("/mensajeInicio/:username", "application/json;charset=utf-8",(request, response) -> {
+		}, this.jsonTransformer);
+
+		Spark.get("/mensajeInicio/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			Usuario usuarioLogueado;
-			usuarioLogueado = RepositorioUsuarios.getInstance().get(
-					new Usuario.UsuarioBuilder()
-						.nombre(username)
-							.build());
+			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 
-			if(usuarioLogueado.getFavoritos() == null)
+			if (usuarioLogueado.getFavoritos() == null) {
 				return "Estas fueron tus úĺtimas consultas";
-			else
+			} else {
 				return "Estas son tus recetas favoritas";
+			}
 
-			}, this.jsonTransformer);
+		});
 
 	}
 }

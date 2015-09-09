@@ -15,11 +15,12 @@ import dds.javatar.app.ui.controller.util.JsonTransformer;
 public class RecetasController {
 
 	private JsonTransformer jsonTransformer;
-	private Gson gson;
+
+	// private Gson gson;
 
 	public RecetasController(JsonTransformer jsonTransformer, Gson gson) {
 		this.jsonTransformer = jsonTransformer;
-		this.gson = gson;
+		// this.gson = gson;
 	}
 
 	public void register() {
@@ -29,28 +30,24 @@ public class RecetasController {
 			response.body(ex.getMessage());
 		});
 
-		Spark.get("/recetasPublicas", "application/json;charset=utf-8",(request, response) -> {
-			
-				return RepositorioRecetas.getInstance().recetaConocidas;
+		Spark.get("/recetasPublicas", "application/json;charset=utf-8", (request, response) -> {
 
-			}, this.jsonTransformer);
-		
-		Spark.get("/recetas/:username", "application/json;charset=utf-8",(request, response) -> {
+			return RepositorioRecetas.getInstance().recetaConocidas;
+
+		}, this.jsonTransformer);
+
+		Spark.get("/recetas/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			Buscador buscador = new Buscador();
 			String username = request.params(":username");
 			Usuario usuarioLogueado;
-			usuarioLogueado = new Usuario.UsuarioBuilder()
-				.nombre(username)
-					.build();
+			usuarioLogueado = new Usuario.UsuarioBuilder().nombre(username).build();
 
+			List<Receta> recetas = buscador.realizarBusquedaPara(usuarioLogueado);
 
-				List<Receta> recetas = buscador
-					.realizarBusquedaPara(usuarioLogueado);
+			return recetas;
 
-				return recetas;
-
-			}, this.jsonTransformer);
+		}, this.jsonTransformer);
 
 	}
 }

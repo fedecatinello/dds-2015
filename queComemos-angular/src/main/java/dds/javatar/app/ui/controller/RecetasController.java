@@ -38,8 +38,7 @@ public class RecetasController {
 			response.body(ex.getMessage());
 		});
 
-		Spark.get("/recetas", (request, response) -> {
-		
+		Spark.get("/recetas", (request, response) -> {		
 	
 				Buscador buscador = new Buscador();
 
@@ -54,7 +53,7 @@ public class RecetasController {
 				response.type("application/json;charset=utf-8");
 			
 				return recetas;
-				//return RepositorioRecetas.getInstance().listarTodas();
+
 			}, this.jsonTransformer);
 		
 		

@@ -149,7 +149,8 @@ public class TestFactory {
 	public static Receta crearRecetaPrivadaSimple() {
 		return new RecetaBuilder("Ravioles")
 			.totalCalorias(310)
-				.inventadaPor("Juan Carlos")
+				.inventadaPor("DonJuan")
+				.agregarIngrediente("Tomatess", new BigDecimal(300))
 				.buildReceta();
 	}
 

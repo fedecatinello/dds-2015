@@ -55,6 +55,8 @@ public class TestLogs {
 	public void logueaTresConsultas() throws FilterException, RecetaException {
 
 		TestFactory.crearListaRecetasParaUsuarioSize101(usuario1);
+		TestFactory.crearListaRecetasParaUsuarioSize101(usuario1);
+		TestFactory.crearListaRecetasParaUsuarioSize101(usuario2);
 		TestFactory.crearListaRecetasParaUsuarioSize101(usuario2);
 		Buscador buscador = new Buscador();
 		buscador.realizarBusquedaPara(usuario1);
@@ -70,7 +72,7 @@ public class TestLogs {
 		assertThat(loggingEvent.getLevel(), is(Level.INFO));
 		assertThat(
 				loggingEvent.getRenderedMessage(),
-				is("Consulta de: DonJuan devuelve mas de 100 resultados.(113 resultados)"));
+				is("Consulta de: DonJuan devuelve mas de 100 resultados.(114 resultados)"));
 	}
 
 	@Test(expected=Exception.class)

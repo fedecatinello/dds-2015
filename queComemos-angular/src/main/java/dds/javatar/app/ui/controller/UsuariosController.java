@@ -21,19 +21,14 @@ public class UsuariosController {
 
 	public void register() {
 
-		Spark.exception(RuntimeException.class, (ex, request, response) -> {
-			response.status(400);
-			response.body(ex.getMessage());
-		});
-
 		Spark.get("/recetasFavoritas/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			Usuario usuarioLogueado;
 			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 
+			response.type("application/json;charset=utf-8");
 			return usuarioLogueado.getFavoritos();
-
 		}, this.jsonTransformer);
 
 		Spark.get("/mensajeInicio/:username", "application/json;charset=utf-8", (request, response) -> {
@@ -42,13 +37,13 @@ public class UsuariosController {
 			Usuario usuarioLogueado;
 			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 
+			response.type("application/json;charset=utf-8");
 			if (usuarioLogueado.getFavoritos()==null || usuarioLogueado.getFavoritos().isEmpty()) {
 				return "Estas fueron tus úĺtimas consultas";
 			} else {
 				return "Estas son tus recetas favoritas";
 			}
-
-		});
+		}, this.jsonTransformer);
 
 	}
 }

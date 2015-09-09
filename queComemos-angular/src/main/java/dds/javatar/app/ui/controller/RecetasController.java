@@ -32,9 +32,8 @@ public class RecetasController {
 		});
 
 		Spark.get("/recetasPublicas", "application/json;charset=utf-8", (request, response) -> {
-
+			response.type("application/json;charset=utf-8");
 			return RepositorioRecetas.getInstance().recetaConocidas;
-
 		}, this.jsonTransformer);
 
 		Spark.get("/recetas/:username", "application/json;charset=utf-8", (request, response) -> {
@@ -51,8 +50,8 @@ public class RecetasController {
 				recetas = usuarioLogueado.getFavoritos();	
 			}
 
+			response.type("application/json;charset=utf-8");
 			return recetas;
-
 		}, this.jsonTransformer);
 
 	}

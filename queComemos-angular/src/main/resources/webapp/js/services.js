@@ -18,8 +18,11 @@ app.service('recetasService', function($http) {
 			errorHandler);
 	};
 
-	this.getInitMessage = function(callback, errorHandler){
-		$http.get('/mensajeInicio').success(callback).error(errorHandler);
-	};
+});
 
+app.service('messageService', function($http) {
+
+	this.getInitMessage = function(username, callback, errorHandler){
+		$http.get('/mensajeInicio/'+ username).success(callback).error(errorHandler);
+	};
 });

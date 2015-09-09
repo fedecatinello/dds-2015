@@ -39,6 +39,22 @@ public class UsuariosController {
 			return usuarioLogueado.getFavoritos();
 
 			}, this.jsonTransformer);
+		
+		Spark.get("/mensajeInicio/:username", "application/json;charset=utf-8",(request, response) -> {
+
+			String username = request.params(":username");
+			Usuario usuarioLogueado;
+			usuarioLogueado = RepositorioUsuarios.getInstance().get(
+					new Usuario.UsuarioBuilder()
+						.nombre(username)
+							.build());
+
+			if(usuarioLogueado.getFavoritos() == null)
+				return "Estas fueron tus úĺtimas consultas";
+			else
+				return "Estas son tus recetas favoritas";
+
+			}, this.jsonTransformer);
 
 	}
 }

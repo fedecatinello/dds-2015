@@ -2,6 +2,8 @@
 
 var app = angular.module('queComemosApp', []);
 
+var username = 'Maru Botana';
+
 /** Controllers* */
 
 app.controller('RecetasController', function(recetasService, $scope) {
@@ -10,7 +12,6 @@ app.controller('RecetasController', function(recetasService, $scope) {
 	self.recetasFavoritas =[];
 	self.recetaSelected =null;
 	self.esFavorita=false;
-	var username = 'Maru Botana'
 
 	function transformarAReceta(jsonTarea) {
 		return Receta.asReceta(jsonTarea);
@@ -43,12 +44,16 @@ app.controller('RecetasController', function(recetasService, $scope) {
 
 });
 
-app.controller('ContentController', function() {
+app.controller('ContentController', function(messageService) {
 
 	var self = this;
 
-	self.getInitMessage(function(data) {
-		self.mensajeInicio = data.toString();
-	});
+	self.obtenerMensajeInicio = function() {
+		messageService.getInitMessage(username, function(data) {
+			self.mensajeInicio = JSON.stringify(data);
+		});
+	}
+
+	self.obtenerMensajeInicio();
 
 });

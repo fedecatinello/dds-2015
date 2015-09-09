@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
+import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
@@ -41,9 +42,14 @@ public class RecetasController {
 			Buscador buscador = new Buscador();
 			String username = request.params(":username");
 			Usuario usuarioLogueado;
-			usuarioLogueado = new Usuario.UsuarioBuilder().nombre(username).build();
+			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 
+			
 			List<Receta> recetas = buscador.realizarBusquedaPara(usuarioLogueado);
+			
+			if (!(usuarioLogueado.getFavoritos()==null || usuarioLogueado.getFavoritos().isEmpty())) {
+				recetas = usuarioLogueado.getFavoritos();	
+			}
 
 			return recetas;
 

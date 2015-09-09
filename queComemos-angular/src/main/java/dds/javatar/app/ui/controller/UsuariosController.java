@@ -42,7 +42,7 @@ public class UsuariosController {
 			Usuario usuarioLogueado;
 			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 
-			if (usuarioLogueado.getFavoritos() == null) {
+			if (usuarioLogueado.getFavoritos()==null || usuarioLogueado.getFavoritos().isEmpty()) {
 				return "Estas fueron tus úĺtimas consultas";
 			} else {
 				return "Estas son tus recetas favoritas";

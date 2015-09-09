@@ -2,7 +2,9 @@
 
 var app = angular.module('queComemosApp', []);
 
-var username = 'Maru Botana';
+//var username = 'Maru Botana';		//Tiene Favoritos
+//var username = 'ElSiscador';		//Ultimas consultas
+var username = 'Mariano';			//Ultimaas consultas
 
 /** Controllers* */
 
@@ -12,6 +14,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.recetasFavoritas = [];
 	self.recetaSelected = null;
 	self.esFavorita = false;
+	self.mensajeAutorReceta;
 
 	function transformarAReceta(jsonTarea) {
 		return Receta.asReceta(jsonTarea);
@@ -25,14 +28,18 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	};
 
 	self.getPasos = function() {
-		var a = self.recetaSelected.pasosPreparacion;
-		var array_values = new Array();
 
-		for ( var key in a) {
-			array_values.push(a[key]);
-		}
+		if (self.recetaSelected) {
+			var pasos = self.recetaSelected.pasosPreparacion;	
+			var array_values = new Array();
 
-		return array_values.join(" ").toString();
+			for ( var key in pasos) {
+				array_values.push(pasos[key]);
+			}
+
+			return array_values.join(" ").toString();
+
+		};
 	};
 
 	self.getRecetasFavoritas = function() {
@@ -48,6 +55,8 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		self.esFavorita = self.recetasFavoritas.filter(function(obj) {
 			return obj.autor == self.recetaSelected.autor;
 		}).length > 0;
+
+		self.mensajeAutorReceta = self.getAutorDeReceta();
 	}
 
 	self.obtenerMensajeInicio = function() {
@@ -65,6 +74,20 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 			}
 		}, 10000);
 	}
+
+self.getAutorDeReceta = function(){
+	var autor = self.recetaSelected.autor;
+	if (!autor) {
+		autor = 'Receta Publica'
+	}
+	else
+	{
+		autor = 'Creador por'+autor;
+	}
+	return autor;
+			
+}
+
 
 	self.obtenerMensajeInicio();
 	self.getRecetas();

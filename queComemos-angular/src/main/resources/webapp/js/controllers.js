@@ -9,7 +9,8 @@ app.controller('RecetasController', function(recetasService, $scope) {
 	self.recetas = [];
 	self.recetasFavoritas =[];
 	self.recetaSelected =null;
-	var username = 'ElSiscador'
+	self.esFavorita=false;
+	var username = 'Maru Botana'
 
 	function transformarAReceta(jsonTarea) {
 		return Receta.asReceta(jsonTarea);
@@ -27,20 +28,13 @@ app.controller('RecetasController', function(recetasService, $scope) {
 		});
 	};
 
-	self.getPasos = function() {
-		var a = self.recetaSelected.pasosPreparacion;
-		var array_values = new Array();
-
-		for (var key in a) {
-			array_values.push(a[key]);
-		}
-
-		return array_values.join(" ").toString();
-	};
-
 	$scope.setClickedRow = function(index) {
 		self.selectedRow = index;
 		self.recetaSelected = self.recetas[self.selectedRow];
+
+		self.esFavorita = self.recetasFavoritas.filter(function ( obj ) {
+			return obj.autor == self.recetaSelected.autor;
+		}).length >0;
 	}
 
 

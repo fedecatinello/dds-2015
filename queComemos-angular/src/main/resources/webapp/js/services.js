@@ -9,7 +9,7 @@ app.service('recetasService', function($http) {
 	};
 
 		this.findFavoritasByUsername = function(username, callback) {
-		$http.get('/favs/'+ username ).success(callback);
+		$http.get('/recetasFavoritas/'+ username ).success(callback);
 	};
 
 

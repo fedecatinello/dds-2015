@@ -3,13 +3,17 @@ package dds.javatar.app.ui.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+
 import spark.Spark;
 
+
 import com.google.gson.Gson;
+
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
+import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
@@ -36,20 +40,21 @@ public class RecetasController {
 
 		Spark.get("/recetas", (request, response) -> {
 		
-				Usuario usuario = new Usuario.UsuarioBuilder()
-					.nombre("DonJuan")
-						.sexo(Usuario.Sexo.MASCULINO)
-						.peso(new BigDecimal(70))
-						.altura(new BigDecimal(1.77))
-						.rutina(new Rutina(TipoRutina.FUERTE, 20))
-						.build();
+	
+				Buscador buscador = new Buscador();
 
-//				Buscador buscador = new Buscador();
-//				List<Receta> recetas = buscador.realizarBusquedaPara(usuario);
+				Usuario usuarioLogueado;
+				usuarioLogueado=new Usuario.UsuarioBuilder().nombre("ElSiscador").build();//RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre("ElSiscador").build());
 				ContainerFactory.getInstance().agregarRecetasAlRepositorio();
 				ContainerFactory.getInstance().agregarUsuariosAlRepo();
+
+				List<Receta> recetas = buscador.realizarBusquedaPara(usuarioLogueado);
+				
+				
 				response.type("application/json;charset=utf-8");
-				return RepositorioRecetas.getInstance().listarTodas();
+			
+				return recetas;
+				//return RepositorioRecetas.getInstance().listarTodas();
 			}, this.jsonTransformer);
 		
 		

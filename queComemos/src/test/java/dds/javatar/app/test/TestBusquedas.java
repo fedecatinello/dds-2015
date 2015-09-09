@@ -75,7 +75,7 @@ public class TestBusquedas {
 		filtros.add(filtroPrecio);
 		buscador.setFiltros(filtros);
 		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuarioPedro);
-		assertEquals(22, listaRecetas.size()); // Son 10 locales + 12 externas
+		assertEquals(32, listaRecetas.size()); // Son 20 locales + 12 externas
 	}
 
 	/* Tests de Busquedas */
@@ -95,7 +95,7 @@ public class TestBusquedas {
 
 	@Test
 	public void cantidadRecetasGeneradas() {
-		assertEquals(30, this.usuario.getRecetas().size());
+		assertEquals(40, this.usuario.getRecetas().size());
 	}
 
 	@Test

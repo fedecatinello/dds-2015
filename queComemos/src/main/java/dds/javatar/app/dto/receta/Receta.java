@@ -22,6 +22,8 @@ public interface Receta {
 	public String getDificultad();
 	public void setDificultad(String dificultad);
 	
+	public String getAutor();
+	
 	public Integer getTiempoPreparacion();
 	public void setTiempoPreparacion(Integer tiempoPreparacion);
 	

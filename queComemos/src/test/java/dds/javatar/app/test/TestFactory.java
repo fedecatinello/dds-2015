@@ -148,16 +148,20 @@ public class TestFactory {
 
 	public static Receta crearRecetaPrivadaSimple() {
 		return new RecetaBuilder("Ravioles")
-			.totalCalorias(350)
-				.agregarIngrediente("Harina", new BigDecimal(300))
-				.agregarIngrediente("Agua", new BigDecimal(70))
-				.agregarIngrediente("Verdura", new BigDecimal(100))
-				.inventadaPor("Fede")
+			.totalCalorias(310)
+				.inventadaPor("Juan Carlos")
+				.buildReceta();
+	}
+
+	public static Receta crearRecetaPublicaSimple() {
+		return new RecetaBuilder("Canelones")
+			.totalCalorias(310)
+				.agregarIngrediente("Tomatess", new BigDecimal(300))
 				.buildReceta();
 	}
 
 	public static Receta crearRecetaPrivadaSimpleConMuchasCalorias() {
-		return new RecetaBuilder("Ravioles")
+		return new RecetaBuilder("RaviolesVerdura")
 			.totalCalorias(900)
 				.agregarIngrediente("Harina", new BigDecimal(300))
 				.agregarIngrediente("Agua", new BigDecimal(70))
@@ -167,24 +171,30 @@ public class TestFactory {
 
 	}
 
-	public static Receta crearRecetaPrivadaCompuesta()
-			throws RecetaException {
+	public static Receta crearRecetaPublicaSimpleConMuchasCalorias() {
+		return new RecetaBuilder("RaviolesRicota")
+			.totalCalorias(900)
+				.agregarIngrediente("Harina", new BigDecimal(300))
+				.agregarIngrediente("Agua", new BigDecimal(70))
+				.agregarIngrediente("Verdura", new BigDecimal(100))
+				.buildReceta();
 
-		Receta recetaPrivadaSimplePure = new RecetaBuilder(
-				"Pure")
+	}
+
+	public static Receta crearRecetaPrivadaCompuesta() throws RecetaException {
+
+		Receta recetaPrivadaSimplePure = new RecetaBuilder("Pure")
 			.totalCalorias(350)
 				.agregarIngrediente("Manteca", new BigDecimal(300))
 				.agregarIngrediente("Papa", new BigDecimal(300))
 				.inventadaPor("Pepe")
 				.buildReceta();
-		Receta recetaPrivadaSimplePollo = new RecetaBuilder(
-				"Pollo")
+		Receta recetaPrivadaSimplePollo = new RecetaBuilder("Pollo")
 			.totalCalorias(220)
 				.agregarIngrediente("pollo", new BigDecimal(280))
 				.inventadaPor("Juan")
 				.buildReceta();
-		Receta recetaPrivadaSimpleCondimentos = new RecetaBuilder(
-				"Condimentos")
+		Receta recetaPrivadaSimpleCondimentos = new RecetaBuilder("Condimentos")
 			.totalCalorias(120)
 				.agregarIngrediente("Oregano", new BigDecimal(20))
 				.inventadaPor("Gabriel")
@@ -204,18 +214,21 @@ public class TestFactory {
 		Receta recetaPrivadaCompuesta;
 		Receta recetaPrivadaSimple;
 		Receta recetaPrivadaSimpleHipertenso;
+		Receta recetaPublicaSimple, recetaPublicaSimple2,recetaPublicaSimple3;
 		for (int i = 0; i < 10; i++) {
-			recetaPrivadaCompuesta = crearRecetaPrivadaCompuesta();
-			recetaPrivadaSimple = crearRecetaPrivadaSimple();
+			recetaPublicaSimple = crearRecetaPublicaSimpleConMuchasCalorias();
+			recetaPublicaSimple2 = crearRecetaPublicaSimple();
+			recetaPublicaSimple3 = crearRecetaPublicaSimple();
 			recetaPrivadaSimpleHipertenso = crearRecetaNoAptaParaHipertensos();
 
-			user.agregarReceta(recetaPrivadaSimple);
-			user.agregarReceta(recetaPrivadaCompuesta);
+			user.agregarReceta(recetaPublicaSimple);
+			user.agregarReceta(recetaPublicaSimple2);
+			user.agregarReceta(recetaPublicaSimple3);
 			user.agregarReceta(recetaPrivadaSimpleHipertenso);
 		}
 
 	}
-	
+
 	public static void crearListaRecetasParaUsuarioSize101(Usuario user)
 			throws RecetaException {
 		Receta recetaPrivadaCompuesta;
@@ -227,7 +240,7 @@ public class TestFactory {
 			user.agregarReceta(recetaPrivadaSimple);
 			user.agregarReceta(recetaPrivadaCompuesta);
 		}
-		
+
 		recetaPrivadaSimple = crearRecetaPrivadaSimple();
 		user.agregarReceta(recetaPrivadaSimple);
 	}

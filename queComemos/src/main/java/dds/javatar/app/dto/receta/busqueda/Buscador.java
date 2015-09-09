@@ -7,6 +7,7 @@ import java.util.Set;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.receta.RecetaSimple;
 import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
 import dds.javatar.app.dto.receta.filtro.Filtro;
 import dds.javatar.app.dto.sistema.Administrador;
@@ -67,7 +68,7 @@ public class Buscador {
 
 	public List<Receta> recetasQueConoceEl(Usuario usuario) {
 
-		List<Receta> recetasQueConoceLista;
+		List<Receta> recetasQueConoceLista = new ArrayList<Receta>();
 		Set<Receta> recetasQueConoceSet = new LinkedHashSet<Receta>(
 				RepositorioRecetas.getInstance().recetaConocidas);
 		recetasQueConoceSet.addAll(usuario.getRecetas());
@@ -80,7 +81,14 @@ public class Buscador {
 				}
 			}
 		}
-		recetasQueConoceLista = new ArrayList<Receta>(recetasQueConoceSet);
+
+		for (Receta unaReceta:recetasQueConoceSet) {
+			if (unaReceta.getAutor()==null || unaReceta.getAutor().equals(usuario.getNombre())) {
+				recetasQueConoceLista.add(unaReceta);
+			}
+		}
+		
+		//recetasQueConoceLista = new ArrayList<Receta>(recetasQueConoceSet);
 		return recetasQueConoceLista;
 	}
 

@@ -15,7 +15,7 @@ public class Main {
 		Gson gson = new Gson();
 		JsonTransformer jsonTransformer = new JsonTransformer(gson);
 
-		Spark.port(9000);
+		Spark.port(9001);
 		Spark.staticFileLocation("/webapp");
 
 		ContainerFactory.getInstance().agregarRecetasAlRepositorio();

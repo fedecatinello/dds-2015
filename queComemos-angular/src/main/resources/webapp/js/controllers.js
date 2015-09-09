@@ -23,6 +23,17 @@ app.controller('RecetasController', function(recetasService, $scope) {
 		});
 	};
 
+	self.getPasos = function() {
+		var a = self.recetaSelected.pasosPreparacion;
+		var array_values = new Array();
+
+		for (var key in a) {
+			array_values.push(a[key]);
+		}
+
+		return array_values.join(" ").toString();
+	};
+
 	self.getRecetasFavoritas = function() {
 		recetasService.findFavoritasByUsername(username,function(data) {
 			self.recetasFavoritas = _.map(data, transformarAReceta);

@@ -9,6 +9,5 @@ Integrantes del grupo:
 - García, Nicolás
 - Gomez, Pablo Matias
 - Lugueros Sinatra, Eliana
-- Macko, Melina
 
 Nombre del tutor: Cano, Federico

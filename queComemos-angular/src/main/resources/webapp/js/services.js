@@ -25,3 +25,10 @@ app.service('messageService', function($http) {
 	};
 	
 });
+
+app.service('usuarioService', function($http){
+
+	this.getLoggedUser = function(username, callback, errorHandler) {
+		$http.get('/'+username+'/').then(callback, errorHandler);
+	};
+});

@@ -46,4 +46,9 @@ public class UsuariosController {
 		}, this.jsonTransformer);
 
 	}
+	
+	public void login() {
+		
+		
+	}
 }

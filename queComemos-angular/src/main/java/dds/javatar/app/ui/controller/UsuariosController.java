@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
-import dds.javatar.app.ui.controller.util.UserCredentials;
 
 public class UsuariosController {
 

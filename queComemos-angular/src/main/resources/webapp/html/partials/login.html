@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../../node_modules/angular-loading-bar/build/loading-bar.min.css" />
 
 </head>
-<body ng-controller="loginCtrl">
+<body ng-controller="login_controller as loginCtrl">
 
 <div class="container">
     <div class="card card-container">
@@ -44,7 +44,7 @@
                     <input type="checkbox" value="remember-me">Recordarme
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ingresar</button>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" ng-click="loginCtrl.submit()">Ingresar</button>
             <p class="ng-hide" ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
             <p ng-show="error">{{ error.message }}</p>
         </form><!-- /form -->
@@ -55,7 +55,6 @@
 </div><!-- /container -->
 
 <!-- Scripts -->
-<script src="../../js/login.js" />
 <script src="../../js/routes.js" />
 <script src="../../js/usuarios_modules.js" />
 <script src="../../js/services.js" />

@@ -7,10 +7,16 @@ var usuarios_module = angular.module('queComemos-usuarios', []);
 
 /** Usuarios Controllers **/
 
-usuarios_module.controller('loginCtrl', function(usuarioService, $scope) {
+usuarios_module.controller('login_controller', ['$scope', function(usuarioService, $scope) {
 
     $scope.usuario = null;
     $scope.contraseña = null;
+
+    $scope.submit = function(){
+
+        alert($scope.usuario+$scope.contraseña);
+        this.logearUsuario();
+    };
 
     this.logearUsuario = function() {
 
@@ -21,6 +27,4 @@ usuarios_module.controller('loginCtrl', function(usuarioService, $scope) {
         });
     };
 
-    this.logearUsuario();
-
-});
+}]);

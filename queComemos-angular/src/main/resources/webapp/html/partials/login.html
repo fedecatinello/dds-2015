@@ -37,15 +37,15 @@
         <p id="profile-name" class="profile-name-card"></p>
         <form class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
-            <input type="text" id="inputUser" ng-model="usuario" class="form-control" placeholder="Usuario" required autofocus>
-            <input type="password" id="inputPassword" ng-model="contraseña" class="form-control" placeholder="Contraseña" required>
+            <input type="text" id="inputUser" ng-model="loginCtrl.usuario" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="password" id="inputPassword" ng-model="loginCtrl.contraseña" class="form-control" placeholder="Contraseña" required>
             <div id="remember" class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me">Recordarme
                 </label>
             </div>
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Ingresar</button>
-            <p ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
+            <p class="ng-hide" ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
             <p ng-show="error">{{ error.message }}</p>
         </form><!-- /form -->
         <a href="#" class="forgot-password">
@@ -56,6 +56,9 @@
 
 <!-- Scripts -->
 <script src="../../js/login.js" />
+<script src="../../js/routes.js" />
+<script src="../../js/usuarios_modules.js" />
+<script src="../../js/services.js" />
 
 </body>
 </html>

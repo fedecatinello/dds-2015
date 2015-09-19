@@ -49,6 +49,20 @@ public class UsuariosController {
 	
 	public void login() {
 		
+		Spark.get("/login/", "application/json;charset=utf-8", (request, response) -> {
+			
+//			String username = request.
+//			Usuario usuarioLogueado;
+//			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
+//
+//			response.type("application/json;charset=utf-8");
+//			if (usuarioLogueado.getFavoritos()==null || usuarioLogueado.getFavoritos().isEmpty()) {
+//				return "Estas fueron tus úĺtimas consultas";
+//			} else {
+//				return "Estas son tus recetas favoritas";
+//			}
+			
+		}, jsonTransformer);
 		
 	}
 }

@@ -48,6 +48,10 @@ public class Usuario extends Entity {
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
 	private List<Receta> recetasFavoritas;
 	private boolean favearTodasLasConsultas;
+	
+	/** Login attributes **/
+	private String user;
+	private String password;
 
 	/**** Constructors ****/
 
@@ -65,6 +69,9 @@ public class Usuario extends Entity {
 		this.recetas = new HashSet<Receta>();
 		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 		this.recetasFavoritas = new ArrayList<Receta>();
+		
+		this.user = usuarioBuilder.user;
+		this.password = usuarioBuilder.password;
 	}
 
 	public static class UsuarioBuilder {
@@ -75,6 +82,9 @@ public class Usuario extends Entity {
 		private BigDecimal peso;
 		private EstadoSolicitud estadoSolicitud;
 		private Rutina rutina;
+		
+		private String user;
+		private String password;
 
 		public UsuarioBuilder nombre(String nombre) {
 			this.nombre = nombre;
@@ -110,6 +120,12 @@ public class Usuario extends Entity {
 			this.rutina = rutina;
 			return this;
 		}
+		
+		public UsuarioBuilder credenciales(String usuario, String contrasenia) {
+			this.user = usuario;
+			this.password = contrasenia;
+			return this;
+		}
 
 		public Usuario build() {
 			return new Usuario(this);
@@ -141,6 +157,23 @@ public class Usuario extends Entity {
 	public Rutina getRutina() {
 		return this.rutina;
 	}
+	
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 
 	public Set<Receta> getRecetas() {
 		return this.recetas;

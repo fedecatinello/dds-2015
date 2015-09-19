@@ -26,9 +26,9 @@ app.service('messageService', function($http) {
 	
 });
 
-app.service('usuarioService', function($http){
+app.service('loginService', function($http, callback){
 
-	this.getLoggedUser = function(username, callback, errorHandler) {
-		$http.get('/'+username+'/').then(callback, errorHandler);
-	};
+	this.postUserData = function(username, password, callback) {
+		$http.post('/login/', {user: username, pwd: password}).success(callback);
+	}
 });

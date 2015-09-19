@@ -50,12 +50,16 @@ public class UsuariosController {
 	
 	public void login() {
 		
-		Spark.get("/login/", "application/json;charset=utf-8", (request, response) -> {
+		Spark.get("/login/user=:username&&pwd=:password", "application/json;charset=utf-8", (request, response) -> {
 			
-			String message = request.body();
+			String username = request.params(":username");
+			String password = request.params(":password");
 			
 			/** Construyo usuario a partir del mensaje recibido **/
-			Usuario visitor = buildUser(message);
+			Usuario visitor = new Usuario.UsuarioBuilder()
+										 .nombre(username)
+										 .credenciales(username, password)
+										 .build();
 			
 			Usuario user = RepositorioUsuarios.getInstance().get(visitor);
 
@@ -72,19 +76,5 @@ public class UsuariosController {
 			
 		}, jsonTransformer);
 		
-	}
-	
-	public Usuario buildUser(String message) {
-		
-		Gson gson = new Gson();
-		
-		UserCredentials credentials = gson.fromJson(message, UserCredentials.class);
-		
-		Usuario visitor = new Usuario.UsuarioBuilder()
-									 .nombre(credentials.getUser())
-									 .credenciales(credentials.getUser(), credentials.getPwd())
-									 .build();
-		
-		return visitor;
 	}
 }

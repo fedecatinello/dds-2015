@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
+import dds.javatar.app.ui.controller.util.UserCredentials;
 
 public class UsuariosController {
 
@@ -51,18 +52,39 @@ public class UsuariosController {
 		
 		Spark.get("/login/", "application/json;charset=utf-8", (request, response) -> {
 			
-//			String username = request.
-//			Usuario usuarioLogueado;
-//			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
-//
-//			response.type("application/json;charset=utf-8");
-//			if (usuarioLogueado.getFavoritos()==null || usuarioLogueado.getFavoritos().isEmpty()) {
-//				return "Estas fueron tus úĺtimas consultas";
-//			} else {
-//				return "Estas son tus recetas favoritas";
-//			}
+			String message = request.body();
+			
+			/** Construyo usuario a partir del mensaje recibido **/
+			Usuario visitor = buildUser(message);
+			
+			Usuario user = RepositorioUsuarios.getInstance().get(visitor);
+
+			response.type("application/json;charset=utf-8");
+			
+			// Entra por primera vez
+			if(user == null) return "Estas son las recetas top del momento";
+
+			if (user.getFavoritos()==null || user.getFavoritos().isEmpty()) {
+				return "Estas fueron tus úĺtimas consultas";
+			} else {
+				return "Estas son tus recetas favoritas";
+			}
 			
 		}, jsonTransformer);
 		
+	}
+	
+	public Usuario buildUser(String message) {
+		
+		Gson gson = new Gson();
+		
+		UserCredentials credentials = gson.fromJson(message, UserCredentials.class);
+		
+		Usuario visitor = new Usuario.UsuarioBuilder()
+									 .nombre(credentials.getUser())
+									 .credenciales(credentials.getUser(), credentials.getPwd())
+									 .build();
+		
+		return visitor;
 	}
 }

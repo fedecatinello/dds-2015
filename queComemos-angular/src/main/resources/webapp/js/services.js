@@ -26,7 +26,7 @@ app.service('messageService', function($http) {
 	
 });
 
-app.service('loginService', function($http, callback){
+app.service('loginService', function($http){
 
 	this.postUserData = function(username, password, callback) {
 		$http.post('/login/', {user: username, pwd: password}).success(callback);

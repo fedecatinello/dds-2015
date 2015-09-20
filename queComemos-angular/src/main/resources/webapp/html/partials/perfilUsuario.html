@@ -94,7 +94,7 @@
 				<div class="panel-title">
 				<h4>Fecha de Nacimiento</h4>
 				</div>
-				<h6>{{profileCtrl.userLogged.fechaNacimiento}}</h6>
+				<h6>{{profileCtrl.userLogged.fechaNacimiento | date:'dd/MM/yyyy'}}</h6>
 			</div>
 		</div> <!-- /first row -->
 		
@@ -117,7 +117,10 @@
 				<div class="panel-title">
 				<h4>IMC</h4>
 				</div>
-				<h6>{{profileCtrl.userLogged.imc}}</h6>
+				<h6 ng-class="{'IMC-Alto': {{profileCtrl.userLogged.imc.esAlto()}},
+								'IMC-Medio': {{profileCtrl.userLogged.imc.esMedio()}},
+								'IMC-Bajo': {{profileCtrl.userLogged.imc.esBajo()}}}">
+				{{profileCtrl.userLogged.imc}}</h6>
 			</div>		
 		</div> <!-- /second row -->
 		

@@ -9,16 +9,18 @@ var usuarios_module = angular.module('queComemos-usuarios', []);
 
 usuarios_module.controller('login_controller', ['$scope', function(usuarioService, $scope) {
 
+    var self = this;
+
     $scope.usuario = null;
     $scope.contraseña = null;
 
     $scope.submit = function(){
 
         alert($scope.usuario+$scope.contraseña);
-        this.logearUsuario();
+        self.logearUsuario();
     };
 
-    this.logearUsuario = function() {
+    self.logearUsuario = function() {
 
         usuarioService.postUserData($scope.usuario, $scope.contraseña, function () {
 

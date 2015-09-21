@@ -5,9 +5,6 @@
 var Usuario = function() {
     this.username = null;
     this.password = null;
-};
-
-var Perfil = function() {
     this.nombre = null;
     this.complexion = null;
     this.sexo = null;
@@ -22,12 +19,14 @@ Usuario.asUsuario = function (jsonUsuario) {
     return angular.extend(new Usuario(), jsonUsuario);
 };
 
-Perfil.prototype.esAlto() = function() {
+Usuario.prototype.esAlto = function() {
     return this.imc>30;
 };
-Perfil.prototype.esBajo() = function() {
+
+Usuario.prototype.esBajo = function() {
     return this.imc<18;
 };
-Perfil.prototype.esMedio() = function() {
+
+Usuario.prototype.esMedio = function() {
     return this.imc>=18 && this.imc<=30;
 };

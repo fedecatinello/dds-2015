@@ -7,5 +7,6 @@ angular.module('queComemos-usuarios', []).config(['$routeProvider', function($ro
 
     $routeProvider.when('/login', {templateUrl: '../html/partials/login.html', login: true});
     $routeProvider.when('/index', {templateUrl: '../html/index.html', controller: 'MyCtrl1'}); /** Agregar controller **/
-    $routeProvider.when('/', {redirectTo: '/index'});
+    $routeProvider.when('/profile', {templateUrl: '../html/perfilUsuario.html', controller: 'MyCtrl2'}); /** Agregar controller **/
+    $routeProvider.when('/', {redirectTo: '/login'});
 }]);

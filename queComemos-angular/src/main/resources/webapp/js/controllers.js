@@ -6,9 +6,25 @@ var username = 'Maru Botana';		//Tiene Favoritos
 //var username = 'ElSiscador';		//Ultimas consultas
 //var username = 'Mariano';			//Ultimaas consultas
 
+
+
+app.directive('visible', function() {
+
+  return {
+    restrict: 'A',
+    
+    link: function(scope, element, attributes) {
+    	scope.$watch(attributes.visible, function(value){
+    	  element.css('visibility', value ? 'visible' : 'hidden');
+        });
+    }
+  };
+})
+
 /** Controllers* */
 
 app.controller('RecetasController', function(recetasService, messageService, $scope) {
+	  $scope.allowEdit = true;
 	var self = this;
 	self.recetas = [];
 	self.recetasFavoritas = [];
@@ -37,7 +53,6 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 			}
 
 			return array_values.join(" ").toString();
-
 		};
 	};
 
@@ -56,6 +71,17 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		}).length > 0;
 
 		self.mensajeAutorReceta = self.getMensajeAutorDeReceta();
+	};
+
+	$scope.setClickedCondimento = function(index) {
+		debugger
+		self.selectedCondimento = index;
+		self.recetaSelected = self.recetas[self.selectedRow];
+	};
+
+		$scope.setClickedIngrediente = function(index) {
+		self.selectedIngrediente = index;
+		self.recetaSelected = self.recetas[self.selectedRow];
 	};
 
 	self.obtenerMensajeInicio = function() {

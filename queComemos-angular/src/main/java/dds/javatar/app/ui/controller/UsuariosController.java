@@ -54,7 +54,7 @@ public class UsuariosController {
 			String username = request.params(":username");
 			String password = request.params(":password");
 			
-			/** Construyo usuario a partir del mensaje recibido **/
+			/* Construyo usuario a partir del mensaje recibido */
 			Usuario visitor = new Usuario.UsuarioBuilder()
 										 .nombre(username)
 										 .credenciales(username, password)

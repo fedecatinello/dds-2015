@@ -1,0 +1,16 @@
+<div class="modal-header">
+	<h3 class="modal-title">Ingrese un nuevo ingrediente!</h3>
+</div>
+<div class="modal-body">
+Cantidad
+<input type="text" ng-model="newCantidad" size="15 " placeholder="Cantidad">
+Ingrediente
+<input type="text" ng-model="newIngrediente" size="15 " placeholder="Ingrediente">
+Unidad de medida
+<input type="text" ng-model="newUnidadMedida" size="15 " placeholder="Unidad de medida">
+
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" type="button" ng-click="ok()">Aceptar</button>
+	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancelar</button>
+</div>

@@ -31,6 +31,8 @@
 	<script src="node_modules/angular-loading-bar/build/loading-bar.min.js"></script>
 	<link rel="stylesheet" href="node_modules/angular-loading-bar/build/loading-bar.min.css" />
 
+	<script src="node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+
 </head>
 
 <body data-ng-controller="RecetasController as recetasCtrl">
@@ -46,9 +48,9 @@
 				<form role="form"></form>
 			</div>
 			<div class="table-responsive">
-				<table class="table-bordered table table-striped table-hover table-condensed example-animate-container">
+				<table class="table table-bordered table-hover table-condensed ">
 					<tbody>
-						<tr>
+						<tr class="header">
 							<th>Nombre</th>
 							<th>Calor&iacute;as</th>
 							<th>Dificultad</th>
@@ -76,7 +78,7 @@
 				<button type="button" ng-disabled="!recetasCtrl.recetaSelected" class="btn btn-default" data-toggle="collapse" data-target="#demo" >Ver Detalles</button>
 				<br>
 				<div id="demo" class="accordion-body collapse" >
-					<div class="panel panel-default">
+					<div class="panel panel-default" style="opacity:0.8;">
 
 						<!-- Panel de arriba de toodo con datos principales -->
 						<div class="panel-body">
@@ -91,9 +93,9 @@
 								<br>
 								<div class="panel-title">
 									<h4>Ingredientes</h4>
-									<table class="table table-striped table-hover table-condensed example-animate-container">
+									<table class="table table-bordered table-condensed ">
 										<tbody>
-											<tr>
+											<tr class='header'>
 												<th>Ingrediente</th>
 												<th>Dosis</th>
 											</tr>
@@ -103,8 +105,8 @@
 											</tr>
 										</tbody>
 									</table>
-									<button type="button" visible='allowEdit' class="btn btn-default" >Agregar</button>
-									<button type="button" visible='allowEdit' class="btn btn-default" >Eliminar</button>
+									<button type="button" visible='allowEdit' class="btn btn-default" ng-click="recetasCtrl.addIngrediente()">Agregar</button>
+									<button type="button" visible='allowEdit' class="btn btn-default" ng-click="recetasCtrl.deleteIngrediente()" >Eliminar</button>
 								</div>
 							</div>
 							<!-- Fin columna izquierda -->
@@ -115,60 +117,63 @@
 								</div>
 								<h6>{{recetasCtrl.recetaSelected.temporada}}</h6>
 								<br>
-								<div class="panel-title">
+								<div>
 									<h4>Condimentos</h4>
-									<input type="text" visible='allowEdit' ng-model="TODOelegiracaNombre" size="20" placeholder="condimento">
-									<input type="text" visible='allowEdit' ng-model="TODOelegiracaNombre" size="10" placeholder="dosis">
-									<button type="button" visible='allowEdit' class="btn btn-default" >Agregar</button>
-									<table class="table table-striped table-hover table-condensed example-animate-container">
-										<tbody>
-											<tr>
-												<th>Condimento</th>
-												<th>Dosis</th>
-												<th visible='allowEdit'>Eliminar</th>
-											</tr>
-											<tr data-ng-repeat="(Condimento, Dosis) in recetasCtrl.recetaSelected.condimentos" class="animate-repeat" ng-click="setClickedCondimento($index)">
-												<td class="col-md-3">{{Condimento}}</td>
-												<td class="col-md-2">{{Dosis}}</td>
-												<td class="col-md-2" visible='allowEdit'><button type="button" visible='allowEdit' class="btn btn-info" > Eliminar</Button></td>						
-											</tr>
-										</tbody>
-									</table>
+									<input type="text" visible='allowEdit' ng-model="recetasCtrl.newCondimento" size="15" placeholder=" Condimento">
+									<input type="number" visible='allowEdit' ng-model="recetasCtrl.newDosis" size="5" placeholder=" Dosis">
+									<button type="button" visible='allowEdit' class="btn btn-sm btn-default" ng-click="recetasCtrl.addCondimento()">Agregar</button>
+									<button type="button" visible='allowEdit' class="btn btn-sm btn-default"  ng-click="recetasCtrl.deleteCondimento()"> Eliminar</Button>
+										<table class="table table-condensed">
+											<tbody>
+												<tr class='header'>
+													<th>Condimento</th>
+													<th>Dosis</th>
+												</tr>
+												<tr data-ng-repeat="(Condimento, Dosis) in recetasCtrl.recetaSelected.condimentos" class="animate-repeat" ng-click="setClickedCondimento()">
+													<td class="col-md-3">{{Condimento}}</td>
+													<td class="col-md-2">{{Dosis}}</td>						
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<br>
+									<div class="panel-title">
+										<h4>Condiciones Preexistentes</h4>
+									</div>
+									<br>
 								</div>
-								<br>
-								<div class="panel-title">
-									<h4>Condiciones Preexistentes</h4>
-								</div>
-								<br>
-							</div>
-							<!-- Fin columna Derecha -->
-							<div class="col-md-12">
-								<br>
-								<input type="checkbox" name="recetaFavorita" ng-checked="recetasCtrl.esFavorita">Favorita<br>
+								<!-- Fin columna Derecha -->
+								<div class="col-md-12">
+									<br>
+									<input type="checkbox" name="recetaFavorita" ng-checked="recetasCtrl.esFavorita">Favorita<br>
 
-								<div class="panel-title">
-									<h4>Proceso de Preparación</h4>
+									<div class="panel-title">
+										<h4>Proceso de Preparación</h4>
+									</div>
+									{{recetasCtrl.getPasos()}}
 								</div>
-								{{recetasCtrl.getPasos()}}
 							</div>
+
 						</div>
-						
+						<button type="button" visible='allowEdit' class="btn btn-default" >Actualizar</button>
+						<button type="button" class="btn btn-default" >Volver</button>
 					</div>
-					<button type="button" visible='allowEdit' class="btn btn-default" >Actualizar</button>
-					<button type="button" class="btn btn-default" >Volver</button>
+
 				</div>
-				
+
+				<div class="alert alert-danger animate-repeat" ng-repeat="error in recetasCtrl.errors">{{error}}</div>
+
+				<script src="js/receta.js"></script>
+				<script src="js/controllers.js"></script>
+				<script src="js/services.js"></script>
 			</div>
 
-			<div class="alert alert-danger animate-repeat" ng-repeat="error in recetasCtrl.errors">{{error}}</div>
-
-			<script src="js/receta.js"></script>
-			<script src="js/controllers.js"></script>
-			<script src="js/services.js"></script>
 		</div>
 
 	</div>
 
 </div>
+
+
 </body>
 </html>

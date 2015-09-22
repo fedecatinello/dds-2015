@@ -7,3 +7,18 @@
     color:white;
     font-style: italic;
 }
+
+.header {
+    background-color:blue;
+    color:white;
+    font-style: italic;
+}
+
+body, html {
+    height: 130%;
+    background: repeating-linear-gradient(rgb(200, 180, 162), rgb(12, 97, 33) ,rgb(104, 145, 162));
+}
+
+.sarasa{
+    background: repeating-linear-gradient(rgb(200, 180, 162), rgb(12, 97, 33) ,rgb(104, 145, 162));
+}

@@ -6,8 +6,7 @@
  */
 body, html {
     height: 100%;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
+    background: repeating-linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33) ,rgb(104, 145, 162));
 }
 
 .card-container.card {
@@ -22,6 +21,10 @@ body, html {
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
+}
+
+.bg {
+   opacity: 0.5;
 }
 
 /*

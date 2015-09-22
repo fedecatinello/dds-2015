@@ -19,6 +19,45 @@ app.directive('visible', function() {
 	};
 });
 
+app.directive("dificultad", function() {
+	return {
+		template: '<ng-include src="getTemplateDificultad()"/>',
+    //templateUrl: unfortunately has no access to $scope.user.type
+    restrict: 'E',
+    controller: function($scope) {
+      //function used on the ng-include to resolve the template
+      $scope.getTemplateDificultad = function() {
+        //basic handling. It could be delegated to different Services
+        if ($scope.allowEdit){
+        	return "partials/templateDificultadListBox.html";
+        }
+        else {
+        	return "partials/templateDificultadLabel.html";
+        }
+    }
+}
+};
+});
+
+app.directive("temporada", function() {
+	return {
+		template: '<ng-include src="getTemplateTemporada()"/>',
+    //templateUrl: unfortunately has no access to $scope.user.type
+    restrict: 'E',
+    controller: function($scope) {
+      //function used on the ng-include to resolve the template
+      $scope.getTemplateTemporada = function() {
+        //basic handling. It could be delegated to different Services
+        if ($scope.allowEdit){
+        	return "partials/templateTemporadaListBox.html";
+        }
+        else {
+        	return "partials/templateTemporadaLabel.html";
+        }
+    }
+}
+};
+});
 
 /** Controllers* */
 
@@ -41,12 +80,13 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
 
 app.controller('RecetasController', function(recetasService, messageService, $scope,$modal) {
 
+
 	var self = this;
-	$scope.allowEdit = true;
+	self.allowEdit= $scope.allowEdit = true;
 	self.esFavorita = false;
 	self.animationsEnabled = true;
 
-	//Estas de aca abajo no hace falta inicializarlas, queda mas "claro". Las elimino?
+	//Estas de aca abajo no hace falta inicializarlas, queda mas "claro" pero es al re pedo. Las elimino?
 	self.recetaSelected = null;
 	self.selectedCondimento=null;
 	self.selectedIngrediente = null;	
@@ -56,6 +96,27 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.newCondimento;
 	self.newDosis;
 	
+	self.dificultades = {
+		repeatSelect: null,
+		availableOptions: [
+		{id: '1', name: 'Facil'},
+		{id: '2', name: 'Medio'},
+		{id: '3', name: 'Dificil'}
+		],
+	};
+
+	self.temporadas = {
+		repeatSelect: null,
+		availableOptions: [
+		{id: '1', name: 'Todo el año'},
+		{id: '2', name: 'Primavera'},
+		{id: '3', name: 'Verano'},
+		{id: '4', name: 'Otoño'},
+		{id: '5', name: 'Invierno'}
+		],
+	};
+
+
 
 	function transformarAReceta(jsonReceta) {
 		var receta= Receta.asReceta(jsonReceta);
@@ -138,7 +199,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 			animation: self.animationsEnabled,
 			templateUrl: 'partials/ingredienteModal.html',
 			controller: 'ModalCtrl',
-			size: size,
+			windowClass: 'modal-fit',
 			resolve: {
 				receta: function () {
 					return self.recetaSelected;

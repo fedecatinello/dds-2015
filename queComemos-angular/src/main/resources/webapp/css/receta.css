@@ -19,6 +19,20 @@ body, html {
     background: repeating-linear-gradient(rgb(200, 180, 162), rgb(12, 97, 33) ,rgb(104, 145, 162));
 }
 
+.modal-fit .modal-dialog {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 10px;
+}
+
+.modal-fit .modal-body {
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+}
+
 .sarasa{
     background: repeating-linear-gradient(rgb(200, 180, 162), rgb(12, 97, 33) ,rgb(104, 145, 162));
 }

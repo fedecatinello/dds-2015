@@ -1,0 +1,8 @@
+ <form name="myForm">
+    <label for="repeatSelect"> </label>
+    <select name="repeatSelect" id="repeatSelect" ng-model="recetasCtrl.temporadas.repeatSelect">
+      <option ng-repeat="option in recetasCtrl.temporadas.availableOptions" value="{{option.id}}">{{option.name}}</option>
+    </select>
+  </form>
+  <hr>
+  <tt>{{temporadas.repeatSelect}}</tt>

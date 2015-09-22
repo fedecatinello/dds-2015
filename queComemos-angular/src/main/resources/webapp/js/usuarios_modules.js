@@ -7,26 +7,21 @@ var usuarios_module = angular.module('queComemos-usuarios', []);
 
 /** Usuarios Controllers **/
 
-usuarios_module.controller('login_controller', ['$scope', function(usuarioService, $scope) {
+usuarios_module.controller('login_controller', ['$scope', function(usuarioService) {
 
     var self = this;
 
-    $scope.usuario = null;
-    $scope.contraseña = null;
+    self.credencials = {};
 
-    $scope.submit = function(){
+    self.submit = function(){
 
-        alert($scope.usuario+$scope.contraseña);
+        alert(self.credencials);
         self.logearUsuario();
     };
 
     self.logearUsuario = function() {
 
-        usuarioService.postUserData($scope.usuario, $scope.contraseña, function () {
-
-            /** Hacer el binding del service **/
-
-        });
+        usuarioService.postUserData(self.credencials);
     };
 
 }]);

@@ -9,6 +9,7 @@ var usuarios_profile = angular.module('queComemos-profile', []);
 
 /** Usuarios Controllers **/
 
+
 	usuarios_module.controller('login_controller', ['$scope', function(usuarioService) {
 		
 	var self = this;
@@ -26,6 +27,25 @@ var usuarios_profile = angular.module('queComemos-profile', []);
 		usuarioService.postUserData(self.credencials);
 	};
 	
+
+usuarios_module.controller('login_controller', ['$scope', function(usuarioService) {
+
+    var self = this;
+
+    self.credencials = {};
+
+    self.submit = function(){
+
+        alert(self.credencials);
+        self.logearUsuario();
+    };
+
+    self.logearUsuario = function() {
+
+        usuarioService.postUserData(self.credencials);
+    };
+
+
 }]);
 
 

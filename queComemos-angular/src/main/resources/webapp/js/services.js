@@ -26,11 +26,20 @@ app.service('messageService', function($http) {
 	
 });
 
+
+/** Login Service **/
+
 app.service('loginService', function($http){
 
-	this.postUserData = function(username, password) {
-		$http.get('/login/user='+username+'&&pwd='+password);
-	}
+	this.postUserData = function(data) {
+
+		$http.post('/login?validate=true', data)
+			.success(function($location){
+				$location.path('/index?username='+data.username+'&&pwd='+data.password);
+		});
+
+	};
+
 });
 
 app.service('usuarioService', function($http) {

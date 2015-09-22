@@ -42,34 +42,20 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
 app.controller('RecetasController', function(recetasService, messageService, $scope,$modal) {
 
 	var self = this;
-	self.recetaSelected = null;
 	$scope.allowEdit = true;
-	self.recetas = [];
-	self.recetasFavoritas = [];
 	self.esFavorita = false;
+	self.animationsEnabled = true;
+
+	//Estas de aca abajo no hace falta inicializarlas, queda mas "claro". Las elimino?
+	self.recetaSelected = null;
+	self.selectedCondimento=null;
+	self.selectedIngrediente = null;	
+	self.recetas = [];
+	self.recetasFavoritas = [];	
 	self.mensajeAutorReceta;
 	self.newCondimento;
 	self.newDosis;
-	self.animationsEnabled = true;
-
-	self.addIngrediente = function (size) {
-		var modalInstance = $modal.open({
-			animation: self.animationsEnabled,
-			templateUrl: 'partials/ingredienteModal.html',
-			controller: 'ModalCtrl',
-			size: size,
-			resolve: {
-				receta: function () {
-					return self.recetaSelected;
-				}
-			}
-		});
-
-		modalInstance.result.then(function (newUnidadMedida, newCantidad, newIngrediente) {
-			self.result = newUnidadMedida; // TODO inyecto la receta seleccioanda,
-											// o devuelvo los nuevos valores y asigno dsp. 
-		});
-	};
+	
 
 	function transformarAReceta(jsonReceta) {
 		var receta= Receta.asReceta(jsonReceta);
@@ -102,9 +88,22 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		});
 	};
 
-	$scope.setClickedRow = function(index) {
-		self.selectedRow = index;
-		self.recetaSelected = self.recetas[self.selectedRow];
+	self.getMensajeAutorDeReceta = function(){
+		var autor = self.recetaSelected.autor;
+		if (!autor) {
+			autor = 'Receta Publica';
+		}
+		else
+		{
+			autor = '   Creado por '+autor;
+		}
+		return autor;
+
+	};
+
+	$scope.setClickedReceta = function(index) {
+		self.selectedRowReceta = index;
+		self.recetaSelected = self.recetas[self.selectedRowReceta];
 
 		self.esFavorita = self.recetasFavoritas.filter(function(obj) {
 			return obj.autor == self.recetaSelected.autor;
@@ -113,11 +112,13 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		self.mensajeAutorReceta = self.getMensajeAutorDeReceta();
 	};
 
-	$scope.setClickedCondimento = function() {
+	$scope.setClickedCondimento = function(index) {
+		self.selectedRowCondimento = index;
 		self.selectedCondimento = this.Condimento;
 	};
 
 	$scope.setClickedIngrediente = function(index) {
+		self.selectedRowIngrediente = index;
 		self.selectedIngrediente = this.Ingrediente;
 	};
 
@@ -130,6 +131,25 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.deleteCondimento = function(){
 		var condimentos= self.recetaSelected.condimentos;
 		delete condimentos[self.selectedCondimento];
+	};
+
+	self.addIngrediente = function (size) {
+		var modalInstance = $modal.open({
+			animation: self.animationsEnabled,
+			templateUrl: 'partials/ingredienteModal.html',
+			controller: 'ModalCtrl',
+			size: size,
+			resolve: {
+				receta: function () {
+					return self.recetaSelected;
+				}
+			}
+		});
+
+		modalInstance.result.then(function (newUnidadMedida, newCantidad, newIngrediente) {
+			self.result = newUnidadMedida; // TODO inyecto la receta seleccioanda,
+											// o devuelvo los nuevos valores y asigno dsp. 
+										});
 	};
 
 	self.deleteIngrediente = function(ingrediente){
@@ -153,18 +173,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		}, 10000);
 	}
 
-	self.getMensajeAutorDeReceta = function(){
-		var autor = self.recetaSelected.autor;
-		if (!autor) {
-			autor = 'Receta Publica';
-		}
-		else
-		{
-			autor = '   Creado por '+autor;
-		}
-		return autor;
-
-	};
+	
 
 	self.obtenerMensajeInicio();
 	self.getRecetas();

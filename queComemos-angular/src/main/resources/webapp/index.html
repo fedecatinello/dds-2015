@@ -57,8 +57,8 @@
 							<th>Temporada</th>
 						</tr>
 						<tr data-ng-repeat="receta in recetasCtrl.recetas" class="animate-repeat"
-						ng-class="{'selected':$index == recetasCtrl.selectedRow , 'publicas': {{receta.esPublica()}}}"
-						ng-click="setClickedRow($index)">
+						ng-class="{'selected':$index == recetasCtrl.selectedRowReceta , 'publicas': {{receta.esPublica()}}}"
+						ng-click="setClickedReceta($index)">
 
 						<td class="col-xs-4">{{receta.nombre}}</td>
 						<td class="col-xs-2">{{receta.calorias}}</td>
@@ -99,7 +99,7 @@
 												<th>Ingrediente</th>
 												<th>Dosis</th>
 											</tr>
-											<tr data-ng-repeat="(Ingrediente, Dosis) in recetasCtrl.recetaSelected.ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)">
+											<tr data-ng-repeat="(Ingrediente, Dosis) in recetasCtrl.recetaSelected.ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == recetasCtrl.selectedRowIngrediente}">
 												<td class="col-md-4">{{Ingrediente}}</td>
 												<td class="col-md-2">{{Dosis}}</td>
 											</tr>
@@ -129,7 +129,7 @@
 													<th>Condimento</th>
 													<th>Dosis</th>
 												</tr>
-												<tr data-ng-repeat="(Condimento, Dosis) in recetasCtrl.recetaSelected.condimentos" class="animate-repeat" ng-click="setClickedCondimento()">
+												<tr data-ng-repeat="(Condimento, Dosis) in recetasCtrl.recetaSelected.condimentos" class="animate-repeat" ng-click="setClickedCondimento($index)" ng-class="{'selected':$index == recetasCtrl.selectedRowCondimento}">
 													<td class="col-md-3">{{Condimento}}</td>
 													<td class="col-md-2">{{Dosis}}</td>						
 												</tr>

@@ -30,7 +30,7 @@
 
 </head>
 
-<body ng-controller="user_profile as profileCtrl">
+<body data-ng-controller="UsuarioController as profileCtrl">
 
 
 <!-- Main content -->
@@ -47,7 +47,7 @@
 					<div class="panel-title">
 					<h4>Nombre</h4>
 					</div>
-					<h6>{{profileCtrl.loggedUser.nombre}}</h6>
+					<h6>{{profileCtrl.nombre}}</h6>
 				</div>
 			</div>
 				
@@ -65,7 +65,7 @@
 					<div class="panel-title">
 					<h4>Preferencias Alimenticias</h4>
 					</div>
-					<select multiple class="form-control" id="sel2"></select>
+					<select multiple class="form-control"  ng-options="preferencias in profileCtrl.preferenciasAlimentarias"></select>
 				</div>
 			</div>
 			
@@ -74,7 +74,7 @@
 					<div class="panel-title">
 					<h4>Condiciones Preexistentes</h4>
 					</div>
-					<select multiple class="form-control" id="sel2"></select>
+					<select multiple class="form-control" no-options="condiciones in profileCtrl.condicionesPreexistentes"></select>
 				</div>
 			</div>
 		</div> <!-- /Left panel -->
@@ -109,7 +109,7 @@
 				<div class="panel-title">
 				<h4>Peso</h4>
 				</div>
-				<h6>{{profileCtrl.loggedUser.peso}}</h6>
+				<h6>{{profileCtrl.peso}}</h6>
 			</div>
 						
 			<div class ="col-lg-3">
@@ -129,7 +129,7 @@
 				<div class="panel-title">
 				<h4>Comidas que le Disgustan</h4>
 				</div>
-				<select multiple class="form-control" id="sel2"></select>
+				<select multiple class="form-control"  ng-options="comidas in profileCtrl.comidasQueDisgustan"></select>
 			</div>
 		</div>  <!-- /third row -->
 		
@@ -152,14 +152,14 @@
 				<div class="panel-title">
 				<h4>Recetas Favoritas</h4>
 				</div>
-				<select multiple class="form-control" id="sel2"></select>
+				<select multiple class="form-control" ng-options="receta in profileCtrl.recetasFavoritas"></select>
 			</div>
 		</div> <!-- /Botom Panel -->
 		
 		
 		<br>
 		<div class="container" align="center">
-			<button type="button" class="btn btn-default btn-lg" ng-click="home.html">Volver</button>
+			<button type="button" class="btn btn-default btn-lg" ng-click="go()">Volver</button>
 		</div>
 	</div>
 </div>

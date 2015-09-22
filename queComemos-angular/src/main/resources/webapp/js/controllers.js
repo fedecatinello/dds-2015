@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('queComemosApp', ['ngAnimate', 'ui.bootstrap']);
+var app = angular.module('queComemosApp', ['ngAnimate', 'ui.bootstrap', 'httpPostFix']);
 
 var username = 'Maru Botana';		//Tiene Favoritos
 //var username = 'ElSiscador';		//Ultimas consultas

@@ -53,29 +53,34 @@ public class UsuariosController {
 	
 	public void login() {
 		
-		Spark.get("/login/user=:username&&pwd=:password", "application/json;charset=utf-8", (request, response) -> {
+		Spark.get("/login?username=:username", "application/json;charset=utf-8", (request, response) -> {
 			
 			String username = request.params(":username");
-			String password = request.params(":password");
 			
-			/* Construyo usuario a partir del mensaje recibido */
-			Usuario visitor = new Usuario.UsuarioBuilder()
-										 .nombre(username)
-										 .credenciales(username, password)
-										 .build();
+			String message = request.body();
 			
-			Usuario user = RepositorioUsuarios.getInstance().get(visitor);
-
-			response.type("application/json;charset=utf-8");
+			System.out.println(message);
 			
-			// Entra por primera vez
-			if(user == null) return "Estas son las recetas top del momento";
-
-			if (user.getFavoritos()==null || user.getFavoritos().isEmpty()) {
-				return "Estas fueron tus úĺtimas consultas";
-			} else {
-				return "Estas son tus recetas favoritas";
-			}
+			return message;
+			
+//			/* Construyo usuario a partir del mensaje recibido */
+//			Usuario visitor = new Usuario.UsuarioBuilder()
+//										 .nombre(username)
+//										 .credenciales(username, password)
+//										 .build();
+//			
+//			Usuario user = RepositorioUsuarios.getInstance().get(visitor);
+//
+//			response.type("application/json;charset=utf-8");
+//			
+//			// Entra por primera vez
+//			if(user == null) return "Estas son las recetas top del momento";
+//
+//			if (user.getFavoritos()==null || user.getFavoritos().isEmpty()) {
+//				return "Estas fueron tus úĺtimas consultas";
+//			} else {
+//				return "Estas son tus recetas favoritas";
+//			}
 			
 		}, jsonTransformer);
 		

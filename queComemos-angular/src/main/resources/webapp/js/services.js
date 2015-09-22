@@ -32,3 +32,11 @@ app.service('loginService', function($http){
 		$http.get('/login/user='+username+'&&pwd='+password);
 	}
 });
+
+app.service('usuarioService', function($http) {
+
+	this.getUserInfoByUsername = function(username, callback) {
+		$http.get('/usuarios/' + username).success(callback);
+	};
+
+});

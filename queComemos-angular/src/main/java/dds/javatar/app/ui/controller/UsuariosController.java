@@ -1,9 +1,13 @@
 package dds.javatar.app.ui.controller;
 
+import java.util.List;
+
 import spark.Spark;
 
 import com.google.gson.Gson;
 
+import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
@@ -75,5 +79,21 @@ public class UsuariosController {
 			
 		}, jsonTransformer);
 		
+	}
+	
+	public void profile(){
+			Spark.get("/usuarios/:username", "application/json;charset=utf-8", (request, response) -> {
+
+			String username = request.params(":username");
+			
+			Usuario userExample = new Usuario.UsuarioBuilder().
+					nombre(username).
+					build();
+			
+			Usuario loggedUser = RepositorioUsuarios.getInstance().get(userExample);
+
+			response.type("application/json;charset=utf-8");
+			return loggedUser;
+		}, this.jsonTransformer);
 	}
 }

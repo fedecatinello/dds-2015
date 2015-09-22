@@ -33,7 +33,7 @@ app.service('loginService', function($http){
 
 	this.postUserData = function(data) {
 
-		$http.post('/login?validate=true')
+		$http.post('/login?validate=true', data)
 			.success(function($location){
 				$location.path('/index?username='+data.username+'&&pwd='+data.password);
 		});

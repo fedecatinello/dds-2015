@@ -5,50 +5,48 @@
 
 var usuarios_module = angular.module('queComemos-usuarios', []);
 
+var usuarios_profile = angular.module('queComemos-profile', []);
+
 /** Usuarios Controllers **/
 
-usuarios_module.controller('login_controller', ['$scope', function(usuarioService, $scope) {
-
-    var self = this;
-
-    $scope.usuario = null;
-    $scope.contraseña = null;
-
-    $scope.submit = function(){
-
-        alert($scope.usuario+$scope.contraseña);
-        self.logearUsuario();
-    };
-
-    self.logearUsuario = function() {
-
-        usuarioService.postUserData($scope.usuario, $scope.contraseña, function () {
-
-            /** Hacer el binding del service **/
-
-        });
-    };
-
+	usuarios_module.controller('login_controller', ['$scope', function(usuarioService) {
+		
+	var self = this;
+	
+	self.credencials = {};
+	
+	self.submit = function(){
+		
+		alert(self.credencials);
+		self.logearUsuario();
+	};
+	
+	self.logearUsuario = function() {
+		
+		usuarioService.postUserData(self.credencials);
+	};
+	
 }]);
 
 
-user_profile.controller('user_profile', ['$scope', function(usuarioService, $scope) {
-
+usuarios_profile.controller('UsuarioController', function(recetasService, $scope) {
+	  $scope.allowEdit = true;
     var self = this;
 
     self.loggedUser=null;
     
-//    self.nombre = null;
-//    self.complexion = null;
-//    self.sexo = null;
-//    self.edad = null;
-//    self.fechaNacimiento = null;
-//    self.altura = null;
-//    self.peso = null;
-//    self.imc = null;
-//    self.condicionesPreexistentes = [];
-//    self.preferenciasAlimentarias = [];
-//    self.comidasQueDisgustan = [];
+    self.nombre = "eliana";
+    self.complexion = null;
+    self.sexo = null;
+    self.edad = null;
+    self.fechaNacimiento = null;
+    self.altura = null;
+    self.peso = null;
+    self.imc = null;
+    self.condicionesPreexistentes = [];
+    self.preferenciasAlimentarias = [];
+    self.comidasQueDisgustan = [];
+    self.recetasFavoritas = [];
     
     function transformarUsuario(jsonUsuario) {
 		return Usuario.asUsuario(jsonUsuario);
@@ -60,5 +58,8 @@ user_profile.controller('user_profile', ['$scope', function(usuarioService, $sco
 		});
 	};
     
+	$scope.go =  function() { 
+		alert('pasaste, gil');
+	}
 
 }]);

@@ -5,19 +5,20 @@ var usuariosModule = angular.module('queComemos-usuarios', []);
 
 /** Usuarios Controllers **/
 
-usuariosModule.controller('login_controller', ['$scope', function(usuarioService) {
+usuariosModule.controller('login_controller', function($scope, usuarioService) {
 
-	var self = this;
-
-	self.credencials = {};
-
-	self.submit = function(){
-
-		alert(self.credencials);
-		usuarioService.postUserData(self.credencials);
+	$scope.credentials = {
+		username : 'fede',
+		password : 'catinello'
 	};
 
-}]);
+	$scope.submit = function(){
+
+		alert($scope.credentials.username);
+		usuarioService.postUserData($scope.credentials);
+	};
+
+});
 
 usuariosModule.controller('UsuarioController', function(usuarioService, $scope) {
 	$scope.allowEdit = true;

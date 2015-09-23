@@ -1,8 +1,8 @@
  <form name="myForm">
     <label for="repeatSelect"> </label>
-    <select name="repeatSelect" id="repeatSelect" ng-model="recetasCtrl.dificultades.repeatSelect">
-      <option ng-repeat="option in recetasCtrl.dificultades.availableOptions" value="{{option.id}}">{{option.name}}</option>
+    <select name="repeatSelect" id="repeatSelect" ng-model="recetasCtrl.recetaSelected.dificultad">
+     <option value="Facil">Facil</option>
+      <option value="Medio">Medio</option>
+      <option value="Dificil">Dificil</option>
     </select>
   </form>
-  <hr>
-  {{dificultades.repeatSelect}}

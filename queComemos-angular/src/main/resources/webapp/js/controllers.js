@@ -88,26 +88,6 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.newCondimento;
 	self.newDosis;
 	
-	self.dificultades = {
-		repeatSelect: null,
-		availableOptions: [
-		{ id: '1', name: 'Facil' },
-		{ id: '2', name: 'Medio' },
-		{ id: '3', name: 'Dificil' }
-		],
-	};
-
-	self.temporadas = {
-		repeatSelect: null,
-		availableOptions: [
-		{ id: '1', name: 'Todo el año' },
-		{ id: '2', name: 'Primavera' },
-		{ id: '3', name: 'Verano' },
-		{ id: '4', name: 'Otoño' },
-		{ id: '5', name: 'Invierno' }
-		],
-	};
-
 	function transformarAReceta(jsonReceta) {
 		return Receta.asReceta(jsonReceta);
 	}
@@ -161,6 +141,8 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		}).length > 0;
 
 		self.mensajeAutorReceta = self.getMensajeAutorDeReceta();
+		self.recetaSelected.temporada == null? "" : self.recetaSelected.temporada
+		self.recetaSelected.dificultad == null? "" : self.recetaSelected.dificultad
 	};
 
 	$scope.setClickedCondimento = function(index) {
@@ -212,6 +194,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 
 	self.updateReceta = function(){
 		self.recetaSelectedOriginal = self.recetaSelected;
+
 		recetasService.updateReceta(self.recetaSelected, username , function() {
 			self.getRecetas();
 		});

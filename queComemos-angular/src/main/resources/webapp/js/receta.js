@@ -2,7 +2,8 @@ var Receta = function() {
 	this.nombre = null;
 	this.autor = "";
 	this.dificultad = null;
-	this.temporada = null;
+	this.temporada = "";
+	this.dificultad = "";
 	this.calorias = 0;
 };
 

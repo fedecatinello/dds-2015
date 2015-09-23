@@ -2,12 +2,7 @@ package dds.javatar.app.ui.controller;
 
 import spark.Spark;
 
-
-import ch.qos.logback.core.status.Status;
-
 import com.google.gson.Gson;
-
-
 
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;

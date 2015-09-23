@@ -51,7 +51,7 @@ public class Usuario extends Entity {
 	private boolean favearTodasLasConsultas;
 	
 	/** Login attributes **/
-	private String user;
+	private String username;
 	private String password;
 
 	/**** Constructors ****/
@@ -71,7 +71,7 @@ public class Usuario extends Entity {
 		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 		this.recetasFavoritas = new ArrayList<Receta>();
 		
-		this.user = usuarioBuilder.user;
+		this.username = usuarioBuilder.user;
 		this.password = usuarioBuilder.password;
 	}
 
@@ -160,11 +160,11 @@ public class Usuario extends Entity {
 	}
 	
 	public String getUser() {
-		return user;
+		return username;
 	}
 
 	public void setUser(String user) {
-		this.user = user;
+		this.username = user;
 	}
 
 	public String getPassword() {

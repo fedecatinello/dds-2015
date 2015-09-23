@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/node_modules/angular-loading-bar/build/loading-bar.min.css" />
 
 </head>
-<body ng-controller="login_controller as loginCtrl">
+<body ng-controller="LoginController as loginCtrl">
 
 <div class="container">
     <div class="card card-container">
@@ -37,16 +37,17 @@
         <p id="profile-name" class="profile-name-card"></p>
         <form class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
-            <input type="text" id="inputUser" ng-model="loginCtrl.credentials.username" class="form-control" placeholder="Usuario" required autofocus>
-            <input type="password" id="inputPassword" ng-model="loginCtrl.credentials.password" class="form-control" placeholder="Contraseña" required>
+            <input type="text" id="inputUser" ng-model="credentials.username" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="password" id="inputPassword" ng-model="credentials.password" class="form-control" placeholder="Contraseña" required>
             <div id="remember" class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me">Recordarme
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block btn-signin" ng-click="loginCtrl.submit()">Ingresar</button>
+            <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-click="submit()" value="Ingresar" />
             <p class="ng-hide" ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
-            <p ng-show="loginCtrl.$error">{{ error.message }}</p>
+            <div class="alert alert-danger animate-repeat" ng-repeat="error in loginCtrl.errors">{{error}}</div>
+
         </form><!-- /form -->
         <a href="#" class="forgot-password">
             Olvide mi contraseña

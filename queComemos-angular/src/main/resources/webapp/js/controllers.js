@@ -256,15 +256,11 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 
 /** Usuarios Controllers **/
 
-app.controller('login_controller', function(loginService) {
+app.controller('LoginController', function(loginService, $timeout) {
 
 	var self = this;
 
-	self.credentials = {
-		username: 'fede',
-		password: 'catinello'
-	};
-
+	self.credentials = {};
 	self.errors = {};
 
 	self.submit = function ($location) {

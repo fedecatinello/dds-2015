@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitoreo de Consultas</title>
+
+    <!-- RECETA STYLE -->
+    <link rel="stylesheet" href="/css/receta.css">
+
+    <!-- JQUERY -->
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="/node_modules/underscore/underscore-min.js"></script>
+
+    <!-- ANGULAR -->
+    <script src="/node_modules/angular/angular.min.js"></script>
+
+    <!-- BOOTBOX (dialogos de confirmacion) http://bootboxjs.com/ -->
+    <script src="/node_modules/bootbox/bootbox.min.js"></script>
+
+    <!-- ANGULAR  -->
+    <script src="/node_modules/angular-animate/angular-animate.js"></script>
+
+    <!-- LOADING BAR -->
+    <script src="/node_modules/angular-loading-bar/build/loading-bar.min.js"></script>
+    <link rel="stylesheet" href="/node_modules/angular-loading-bar/build/loading-bar.min.css" />
+
+    <script src="/node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h3>Ranking de recetas mas consultadas</h3>
+    </div>
+
+    <div class="panel panel-default" style="opacity:0.8;">
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-condensed">
+                    <tbody>
+                        <tr class="header">
+                            <th>Nombre</th>
+                            <th>Calor&iacute;as</th>
+                            <th>Dificultad</th>
+                            <th>Consultas</th>
+                        </tr>
+                        <tr data-ng-repeat="receta in consultarRecetasCtrl.resultados" class="animate-repeat"
+                            ng-class="{'selected': $index == recetasCtrl.selectedRowReceta, 'publicas': {{receta.esPublica()}}}"
+                            ng-click="recetasCtrl.setClickedReceta(receta, $index)">
+
+                            <td class="col-xs-4">{{receta.nombre}}</td>
+                            <td class="col-xs-2">{{receta.calorias}}</td>
+                            <td class="col-xs-3">{{receta.dificultad}}</td>
+                            <td class="col-xs-2">{{receta.consultas}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="container" align="center">
+                <a href="/index.html"><button type="button" class="btn btn-default btn-lg">Volver</button></a>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+<!-- Scripts -->
+<script src="/js/receta.js"></script>
+<script src="/js/controllers.js"></script>
+<script src="/js/services.js"></script>
+
+</body>
+</html>

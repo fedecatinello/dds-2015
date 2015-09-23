@@ -13,8 +13,8 @@ app.service('recetasService', function($http) {
 		$http.get('/recetasFavoritas/' + username).success(callback);
 	};
 
-	this.updateReceta = function(receta, callback) {
-		$http.put('/updateReceta/' + receta.autor, receta).success(callback);
+	this.updateReceta = function(receta, username, callback) {
+		$http.post('/updateReceta/'+ username, receta).success(callback);
 	};
 
 	this.buscar = function(busqueda, callback, errorHandler) {

@@ -218,7 +218,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 
 	self.updateReceta = function(){
 		self.recetaSelectedOriginal = self.recetaSelected;
-		recetasService.updateReceta(self.recetaSelected, function() {
+		recetasService.updateReceta(self.recetaSelected, username , function() {
 			self.getRecetas();
 		});
 	};

@@ -3,12 +3,24 @@ package dds.javatar.app.ui.controller;
 import java.util.Arrays;
 import java.util.List;
 
+
+
+
 import queComemos.entrega3.dominio.Dificultad;
+import queComemos.entrega3.repositorio.RepoRecetas;
 import spark.Spark;
+
+
+
 
 import com.google.gson.Gson;
 
+import com.google.gson.stream.JsonReader;
+
+
+
 import dds.javatar.app.dto.receta.Receta;
+import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.receta.busqueda.Busqueda.BusquedaBuilder;
@@ -21,11 +33,11 @@ public class RecetasController {
 
 	private JsonTransformer jsonTransformer;
 
-	// private Gson gson;
+	 private Gson gson;
 
 	public RecetasController(JsonTransformer jsonTransformer, Gson gson) {
 		this.jsonTransformer = jsonTransformer;
-		// this.gson = gson;
+		 this.gson = gson;
 	}
 
 	public void register() {
@@ -81,14 +93,15 @@ public class RecetasController {
 			return recetas;
 		}, this.jsonTransformer);
 		
-		Spark.post("/updateReceta/:receta", "application/json;charset=utf-8", (request, response) -> {
+		Spark.post("/updateReceta/:username", "application/json;charset=utf-8", (request, response) -> {
 
-			String receta = request.queryParams(":receta");
-
+			String username = request.params(":username");
 			String message = request.body();
+			Receta receta  =	gson.fromJson(message,RecetaPrivadaSimple.class);
+			RepositorioRecetas.getInstance().updateReceta(receta);
 
-			System.out.println(message);
-
+			Usuario userLogueado = RepositorioUsuarios.getInstance().get( new Usuario.UsuarioBuilder().nombre(username).build());
+			userLogueado.updateFavorita(receta);	
 			return message;
 		}, this.jsonTransformer);
 

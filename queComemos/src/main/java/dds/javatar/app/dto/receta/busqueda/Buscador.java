@@ -87,8 +87,7 @@ public class Buscador {
 				recetasQueConoceLista.add(unaReceta);
 			}
 		}
-		
-		//recetasQueConoceLista = new ArrayList<Receta>(recetasQueConoceSet);
+
 		return recetasQueConoceLista;
 	}
 

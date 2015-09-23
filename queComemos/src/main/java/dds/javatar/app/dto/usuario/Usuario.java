@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.uqbar.commons.model.Entity;
@@ -395,6 +396,19 @@ public class Usuario extends Entity {
 
 	public void marcarFavorita(Receta receta) {
 		this.recetasFavoritas.add(receta);
+	}
+	
+	public void updateFavorita(Receta receta){
+		
+		try {
+			Receta recetaEncontrada = this.getFavoritos().stream().filter(o -> o.getNombre().equals(receta.getNombre())).findFirst().get();
+			
+			this.getFavoritos().remove(recetaEncontrada);
+			this.marcarFavorita(receta);
+		} catch (NoSuchElementException e) {
+			// TODO: handle exception
+		}
+		
 	}
 
 	public boolean tieneReceta(Receta receta) {

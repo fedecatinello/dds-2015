@@ -3,27 +3,17 @@ package dds.javatar.app.ui.controller;
 import java.util.Arrays;
 import java.util.List;
 
-
-
-
 import queComemos.entrega3.dominio.Dificultad;
-import queComemos.entrega3.repositorio.RepoRecetas;
 import spark.Spark;
 
-
-
-
 import com.google.gson.Gson;
-
-import com.google.gson.stream.JsonReader;
-
-
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.receta.busqueda.Busqueda.BusquedaBuilder;
+import dds.javatar.app.dto.receta.filtro.FiltroCondiciones;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
@@ -33,11 +23,11 @@ public class RecetasController {
 
 	private JsonTransformer jsonTransformer;
 
-	 private Gson gson;
+	private Gson gson;
 
 	public RecetasController(JsonTransformer jsonTransformer, Gson gson) {
 		this.jsonTransformer = jsonTransformer;
-		 this.gson = gson;
+		this.gson = gson;
 	}
 
 	public void register() {
@@ -51,7 +41,6 @@ public class RecetasController {
 			response.type("application/json;charset=utf-8");
 			return RepositorioRecetas.getInstance().recetaConocidas;
 		}, this.jsonTransformer);
-
 
 		Spark.get("/recetas/buscar", "application/json;charset=utf-8", (request, response) -> {
 			Buscador buscador = new Buscador();
@@ -72,10 +61,16 @@ public class RecetasController {
 				.palabrasClave(Arrays.asList(ingrediente, temporada))
 				.build();
 
+			List<Receta> recetas = buscador.realizarBusquedaPara(usuario, busqueda);
+			if (request.queryParams("aplicar_filtros_usuario") != null) {
+				buscador.setFiltros(Arrays.asList(new FiltroCondiciones()));
+				buscador.filtrar(usuario, recetas);
+			}
+
 			response.type("application/json;charset=utf-8");
-			return buscador.realizarBusquedaPara(usuario, busqueda);
+			return recetas;
 		}, this.jsonTransformer);
-		
+
 		Spark.get("/recetas/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			Buscador buscador = new Buscador();
@@ -92,15 +87,15 @@ public class RecetasController {
 			response.type("application/json;charset=utf-8");
 			return recetas;
 		}, this.jsonTransformer);
-		
+
 		Spark.post("/updateReceta/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			String message = request.body();
-			Receta receta  =	gson.fromJson(message,RecetaPrivadaSimple.class);
+			Receta receta = this.gson.fromJson(message, RecetaPrivadaSimple.class);
 			RepositorioRecetas.getInstance().updateReceta(receta);
 
-			Usuario userLogueado = RepositorioUsuarios.getInstance().get( new Usuario.UsuarioBuilder().nombre(username).build());
+			Usuario userLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 			userLogueado.updateFavorita(receta);
 			return message;
 		}, this.jsonTransformer);

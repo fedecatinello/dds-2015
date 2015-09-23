@@ -21,7 +21,6 @@ public class Main {
 		ContainerFactory.getInstance().agregarRecetasAlRepositorio();
 		ContainerFactory.getInstance().agregarUsuariosAlRepo();
 		new UsuariosController(jsonTransformer, gson).register();
-		new UsuariosController(jsonTransformer, gson).login();
 		new RecetasController(jsonTransformer, gson).register();
 
 	}

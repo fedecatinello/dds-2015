@@ -43,11 +43,10 @@ public class RecetasController {
 			Usuario usuarioLogueado;
 			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 
-			
 			List<Receta> recetas = buscador.realizarBusquedaPara(usuarioLogueado);
-			
-			if (!(usuarioLogueado.getFavoritos()==null || usuarioLogueado.getFavoritos().isEmpty())) {
-				recetas = usuarioLogueado.getFavoritos();	
+
+			if (!(usuarioLogueado.getFavoritos() == null || usuarioLogueado.getFavoritos().isEmpty())) {
+				recetas = usuarioLogueado.getFavoritos();
 			}
 
 			response.type("application/json;charset=utf-8");

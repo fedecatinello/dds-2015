@@ -275,9 +275,8 @@ app.controller('LoginController', function(loginService, $timeout) {
 	self.credentials = {};
 	self.errors = [];
 
-	self.submit = function ($location) {
+	self.ingresar = function ($location) {
 
-		alert('Entro al controller');
 		loginService.postUserData(self.credentials,
 			function () {
 				$location.path('/');

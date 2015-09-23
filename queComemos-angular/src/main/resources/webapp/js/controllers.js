@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('queComemosApp', ['ngAnimate', 'ui.bootstrap', 'httpPostFix']);
+var app = angular.module('queComemosApp', ['ngAnimate', 'ui.bootstrap']);
 
 var username = 'Maru Botana';		//Tiene Favoritos
 //var username = 'ElSiscador';		//Ultimas consultas
@@ -76,15 +76,13 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
 	};
 });
 
-app.controller('RecetasController', function(recetasService, messageService, $scope,$modal) {
-
+app.controller('RecetasController', function(recetasService, messageService, $scope, $modal) {
 
 	var self = this;
 	self.allowEdit= $scope.allowEdit = true;
 	self.esFavorita = false;
 	self.animationsEnabled = true;
 
-	//Estas de aca abajo no hace falta inicializarlas, queda mas "claro" pero es al re pedo. Las elimino?
 	self.recetaSelected = null;
 	self.selectedCondimento=null;
 	self.selectedIngrediente = null;	

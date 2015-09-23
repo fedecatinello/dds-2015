@@ -19,7 +19,7 @@ app.service('recetasService', function($http) {
 });
 
 app.service('messageService', function($http) {
-
+	
 	this.getInitMessage = function(username, callback, errorHandler) {
 		$http.get('/mensajeInicio/' + username).success(callback).error(errorHandler);
 	};

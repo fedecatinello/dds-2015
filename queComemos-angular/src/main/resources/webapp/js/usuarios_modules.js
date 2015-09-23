@@ -20,16 +20,13 @@ usuariosModule.controller('login_controller', function($scope, usuarioService) {
 
 });
 
-usuariosModule.controller('UsuarioController', function(usuarioService, $scope) {
-	$scope.allowEdit = true;
+usuariosModule.controller('UsuarioController', function($scope, usuarioService) {
 	var self = this;
-
-	self.loggedUser=null;
 	
 	self.nombre = "eliana";
 	self.complexion = null;
-	self.sexo = null;
-	self.edad = null;
+	self.sexo = "F";
+	self.edad = 21;
 	self.fechaNacimiento = null;
 	self.altura = null;
 	self.peso = null;
@@ -43,14 +40,14 @@ usuariosModule.controller('UsuarioController', function(usuarioService, $scope) 
 		return Usuario.asUsuario(jsonUsuario);
 	}
 	
-	self.getUserInfo = function() {
-		usuarioService.getUserInfoByUsername(username, function() {
-			self.loggedUser = transformarUsuario(jsonUsuario);
-		});
-	};
+//	self.getUserInfo = function() {
+//		usuarioService.getUserInfoByUsername(username, function() {
+//			self.loggedUser = transformarUsuario(jsonUsuario);
+//		});
+//	};
 	
 	$scope.go =  function() { 
-		alert('pasaste, gil');
+		alert('ENTRÓ AL CONTROLLER, SHORO.');
 	};
 
 });

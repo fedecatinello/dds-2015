@@ -16,5 +16,5 @@ Receta.asReceta = function (jsonReceta) {
 };
 
 Receta.prototype.esPublica = function() {
-	return this.autor=="";
+	return !this.autor;
 };

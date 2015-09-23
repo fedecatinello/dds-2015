@@ -23,7 +23,6 @@ app.service('messageService', function($http) {
 	this.getInitMessage = function(username, callback, errorHandler) {
 		$http.get('/mensajeInicio/' + username).success(callback).error(errorHandler);
 	};
-	
 });
 
 
@@ -36,7 +35,6 @@ app.service('loginService', function($http){
 		$http.post('/login?username='+data.username, data);
 
 	};
-
 });
 
 app.service('usuarioService', function($http) {
@@ -44,5 +42,4 @@ app.service('usuarioService', function($http) {
 	this.getUserInfoByUsername = function(username, callback) {
 		$http.get('/usuarios/' + username).success(callback);
 	};
-
 });

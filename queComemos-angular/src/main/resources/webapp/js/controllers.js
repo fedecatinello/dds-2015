@@ -22,50 +22,48 @@ app.directive('visible', function() {
 app.directive("dificultad", function() {
 	return {
 		template: '<ng-include src="getTemplateDificultad()"/>',
-    //templateUrl: unfortunately has no access to $scope.user.type
-    restrict: 'E',
-    controller: function($scope) {
-      //function used on the ng-include to resolve the template
-      $scope.getTemplateDificultad = function() {
-        //basic handling. It could be delegated to different Services
-        if ($scope.allowEdit){
-        	return "partials/templateDificultadListBox.html";
-        }
-        else {
-        	return "partials/templateDificultadLabel.html";
-        }
-    }
-}
-};
+		//templateUrl: unfortunately has no access to $scope.user.type
+		restrict: 'E',
+		controller: function($scope) {
+			//function used on the ng-include to resolve the template
+			$scope.getTemplateDificultad = function() {
+				//basic handling. It could be delegated to different Services
+				if ($scope.allowEdit){
+					return "partials/templateDificultadListBox.html";
+				} else {
+					return "partials/templateDificultadLabel.html";
+				}
+			}
+		}
+	};
 });
 
 app.directive("temporada", function() {
 	return {
 		template: '<ng-include src="getTemplateTemporada()"/>',
-    //templateUrl: unfortunately has no access to $scope.user.type
-    restrict: 'E',
-    controller: function($scope) {
-      //function used on the ng-include to resolve the template
-      $scope.getTemplateTemporada = function() {
-        //basic handling. It could be delegated to different Services
-        if ($scope.allowEdit){
-        	return "partials/templateTemporadaListBox.html";
-        }
-        else {
-        	return "partials/templateTemporadaLabel.html";
-        }
-    }
-}
-};
+		//templateUrl: unfortunately has no access to $scope.user.type
+		restrict: 'E',
+		controller: function($scope) {
+			//function used on the ng-include to resolve the template
+			$scope.getTemplateTemporada = function() {
+				//basic handling. It could be delegated to different Services
+				if ($scope.allowEdit){
+					return "partials/templateTemporadaListBox.html";
+				} else {
+					return "partials/templateTemporadaLabel.html";
+				}
+			}
+		}
+	};
 });
 
 /** Controllers* */
 
 app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
 
-	var newUnidadMedida=null;
-	var newCantidad= null;
-	var newIngrediente=null;
+	var newUnidadMedida = null;
+	var newCantidad = null;
+	var newIngrediente = null;
 
 	$scope.ok = function () {
 		receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
@@ -99,24 +97,22 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.dificultades = {
 		repeatSelect: null,
 		availableOptions: [
-		{id: '1', name: 'Facil'},
-		{id: '2', name: 'Medio'},
-		{id: '3', name: 'Dificil'}
+			{ id: '1', name: 'Facil' },
+			{ id: '2', name: 'Medio' },
+			{ id: '3', name: 'Dificil' }
 		],
 	};
 
 	self.temporadas = {
 		repeatSelect: null,
 		availableOptions: [
-		{id: '1', name: 'Todo el año'},
-		{id: '2', name: 'Primavera'},
-		{id: '3', name: 'Verano'},
-		{id: '4', name: 'Otoño'},
-		{id: '5', name: 'Invierno'}
+			{ id: '1', name: 'Todo el año' },
+			{ id: '2', name: 'Primavera' },
+			{ id: '3', name: 'Verano' },
+			{ id: '4', name: 'Otoño' },
+			{ id: '5', name: 'Invierno' }
 		],
 	};
-
-
 
 	function transformarAReceta(jsonReceta) {
 		var receta= Receta.asReceta(jsonReceta);
@@ -208,9 +204,9 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		});
 
 		modalInstance.result.then(function (newUnidadMedida, newCantidad, newIngrediente) {
-			self.result = newUnidadMedida; // TODO inyecto la receta seleccioanda,
-											// o devuelvo los nuevos valores y asigno dsp. 
-										});
+			// TODO inyecto la receta seleccioanda o devuelvo los nuevos valores y asigno dsp. 
+			self.result = newUnidadMedida; 
+		});
 	};
 
 	self.deleteIngrediente = function(ingrediente){
@@ -233,8 +229,6 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 			}
 		}, 10000);
 	}
-
-	
 
 	self.obtenerMensajeInicio();
 	self.getRecetas();

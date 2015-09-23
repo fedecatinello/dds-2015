@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('queComemosApp', []).config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function($routeProvider) {
 
 	$routeProvider.when('/login', {
 		templateUrl: '/login.html',
-		login: true
+		controller: 'LoginController'
 	});
 	$routeProvider.when('/index', {
 		templateUrl: '/index.html',
@@ -14,11 +14,11 @@ angular.module('queComemosApp', []).config(['$routeProvider', function($routePro
 	/** Agregar controller **/
 	$routeProvider.when('/profile', {
 		templateUrl: '/perfilUsuario.html',
-		controller: 'MyCtrl2'
+		controller: 'UsuarioController'
 	});
 
 	/** Agregar controller **/
 	$routeProvider.when('/', {
-		redirectTo: '/login'
+		redirectTo: '/index'
 	});
 }]);

@@ -247,7 +247,7 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 		self.busqueda.username = username;
 		recetasService.buscar(self.busqueda, function(data) {
 			self.resultados = _.map(data, Receta.asReceta);
-			resultados.forEach(function(receta){
+			self.resultados.forEach(function(receta){
 				receta.consultas++;
 			});
 		}, notificarError);
@@ -273,10 +273,11 @@ app.controller('LoginController', function(loginService, $timeout) {
 	var self = this;
 
 	self.credentials = {};
-	self.errors = {};
+	self.errors = [];
 
 	self.submit = function ($location) {
 
+		alert('Entro al controller');
 		loginService.postUserData(self.credentials,
 			function () {
 				$location.path('/');
@@ -326,9 +327,9 @@ app.controller('UsuarioController', function ($scope, usuarioService) {
 //		});
 //	};
 
-self.go = function () {
-	alert('ENTRÓ AL CONTROLLER, SHORO.');
-};
+	self.go = function () {
+		alert('ENTRÓ AL CONTROLLER, SHORO.');
+	};
 
 });
 

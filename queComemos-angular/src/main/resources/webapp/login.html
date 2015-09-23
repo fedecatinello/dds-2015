@@ -28,6 +28,8 @@
     <script src="/node_modules/angular-loading-bar/build/loading-bar.min.js"></script>
     <link rel="stylesheet" href="/node_modules/angular-loading-bar/build/loading-bar.min.css" />
 
+    <script src="/node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+
 </head>
 <body ng-controller="LoginController as loginCtrl">
 
@@ -46,9 +48,11 @@
             </div>
             <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-click="submit()" value="Ingresar" />
             <p class="ng-hide" ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
-            <div class="alert alert-danger animate-repeat" ng-repeat="error in loginCtrl.errors">{{error}}</div>
 
         </form><!-- /form -->
+
+        <div class="alert alert-danger animate-repeat" ng-repeat="error in loginCtrl.errors">{{error}}</div>
+
         <a href="#" class="forgot-password">
             Olvide mi contraseña
         </a>

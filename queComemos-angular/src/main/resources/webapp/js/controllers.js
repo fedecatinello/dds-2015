@@ -140,9 +140,9 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 
 	};
 
-	$scope.setClickedReceta = function(index) {
+	self.setClickedReceta = function(receta, index) {
 		self.selectedRowReceta = index;
-		self.recetaSelectedOriginal = self.recetas[self.selectedRowReceta];
+		self.recetaSelectedOriginal = receta;
 		self.recetaSelected = jQuery.extend(true, {}, self.recetaSelectedOriginal);
 
 		self.esFavorita = self.recetasFavoritas.filter(function(obj) {
@@ -154,12 +154,12 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		self.recetaSelected.dificultad == null? "" : self.recetaSelected.dificultad
 	};
 
-	$scope.setClickedCondimento = function(index) {
+	self.setClickedCondimento = function(index) {
 		self.selectedRowCondimento = index;
 		self.selectedCondimento = this.Condimento;
 	};
 
-	$scope.setClickedIngrediente = function(index) {
+	self.setClickedIngrediente = function(index) {
 		self.selectedRowIngrediente = index;
 		self.selectedIngrediente = this.Ingrediente;
 	};
@@ -265,15 +265,11 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 
 /** Usuarios Controllers **/
 
-app.controller('login_controller', function(loginService) {
+app.controller('LoginController', function(loginService, $timeout) {
 
 	var self = this;
 
-	self.credentials = {
-		username: 'fede',
-		password: 'catinello'
-	};
-
+	self.credentials = {};
 	self.errors = {};
 
 	self.submit = function ($location) {

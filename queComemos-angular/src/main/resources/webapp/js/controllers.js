@@ -65,15 +65,17 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
 	var newCantidad = null;
 	var newIngrediente = null;
 
-	$scope.ok = function () {
-		receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
+	$scope.ok = function (form) {
+		if (form.$valid) {
+			receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
 		//borrar lo de abajo, en algun lado validar q se pueda agregar el ingrediente
-		$modalInstance.close($scope.newUnidadMedida, $scope.newCantidad, $scope.newIngrediente);
-	};
+		$modalInstance.close($scope.newUnidadMedida, $scope.newCantidad, $scope.newIngrediente);	
+	}
+};
 
-	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
-	};
+$scope.cancel = function () {
+	$modalInstance.dismiss('cancel');
+};
 });
 
 app.controller('RecetasController', function(recetasService, messageService, $scope, $modal) {
@@ -95,20 +97,20 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.dificultades = {
 		repeatSelect: null,
 		availableOptions: [
-			{ id: '1', name: 'Facil' },
-			{ id: '2', name: 'Medio' },
-			{ id: '3', name: 'Dificil' }
+		{ id: '1', name: 'Facil' },
+		{ id: '2', name: 'Medio' },
+		{ id: '3', name: 'Dificil' }
 		],
 	};
 
 	self.temporadas = {
 		repeatSelect: null,
 		availableOptions: [
-			{ id: '1', name: 'Todo el año' },
-			{ id: '2', name: 'Primavera' },
-			{ id: '3', name: 'Verano' },
-			{ id: '4', name: 'Otoño' },
-			{ id: '5', name: 'Invierno' }
+		{ id: '1', name: 'Todo el año' },
+		{ id: '2', name: 'Primavera' },
+		{ id: '3', name: 'Verano' },
+		{ id: '4', name: 'Otoño' },
+		{ id: '5', name: 'Invierno' }
 		],
 	};
 
@@ -176,10 +178,12 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		self.selectedIngrediente = this.Ingrediente;
 	};
 
-	self.addCondimento = function(){
-		self.recetaSelected.condimentos[self.newCondimento] = self.newDosis;
-		self.newCondimento="";
-		self.newDosis="";
+	self.addCondimento = function(form){
+		if (form.$valid) {
+			self.recetaSelected.condimentos[self.newCondimento] = self.newDosis;
+			self.newCondimento="";
+			self.newDosis="";	
+		};
 	};
 
 	self.deleteCondimento = function(){

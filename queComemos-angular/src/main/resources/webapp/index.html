@@ -132,10 +132,12 @@
 								<br>
 								<div>
 									<h4>Condimentos</h4>
-									<input type="text" visible='allowEdit' ng-model="recetasCtrl.newCondimento" size="15" placeholder=" Condimento">
-									<input type="number" visible='allowEdit' ng-model="recetasCtrl.newDosis" size="5" placeholder=" Dosis">
-									<button type="button" visible='allowEdit' class="btn btn-sm btn-default" ng-click="recetasCtrl.addCondimento()">Agregar</button>
+									 <form name="form" class="css-form">
+									<input type="text" visible='allowEdit' ng-model="recetasCtrl.newCondimento" size="15" placeholder=" Condimento" required>
+									<input type="number" visible='allowEdit' ng-model="recetasCtrl.newDosis" size="5" placeholder=" Dosis" required>
+									<button type="button" visible='allowEdit' class="btn btn-sm btn-default" ng-click="recetasCtrl.addCondimento(form)" >Agregar</button>
 									<button type="button" visible='allowEdit' class="btn btn-sm btn-default"  ng-click="recetasCtrl.deleteCondimento()"> Eliminar</Button>
+									</form>
 										<table class="table table-condensed">
 											<tbody>
 												<tr class='header'>

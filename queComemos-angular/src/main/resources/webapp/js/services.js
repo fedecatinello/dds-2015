@@ -1,5 +1,3 @@
-var app = angular.module('queComemos-usuarios', []);
-
 
 app.service('recetasService', function($http) {
 

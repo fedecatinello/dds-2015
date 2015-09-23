@@ -16,7 +16,7 @@ public class UsuariosController {
 
 	public UsuariosController(JsonTransformer jsonTransformer, Gson gson) {
 		this.jsonTransformer = jsonTransformer;
-		// this.gson = gson;
+		this.gson = gson;
 	}
 
 	public void register() {
@@ -55,12 +55,12 @@ public class UsuariosController {
 			response.type("application/json;charset=utf-8");
 			
 			/* Busco el usuario en el repositorio para validar */
-			Usuario user = RepositorioUsuarios.getInstance().get(usuario);
+			Usuario user = RepositorioUsuarios.getInstance().getByUsername(usuario);
 			
 //			if(user == null)  //Si no esta lo agrego
 //				RepositorioUsuarios.getInstance().add(usuario);
 			
-			if(coincidePassword(user, usuario))	
+			if(user != null)	
 				response.status(200);
 				
 			else 
@@ -84,9 +84,5 @@ public class UsuariosController {
 		}, this.jsonTransformer);
 	}
 	
-	Boolean coincidePassword(Usuario usr1, Usuario usr2) {
-		
-		return usr1.getPassword().compareTo(usr2.getPassword()) == 0;
-	}
 }
 

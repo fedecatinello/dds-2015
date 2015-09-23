@@ -2,6 +2,7 @@ package dds.javatar.app.dto.sistema;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections15.Predicate;
 import org.uqbar.commons.model.CollectionBasedHome;
@@ -33,9 +34,17 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 
 	public Usuario get(Usuario Usuario) {
 		return this.searchByName(Usuario).get(0);
-
 	}
 
+	public Usuario getByUsername(Usuario user) {
+		try {
+			List<Usuario> listaUsers = super.getObjects();
+			return listaUsers.stream().filter(s -> s.getUser().equals(user.getUser())).map(p-> (Usuario) p).collect(Collectors.toList()).get(0);
+		} catch (Exception e) {
+			return null;	// revianta cuando no encuentra nada
+		}
+		}
+	
 	public List<Usuario> searchByName(Usuario usuario) {
 		List<Usuario> listaUsuariosConElMismoNombre = new ArrayList<Usuario>();
 		for (Usuario usuarioEnSistema : super.getObjects()) {
@@ -45,7 +54,7 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 		}
 		return listaUsuariosConElMismoNombre;
 	}
-
+	
 	public List<Usuario> list(Usuario usuario) {
 		List<Usuario> listaUsuariosConElMismoNombreyCondicionesPreexistentes = this.searchByName(usuario);
 		listaUsuariosConElMismoNombreyCondicionesPreexistentes.forEach(usuarioConElMismoNombre -> addToUsersList(usuarioConElMismoNombre, usuario, listaUsuariosConElMismoNombreyCondicionesPreexistentes));

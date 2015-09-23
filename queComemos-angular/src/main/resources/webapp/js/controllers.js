@@ -65,7 +65,7 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
 			self.ingredientesFiltrados =data;
 		});
 	};
-*/
+	*/
 	$scope.ok = function (form) {
 		if (form.$valid) {
 			receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
@@ -278,30 +278,28 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 	self.ingresar = function () {
 
 		loginService.postUserData(self.credentials,
-			function () {
-
-				var landingUrl = "http://" + $window.location.host + "/";
+		function() {
+			var landingUrl = "http://" + $window.location.host + "/" + "home.html";
 				$window.location.href = landingUrl;
-			},
-			function () {
+		}
+		,function () {
+			self.notificarError();
+		});
 
-				self.notificarError();
+		self.notificarError = function () {
 
-			});
-	};
+			self.errors.push('Usuario o contraseña invalido, intente nuevamente');
+			$timeout(function () {
+				while (self.errors.length > 0) {
+					self.errors.pop();
+				}
+			}, 5000);
 
-	self.notificarError = function () {
+		};
 
-		self.errors.push('Usuario o contraseña invalido, intente nuevamente');
-		$timeout(function () {
-			while (self.errors.length > 0) {
-				self.errors.pop();
-			}
-		}, 5000);
-
-	};
-
+	}
 });
+
 
 app.controller('UsuarioController', function ($scope, usuarioService) {
 	var self = this;
@@ -329,9 +327,9 @@ app.controller('UsuarioController', function ($scope, usuarioService) {
 //		});
 //	};
 
-	self.go = function () {
-		alert('ENTRÓ AL CONTROLLER, SHORO.');
-	};
+self.go = function () {
+	alert('ENTRÓ AL CONTROLLER, SHORO.');
+};
 
 });
 

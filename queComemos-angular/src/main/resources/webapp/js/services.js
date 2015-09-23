@@ -1,3 +1,5 @@
+
+
 app.service('recetasService', function($http) {
 
 	this.findAll = function(callback) {
@@ -36,14 +38,3 @@ app.service('messageService', function($http) {
 	};
 });
 
-
-/** Login Service **/
-
-app.service('loginService', function($http){
-
-	this.postUserData = function(data) {
-
-		$http.post('/login', data);
-
-	};
-});

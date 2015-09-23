@@ -271,3 +271,55 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 
 });
 
+/** Usuarios Controllers **/
+
+app.controller('login_controller', function($scope, loginService) {
+
+	$scope.credentials = {
+		username : 'fede',
+		password : 'catinello'
+	};
+
+	$scope.val = 'Fede';
+
+	$scope.submit = function(){
+
+		debugger
+		alert($scope.credentials.username);
+		loginService.postUserData($scope.credentials);
+	};
+
+});
+
+app.controller('UsuarioController', function($scope, usuarioService) {
+	var self = this;
+
+	self.nombre = "eliana";
+	self.complexion = null;
+	self.sexo = "F";
+	self.edad = 21;
+	self.fechaNacimiento = null;
+	self.altura = null;
+	self.peso = null;
+	self.imc = null;
+	self.condicionesPreexistentes = [];
+	self.preferenciasAlimentarias = [];
+	self.comidasQueDisgustan = [];
+	self.recetasFavoritas = [];
+
+	function transformarUsuario(jsonUsuario) {
+		return Usuario.asUsuario(jsonUsuario);
+	}
+
+//	self.getUserInfo = function() {
+//		usuarioService.getUserInfoByUsername(username, function() {
+//			self.loggedUser = transformarUsuario(jsonUsuario);
+//		});
+//	};
+
+	$scope.go =  function() {
+		alert('ENTRÓ AL CONTROLLER, SHORO.');
+	};
+
+});
+

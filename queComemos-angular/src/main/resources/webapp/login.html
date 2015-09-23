@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="queComemos-usuarios">
+<html lang="en" ng-app="queComemosApp">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido a QueComemos</title>
+    <title>Bienvenido a QueComemos - Login</title>
     <link rel="stylesheet" type="text/css" href="/css/login.css">
 
     <!-- JQUERY -->
@@ -37,7 +37,7 @@
         <p id="profile-name" class="profile-name-card"></p>
         <form class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
-            <input type="text" id="inputUser" ng-model="loginCtrl.credentials.username" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="text" id="inputUser" ng-model="val" class="form-control" placeholder="Usuario" required autofocus>
             <input type="password" id="inputPassword" ng-model="loginCtrl.credentials.password" class="form-control" placeholder="Contraseña" required>
             <div id="remember" class="checkbox">
                 <label>

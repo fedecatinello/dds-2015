@@ -233,3 +233,18 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.getRecetasFavoritas();
 
 });
+
+
+app.controller("ConsultarRecetasController", function(recetasService) {
+
+	var self = this;
+
+	var resultados = [
+		{
+
+		},
+		{
+
+		}
+	];
+});

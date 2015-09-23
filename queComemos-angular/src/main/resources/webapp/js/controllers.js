@@ -159,7 +159,8 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 
 	$scope.setClickedReceta = function(index) {
 		self.selectedRowReceta = index;
-		self.recetaSelected = self.recetas[self.selectedRowReceta];
+		self.recetaSelectedOriginal = self.recetas[self.selectedRowReceta];
+		self.recetaSelected = jQuery.extend(true, {}, self.recetaSelectedOriginal);
 
 		self.esFavorita = self.recetasFavoritas.filter(function(obj) {
 			return obj.autor == self.recetaSelected.autor;
@@ -213,6 +214,17 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.deleteIngrediente = function(ingrediente){
 		var	ingredientes= self.recetaSelected.ingredientes;
 		delete ingredientes[self.selectedIngrediente];
+	};
+
+	self.updateReceta = function(){
+		self.recetaSelectedOriginal = self.recetaSelected;
+		recetasService.updateReceta(self.recetaSelected, function() {
+			self.getRecetas();
+		});
+	};
+
+	self.exit = function(){
+		self.recetaSelected = self.recetaSelectedOriginal;
 	};
 
 	self.obtenerMensajeInicio = function() {

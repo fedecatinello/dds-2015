@@ -47,7 +47,7 @@
 			<ul class="nav nav-tabs nav-justified">
 				<li role="presentation"><a href="/perfilUsuario.html">Ver Perfil</a></li>
 				<li role="presentation"><a href="/consultaRecetas.html">Consultar Recetas</a></li>
-                <li role="presentation"><a href="/monitoreoConsultas.html">Monitoreo de consultas</a></li>
+				<li role="presentation"><a href="/monitoreoConsultas.html">Monitoreo de consultas</a></li>
 			</ul>
 		</div>
 
@@ -70,8 +70,8 @@
 							<th>Temporada</th>
 						</tr>
 						<tr data-ng-repeat="receta in recetasCtrl.recetas" class="animate-repeat"
-							ng-class="{'selected':$index == recetasCtrl.selectedRowReceta , 'publicas': {{receta.esPublica()}}}"
-							ng-click="setClickedReceta($index)">
+						ng-class="{'selected':$index == recetasCtrl.selectedRowReceta , 'publicas': {{receta.esPublica()}}}"
+						ng-click="setClickedReceta($index)">
 
 						<td class="col-xs-4">{{receta.nombre}}</td>
 						<td class="col-xs-2">{{receta.calorias}}</td>
@@ -132,12 +132,12 @@
 								<br>
 								<div>
 									<h4>Condimentos</h4>
-									 <form name="form" class="css-form">
-									<input type="text" visible='allowEdit' ng-model="recetasCtrl.newCondimento" size="15" placeholder=" Condimento" required>
-									<input type="number" visible='allowEdit' ng-model="recetasCtrl.newDosis" size="5" placeholder=" Dosis" required>
-									<button type="button" visible='allowEdit' class="btn btn-sm btn-default" ng-click="recetasCtrl.addCondimento(form)" >Agregar</button>
-									<button type="button" visible='allowEdit' class="btn btn-sm btn-default"  ng-click="recetasCtrl.deleteCondimento()"> Eliminar</Button>
-									</form>
+									<form name="form" class="css-form">
+										<input type="text" visible='allowEdit' ng-model="recetasCtrl.newCondimento" size="15" placeholder=" Condimento" required>
+										<input type="number" visible='allowEdit' ng-model="recetasCtrl.newDosis" size="5" placeholder=" Dosis" required>
+										<button type="button" visible='allowEdit' class="btn btn-sm btn-default" ng-click="recetasCtrl.addCondimento(form)" >Agregar</button>
+										<button type="button" visible='allowEdit' class="btn btn-sm btn-default"  ng-click="recetasCtrl.deleteCondimento()"> Eliminar</Button>
+										</form>
 										<table class="table table-condensed">
 											<tbody>
 												<tr class='header'>
@@ -168,10 +168,11 @@
 									{{recetasCtrl.getPasos()}}
 								</div>
 							</div>
-
+							<div style="text-align:center">
+								<button type="button" visible='allowEdit' class="btn btn-default" ng-click="recetasCtrl.updateReceta()" >Actualizar</button>
+								<button type="button" class="btn btn-default" ng-click="recetasCtrl.exit()">Volver</button>
+							</div>
 						</div>
-						<button type="button" visible='allowEdit' class="btn btn-default" >Actualizar</button>
-						<button type="button" class="btn btn-default" >Volver</button>
 					</div>
 
 				</div>

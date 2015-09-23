@@ -80,6 +80,17 @@ public class RecetasController {
 			response.type("application/json;charset=utf-8");
 			return recetas;
 		}, this.jsonTransformer);
+		
+		Spark.post("/updateReceta/:receta", "application/json;charset=utf-8", (request, response) -> {
+
+			String receta = request.queryParams(":receta");
+
+			String message = request.body();
+
+			System.out.println(message);
+
+			return message;
+		}, this.jsonTransformer);
 
 	}
 }

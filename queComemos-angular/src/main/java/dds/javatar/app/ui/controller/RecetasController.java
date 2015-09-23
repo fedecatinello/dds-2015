@@ -97,6 +97,7 @@ public class RecetasController {
 
 			Usuario userLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 			userLogueado.updateFavorita(receta);
+			response.status(200);
 			return message;
 		}, this.jsonTransformer);
 

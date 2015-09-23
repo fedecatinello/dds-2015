@@ -1,5 +1,3 @@
-
-
 app.service('recetasService', function($http) {
 
 	this.findAll = function(callback) {

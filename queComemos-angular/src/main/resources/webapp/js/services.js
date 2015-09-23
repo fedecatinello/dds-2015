@@ -1,3 +1,5 @@
+
+
 app.service('recetasService', function($http) {
 
 	this.findAll = function(callback) {
@@ -25,6 +27,7 @@ app.service('recetasService', function($http) {
 		if (busqueda.dificultad) url += "dificultad=" + encodeURIComponent(busqueda.dificultad) + "&";
 		if (busqueda.temporada) url += "temporada=" + encodeURIComponent(busqueda.temporada) + "&";
 		if (busqueda.ingrediente) url += "ingrediente=" + encodeURIComponent(busqueda.ingrediente) + "&";
+		if (busqueda.aplicarFiltrosUsuario) url += "aplicar_filtros_usuario=true&";
 		$http.get(url).success(callback).error(errorHandler);
 	}
 });
@@ -36,14 +39,3 @@ app.service('messageService', function($http) {
 	};
 });
 
-
-/** Login Service **/
-
-app.service('loginService', function($http){
-
-	this.postUserData = function(data) {
-
-		$http.post('/login', data);
-
-	};
-});

@@ -254,3 +254,73 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 
 });
 
+/** Usuarios Controllers **/
+
+app.controller('login_controller', function(loginService) {
+
+	var self = this;
+
+	self.credentials = {
+		username: 'fede',
+		password: 'catinello'
+	};
+
+	self.errors = {};
+
+	self.submit = function ($location) {
+
+		loginService.postUserData(self.credentials,
+			function () {
+				$location.path('/');
+			},
+			function () {
+				self.notificarError();
+				$location.path('/login');
+			});
+	};
+
+	self.notificarError = function () {
+
+		self.errors.push('Usuario o contraseña invalido, intente nuevamente');
+		$timeout(function () {
+			while (self.errors.length > 0) {
+				self.errors.pop();
+			}
+		}, 10000);
+
+	};
+
+});
+
+app.controller('UsuarioController', function ($scope, usuarioService) {
+		var self = this;
+
+		self.nombre = "eliana";
+		self.complexion = null;
+		self.sexo = "F";
+		self.edad = 21;
+		self.fechaNacimiento = null;
+		self.altura = null;
+		self.peso = null;
+		self.imc = null;
+		self.condicionesPreexistentes = [];
+		self.preferenciasAlimentarias = [];
+		self.comidasQueDisgustan = [];
+		self.recetasFavoritas = [];
+
+		function transformarUsuario(jsonUsuario) {
+			return Usuario.asUsuario(jsonUsuario);
+		}
+
+//	self.getUserInfo = function() {
+//		usuarioService.getUserInfoByUsername(username, function() {
+//			self.loggedUser = transformarUsuario(jsonUsuario);
+//		});
+//	};
+
+		self.go = function () {
+			alert('ENTRÓ AL CONTROLLER, SHORO.');
+		};
+
+});
+

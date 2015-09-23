@@ -1,19 +1,19 @@
 'use strict';
 
-angular.module('queComemos-usuarios', []).config(['$routeProvider', function($routeProvider) {
+angular.module('queComemosApp', []).config(['$routeProvider', function($routeProvider) {
 
 	$routeProvider.when('/login', {
-		templateUrl: '../partials/login.html',
+		templateUrl: '/login.html',
 		login: true
 	});
 	$routeProvider.when('/index', {
-		templateUrl: '../index.html',
+		templateUrl: '/index.html',
 		controller: 'MyCtrl1'
 	});
 
 	/** Agregar controller **/
 	$routeProvider.when('/profile', {
-		templateUrl: '../partials/perfilUsuario.html',
+		templateUrl: '/perfilUsuario.html',
 		controller: 'MyCtrl2'
 	});
 

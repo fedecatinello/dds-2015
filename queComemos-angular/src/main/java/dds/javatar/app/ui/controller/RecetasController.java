@@ -2,6 +2,7 @@ package dds.javatar.app.ui.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import queComemos.entrega3.dominio.Dificultad;
 import spark.Spark;
@@ -93,12 +94,20 @@ public class RecetasController {
 			String username = request.params(":username");
 			String message = request.body();
 			Receta receta = this.gson.fromJson(message, RecetaPrivadaSimple.class);
-			RepositorioRecetas.getInstance().updateReceta(receta);
-
+			RepositorioRecetas.getInstance().updateReceta(receta);			
 			Usuario userLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
 			userLogueado.updateFavorita(receta);
 			response.status(200);
 			return message;
+		}, this.jsonTransformer);
+		
+		
+		Spark.get("/ingredientes/:patron", "application/json;charset=utf-8", (request, response) -> {
+			
+			String patron = request.params(":patron");
+			Set <String> ingredientes = RepositorioRecetas.getInstance().getAllIngredientes();
+			return  ingredientes.removeIf(s -> !s.contains(patron));
+
 		}, this.jsonTransformer);
 
 	}

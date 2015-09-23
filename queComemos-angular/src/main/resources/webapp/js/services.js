@@ -16,6 +16,10 @@ app.service('recetasService', function($http) {
 		$http.post('/updateReceta/'+ username, receta).success(callback);
 	};
 
+	this.getIngredientes = function(patron, callback, errorHandler) {
+		$http.get('/ingredientes/' + patron).success(callback);
+	};
+
 	this.buscar = function(busqueda, callback, errorHandler) {
 		var url = "/recetas/buscar?";
 		if (busqueda.username) url += "username=" + encodeURIComponent(busqueda.username) + "&";

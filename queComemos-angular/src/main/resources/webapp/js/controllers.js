@@ -54,11 +54,18 @@ app.directive("temporada", function() {
 /** Controllers* */
 
 app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
-
+	var self = this;
 	var newUnidadMedida = null;
 	var newCantidad = null;
 	var newIngrediente = null;
+	self.ingredientesFiltrados=null;
 
+/*	self.getIngredientes = function() {
+		recetasService.getIngredientes(newIngrediente, function(data) {
+			self.ingredientesFiltrados =data;
+		});
+	};
+*/
 	$scope.ok = function (form) {
 		if (form.$valid) {
 			receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
@@ -70,6 +77,8 @@ app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
 $scope.cancel = function () {
 	$modalInstance.dismiss('cancel');
 };
+//self.getIngredientes();
+
 });
 
 app.controller('RecetasController', function(recetasService, messageService, $scope, $modal) {
@@ -293,24 +302,24 @@ app.controller('login_controller', function(loginService) {
 });
 
 app.controller('UsuarioController', function ($scope, usuarioService) {
-		var self = this;
+	var self = this;
 
-		self.nombre = "eliana";
-		self.complexion = null;
-		self.sexo = "F";
-		self.edad = 21;
-		self.fechaNacimiento = null;
-		self.altura = null;
-		self.peso = null;
-		self.imc = null;
-		self.condicionesPreexistentes = [];
-		self.preferenciasAlimentarias = [];
-		self.comidasQueDisgustan = [];
-		self.recetasFavoritas = [];
+	self.nombre = "eliana";
+	self.complexion = null;
+	self.sexo = "F";
+	self.edad = 21;
+	self.fechaNacimiento = null;
+	self.altura = null;
+	self.peso = null;
+	self.imc = null;
+	self.condicionesPreexistentes = [];
+	self.preferenciasAlimentarias = [];
+	self.comidasQueDisgustan = [];
+	self.recetasFavoritas = [];
 
-		function transformarUsuario(jsonUsuario) {
-			return Usuario.asUsuario(jsonUsuario);
-		}
+	function transformarUsuario(jsonUsuario) {
+		return Usuario.asUsuario(jsonUsuario);
+	}
 
 //	self.getUserInfo = function() {
 //		usuarioService.getUserInfoByUsername(username, function() {
@@ -318,9 +327,9 @@ app.controller('UsuarioController', function ($scope, usuarioService) {
 //		});
 //	};
 
-		self.go = function () {
-			alert('ENTRÓ AL CONTROLLER, SHORO.');
-		};
+self.go = function () {
+	alert('ENTRÓ AL CONTROLLER, SHORO.');
+};
 
 });
 

@@ -2,7 +2,12 @@ package dds.javatar.app.ui.controller;
 
 import spark.Spark;
 
+
+import ch.qos.logback.core.status.Status;
+
 import com.google.gson.Gson;
+
+
 
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
@@ -12,7 +17,7 @@ public class UsuariosController {
 
 	private JsonTransformer jsonTransformer;
 
-	// private Gson gson;
+	private Gson gson;
 
 	public UsuariosController(JsonTransformer jsonTransformer, Gson gson) {
 		this.jsonTransformer = jsonTransformer;
@@ -47,32 +52,27 @@ public class UsuariosController {
 
 		Spark.post("/login", "application/json;charset=utf-8", (request, response) -> {
 
-			String username = request.queryParams(":username");
-
 			String message = request.body();
+			Usuario usuario = this.gson.fromJson(message, Usuario.class);
 
 			System.out.println(message);
 
+			response.type("application/json;charset=utf-8");
+			
+			/* Busco el usuario en el repositorio para validar */
+			Usuario user = RepositorioUsuarios.getInstance().get(usuario);
+			
+//			if(user == null)  //Si no esta lo agrego
+//				RepositorioUsuarios.getInstance().add(usuario);
+			
+			if(coincidePassword(user, usuario))	
+				response.status(200);
+				
+			else 
+				response.status(401);
+					
+			
 			return message;
-
-			// /* Construyo usuario a partir del mensaje recibido */
-			// Usuario visitor = new Usuario.UsuarioBuilder()
-			// .nombre(username)
-			// .credenciales(username, password)
-			// .build();
-			//
-			// Usuario user = RepositorioUsuarios.getInstance().get(visitor);
-			//
-			// response.type("application/json;charset=utf-8");
-			//
-			// // Entra por primera vez
-			// if(user == null) return "Estas son las recetas top del momento";
-			//
-			// if (user.getFavoritos()==null || user.getFavoritos().isEmpty()) {
-			// return "Estas fueron tus úĺtimas consultas";
-			// } else {
-			// return "Estas son tus recetas favoritas";
-			// }
 
 		}, this.jsonTransformer);
 
@@ -88,4 +88,10 @@ public class UsuariosController {
 			return loggedUser;
 		}, this.jsonTransformer);
 	}
+	
+	Boolean coincidePassword(Usuario usr1, Usuario usr2) {
+		
+		return usr1.getPassword().compareTo(usr2.getPassword()) == 0;
+	}
 }
+

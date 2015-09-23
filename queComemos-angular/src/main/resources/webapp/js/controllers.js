@@ -273,43 +273,61 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 
 /** Usuarios Controllers **/
 
-app.controller('login_controller', function($scope, loginService) {
+app.controller('login_controller', function(loginService) {
 
-	$scope.credentials = {
-		username : 'fede',
-		password : 'catinello'
+	var self = this;
+
+	self.credentials = {
+		username: 'fede',
+		password: 'catinello'
 	};
 
-	$scope.val = 'Fede';
+	self.errors = {};
 
-	$scope.submit = function(){
+	self.submit = function ($location) {
 
-		debugger
-		alert($scope.credentials.username);
-		loginService.postUserData($scope.credentials);
+		loginService.postUserData(self.credentials,
+			function () {
+				$location.path('/');
+			},
+			function () {
+				self.notificarError();
+				$location.path('/login');
+			});
+	};
+
+	self.notificarError = function () {
+
+		self.errors.push('Usuario o contraseña invalido, intente nuevamente');
+		$timeout(function () {
+			while (self.errors.length > 0) {
+				self.errors.pop();
+			}
+		}, 10000);
+
 	};
 
 });
 
-app.controller('UsuarioController', function($scope, usuarioService) {
-	var self = this;
+app.controller('UsuarioController', function ($scope, usuarioService) {
+		var self = this;
 
-	self.nombre = "eliana";
-	self.complexion = null;
-	self.sexo = "F";
-	self.edad = 21;
-	self.fechaNacimiento = null;
-	self.altura = null;
-	self.peso = null;
-	self.imc = null;
-	self.condicionesPreexistentes = [];
-	self.preferenciasAlimentarias = [];
-	self.comidasQueDisgustan = [];
-	self.recetasFavoritas = [];
+		self.nombre = "eliana";
+		self.complexion = null;
+		self.sexo = "F";
+		self.edad = 21;
+		self.fechaNacimiento = null;
+		self.altura = null;
+		self.peso = null;
+		self.imc = null;
+		self.condicionesPreexistentes = [];
+		self.preferenciasAlimentarias = [];
+		self.comidasQueDisgustan = [];
+		self.recetasFavoritas = [];
 
-	function transformarUsuario(jsonUsuario) {
-		return Usuario.asUsuario(jsonUsuario);
-	}
+		function transformarUsuario(jsonUsuario) {
+			return Usuario.asUsuario(jsonUsuario);
+		}
 
 //	self.getUserInfo = function() {
 //		usuarioService.getUserInfoByUsername(username, function() {
@@ -317,9 +335,9 @@ app.controller('UsuarioController', function($scope, usuarioService) {
 //		});
 //	};
 
-	$scope.go =  function() {
-		alert('ENTRÓ AL CONTROLLER, SHORO.');
-	};
+		self.go = function () {
+			alert('ENTRÓ AL CONTROLLER, SHORO.');
+		};
 
 });
 

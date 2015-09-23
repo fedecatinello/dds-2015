@@ -10,9 +10,9 @@ app.service('usuarioService', function($http) {
 
 app.service('loginService', function($http){
 
-	this.postUserData = function(data, callback) {
+	this.postUserData = function(data, callback, errorHandler) {
 
-		$http.post('/login', data).success(callback);
+		$http.post('/login', data).then(callback, errorHandler);
 
 	};
 });

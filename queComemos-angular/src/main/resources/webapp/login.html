@@ -46,7 +46,7 @@
             </div>
             <button class="btn btn-lg btn-primary btn-block btn-signin" ng-click="loginCtrl.submit()">Ingresar</button>
             <p class="ng-hide" ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
-            <p ng-show="error">{{ error.message }}</p>
+            <p ng-show="loginCtrl.$error">{{ error.message }}</p>
         </form><!-- /form -->
         <a href="#" class="forgot-password">
             Olvide mi contraseña

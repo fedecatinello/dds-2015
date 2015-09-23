@@ -306,10 +306,10 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 app.controller('UsuarioController', function ($scope, usuarioService) {
 	var self = this;
 
-	self.nombre = "eliana";
+	self.nombre = null;
 	self.complexion = null;
-	self.sexo = "F";
-	self.edad = 21;
+	self.sexo = null;
+	self.edad = null;
 	self.fechaNacimiento = null;
 	self.altura = null;
 	self.peso = null;
@@ -323,14 +323,10 @@ app.controller('UsuarioController', function ($scope, usuarioService) {
 		return Usuario.asUsuario(jsonUsuario);
 	}
 
-//	self.getUserInfo = function() {
-//		usuarioService.getUserInfoByUsername(username, function() {
-//			self.loggedUser = transformarUsuario(jsonUsuario);
-//		});
-//	};
-
-	self.go = function () {
-		alert('ENTRÓ AL CONTROLLER, SHORO.');
+	self.getUserInfo = function() {
+		usuarioService.getUserInfoByUsername(username, function() {
+			self.loggedUser = transformarUsuario(jsonUsuario);
+		});
 	};
 
 });

@@ -48,7 +48,7 @@
 				<div class="col-lg-6">
 						<div class="form-group">
 							<label for="nombre">Nombre</label>
-							<input ng-model="nombre" class="form-control" id="nombre" placeholder="Nombre">
+							<input ng-model="consultarRecetasCtrl.busqueda.nombre" class="form-control" id="nombre" placeholder="Nombre">
 						</div>
 				</div>
 				<div class="col-lg-6">
@@ -56,10 +56,10 @@
 						<label for="calorias-desde">Calorias</label>
 						<div class="row">
 							<div class="col-lg-6">
-								<input ng-model="caloriasDesde" class="form-control" id="calorias-desde" placeholder="Desde">
+								<input ng-model="consultarRecetasCtrl.busqueda.caloriasDesde" class="form-control" id="calorias-desde" placeholder="Desde">
 							</div>
 							<div class="col-lg-6">
-								<input ng-model="caloriasHasta" class="form-control" id="calorias-hasta" placeholder="Hasta">
+								<input ng-model="consultarRecetasCtrl.busqueda.caloriasHasta" class="form-control" id="calorias-hasta" placeholder="Hasta">
 							</div>
 						</div>
 					</div>
@@ -69,16 +69,18 @@
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="dificultad">Dificultad</label>
-						<select ng-model="dificultad" class="form-control" id="dificultad" placeholder="Dificultad">
-							<option value="a">a</option>
+						<select ng-model="consultarRecetasCtrl.busqueda.dificultad" class="form-control" id="dificultad" placeholder="Dificultad">
+							<option value="FACIL">FACIL</option>
+							<option value="MEDIANA">MEDIANA</option>
+							<option value="DIFICIL">DIFICIL</option>
 						</select>
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="temporada">Temporada</label>
-						<select ng-model="temporada" class="form-control" id="temporada" placeholder="Temporada">
-							<option value="a">a</option>
+						<select ng-model="consultarRecetasCtrl.busqueda.temporada" class="form-control" id="temporada" placeholder="Temporada">
+							
 						</select>
 					</div>
 				</div>
@@ -87,13 +89,13 @@
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="ingrediente">Que contenga ingrediente</label>
-						<input ng-model="ingrediente" class="form-control" id="ingrediente" placeholder="Ingrediente" />
+						<input ng-model="consultarRecetasCtrl.busqueda.ingrediente" class="form-control" id="ingrediente" placeholder="Ingrediente" />
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="filtros-perfil">Aplicar filtros del perfil de usuario
-							<input type="checkbox" ng-model="aplicarFiltrosUsuario" class="form-control" id="filtros-perfil" />
+							<input type="checkbox" ng-model="consultarRecetasCtrl.busqueda.aplicarFiltrosUsuario" class="form-control" id="filtros-perfil" />
 						</label>
 					</div>
 				</div>
@@ -102,7 +104,7 @@
 
 		<br />
 		<div class="row text-center">
-			<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#results">Buscar</button>
+			<button type="button" class="btn btn-default" ng-click="consultarRecetasCtrl.buscarRecetas()">Buscar</button>
 			<a href="/" class="btn btn-default">Volver</a>
 		</div>
 		<br />
@@ -111,13 +113,13 @@
 		<div class="accordion" id="accordion1">
 			<div class="accordion-group">
 
-				<div id="results" class="accordion-body collapse" >
+				<div id="results" class="accordion-body">
 					<div class="panel panel-default" style="opacity:0.8;">
 
 						<!-- Panel de arriba de toodo con datos principales -->
 						<div class="panel-body">
 							<div class="table-responsive">
-								<table class="table table-bordered table-hover table-condensed ">
+								<table class="table table-bordered table-hover table-condensed">
 									<tbody>
 										<tr class="header">
 											<th>Nombre</th>
@@ -125,8 +127,8 @@
 											<th>Dificultad</th>
 											<th>Temporada</th>
 										</tr>
-										<tr data-ng-repeat="receta in consultarRecetasCtrl.reultados" class="animate-repeat"
-												ng-class="{'selected':$index == recetasCtrl.selectedRowReceta , 'publicas': {{receta.esPublica()}}}"
+										<tr data-ng-repeat="receta in consultarRecetasCtrl.resultados" class="animate-repeat"
+												ng-class="{'selected':$index == consultarRecetasCtrl.selectedRowReceta , 'publicas': {{receta.esPublica()}}}"
 												ng-click="setClickedReceta($index)">
 
 											<td class="col-xs-4">{{receta.nombre}}</td>

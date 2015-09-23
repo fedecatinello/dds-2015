@@ -113,8 +113,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	};
 
 	function transformarAReceta(jsonReceta) {
-		var receta= Receta.asReceta(jsonReceta);
-		return receta;
+		return Receta.asReceta(jsonReceta);
 	}
 
 	self.getRecetas = function() {
@@ -235,16 +234,29 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 });
 
 
-app.controller("ConsultarRecetasController", function(recetasService) {
+app.controller("ConsultarRecetasController", function(recetasService, $timeout) {
 
 	var self = this;
 
-	var resultados = [
-		{
+	self.busqueda = {};
+	self.resultados = [];
 
-		},
-		{
+	self.buscarRecetas = function() {
+		self.busqueda.username = username;
+		recetasService.buscar(self.busqueda, function(data) {
+			self.resultados = _.map(data, Receta.asReceta);
+		}, notificarError);
+	};
 
-		}
-	];
+	this.errors = [];
+
+	function notificarError(mensaje) {
+		self.errors.push(mensaje);
+		$timeout(function() {
+			while (self.errors.length > 0) {
+				self.errors.pop();
+			}
+		}, 10000);
+	};
+
 });

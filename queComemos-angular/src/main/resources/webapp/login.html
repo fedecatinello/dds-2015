@@ -37,7 +37,7 @@
         <p id="profile-name" class="profile-name-card"></p>
         <form class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
-            <input type="text" id="inputUser" ng-model="val" class="form-control" placeholder="Usuario" required autofocus>
+            <input type="text" id="inputUser" ng-model="loginCtrl.credentials.username" class="form-control" placeholder="Usuario" required autofocus>
             <input type="password" id="inputPassword" ng-model="loginCtrl.credentials.password" class="form-control" placeholder="Contraseña" required>
             <div id="remember" class="checkbox">
                 <label>
@@ -56,8 +56,8 @@
 
 <!-- Scripts -->
 <script src="/js/routes.js"></script>
-<script src="/js/usuarios_modules.js"></script>
-<script src="/js/services.js"></script>
+<script src="/js/controllers.js"></script>
+<script src="/js/servicesUsuario.js"></script>
 
 </body>
 </html>

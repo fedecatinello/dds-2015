@@ -7,7 +7,7 @@ var username = 'Maru Botana';		//Tiene Favoritos
 
 
 
-app.directive('visible', function() {
+app.directive("visible", function() {
 	return {
 		restrict: 'A',
 
@@ -22,12 +22,9 @@ app.directive('visible', function() {
 app.directive("dificultad", function() {
 	return {
 		template: '<ng-include src="getTemplateDificultad()"/>',
-		//templateUrl: unfortunately has no access to $scope.user.type
 		restrict: 'E',
 		controller: function($scope) {
-			//function used on the ng-include to resolve the template
 			$scope.getTemplateDificultad = function() {
-				//basic handling. It could be delegated to different Services
 				if ($scope.allowEdit){
 					return "partials/templateDificultadListBox.html";
 				} else {
@@ -41,12 +38,9 @@ app.directive("dificultad", function() {
 app.directive("temporada", function() {
 	return {
 		template: '<ng-include src="getTemplateTemporada()"/>',
-		//templateUrl: unfortunately has no access to $scope.user.type
 		restrict: 'E',
 		controller: function($scope) {
-			//function used on the ng-include to resolve the template
 			$scope.getTemplateTemporada = function() {
-				//basic handling. It could be delegated to different Services
 				if ($scope.allowEdit){
 					return "partials/templateTemporadaListBox.html";
 				} else {
@@ -276,3 +270,4 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 	};
 
 });
+

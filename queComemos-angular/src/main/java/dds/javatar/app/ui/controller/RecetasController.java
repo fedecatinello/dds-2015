@@ -101,7 +101,7 @@ public class RecetasController {
 			RepositorioRecetas.getInstance().updateReceta(receta);
 
 			Usuario userLogueado = RepositorioUsuarios.getInstance().get( new Usuario.UsuarioBuilder().nombre(username).build());
-			userLogueado.updateFavorita(receta);	
+			userLogueado.updateFavorita(receta);
 			return message;
 		}, this.jsonTransformer);
 

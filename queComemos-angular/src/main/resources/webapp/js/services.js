@@ -1,4 +1,3 @@
-
 app.service('recetasService', function($http) {
 
 	this.findAll = function(callback) {
@@ -46,12 +45,5 @@ app.service('loginService', function($http){
 
 		$http.post('/login', data);
 
-	};
-});
-
-app.service('usuarioService', function($http) {
-
-	this.getUserInfoByUsername = function(username, callback) {
-		$http.get('/usuarios/' + username).success(callback);
 	};
 });

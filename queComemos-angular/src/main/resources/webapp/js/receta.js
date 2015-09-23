@@ -5,6 +5,7 @@ var Receta = function() {
 	this.temporada = "";
 	this.dificultad = "";
 	this.calorias = 0;
+	this.consultas = 0;
 };
 
 var Condimento = function(condimento,dosis){

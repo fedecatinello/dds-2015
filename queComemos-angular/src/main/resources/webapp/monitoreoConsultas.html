@@ -33,7 +33,7 @@
     <script src="/node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
 
 </head>
-<body>
+<body data-ng-controller="ConsultarRecetasController as consultarRecetasCtrl">
 
 <div class="container">
     <div class="page-header">
@@ -43,7 +43,7 @@
     <div class="panel panel-default" style="opacity:0.8;">
 
         <div class="panel-body">
-            <div class="table-responsive">
+            <div class="table-responsive" data-ng-controller="RecetasController as recetasCtrl">
                 <table class="table table-bordered table-hover table-condensed">
                     <tbody>
                         <tr class="header">

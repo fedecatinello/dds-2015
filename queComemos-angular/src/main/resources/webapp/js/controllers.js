@@ -268,22 +268,25 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 
 /** Usuarios Controllers **/
 
-app.controller('LoginController', function(loginService, $timeout) {
+app.controller('LoginController', function(loginService, $timeout, $window, $scope) {
 
 	var self = this;
 
 	self.credentials = {};
 	self.errors = [];
 
-	self.ingresar = function ($location) {
+	self.ingresar = function () {
 
 		loginService.postUserData(self.credentials,
 			function () {
-				$location.path('/');
+
+				var landingUrl = "http://" + $window.location.host + "/";
+				$window.location.href = landingUrl;
 			},
 			function () {
+
 				self.notificarError();
-				$location.path('/login');
+
 			});
 	};
 
@@ -294,7 +297,7 @@ app.controller('LoginController', function(loginService, $timeout) {
 			while (self.errors.length > 0) {
 				self.errors.pop();
 			}
-		}, 10000);
+		}, 5000);
 
 	};
 

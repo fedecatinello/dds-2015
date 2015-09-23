@@ -52,7 +52,7 @@
                             <th>Dificultad</th>
                             <th>Consultas</th>
                         </tr>
-                        <tr data-ng-repeat="receta in consultarRecetasCtrl.resultados" class="animate-repeat"
+                        <tr data-ng-repeat="receta in consultarRecetasCtrl.resultados | limitTo: 10" class="animate-repeat"
                             ng-class="{'selected': $index == recetasCtrl.selectedRowReceta, 'publicas': {{receta.esPublica()}}}"
                             ng-click="recetasCtrl.setClickedReceta(receta, $index)">
 

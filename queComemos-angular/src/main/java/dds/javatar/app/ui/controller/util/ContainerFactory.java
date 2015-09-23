@@ -217,6 +217,7 @@ public class ContainerFactory {
 	public void agregarUsuariosAlRepo() {
 		Usuario maru = new Usuario.UsuarioBuilder()
 			.nombre("Maru Botana")
+			.credenciales("mbotana", "megustacocinar")
 			.sexo(Usuario.Sexo.FEMENINO)
 			.peso(new BigDecimal(58))
 			.altura(new BigDecimal(1.63))
@@ -231,6 +232,7 @@ public class ContainerFactory {
 
 		Usuario mariano = new Usuario.UsuarioBuilder()
 			.nombre("Mariano")
+			.credenciales("mloisotto", "elmascapo")
 			.sexo(Usuario.Sexo.MASCULINO)
 			.peso(new BigDecimal(68))
 			.altura(new BigDecimal(1.71))
@@ -241,6 +243,7 @@ public class ContainerFactory {
 
 		Usuario siscate = new Usuario.UsuarioBuilder()
 			.nombre("ElSiscador")
+			.credenciales("siscador", "siscate")
 			.sexo(Usuario.Sexo.MASCULINO)
 			.peso(new BigDecimal(78))
 			.altura(new BigDecimal(1.89))

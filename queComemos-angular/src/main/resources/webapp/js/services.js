@@ -1,3 +1,6 @@
+var app = angular.module('queComemos-usuarios', []);
+
+
 app.service('recetasService', function($http) {
 
 	this.findAll = function(callback) {
@@ -43,7 +46,7 @@ app.service('loginService', function($http){
 
 	this.postUserData = function(data) {
 
-		$http.post('/login?username='+data.username, data);
+		$http.post('/login', data);
 
 	};
 });

@@ -50,22 +50,15 @@ public class UsuariosController {
 			String message = request.body();
 			Usuario usuario = this.gson.fromJson(message, Usuario.class);
 
-			System.out.println(message);
-
 			response.type("application/json;charset=utf-8");
 			
 			/* Busco el usuario en el repositorio para validar */
 			Usuario user = RepositorioUsuarios.getInstance().getByUsername(usuario);
-			
-//			if(user == null)  //Si no esta lo agrego
-//				RepositorioUsuarios.getInstance().add(usuario);
-			
+	
 			if(user != null)	
-				response.status(200);
-				
+				response.status(200);				
 			else 
-				response.status(401);
-					
+				response.status(401);					
 			
 			return message;
 
@@ -76,7 +69,6 @@ public class UsuariosController {
 			String username = request.params(":username");
 
 			Usuario userExample = new Usuario.UsuarioBuilder().nombre(username).build();
-
 			Usuario loggedUser = RepositorioUsuarios.getInstance().get(userExample);
 
 			response.type("application/json;charset=utf-8");

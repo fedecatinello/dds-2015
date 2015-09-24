@@ -154,12 +154,12 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		self.recetaSelected.dificultad == null? "" : self.recetaSelected.dificultad
 	};
 
-	self.setClickedCondimento = function(index) {
+	$scope.setClickedCondimento = function(index) {
 		self.selectedRowCondimento = index;
 		self.selectedCondimento = this.Condimento;
 	};
 
-	self.setClickedIngrediente = function(index) {
+	$scope.setClickedIngrediente = function(index) {
 		self.selectedRowIngrediente = index;
 		self.selectedIngrediente = this.Ingrediente;
 	};

@@ -64,7 +64,7 @@ public class UsuariosController {
 
 		}, this.jsonTransformer);
 
-		Spark.get("/usuarios/:username", "application/json;charset=utf-8", (request, response) -> {
+		Spark.get("/profile/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 

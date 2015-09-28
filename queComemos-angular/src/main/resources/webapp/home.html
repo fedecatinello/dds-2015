@@ -43,9 +43,9 @@
 			<h3 align="center">¿Qué Comemos?</h3>
 		</div>
 
-		<div class="panel panel-primary" style="opacity:0.75;">
+		<div class="panel panel-primary" data-ng-controller="UsuarioController as profileCtrl" style="opacity:0.75;">
 			<ul class="nav nav-tabs nav-justified">
-				<li role="presentation"><a href="/perfilUsuario.html">Ver Perfil</a></li>
+				<li role="presentation"><a href="/perfilUsuario.html" ng-click="profileCtrl.getUserInfo()">{{profileCtrl.example}}</a></li>
 				<li role="presentation"><a href="/consultaRecetas.html">Consultar Recetas</a></li>
 				<li role="presentation"><a href="/monitoreoConsultas.html">Monitoreo de consultas</a></li>
 			</ul>

@@ -304,14 +304,14 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 app.controller('UsuarioController', function ($scope, usuarioService) {
 	var self = this;
 
-	self.nombre = null;
+	self.example = "Ver Perfil";
+	self.nombre = "Eliana";
 	self.complexion = null;
-	self.sexo = null;
-	self.edad = null;
+	self.sexo = "femenino";
 	self.fechaNacimiento = null;
 	self.altura = null;
 	self.peso = null;
-	self.imc = null;
+	self.imc = 22;
 	self.condicionesPreexistentes = [];
 	self.preferenciasAlimentarias = [];
 	self.comidasQueDisgustan = [];
@@ -322,6 +322,18 @@ app.controller('UsuarioController', function ($scope, usuarioService) {
 	}
 
 
+	self.esAlto = function(){
+		return true;
+	}
+	
+	self.esBajo = function(){
+		return self.imc<18;
+	}
+	
+	self.esMedio = function(){
+	return self.imc>=18 && self.imc<=30
+	}
+	
 	self.getUserInfo = function() {
 		usuarioService.getUserInfoByUsername(username, function() {
 			self.loggedUser = transformarUsuario(jsonUsuario);

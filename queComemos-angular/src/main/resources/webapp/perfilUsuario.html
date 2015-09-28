@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Qué Comemos - Perfil de Usuario</title>
 	<link rel="stylesheet" type="text/css" href="/css/login.css">
+	<link rel="stylesheet" type="text/css" href="/css/user.css">
 
 	<!-- JQUERY -->
 	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -118,9 +119,9 @@
 								<div class="panel-title">
 									<h4>IMC</h4>
 								</div>
-								<h6 ng-class="{'IMC-Alto': {{profileCtrl.loggedUser.imc.esAlto()}},
-								'IMC-Medio': {{profileCtrl.loggedUser.imc.esMedio()}},
-								'IMC-Bajo': {{profileCtrl.loggedUser.imc.esBajo()}}}">
+								<h6 ng-class="{'IMC-Alto': {{profileCtrl.esAlto()}},
+								'IMC-Medio': {{profileCtrl.esMedio()}},
+								'IMC-Bajo': {{profileCtrl.esBajo()}}}">
 								{{profileCtrl.imc | number:2 }}</h6>
 							</div>		
 						</div> <!-- /second row -->

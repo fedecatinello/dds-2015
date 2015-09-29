@@ -36,10 +36,19 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 		return this.searchByName(Usuario).get(0);
 	}
 
-	public Usuario getByUsername(Usuario user) {
+	public Usuario getByUsername(String username) {
 		try {
 			List<Usuario> listaUsers = super.getObjects();
-			return listaUsers.stream().filter(s -> s.getUser().equals(user.getUser())).map(p-> (Usuario) p).collect(Collectors.toList()).get(0);
+			return listaUsers.stream().filter(s -> s.getUser().equals(username)).map(p-> (Usuario) p).collect(Collectors.toList()).get(0);
+		} catch (Exception e) {
+			return null;	// revianta cuando no encuentra nada
+		}
+		}
+	
+	public Usuario getByCredential(String username, String password) {
+		try {
+			List<Usuario> listaUsers = super.getObjects();
+			return listaUsers.stream().filter(s -> s.getUser().equals(username) && s.getPassword().equals(password)).map(p-> (Usuario) p).collect(Collectors.toList()).get(0);
 		} catch (Exception e) {
 			return null;	// revianta cuando no encuentra nada
 		}

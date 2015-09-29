@@ -1,55 +1,4 @@
 'use strict';
-var app = angular.module('queComemosApp', ['ngAnimate', 'ui.bootstrap']);
-
-var username = 'Maru Botana';		//Tiene Favoritos
-//var username = 'ElSiscador';		//Ultimas consultas
-//var username = 'Mariano';			//Ultimaas consultas
-
-
-
-app.directive("visible", function() {
-	return {
-		restrict: 'A',
-
-		link: function(scope, element, attributes) {
-			scope.$watch(attributes.visible, function(value){
-				element.css('visibility', value ? 'visible' : 'hidden');
-			});
-		}
-	};
-});
-
-app.directive("dificultad", function() {
-	return {
-		template: '<ng-include src="getTemplateDificultad()"/>',
-		restrict: 'E',
-		controller: function($scope) {
-			$scope.getTemplateDificultad = function() {
-				if ($scope.allowEdit){
-					return "partials/templateDificultadListBox.html";
-				} else {
-					return "partials/templateDificultadLabel.html";
-				}
-			}
-		}
-	};
-});
-
-app.directive("temporada", function() {
-	return {
-		template: '<ng-include src="getTemplateTemporada()"/>',
-		restrict: 'E',
-		controller: function($scope) {
-			$scope.getTemplateTemporada = function() {
-				if ($scope.allowEdit){
-					return "partials/templateTemporadaListBox.html";
-				} else {
-					return "partials/templateTemporadaLabel.html";
-				}
-			}
-		}
-	};
-});
 
 /** Controllers* */
 
@@ -84,6 +33,9 @@ $scope.cancel = function () {
 app.controller('RecetasController', function(recetasService, messageService, $scope, $modal) {
 
 	var self = this;
+	self.credentials = {};
+	self.credentials.username = localStorage.getItem("username");
+	self.credentials.password = localStorage.getItem("password");
 	self.allowEdit= $scope.allowEdit = true;
 	self.esFavorita = false;
 	self.animationsEnabled = true;
@@ -102,7 +54,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	}
 
 	self.getRecetas = function() {
-		recetasService.findAllByUsername(username, function(data) {
+		recetasService.findAllByUsername(self.credentials.username, function(data) {
 			self.recetas = _.map(data, transformarAReceta);
 		});
 	};
@@ -122,7 +74,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	};
 
 	self.getRecetasFavoritas = function() {
-		recetasService.findFavoritasByUsername(username, function(data) {
+		recetasService.findFavoritasByUsername(self.credentials.username, function(data) {
 			self.recetasFavoritas = _.map(data, transformarAReceta);
 		});
 	};
@@ -204,7 +156,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.updateReceta = function(){
 		self.recetaSelectedOriginal = self.recetaSelected;
 
-		recetasService.updateReceta(self.recetaSelected, username , function() {
+		recetasService.updateReceta(self.recetaSelected, self.credentials.username , function() {
 			self.getRecetas();
 		});
 	};
@@ -214,13 +166,13 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	};
 
 	self.obtenerMensajeInicio = function() {
-		messageService.getInitMessage(username, function(data) {
+		messageService.getInitMessage(self.credentials.username, function(data) {
 			self.mensajeInicio = data;
 		}, notificarError);
 	};
 
 	function notificarError(mensaje) {
-		self.getTareas();
+		//self.getTareas();
 		self.errors.push(mensaje);
 		$timeout(function() {
 			while (self.errors.length > 0) {
@@ -239,12 +191,16 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 app.controller("ConsultarRecetasController", function(recetasService, $timeout) {
 
 	var self = this;
+	
+	self.credentials = {};
+	self.credentials.username = localStorage.getItem("username");
+	self.credentials.password = localStorage.getItem("password");
 
 	self.busqueda = {};
 	self.resultados = [];
 
 	self.buscarRecetas = function() {
-		self.busqueda.username = username;
+		self.busqueda.username = self.credentials.username;
 		recetasService.buscar(self.busqueda, function(data) {
 			self.resultados = _.map(data, Receta.asReceta);
 			self.resultados.forEach(function(receta){
@@ -268,7 +224,7 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 
 /** Usuarios Controllers **/
 
-app.controller('LoginController', function(loginService, $timeout, $window, $scope) {
+app.controller('LoginController', function(loginService, $timeout, $window, $scope, $rootScope) {
 
 	var self = this;
 
@@ -278,13 +234,17 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 	self.ingresar = function () {
 
 		loginService.postUserData(self.credentials,
-		function() {
-			var landingUrl = "http://" + $window.location.host + "/" + "home.html";
+			function() {
+				var landingUrl = "http://" + $window.location.host + "/" + "home.html";
+				
+				localStorage.setItem("username", self.credentials.username);
+				localStorage.setItem("password", self.credentials.password);
+
 				$window.location.href = landingUrl;
-		}
-		,function () {
-			self.notificarError();
-		});
+			}
+			,function () {
+				self.notificarError();
+			});
 
 		self.notificarError = function () {
 
@@ -294,10 +254,8 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 					self.errors.pop();
 				}
 			}, 5000);
-
 		};
-
-	}
+	};	
 });
 
 
@@ -331,11 +289,11 @@ app.controller('UsuarioController', function ($scope, usuarioService) {
 	}
 	
 	self.esMedio = function(){
-	return self.imc>=18 && self.imc<=30
+		return self.imc>=18 && self.imc<=30
 	}
 	
 	self.getUserInfo = function() {
-		usuarioService.getUserInfoByUsername(username, function() {
+		usuarioService.getUserInfoByUsername(self.credentials.username, function() {
 			self.loggedUser = transformarUsuario(jsonUsuario);
 		});
 	};

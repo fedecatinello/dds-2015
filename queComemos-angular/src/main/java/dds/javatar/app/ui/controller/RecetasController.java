@@ -54,7 +54,7 @@ public class RecetasController {
 			String temporada = request.queryParams("temporada");
 			String ingrediente = request.queryParams("ingrediente");
 
-			Usuario usuario = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
+			Usuario usuario = RepositorioUsuarios.getInstance().getByUsername(username);
 
 			Busqueda busqueda = new BusquedaBuilder()
 				.nombre(nombre)
@@ -77,8 +77,8 @@ public class RecetasController {
 			Buscador buscador = new Buscador();
 			String username = request.params(":username");
 			Usuario usuarioLogueado;
-			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
-
+			usuarioLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
+			
 			List<Receta> recetas = buscador.realizarBusquedaPara(usuarioLogueado);
 
 			if (!(usuarioLogueado.getFavoritos() == null || usuarioLogueado.getFavoritos().isEmpty())) {
@@ -88,6 +88,17 @@ public class RecetasController {
 			response.type("application/json;charset=utf-8");
 			return recetas;
 		}, this.jsonTransformer);
+		
+		Spark.get("/recetasFavoritas/:username", "application/json;charset=utf-8", (request, response) -> {
+
+			String username = request.params(":username");
+			Usuario usuarioLogueado;
+			usuarioLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
+
+			response.type("application/json;charset=utf-8");
+			return usuarioLogueado.getFavoritos();
+		}, this.jsonTransformer);
+
 
 		Spark.post("/updateReceta/:username", "application/json;charset=utf-8", (request, response) -> {
 
@@ -95,7 +106,7 @@ public class RecetasController {
 			String message = request.body();
 			Receta receta = this.gson.fromJson(message, RecetaPrivadaSimple.class);
 			RepositorioRecetas.getInstance().updateReceta(receta);			
-			Usuario userLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
+			Usuario userLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
 			userLogueado.updateFavorita(receta);
 			response.status(200);
 			return message;

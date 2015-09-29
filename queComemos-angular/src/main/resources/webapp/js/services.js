@@ -41,24 +41,4 @@ app.service('messageService', function($http) {
 	};
 });
 
-app.service('loginModal', function ($modal, $rootScope) {
-
-	function assignCurrentUser (user) {
-		$rootScope.currentUser = user;
-		return user;
-	}
-
-	return function() {
-		var instance = $modal.open({
-			animation: self.animationsEnabled,
-			templateUrl: 'partials/loginModal.html',
-			controller: 'LoginController',
-			controllerAs: 'loginCtrl',
-			windowClass: 'modal-fit'
-		})
-
-		return instance.result.then(assignCurrentUser);
-	};
-
-});
 

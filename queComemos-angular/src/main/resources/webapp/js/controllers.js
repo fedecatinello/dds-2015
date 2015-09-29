@@ -30,7 +30,15 @@ $scope.cancel = function () {
 
 });
 
-app.controller('RecetasController', function(recetasService, messageService, $scope, $modal) {
+app.controller('HomeController', function($state) {
+	this.logout = function(){
+		localStorage.setItem("username", null);
+		localStorage.setItem("password", null);
+		//$state.go('MonitoreoConsultas');
+	};
+});
+
+app.controller('RecetasController', function(recetasService, messageService, $scope, $modal, $state) {
 
 	var self = this;
 	self.credentials = {};
@@ -161,10 +169,6 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		});
 	};
 
-	self.exit = function(){
-		self.recetaSelected = self.recetaSelectedOriginal;
-	};
-
 	self.obtenerMensajeInicio = function() {
 		messageService.getInitMessage(self.credentials.username, function(data) {
 			self.mensajeInicio = data;
@@ -191,7 +195,9 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 app.controller("ConsultarRecetasController", function(recetasService, $timeout) {
 
 	var self = this;
-	
+	self.recetaSelected = null;
+	self.recetaSelectedOriginal=null;
+
 	self.credentials = {};
 	self.credentials.username = localStorage.getItem("username");
 	self.credentials.password = localStorage.getItem("password");
@@ -224,23 +230,24 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 
 /** Usuarios Controllers **/
 
-app.controller('LoginController', function(loginService, $timeout, $window, $scope, $rootScope) {
+app.controller('LoginController', function(loginService, $timeout, $window, $scope, $rootScope, $modalInstance, $state) {
 
 	var self = this;
-
 	self.credentials = {};
 	self.errors = [];
 
 	self.ingresar = function () {
 
 		loginService.postUserData(self.credentials,
-			function() {
-				var landingUrl = "http://" + $window.location.host + "/" + "home.html";
-				
+			function() {				
+				$state.go('Home')
 				localStorage.setItem("username", self.credentials.username);
 				localStorage.setItem("password", self.credentials.password);
-
-				$window.location.href = landingUrl;
+				$modalInstance.close();
+				//$scope.$close(user);
+				//$scope.dismiss;
+				//var landingUrl = "http://" + $window.location.host + "/" + "home.html";
+				//$window.location.href = landingUrl;
 			}
 			,function () {
 				self.notificarError();
@@ -258,6 +265,26 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 	};	
 });
 
+
+app.service('loginModal', function ($modal, $rootScope) {
+
+	function assignCurrentUser (user) {
+		$rootScope.currentUser = user;
+		return user;
+	}
+
+	return function() {
+		var instance = $modal.open({
+			animation: self.animationsEnabled,
+			templateUrl: 'partials/loginModal.html',
+			controller: 'LoginController',
+			controllerAs: 'loginCtrl',
+		})
+
+		return instance.result.then(assignCurrentUser);
+	};
+
+});
 
 app.controller('UsuarioController', function ($scope, usuarioService) {
 	var self = this;

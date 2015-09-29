@@ -2,62 +2,53 @@
 var app = angular.module('queComemosApp', ['ngAnimate', 'ui.bootstrap','ui.router', 'LocalStorageModule']);
 
 app.config(function($stateProvider, $urlRouterProvider){
-      $urlRouterProvider.otherwise("/home.html");
-      
-      $stateProvider
-      .state('Login', {
-      	url: "/index.html",
-      	templateUrl: "index.html",
-      	data: {
-      		requireLogin: false
-      	}
-      })
 
+      $stateProvider
       .state('Home', {
       	url: "/home.html",
       	templateUrl: "templateConsultaRecetas.html",
             controller: "RecetasController as Ctrl",
             data: {
-              requireLogin: false
-        }
-  })
+                requireLogin: true
+          }
+    })
 
       .state('ConsultaRecetas', {
       	url: "/consultaRecetas.html",
       	templateUrl: "consultaRecetas.html",
             controller: "ConsultarRecetasController as Ctrl",
             data: {
-              requireLogin: false
-        }
-  })
+                requireLogin: true
+          }
+    })
 
       .state('PerfilUsuario', {
       	url: "/perfilUsuario.html",
       	templateUrl: "perfilUsuario.html",
-       data: {
-        requireLogin: true
-  }
-})
+           data: {
+                requireLogin: true
+          }
+    })
 
       .state('MonitoreoConsultas', {
       	url: "/monitoreoConsultas.html",
       	templateUrl: "monitoreoConsultas.html",
-       controller: "ConsultarRecetasController as Ctrl",
-       data: {
-          requireLogin: true
-    }
-});
+           controller: "ConsultarRecetasController as Ctrl",
+           data: {
+              requireLogin: true
+        }
+  });
 });    
 
 
-/*
+
 
 app.run(function ($rootScope, $state, loginModal) {
 
 	$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 		var requireLogin = toState.data.requireLogin;
 
-		if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
+		if (requireLogin && localStorage.getItem("username") == "null") {
 			event.preventDefault();
 
 			loginModal()
@@ -65,10 +56,10 @@ app.run(function ($rootScope, $state, loginModal) {
 				return $state.go(toState.name, toParams);
 			})
 			.catch(function () {
-				return $state.go('welcome');
+				return $state.go('Home');
 			});
 		}
 	});
 
 });
-*/
+

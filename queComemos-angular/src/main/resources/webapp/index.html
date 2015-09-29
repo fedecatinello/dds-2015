@@ -1,73 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="queComemosApp">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Bienvenido a QueComemos - Login</title>
-    <link rel="stylesheet" type="text/css" href="/css/login.css">
+	<meta charset="utf-8">
+	<title>Bienvenido a ¿Qué comemos?</title>
 
-    <!-- JQUERY -->
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+	<!-- RECETA STYLE -->
+	<link rel="stylesheet" href="/css/receta.css">
 
-    <!-- BOOTSTRAP -->
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+	<!-- JQUERY -->
+	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
 
-    <script src="/node_modules/underscore/underscore-min.js"></script>
+	<!-- BOOTSTRAP -->
+	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+	<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- ANGULAR -->
-    <script src="/node_modules/angular/angular.min.js"></script>
-    <script src="/node_modules/angular-animate/angular-animate.js"></script>
-    <script src="/node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+	<script src="/node_modules/underscore/underscore-min.js"></script>
 
-    <!-- BOOTBOX (dialogos de confirmacion) http://bootboxjs.com/ -->
-    <script src="/node_modules/bootbox/bootbox.min.js"></script>
+	<!-- ANGULAR -->
+	<script src="/node_modules/angular/angular.min.js"></script>
+	<script src="/node_modules/angular-animate/angular-animate.js"></script>
+	<script src="/node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
 
-    <!-- LOADING BAR -->
-    <script src="/node_modules/angular-loading-bar/build/loading-bar.min.js"></script>
-    <link rel="stylesheet" href="/node_modules/angular-loading-bar/build/loading-bar.min.css" />
+	<!-- BOOTBOX (dialogos de confirmacion) http://bootboxjs.com/ -->
+	<script src="/node_modules/bootbox/bootbox.min.js"></script>
 
-    <!-- angular-ui-bootstrap (Popups entre otros) -->
-    <script src="/node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+	<!-- LOADING BAR -->
+	<script src="/node_modules/angular-loading-bar/build/loading-bar.min.js"></script>
+	<link rel="stylesheet" href="/node_modules/angular-loading-bar/build/loading-bar.min.css" />
 
-    <!-- Routing -->
-    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<!-- angular-ui-bootstrap (Popups entre otros) -->
+	<script src="/node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
+
+	<!-- Routing -->
+	<script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
 
 
 </head>
-<body ng-controller="LoginController as loginCtrl">
 
-    <div class="container">
-        <div class="card card-container">
-            <img id="profile-img" class="profile-img-card center-block" src="images/avatar.png" />
-            <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin">
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="text" id="inputUser" ng-model="loginCtrl.credentials.username" class="form-control" placeholder="Usuario" required autofocus>
-                <input type="password" id="inputPassword" ng-model="loginCtrl.credentials.password" class="form-control" placeholder="Contraseña" required>
-                <div id="remember" class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me">Recordarme
-                    </label>
-                </div>
-                <input class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-click="loginCtrl.ingresar()" value="Ingresar" />
-                <p class="ng-hide" ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
+<body data-ng-controller="HomeController as homeCtrl">
 
-            </form><!-- /form -->
+	<div class="container">
 
-            <div class="alert alert-danger animate-repeat" ng-repeat="error in loginCtrl.errors">{{error}}</div>
+		<div class="panel panel-title" style="opacity:0.8;">
+			<h3 align="center">¿Qué Comemos?</h3>
+			<button align="right" type="button" class="btn btn-default" ng-click="homeCtrl.logout()">logout</button>
+		</div>
 
-            <a href="#" class="forgot-password">
-                Olvide mi contraseña
-            </a>
-        </div><!-- /card-container -->
-    </div><!-- /container -->
+		<div class="panel panel-primary" data-ng-controller="UsuarioController as profileCtrl" style="opacity:0.75;">
+			<ul class="nav nav-tabs nav-justified">
+				<li role="presentation"><a ui-sref="Home">Home</a></li>
+				<li role="presentation"><a ui-sref="PerfilUsuario">Perfil Usuario</a></li>
+				<li role="presentation"><a ui-sref="ConsultaRecetas">Consultar Recetas</a></li>
+				<li role="presentation"><a ui-sref="MonitoreoConsultas">Monitoreo de consultas</a></li>
+			</ul>
+		</div>
 
-    <!-- Scripts -->
-    <script src="/js/app.js"></script>
-    <script src="/js/services.js"></script>
-    <script src="/js/controllers.js"></script>
-    <script src="/js/servicesUsuario.js"></script>
+		<div ui-view></div> 
+	</div>
+</div>
+</div>
+
+<script src="/js/app.js"></script>
+<script src="/js/receta.js"></script>
+<script src="/js/controllers.js"></script>
+<script src="/js/services.js"></script>
+<script src="/js/servicesUsuario.js"></script>
+<script src="/js/directives.js"></script>
 
 </body>
 </html>

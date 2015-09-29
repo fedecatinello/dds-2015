@@ -13,6 +13,15 @@ app.config(function($stateProvider, $urlRouterProvider){
           }
     })
 
+      .state('userDeslogueado', {
+            url: "/userDeslogueado.html",
+            templateUrl: "userDeslogueado.html",
+            controller: "HomeController as homeCtrl", 
+            data: {
+                requireLogin: false
+          }
+    })
+
       .state('ConsultaRecetas', {
       	url: "/consultaRecetas.html",
       	templateUrl: "consultaRecetas.html",
@@ -56,7 +65,7 @@ app.run(function ($rootScope, $state, loginModal) {
 				return $state.go(toState.name, toParams);
 			})
 			.catch(function () {
-				return $state.go('Home');
+			//	return $state.go('Home');
 			});
 		}
 	});

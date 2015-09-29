@@ -42,6 +42,23 @@ app.directive("temporada", function() {
 	};
 });
 
+app.directive("authenticate", function() {
+	return {
+		template: '<ng-include src="getAuthenticate()"/>',
+		restrict: 'E',
+		controller: function($scope) {
+			$scope.getAuthenticate = function() {
+				if ($scope.username){
+					return '<button align="right" type="button" class="btn btn-default" ng-click="{{homeCtrl.login()}}">login</button>';
+				} else {
+					return '<button align="right" type="button" class="btn btn-default" ng-click="{{homeCtrl.logout()}}">logout</button>';
+				}
+			}
+		}
+	};
+});
+
+
 app.directive('tablaRecetas', function() {
 	return {
 		templateUrl: 'templateConsultaRecetas.html'

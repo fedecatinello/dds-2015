@@ -2,7 +2,7 @@
 
 /** Controllers* */
 
-app.controller('ModalCtrl', function ($scope, $modalInstance, receta) {
+app.controller('ModalAddIngredienteCtrl', function ($scope, $modalInstance, receta) {
 	var self = this;
 	var newUnidadMedida = null;
 	var newCantidad = null;
@@ -31,11 +31,18 @@ $scope.cancel = function () {
 });
 
 app.controller('HomeController', function($state) {
+	var username = localStorage.getItem("username");
+	this.login = function(){
+		localStorage.setItem("username", null);
+		localStorage.setItem("password", null);
+		$state.go('userDeslogueado');
+	};
 	this.logout = function(){
 		localStorage.setItem("username", null);
 		localStorage.setItem("password", null);
-		//$state.go('MonitoreoConsultas');
+		$state.go('userDeslogueado');
 	};
+
 });
 
 app.controller('RecetasController', function(recetasService, messageService, $scope, $modal, $state) {
@@ -141,7 +148,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		var modalInstance = $modal.open({
 			animation: self.animationsEnabled,
 			templateUrl: 'partials/ingredienteModal.html',
-			controller: 'ModalCtrl',
+			controller: 'ModalAddIngredienteCtrl',
 			windowClass: 'modal-fit',
 			resolve: {
 				receta: function () {
@@ -176,7 +183,6 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	};
 
 	function notificarError(mensaje) {
-		//self.getTareas();
 		self.errors.push(mensaje);
 		$timeout(function() {
 			while (self.errors.length > 0) {
@@ -240,14 +246,9 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 
 		loginService.postUserData(self.credentials,
 			function() {				
-				$state.go('Home')
 				localStorage.setItem("username", self.credentials.username);
 				localStorage.setItem("password", self.credentials.password);
 				$modalInstance.close();
-				//$scope.$close(user);
-				//$scope.dismiss;
-				//var landingUrl = "http://" + $window.location.host + "/" + "home.html";
-				//$window.location.href = landingUrl;
 			}
 			,function () {
 				self.notificarError();

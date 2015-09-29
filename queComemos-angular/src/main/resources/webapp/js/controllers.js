@@ -248,7 +248,7 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 			function() {				
 				localStorage.setItem("username", self.credentials.username);
 				localStorage.setItem("password", self.credentials.password);
-				$modalInstance.close();
+				$modalInstance.close(self.credentials);
 			}
 			,function () {
 				self.notificarError();

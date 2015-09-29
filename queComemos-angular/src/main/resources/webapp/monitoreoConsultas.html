@@ -8,27 +8,8 @@
     <div class="panel panel-default" style="opacity:0.8;">
 
         <div class="panel-body">
-            <div class="table-responsive" data-ng-controller="RecetasController as recetasCtrl">
-                <table class="table table-bordered table-hover table-condensed">
-                    <tbody>
-                        <tr class="header">
-                            <th>Nombre</th>
-                            <th>Calor&iacute;as</th>
-                            <th>Dificultad</th>
-                            <th>Consultas</th>
-                        </tr>
-                        <tr data-ng-repeat="receta in consultarRecetasCtrl.resultados | limitTo: 10" class="animate-repeat"
-                            ng-class="{'selected': $index == recetasCtrl.selectedRowReceta, 'publicas': {{receta.esPublica()}}}"
-                            ng-click="recetasCtrl.setClickedReceta(receta, $index)">
-
-                            <td class="col-xs-4">{{receta.nombre}}</td>
-                            <td class="col-xs-2">{{receta.calorias}}</td>
-                            <td class="col-xs-3">{{receta.dificultad}}</td>
-                            <td class="col-xs-2">{{receta.consultas}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            
+            <div tabla-recetas></div>
 
             <div class="container" align="center">
                 <a href="/home.html"><button type="button" class="btn btn-default btn-lg">Volver</button></a>

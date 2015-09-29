@@ -1,4 +1,4 @@
-<div data-ng-controller="ConsultarRecetasController as consultarRecetasCtrl">
+<div data-ng-controller="ConsultarRecetasController as Ctrl">
 
 	<div class="container">
 		<div class="page-header">
@@ -11,7 +11,7 @@
 				<div class="col-lg-6">
 						<div class="form-group">
 							<label for="nombre">Nombre</label>
-							<input ng-model="consultarRecetasCtrl.busqueda.nombre" class="form-control" id="nombre" placeholder="Nombre">
+							<input ng-model="Ctrl.busqueda.nombre" class="form-control" id="nombre" placeholder="Nombre">
 						</div>
 				</div>
 				<div class="col-lg-6">
@@ -19,10 +19,10 @@
 						<label for="calorias-desde">Calorias</label>
 						<div class="row">
 							<div class="col-lg-6">
-								<input ng-model="consultarRecetasCtrl.busqueda.caloriasDesde" class="form-control" id="calorias-desde" placeholder="Desde">
+								<input ng-model="Ctrl.busqueda.caloriasDesde" class="form-control" id="calorias-desde" placeholder="Desde">
 							</div>
 							<div class="col-lg-6">
-								<input ng-model="consultarRecetasCtrl.busqueda.caloriasHasta" class="form-control" id="calorias-hasta" placeholder="Hasta">
+								<input ng-model="Ctrl.busqueda.caloriasHasta" class="form-control" id="calorias-hasta" placeholder="Hasta">
 							</div>
 						</div>
 					</div>
@@ -32,7 +32,7 @@
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="dificultad">Dificultad</label>
-						<select ng-model="consultarRecetasCtrl.busqueda.dificultad" class="form-control" id="dificultad" placeholder="Dificultad">
+						<select ng-model="Ctrl.busqueda.dificultad" class="form-control" id="dificultad" placeholder="Dificultad">
 							<option value="FACIL">FACIL</option>
 							<option value="MEDIANA">MEDIANA</option>
 							<option value="DIFICIL">DIFICIL</option>
@@ -42,7 +42,7 @@
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="temporada">Temporada</label>
-						<input ng-model="consultarRecetasCtrl.busqueda.temporada" class="form-control" id="temporada" placeholder="Temporada">
+						<input ng-model="Ctrl.busqueda.temporada" class="form-control" id="temporada" placeholder="Temporada">
 					</div>
 				</div>
 			</div>
@@ -50,13 +50,13 @@
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="ingrediente">Que contenga ingrediente</label>
-						<input ng-model="consultarRecetasCtrl.busqueda.ingrediente" class="form-control" id="ingrediente" placeholder="Ingrediente" />
+						<input ng-model="Ctrl.busqueda.ingrediente" class="form-control" id="ingrediente" placeholder="Ingrediente" />
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="form-group">
 						<label for="filtros-perfil">Aplicar filtros del perfil de usuario
-							<input type="checkbox" ng-model="consultarRecetasCtrl.busqueda.aplicarFiltrosUsuario" class="form-control" id="filtros-perfil" />
+							<input type="checkbox" ng-model="Ctrl.busqueda.aplicarFiltrosUsuario" class="form-control" id="filtros-perfil" />
 						</label>
 					</div>
 				</div>
@@ -65,136 +65,12 @@
 
 		<br />
 		<div class="row text-center">
-			<button type="button" class="btn btn-default" ng-click="consultarRecetasCtrl.buscarRecetas()">Buscar</button>
+			<button type="button" class="btn btn-default" ng-click="Ctrl.buscarRecetas()">Buscar</button>
 			<a href="home.html" class="btn btn-default">Volver</a>
 		</div>
 		<br />
 		
-		<!-- Boton desplegable -->
-		<div class="accordion" id="accordion1" data-ng-controller="RecetasController as recetasCtrl">
-			<div class="accordion-group">
+		<div tabla-recetas></div>
 
-				<div id="results" class="accordion-body">
-					<div class="panel panel-default" style="opacity:0.8;">
-
-						<div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover table-condensed">
-									<tbody>
-										<tr class="header">
-											<th>Nombre</th>
-											<th>Calor&iacute;as</th>
-											<th>Dificultad</th>
-											<th>Temporada</th>
-										</tr>
-										<tr data-ng-repeat="receta in consultarRecetasCtrl.resultados" class="animate-repeat"
-												ng-class="{'selected': $index == recetasCtrl.selectedRowReceta, 'publicas': {{receta.esPublica()}}}"
-												ng-click="recetasCtrl.setClickedReceta(receta, $index)">
-
-											<td class="col-xs-4">{{receta.nombre}}</td>
-											<td class="col-xs-2">{{receta.calorias}}</td>
-											<td class="col-xs-3">{{receta.dificultad}}</td>
-											<td class="col-xs-2">{{receta.temporada}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-
-							<button type="button" ng-disabled="!recetasCtrl.recetaSelected" class="btn btn-default" data-toggle="collapse" data-target="#detail">Ver Detalles</button>
-						</div>
-					</div>
-				</div>
-
-				<div id="detail" class="accordion-body collapse">
-					<div class="panel panel-default" style="opacity:0.8;">
-
-						<!-- Panel de arriba de toodo con datos principales -->
-						<div class="panel-body">
-							<h4>{{recetasCtrl.recetaSelected.nombre}}</h4>
-							<h6>{{recetasCtrl.recetaSelected.calorias}} calorías.   {{recetasCtrl.mensajeAutorReceta}}</h6>
-
-							<div class="col-md-6">
-								<div class="panel-title">
-									<h4>Dificultad</h4>
-								</div>
-								<dificultad></dificultad>
-								<br>
-								<div class="panel-title">
-									<h4>Ingredientes</h4>
-									<table class="table table-bordered table-condensed ">
-										<tbody>
-											<tr class='header'>
-												<th>Ingrediente</th>
-												<th>Dosis</th>
-											</tr>
-											<tr data-ng-repeat="(Ingrediente, Dosis) in recetasCtrl.recetaSelected.ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == recetasCtrl.selectedRowIngrediente}">
-												<td class="col-md-4">{{Ingrediente}}</td>
-												<td class="col-md-2">{{Dosis}}</td>
-											</tr>
-										</tbody>
-									</table>
-									<button type="button" visible='allowEdit' class="btn btn-default" ng-click="recetasCtrl.addIngrediente()">Agregar</button>
-									<button type="button" visible='allowEdit' class="btn btn-default" ng-click="recetasCtrl.deleteIngrediente()" >Eliminar</button>
-								</div>
-							</div>
-							<!-- Fin columna izquierda -->
-
-							<div class="col-md-6">
-								<div class="panel-title">
-									<h4>Temporada</h4>
-								</div>
-								<temporada></temporada>
-								<br>
-								<div>
-									<h4>Condimentos</h4>
-									<form name="form" class="css-form">
-										<input type="text" visible='allowEdit' ng-model="recetasCtrl.newCondimento" size="15" placeholder=" Condimento" required>
-										<input type="number" visible='allowEdit' ng-model="recetasCtrl.newDosis" size="5" placeholder=" Dosis" required>
-										<button type="button" visible='allowEdit' class="btn btn-sm btn-default" ng-click="recetasCtrl.addCondimento(form)" >Agregar</button>
-										<button type="button" visible='allowEdit' class="btn btn-sm btn-default"  ng-click="recetasCtrl.deleteCondimento()"> Eliminar</Button>
-										</form>
-										<table class="table table-condensed">
-											<tbody>
-												<tr class='header'>
-													<th>Condimento</th>
-													<th>Dosis</th>
-												</tr>
-												<tr data-ng-repeat="(Condimento, Dosis) in recetasCtrl.recetaSelected.condimentos" class="animate-repeat" ng-click="setClickedCondimento($index)" ng-class="{'selected':$index == recetasCtrl.selectedRowCondimento}">
-													<td class="col-md-3">{{Condimento}}</td>
-													<td class="col-md-2">{{Dosis}}</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<br>
-									<div class="panel-title">
-										<h4>Condiciones Preexistentes</h4>
-									</div>
-									<br>
-								</div>
-								<!-- Fin columna Derecha -->
-								<div class="col-md-12">
-									<br>
-									<input type="checkbox" name="recetaFavorita" ng-checked="recetasCtrl.esFavorita">Favorita<br>
-
-									<div class="panel-title">
-										<h4>Proceso de Preparación</h4>
-									</div>
-									{{recetasCtrl.getPasos()}}
-								</div>
-							</div>
-							<div style="text-align:center">
-								<button type="button" visible='allowEdit' class="btn btn-default" ng-click="recetasCtrl.updateReceta()" >Actualizar</button>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="alert alert-danger animate-repeat" ng-repeat="error in consultarRecetasCtrl.errors">{{error}}</div>
-
-			</div>
-		</div>
 	</div>
-</div>
 </div>

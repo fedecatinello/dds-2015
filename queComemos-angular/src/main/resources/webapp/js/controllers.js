@@ -36,7 +36,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.credentials = {};
 	self.credentials.username = localStorage.getItem("username");
 	self.credentials.password = localStorage.getItem("password");
-	self.allowEdit= $scope.allowEdit = true;
+	self.allowEdit= $scope.allowEdit = true; //TODO
 	self.esFavorita = false;
 	self.animationsEnabled = true;
 
@@ -197,13 +197,13 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 	self.credentials.password = localStorage.getItem("password");
 
 	self.busqueda = {};
-	self.resultados = [];
+	self.recetas = [];
 
 	self.buscarRecetas = function() {
 		self.busqueda.username = self.credentials.username;
 		recetasService.buscar(self.busqueda, function(data) {
-			self.resultados = _.map(data, Receta.asReceta);
-			self.resultados.forEach(function(receta){
+			self.recetas = _.map(data, Receta.asReceta);
+			self.recetas.forEach(function(receta){
 				receta.consultas++;
 			});
 		}, notificarError);

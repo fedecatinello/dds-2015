@@ -41,3 +41,9 @@ app.directive("temporada", function() {
 		}
 	};
 });
+
+app.directive('tablaRecetas', function() {
+	return {
+		templateUrl: 'templateConsultaRecetas.html'
+	};
+});

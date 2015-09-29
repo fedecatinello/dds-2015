@@ -16,35 +16,38 @@ app.config(function($stateProvider, $urlRouterProvider){
       .state('Home', {
       	url: "/home.html",
       	templateUrl: "templateConsultaRecetas.html",
-      	data: {
-      		requireLogin: false
-      	}
-      })
+            controller: "RecetasController as Ctrl",
+            data: {
+              requireLogin: false
+        }
+  })
 
       .state('ConsultaRecetas', {
       	url: "/consultaRecetas.html",
       	templateUrl: "consultaRecetas.html",
-      	data: {
-      		requireLogin: false
-      	}
-      })
+            controller: "ConsultarRecetasController as Ctrl",
+            data: {
+              requireLogin: false
+        }
+  })
 
       .state('PerfilUsuario', {
       	url: "/perfilUsuario.html",
       	templateUrl: "perfilUsuario.html",
-      	data: {
-      		requireLogin: true
-      	}
-      })
+       data: {
+        requireLogin: true
+  }
+})
 
       .state('MonitoreoConsultas', {
       	url: "/monitoreoConsultas.html",
       	templateUrl: "monitoreoConsultas.html",
-      	data: {
-      		requireLogin: true
-      	}
-      });
-  });    
+       controller: "ConsultarRecetasController as Ctrl",
+       data: {
+          requireLogin: true
+    }
+});
+});    
 
 
 /*

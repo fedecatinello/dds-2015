@@ -25,11 +25,11 @@ public class UsuariosController {
 
 			String username = request.params(":username");
 			Usuario usuarioLogueado;
-			usuarioLogueado = RepositorioUsuarios.getInstance().get(new Usuario.UsuarioBuilder().nombre(username).build());
+			usuarioLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
 
 			response.type("application/json;charset=utf-8");
 			if (usuarioLogueado.getFavoritos() == null || usuarioLogueado.getFavoritos().isEmpty()) {
-				return "Estas fueron tus úĺtimas consultas";
+				return "Estas fueron tus Ultimas consultas";
 			} else {
 				return "Estas son tus recetas favoritas";
 			}
@@ -58,8 +58,7 @@ public class UsuariosController {
 
 			String username = request.params(":username");
 
-			Usuario userExample = new Usuario.UsuarioBuilder().nombre(username).build();
-			Usuario loggedUser = RepositorioUsuarios.getInstance().get(userExample);
+			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
 
 			response.type("application/json;charset=utf-8");
 			return loggedUser;

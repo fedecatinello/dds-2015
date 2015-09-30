@@ -57,7 +57,7 @@ app.run(function ($rootScope, $state, loginModal) {
 	$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 		var requireLogin = toState.data.requireLogin;
 
-		if (requireLogin && localStorage.getItem("username") == "null") {
+		if (requireLogin && (localStorage.getItem("username") == null || localStorage.getItem("username") == 'null')) {
 			event.preventDefault();
 
 			loginModal()

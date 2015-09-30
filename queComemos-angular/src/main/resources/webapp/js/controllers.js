@@ -15,18 +15,19 @@ app.controller('ModalAddIngredienteCtrl', function ($scope, $modalInstance, rece
 		});
 	};
 	*/
-	$scope.ok = function (form) {
-		if (form.$valid) {
-			receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
-		//borrar lo de abajo, en algun lado validar q se pueda agregar el ingrediente
-		$modalInstance.close($scope.newUnidadMedida, $scope.newCantidad, $scope.newIngrediente);	
-	}
-};
 
-$scope.cancel = function () {
-	$modalInstance.dismiss('cancel');
-};
-//self.getIngredientes();
+	$scope.ok = function (form) {
+			if (form.$valid) {
+				receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
+			//borrar lo de abajo, en algun lado validar q se pueda agregar el ingrediente
+			$modalInstance.close($scope.newUnidadMedida, $scope.newCantidad, $scope.newIngrediente);	
+		}
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+	//self.getIngredientes();
 
 });
 
@@ -51,12 +52,13 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.credentials = {};
 	self.credentials.username = localStorage.getItem("username");
 	self.credentials.password = localStorage.getItem("password");
-	self.allowEdit= $scope.allowEdit = true; //TODO
+	self.allowEdit = $scope.allowEdit = true; //TODO
 	self.esFavorita = false;
 	self.animationsEnabled = true;
 
+	self.selectedRowReceta = -1;
 	self.recetaSelected = null;
-	self.selectedCondimento=null;
+	self.selectedCondimento = null;
 	self.selectedIngrediente = null;	
 	self.recetas = [];
 	self.recetasFavoritas = [];	
@@ -98,13 +100,10 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		var autor = self.recetaSelected.autor;
 		if (!autor) {
 			autor = 'Receta Publica';
-		}
-		else
-		{
+		} else {
 			autor = '   Creado por '+autor;
 		}
 		return autor;
-
 	};
 
 	self.setClickedReceta = function(receta, index) {
@@ -198,11 +197,11 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 });
 
 
-app.controller("ConsultarRecetasController", function(recetasService, $timeout) {
+app.controller("ConsultarRecetasController", function(recetasService, $timeout, $controller, $scope) {
+
+	angular.extend(this, $controller('RecetasController', { $scope: $scope }));
 
 	var self = this;
-	self.recetaSelected = null;
-	self.recetaSelectedOriginal=null;
 
 	self.credentials = {};
 	self.credentials.username = localStorage.getItem("username");
@@ -231,7 +230,6 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout) 
 			}
 		}, 10000);
 	};
-
 });
 
 /** Usuarios Controllers **/

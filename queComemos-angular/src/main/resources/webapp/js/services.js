@@ -21,7 +21,7 @@ app.service('recetasService', function($http) {
 	};
 
 	this.buscar = function(busqueda, callback, errorHandler) {
-		var url = "/recetas/buscar?";
+		var url = "/buscarRecetas?";
 		if (busqueda.username) url += "username=" + encodeURIComponent(busqueda.username) + "&";
 		if (busqueda.nombre) url += "nombre=" + encodeURIComponent(busqueda.nombre) + "&";
 		if (busqueda.caloriasDesde) url += "calorias_desde=" + encodeURIComponent(busqueda.caloriasDesde) + "&";

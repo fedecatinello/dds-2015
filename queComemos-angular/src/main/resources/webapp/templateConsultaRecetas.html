@@ -17,8 +17,8 @@
 						<th>Temporada</th>
 					</tr>
 					<tr data-ng-repeat="receta in Ctrl.recetas" class="animate-repeat"
-					ng-class="{'selected':$index == Ctrl.selectedRowReceta , 'publicas': {{receta.esPublica()}}}"
-					ng-click="Ctrl.setClickedReceta(receta, $index)">
+						ng-class="{'selected':$index == Ctrl.selectedRowReceta , 'publicas': {{receta.esPublica()}}}"
+						ng-click="Ctrl.setClickedReceta(receta, $index)">
 					<td class="col-xs-4">{{receta.nombre}}</td>
 					<td class="col-xs-2">{{receta.calorias}}</td>
 					<td class="col-xs-3">{{receta.dificultad}}</td>

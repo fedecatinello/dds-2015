@@ -34,8 +34,9 @@ public class RecetasController {
 	public void register() {
 
 		Spark.exception(RuntimeException.class, (ex, request, response) -> {
-			response.status(400);
+			ex.printStackTrace();
 			response.body(ex.getMessage());
+			Spark.halt(400);
 		});
 
 		Spark.get("/recetasPublicas", "application/json;charset=utf-8", (request, response) -> {
@@ -43,7 +44,7 @@ public class RecetasController {
 			return RepositorioRecetas.getInstance().recetaConocidas;
 		}, this.jsonTransformer);
 
-		Spark.get("/recetas/buscar", "application/json;charset=utf-8", (request, response) -> {
+		Spark.get("/buscarRecetas", (request, response) -> {
 			Buscador buscador = new Buscador();
 
 			String username = request.queryParams("username");
@@ -78,7 +79,7 @@ public class RecetasController {
 			String username = request.params(":username");
 			Usuario usuarioLogueado;
 			usuarioLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
-			
+
 			List<Receta> recetas = buscador.realizarBusquedaPara(usuarioLogueado);
 
 			if (!(usuarioLogueado.getFavoritos() == null || usuarioLogueado.getFavoritos().isEmpty())) {
@@ -88,7 +89,7 @@ public class RecetasController {
 			response.type("application/json;charset=utf-8");
 			return recetas;
 		}, this.jsonTransformer);
-		
+
 		Spark.get("/recetasFavoritas/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
@@ -99,25 +100,23 @@ public class RecetasController {
 			return usuarioLogueado.getFavoritos();
 		}, this.jsonTransformer);
 
-
 		Spark.post("/updateReceta/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			String message = request.body();
 			Receta receta = this.gson.fromJson(message, RecetaPrivadaSimple.class);
-			RepositorioRecetas.getInstance().updateReceta(receta);			
+			RepositorioRecetas.getInstance().updateReceta(receta);
 			Usuario userLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
 			userLogueado.updateFavorita(receta);
 			response.status(200);
 			return message;
 		}, this.jsonTransformer);
-		
-		
+
 		Spark.get("/ingredientes/:patron", "application/json;charset=utf-8", (request, response) -> {
-			
+
 			String patron = request.params(":patron");
-			Set <String> ingredientes = RepositorioRecetas.getInstance().getAllIngredientes();
-			return  ingredientes.removeIf(s -> !s.contains(patron));
+			Set<String> ingredientes = RepositorioRecetas.getInstance().getAllIngredientes();
+			return ingredientes.removeIf(s -> !s.contains(patron));
 
 		}, this.jsonTransformer);
 

@@ -14,10 +14,12 @@ import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.receta.busqueda.Busqueda.BusquedaBuilder;
+import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
 import dds.javatar.app.dto.receta.filtro.FiltroCondiciones;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.monitoreo.MonitorMasConsultadas;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class RecetasController {
@@ -46,6 +48,10 @@ public class RecetasController {
 
 		Spark.get("/buscarRecetas", (request, response) -> {
 			Buscador buscador = new Buscador();
+			
+			/** Creo monitor de recetas mas consultadas **/
+			MonitorMasConsultadas observer = new MonitorMasConsultadas();
+			BusquedaAdapter.getInstance().addObserver(observer);
 
 			String username = request.queryParams("username");
 			String nombre = request.queryParams("nombre");
@@ -54,6 +60,7 @@ public class RecetasController {
 			String dificultad = request.queryParams("dificultad");
 			String temporada = request.queryParams("temporada");
 			String ingrediente = request.queryParams("ingrediente");
+			String consultas = request.queryParams("consultas");
 
 			Usuario usuario = RepositorioUsuarios.getInstance().getByUsername(username);
 

@@ -214,9 +214,6 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout, 
 		self.busqueda.username = self.credentials.username;
 		recetasService.buscar(self.busqueda, function(data) {
 			self.recetas = _.map(data, Receta.asReceta);
-			self.recetas.forEach(function(receta){
-				receta.consultas++;
-			});
 		}, notificarError);
 	};
 

@@ -64,3 +64,10 @@ app.directive('tablaRecetas', function() {
 		templateUrl: 'templateConsultaRecetas.html'
 	};
 });
+
+app.directive('recetasMasConsultadas', function() {
+	return {
+		restrict: 'E',
+		template: '<td class="col-xs-2">{{Ctrl.receta.consultas}}</td>'
+	}
+})

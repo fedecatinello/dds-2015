@@ -30,6 +30,7 @@ app.service('recetasService', function($http) {
 		if (busqueda.temporada) url += "temporada=" + encodeURIComponent(busqueda.temporada) + "&";
 		if (busqueda.ingrediente) url += "ingrediente=" + encodeURIComponent(busqueda.ingrediente) + "&";
 		if (busqueda.aplicarFiltrosUsuario) url += "aplicar_filtros_usuario=true&";
+		if (busqueda.consultas) url += "consultas="+encodeURIComponent(busqueda.consultas)+"&";
 		$http.get(url).success(callback).error(errorHandler);
 	}
 });

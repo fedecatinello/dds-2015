@@ -17,7 +17,7 @@
 						<th>Temporada</th>
 					</tr>
 					<tr data-ng-repeat="receta in Ctrl.recetas" class="animate-repeat"
-						ng-class="{'selected':$index == Ctrl.selectedRowReceta , 'publicas': {{receta.esPublica()}}}"
+						ng-class="{'selected':$index == Ctrl.getSelectedRowReceta() , 'publicas': {{receta.esPublica()}}}"
 						ng-click="Ctrl.setClickedReceta(receta, $index)">
 					<td class="col-xs-4">{{receta.nombre}}</td>
 					<td class="col-xs-2">{{receta.calorias}}</td>
@@ -34,15 +34,15 @@
 	<div class="accordion" id="accordion1">
 		<div class="accordion-group">
 
-			<button type="button" ng-disabled="!Ctrl.recetaSelected" class="btn btn-default" data-toggle="collapse" data-target="#demo" >Ver Detalles</button>
+			<button type="button" ng-disabled="!Ctrl.getRecetaSelected()" class="btn btn-default" data-toggle="collapse" data-target="#demo" >Ver Detalles</button>
 			<br>
 			<div id="demo" class="accordion-body collapse" >
 				<div class="panel panel-default" style="opacity:0.8;">
 
 					<!-- Panel de arriba de toodo con datos principales -->
 					<div class="panel-body">
-						<h4>{{Ctrl.recetaSelected.nombre}}</h4>
-						<h6>{{Ctrl.recetaSelected.calorias}} calorías.   {{Ctrl.mensajeAutorReceta}}</h6>
+						<h4>{{Ctrl.getRecetaSelected().nombre}}</h4>
+						<h6>{{Ctrl.getRecetaSelected().calorias}} calorías.   {{Ctrl.mensajeAutorReceta}}</h6>
 
 						<div class="col-md-6">
 							<div class="panel-title">
@@ -58,7 +58,7 @@
 											<th>Ingrediente</th>
 											<th>Dosis</th>
 										</tr>
-										<tr data-ng-repeat="(Ingrediente, Dosis) in Ctrl.recetaSelected.ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == Ctrl.selectedRowIngrediente}">
+										<tr data-ng-repeat="(Ingrediente, Dosis) in Ctrl.getRecetaSelected().ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == Ctrl.selectedRowIngrediente}">
 											<td class="col-md-4">{{Ingrediente}}</td>
 											<td class="col-md-2">{{Dosis}}</td>
 										</tr>
@@ -91,7 +91,7 @@
 												<th>Condimento</th>
 												<th>Dosis</th>
 											</tr>
-											<tr data-ng-repeat="(Condimento, Dosis) in Ctrl.recetaSelected.condimentos" class="animate-repeat" ng-click="setClickedCondimento($index)" ng-class="{'selected':$index == Ctrl.selectedRowCondimento}">
+											<tr data-ng-repeat="(Condimento, Dosis) in Ctrl.getRecetaSelected().condimentos" class="animate-repeat" ng-click="setClickedCondimento($index)" ng-class="{'selected':$index == Ctrl.selectedRowCondimento}">
 												<td class="col-md-3">{{Condimento}}</td>
 												<td class="col-md-2">{{Dosis}}</td>
 											</tr>

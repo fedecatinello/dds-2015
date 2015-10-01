@@ -40,5 +40,3 @@ app.service('messageService', function($http) {
 		$http.get('/mensajeInicio/' + username).success(callback).error(errorHandler);
 	};
 });
-
-

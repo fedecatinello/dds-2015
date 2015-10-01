@@ -120,6 +120,14 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		self.recetaSelected.dificultad == null? "" : self.recetaSelected.dificultad
 	};
 
+	self.getSelectedRowReceta = function() {
+		return self.selectedRowReceta;
+	};
+
+	self.getRecetaSelected = function() {
+		return self.recetaSelected;
+	};
+
 	$scope.setClickedCondimento = function(index) {
 		self.selectedRowCondimento = index;
 		self.selectedCondimento = this.Condimento;

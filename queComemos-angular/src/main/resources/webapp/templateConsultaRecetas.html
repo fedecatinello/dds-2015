@@ -42,7 +42,7 @@
 					<!-- Panel de arriba de toodo con datos principales -->
 					<div class="panel-body">
 						<h4>{{Ctrl.getRecetaSelected().nombre}}</h4>
-						<h6>{{Ctrl.getRecetaSelected().calorias}} calorías.   {{Ctrl.mensajeAutorReceta}}</h6>
+						<h6>{{Ctrl.getRecetaSelected().calorias}} calorías.   {{Ctrl.getMensajeAutorReceta()}}</h6>
 
 						<div class="col-md-6">
 							<div class="panel-title">
@@ -58,7 +58,7 @@
 											<th>Ingrediente</th>
 											<th>Dosis</th>
 										</tr>
-										<tr data-ng-repeat="(Ingrediente, Dosis) in Ctrl.getRecetaSelected().ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == Ctrl.selectedRowIngrediente}">
+										<tr data-ng-repeat="(Ingrediente, Dosis) in Ctrl.getRecetaSelected().ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == Ctrl.getSelectedRowIngrediente()}">
 											<td class="col-md-4">{{Ingrediente}}</td>
 											<td class="col-md-2">{{Dosis}}</td>
 										</tr>
@@ -91,7 +91,7 @@
 												<th>Condimento</th>
 												<th>Dosis</th>
 											</tr>
-											<tr data-ng-repeat="(Condimento, Dosis) in Ctrl.getRecetaSelected().condimentos" class="animate-repeat" ng-click="setClickedCondimento($index)" ng-class="{'selected':$index == Ctrl.selectedRowCondimento}">
+											<tr data-ng-repeat="(Condimento, Dosis) in Ctrl.getRecetaSelected().condimentos" class="animate-repeat" ng-click="setClickedCondimento($index)" ng-class="{'selected':$index == Ctrl.getSelectedRowCondimento()}">
 												<td class="col-md-3">{{Condimento}}</td>
 												<td class="col-md-2">{{Dosis}}</td>
 											</tr>
@@ -107,7 +107,7 @@
 							<!-- Fin columna Derecha -->
 							<div class="col-md-12">
 								<br>
-								<input type="checkbox" name="recetaFavorita" ng-checked="Ctrl.esFavorita">Favorita<br>
+								<input type="checkbox" name="recetaFavorita" ng-checked="Ctrl.getEsFavorita()">Favorita<br>
 
 								<div class="panel-title">
 									<h4>Proceso de Preparación</h4>

@@ -128,6 +128,22 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 		return self.recetaSelected;
 	};
 
+	self.getMensajeAutorReceta = function() {
+		return self.mensajeAutorReceta;
+	};
+
+	self.getSelectedRowIngrediente = function() {
+		return self.selectedRowIngrediente;
+	};
+
+	self.getSelectedRowCondimento = function() {
+		return self.selectedRowCondimento;
+	}
+
+	self.getEsFavorita = function() {
+		return self.esFavorita;
+	};
+
 	$scope.setClickedCondimento = function(index) {
 		self.selectedRowCondimento = index;
 		self.selectedCondimento = this.Condimento;

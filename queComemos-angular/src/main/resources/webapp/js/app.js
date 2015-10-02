@@ -60,12 +60,10 @@ app.run(function ($rootScope, $state, loginModal) {
 		if (requireLogin && (localStorage.getItem("username") == null || localStorage.getItem("username") == 'null')) {
 			event.preventDefault();
 
-			loginModal()
-			.then(function () {
+			loginModal().then(function () {
 				return $state.go(toState.name, toParams);
-			})
-			.catch(function () {
-			//	return $state.go('Home');
+			}).catch(function () {
+				// return $state.go('Home');
 			});
 		}
 	});

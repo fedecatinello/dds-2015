@@ -1,5 +1,6 @@
 package dds.javatar.app.ui.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,6 @@ import dds.javatar.app.dto.receta.filtro.FiltroCondiciones;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.dto.usuario.monitoreo.MonitorMasConsultadas;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class RecetasController {
@@ -47,31 +47,35 @@ public class RecetasController {
 		}, this.jsonTransformer);
 
 		Spark.get("/buscarRecetas", (request, response) -> {
-			Buscador buscador = new Buscador();
-			
-			/** Creo monitor de recetas mas consultadas **/
-			MonitorMasConsultadas observer = new MonitorMasConsultadas();
-			BusquedaAdapter.getInstance().addObserver(observer);
 
 			String username = request.queryParams("username");
 			String nombre = request.queryParams("nombre");
-			String caloriasDesde = request.queryParams("calorias_desde");
-			String caloriasHasta = request.queryParams("calorias_hasta");
+			// Calorias No soportado por el buscador de la entrega 3 de uqbar:
+			//String caloriasDesde = request.queryParams("calorias_desde");
+			//String caloriasHasta = request.queryParams("calorias_hasta");
 			String dificultad = request.queryParams("dificultad");
 			String temporada = request.queryParams("temporada");
 			String ingrediente = request.queryParams("ingrediente");
-			String consultas = request.queryParams("consultas");
 
 			Usuario usuario = RepositorioUsuarios.getInstance().getByUsername(username);
+
+			List<String> palabrasClave = new ArrayList<>();
+			if (ingrediente != null && !ingrediente.isEmpty()) {
+				palabrasClave.add(ingrediente);
+			}
+			if (temporada != null && !temporada.isEmpty()) {
+				palabrasClave.add(temporada);
+			}
 
 			Busqueda busqueda = new BusquedaBuilder()
 				.nombre(nombre)
 				.dificultad(dificultad != null ? Dificultad.valueOf(dificultad) : null)
-				.palabrasClave(Arrays.asList(ingrediente, temporada))
+				.palabrasClave(palabrasClave)
 				.build();
 
-			List<Receta> recetas = buscador.realizarBusquedaPara(usuario, busqueda);
+			List<Receta> recetas = BusquedaAdapter.getInstance().consultarRecetas(usuario, busqueda);
 			if (request.queryParams("aplicar_filtros_usuario") != null) {
+				Buscador buscador = new Buscador();
 				buscador.setFiltros(Arrays.asList(new FiltroCondiciones()));
 				buscador.filtrar(usuario, recetas);
 			}

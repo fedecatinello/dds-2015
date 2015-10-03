@@ -2,7 +2,9 @@ package dds.javatar.app.ui.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import queComemos.entrega3.dominio.Dificultad;
@@ -25,7 +27,7 @@ import dds.javatar.app.ui.controller.util.JsonTransformer;
 public class RecetasController {
 
 	private JsonTransformer jsonTransformer;
-
+	private Integer consultas_receta;
 	private Gson gson;
 
 	public RecetasController(JsonTransformer jsonTransformer, Gson gson) {
@@ -130,6 +132,19 @@ public class RecetasController {
 			return ingredientes.removeIf(s -> !s.contains(patron));
 
 		}, this.jsonTransformer);
+		
+		Spark.get("/monitoreo/:receta", "application/json;charset=utf-8", (request, response) -> {
+
+			String nombre_receta = request.params(":receta");
+									
+			BusquedaAdapter.getInstance().getObservers()
+																	.forEach(observer -> consultas_receta = observer.cantidadConsultasReceta(nombre_receta));
+			
+			response.type("application/json;charset=utf-8");
+			return consultas_receta;
+
+		}, this.jsonTransformer);
+
 
 	}
 }

@@ -62,13 +62,7 @@ app.directive("authenticate", function() {
 app.directive('tablaRecetas', function() {
 	return {
 		templateUrl: 'templateConsultaRecetas.html'
-		/*scope: {
-			monitoreo : '=monitoreo'
-		},
-		link: function(scope) {
-			console.log(scope.monitoreo);
-			alert($scope.monitoreo);
-		}*/
+
 	};
 });
 
@@ -77,7 +71,8 @@ app.directive("condicionalInput", function() {
 		template: '<ng-include src="getTemplateInput()"/>',
 		controller: function($scope) {
 			$scope.getTemplateInput = function() {
-				if ($scope.monitoreo){
+				var monitoreo = localStorage.getItem("monitoreo");
+				if (monitoreo){
 					return "partials/templateCondicionalConsultasInput.html";
 				} else {
 					return "partials/templateCondicionalTemporadaInput.html";
@@ -92,7 +87,8 @@ app.directive("condicionalLabel", function() {
 		template: '<ng-include src="getTemplateLabel()"/>',
 		controller: function($scope) {
 			$scope.getTemplateLabel = function() {
-				if ($scope.monitoreo){
+				var monitoreo = localStorage.getItem("monitoreo");
+				if (monitoreo){
 					return "partials/templateCondicionalConsultasLabel.html";
 				} else {
 					return "partials/templateCondicionalTemporadaLabel.html";

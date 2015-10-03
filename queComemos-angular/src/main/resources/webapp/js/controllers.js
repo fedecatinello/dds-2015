@@ -221,7 +221,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 });
 
 
-app.controller("ConsultarRecetasController", function(recetasService, $timeout, $controller, $scope) {
+app.controller("ConsultarRecetasController", function(recetasService, monitoreoService, $timeout, $controller, $scope) {
 
 	angular.extend(this, $controller('RecetasController', { $scope: $scope }));
 
@@ -230,7 +230,11 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout, 
 	self.credentials = {};
 	self.credentials.username = localStorage.getItem("username");
 	self.credentials.password = localStorage.getItem("password");
+
+	/** Flag del monitoreo, lo persisto en localStorage **/
 	self.monitoreo = false;
+	/*localStorage.setItem("monitoreo", self.monitoreo);*/
+
 	self.busqueda = {};
 	self.recetas = [];
 
@@ -238,7 +242,21 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout, 
 		self.busqueda.username = self.credentials.username;
 		recetasService.buscar(self.busqueda, function(data) {
 			self.recetas = _.map(data, Receta.asReceta);
+			localStorage.setItem("recetasConsultadas", self.recetas);
+			/*self.buscarConsultasPorReceta();*/
 		}, notificarError);
+	};
+
+	self.buscarConsultasPorReceta = function() {
+		self.monitoreo = true;
+		/*localStorage.setItem("monitoreo", self.monitoreo);*/
+		self.recetas = localStorage.getItem("recetasConsultadas");
+		alert(self.recetas);
+		self.recetas.forEach(function(receta){
+			monitoreoService.getConsultasReceta(receta.nombre, function(data){
+				receta.consultas = data;
+			}, notificarError);
+		});
 	};
 
 	this.errors = [];
@@ -251,6 +269,7 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout, 
 			}
 		}, 10000);
 	};
+
 });
 
 /** Usuarios Controllers **/

@@ -23,4 +23,10 @@ public class MonitorVeganos implements ConsultaObserver {
 		return this.count;
 	}
 
+	@Override
+	public Integer cantidadConsultasReceta(String nombre) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

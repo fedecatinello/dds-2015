@@ -42,4 +42,16 @@ public class MonitorMasConsultadas implements ConsultaObserver {
 		this.consultasPorNombre.put(nombre, currentValue + 1);
 	}
 
+	@Override
+	public Integer cantidadConsultasReceta(String nombre) {
+		
+		Integer value = 0;
+		
+		if (this.consultasPorNombre.containsKey(nombre)) {
+			value = this.consultasPorNombre.get(nombre);
+		}
+		
+		return value;
+	}
+
 }

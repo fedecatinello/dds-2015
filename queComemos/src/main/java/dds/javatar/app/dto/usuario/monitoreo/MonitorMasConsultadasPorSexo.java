@@ -31,4 +31,10 @@ public class MonitorMasConsultadasPorSexo implements ConsultaObserver {
 	public String getNombreMasConsultadoPorMujeres() {
 		return this.monitorMujeres.getNombreMasConsultado();
 	}
+
+	@Override
+	public Integer cantidadConsultasReceta(String nombre) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

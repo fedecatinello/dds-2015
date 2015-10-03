@@ -57,10 +57,9 @@ public class UsuariosController {
 		Spark.get("/profile/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
-
+			response.type("application/json;charset=utf-8");
 			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
 
-			response.type("application/json;charset=utf-8");
 			return loggedUser;
 		}, this.jsonTransformer);
 	}

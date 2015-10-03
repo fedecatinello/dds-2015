@@ -306,19 +306,21 @@ app.service('loginModal', function ($modal, $rootScope) {
 
 });
 
-app.controller('UsuarioController', function ($scope, usuarioService) {
+app.controller('UsuarioController', function (usuarioService) {
 	var self = this;
 
+	self.loggedUser = null;
 	self.example = "Ver Perfil";
-	self.nombre = "Eliana";
-	self.complexion = null;
-	self.sexo = "femenino";
+	self.nombre = "";
+	self.complexion = "";
+	self.sexo = "";
 	self.fechaNacimiento = null;
 	self.altura = null;
 	self.peso = null;
 	self.imc = 22;
+	self.rutina = "";
 	self.condicionesPreexistentes = [];
-	self.preferenciasAlimentarias = [];
+	self.preferenciasAlimenticias = [];
 	self.comidasQueDisgustan = [];
 	self.recetasFavoritas = [];
 
@@ -326,9 +328,12 @@ app.controller('UsuarioController', function ($scope, usuarioService) {
 		return Usuario.asUsuario(jsonUsuario);
 	}
 
+	function transformarAReceta(jsonReceta) {
+		return Receta.asReceta(jsonReceta);
+	}
 
 	self.esAlto = function(){
-		return true;
+		return self.imc>30;
 	}
 	
 	self.esBajo = function(){
@@ -342,6 +347,10 @@ app.controller('UsuarioController', function ($scope, usuarioService) {
 	self.getUserInfo = function() {
 		usuarioService.getUserInfoByUsername(self.credentials.username, function() {
 			self.loggedUser = transformarUsuario(jsonUsuario);
+		});
+	
+		recetasService.findFavoritasByUsername(self.credentials.username, function(data) {
+			self.recetasFavoritas = _.map(data, transformarAReceta);
 		});
 	};
 

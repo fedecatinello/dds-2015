@@ -60,7 +60,8 @@ public class UsuariosController {
 			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
 	
 			response.type("application/json;charset=utf-8");
-			return loggedUser;
+//			String user = this.gson.toJson(loggedUser);
+			return loggedUser.getNombre();
 		}, this.jsonTransformer);
 	}
 	

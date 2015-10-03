@@ -34,6 +34,7 @@ app.config(function($stateProvider, $urlRouterProvider){
       .state('PerfilUsuario', {
       	url: "/perfilUsuario.html",
       	templateUrl: "perfilUsuario.html",
+      	   controller: "UsuarioController as profileCtrl",
            data: {
                 requireLogin: true
           }

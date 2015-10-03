@@ -14,7 +14,8 @@
 						<th>Nombre</th>
 						<th>Calor&iacute;as</th>
 						<th>Dificultad</th>
-						<th>Temporada</th>
+						<th condicional-label></th>
+
 					</tr>
 					<tr data-ng-repeat="receta in Ctrl.recetas" class="animate-repeat"
 						ng-class="{'selected':$index == Ctrl.getSelectedRowReceta() , 'publicas': {{receta.esPublica()}}}"
@@ -22,7 +23,7 @@
 					<td class="col-xs-4">{{receta.nombre}}</td>
 					<td class="col-xs-2">{{receta.calorias}}</td>
 					<td class="col-xs-3">{{receta.dificultad}}</td>
-					<td class="col-xs-2">{{receta.temporada}}</td>
+					<td class="col-xs-3" condicional-input></td>
 
 				</tr>
 			</tbody>

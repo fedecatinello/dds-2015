@@ -61,7 +61,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.selectedCondimento = null;
 	self.selectedIngrediente = null;	
 	self.recetas = [];
-	self.recetasFavoritas = [];	
+	self.recetasFavoritas = [];
 	self.mensajeAutorReceta;
 	self.newCondimento;
 	self.newDosis;
@@ -138,7 +138,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 
 	self.getSelectedRowCondimento = function() {
 		return self.selectedRowCondimento;
-	}
+	};
 
 	self.getEsFavorita = function() {
 		return self.esFavorita;
@@ -230,7 +230,7 @@ app.controller("ConsultarRecetasController", function(recetasService, $timeout, 
 	self.credentials = {};
 	self.credentials.username = localStorage.getItem("username");
 	self.credentials.password = localStorage.getItem("password");
-
+	self.monitoreo = false;
 	self.busqueda = {};
 	self.recetas = [];
 

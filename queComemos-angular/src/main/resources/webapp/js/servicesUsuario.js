@@ -1,7 +1,7 @@
 app.service('usuarioService', function($http) {
 
-	this.getUserInfoByUsername = function(username, callback) {
-		$http.get('/profile/' + username).success(callback);
+	this.getUserInfoByUsername = function(username, callback, errorHandler) {
+		$http.get('/profile/' + username).success(callback).error(errorHandler);
 	};
 });
 

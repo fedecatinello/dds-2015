@@ -306,29 +306,28 @@ app.service('loginModal', function ($modal, $rootScope) {
 
 });
 
-app.controller('UsuarioController', function (usuarioService, $state) {
+app.controller('UsuarioController', function (usuarioService, recetasService, $state) {
 	var self = this;
 
 	self.loggedUser = null;
 	self.example = "Ver Perfil";
-	self.nombre = "Eliana";
+	self.nombre = "";
 	self.complexion = "";
 	self.sexo = "";
 	self.fechaNacimiento = null;
 	self.altura = null;
 	self.peso = null;
-	self.imc = 22;
+	self.imc ;
 	self.rutina = "";
-	self.condicionesPreexistentes = [];
-	self.preferenciasAlimenticias = [];
-	self.comidasQueDisgustan = [];
+//	self.condicionesPreexistentes = [];
+//	self.preferenciasAlimenticias = [];
+//	self.comidasQueDisgustan = [];
 	self.recetasFavoritas = [];
 	
-	self.credentials = {};
-	self.credentials.username = localStorage.getItem("username");
-	self.credentials.password = localStorage.getItem("password");
+	self.username = localStorage.getItem("username");
 
 	function transformarUsuario(jsonUsuario) {
+		alert("Transformando");
 		return Usuario.asUsuario(jsonUsuario);
 	}
 
@@ -349,14 +348,21 @@ app.controller('UsuarioController', function (usuarioService, $state) {
 	}
 	
 	self.getUserInfo = function() {
-		alert(self.nombre);
-		usuarioService.getUserInfoByUsername(self.credentials.username, function() {
-			self.loggedUser = transformarUsuario(jsonUsuario);
+
+		usuarioService.getUserInfoByUsername(self.username, 
+		function() {
+			alert("Cargando datos...");
+			self.loggedUser = transformarUsuario();
+		},
+		function () {
+			alert("Error");
 		});
-		alert(self.nombre);
-		recetasService.findFavoritasByUsername(self.credentials.username, function(data) {
-			self.recetasFavoritas = _.map(data, transformarAReceta);
-		});
+		
+		alert("Vas a entrar a la pantalla de Perfil");
+		
+//		recetasService.findFavoritasByUsername(self.username, function(data) {
+//			self.recetasFavoritas = _.map(data, transformarAReceta);
+//		});
 	};
 
 });

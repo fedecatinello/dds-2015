@@ -73,6 +73,7 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 	self.getRecetas = function() {
 		recetasService.findAllByUsername(self.credentials.username, function(data) {
 			self.recetas = _.map(data, transformarAReceta);
+			localStorage.setItem("recetas", self.recetas);
 		});
 	};
 
@@ -233,7 +234,7 @@ app.controller("ConsultarRecetasController", function(recetasService, monitoreoS
 
 	/** Flag del monitoreo, lo persisto en localStorage **/
 	self.monitoreo = false;
-	/*localStorage.setItem("monitoreo", self.monitoreo);*/
+	localStorage.setItem("monitoreo", self.monitoreo);
 
 	self.busqueda = {};
 	self.recetas = [];
@@ -242,18 +243,16 @@ app.controller("ConsultarRecetasController", function(recetasService, monitoreoS
 		self.busqueda.username = self.credentials.username;
 		recetasService.buscar(self.busqueda, function(data) {
 			self.recetas = _.map(data, Receta.asReceta);
-			localStorage.setItem("recetasConsultadas", self.recetas);
-			/*self.buscarConsultasPorReceta();*/
 		}, notificarError);
 	};
 
 	self.buscarConsultasPorReceta = function() {
 		self.monitoreo = true;
-		/*localStorage.setItem("monitoreo", self.monitoreo);*/
-		self.recetas = localStorage.getItem("recetasConsultadas");
-		alert(self.recetas);
-		self.recetas.forEach(function(receta){
-			monitoreoService.getConsultasReceta(receta.nombre, function(data){
+		localStorage.setItem("monitoreo", self.monitoreo);
+		/*self.recetas = localStorage.getItem("recetas");
+		alert(self.recetas);*/
+		localStorage.getItem("recetas").forEach(function (receta) {
+			monitoreoService.getConsultasReceta(receta.nombre, function (data) {
 				receta.consultas = data;
 			}, notificarError);
 		});

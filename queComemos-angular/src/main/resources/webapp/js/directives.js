@@ -72,7 +72,7 @@ app.directive("condicionalInput", function() {
 		controller: function($scope) {
 			$scope.getTemplateInput = function() {
 				var monitoreo = localStorage.getItem("monitoreo");
-				if (monitoreo){
+				if (monitoreo === true){
 					return "partials/templateCondicionalConsultasInput.html";
 				} else {
 					return "partials/templateCondicionalTemporadaInput.html";
@@ -88,7 +88,7 @@ app.directive("condicionalLabel", function() {
 		controller: function($scope) {
 			$scope.getTemplateLabel = function() {
 				var monitoreo = localStorage.getItem("monitoreo");
-				if (monitoreo){
+				if (monitoreo === true){
 					return "partials/templateCondicionalConsultasLabel.html";
 				} else {
 					return "partials/templateCondicionalTemporadaLabel.html";

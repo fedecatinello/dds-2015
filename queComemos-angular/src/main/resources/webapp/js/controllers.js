@@ -233,7 +233,7 @@ app.controller("ConsultarRecetasController", function(recetasService, monitoreoS
 
 	/** Flag del monitoreo, lo persisto en localStorage **/
 	self.monitoreo = false;
-	/*localStorage.setItem("monitoreo", self.monitoreo);*/
+	localStorage.setItem("monitoreo", self.monitoreo);
 
 	self.busqueda = {};
 	self.recetas = [];
@@ -242,20 +242,19 @@ app.controller("ConsultarRecetasController", function(recetasService, monitoreoS
 		self.busqueda.username = self.credentials.username;
 		recetasService.buscar(self.busqueda, function(data) {
 			self.recetas = _.map(data, Receta.asReceta);
-			localStorage.setItem("recetasConsultadas", self.recetas);
-			/*self.buscarConsultasPorReceta();*/
 		}, notificarError);
 	};
 
 	self.buscarConsultasPorReceta = function() {
-		self.monitoreo = true;
-		/*localStorage.setItem("monitoreo", self.monitoreo);*/
-		self.recetas = localStorage.getItem("recetasConsultadas");
-		alert(self.recetas);
-		self.recetas.forEach(function(receta){
-			monitoreoService.getConsultasReceta(receta.nombre, function(data){
-				receta.consultas = data;
-			}, notificarError);
+		self.monitoreo = false;
+		localStorage.setItem("monitoreo", self.monitoreo);
+		recetasService.findAllByUsername(self.credentials.username, function(data) {
+			var recetas = _.map(data, Receta.asReceta);
+			recetas.forEach(function (receta) {
+				monitoreoService.getConsultasReceta(receta.nombre, function (data) {
+					receta.consultas = data;
+				}, notificarError);
+			});
 		});
 	};
 
@@ -269,6 +268,8 @@ app.controller("ConsultarRecetasController", function(recetasService, monitoreoS
 			}
 		}, 10000);
 	};
+
+/*	self.buscarConsultasPorReceta();*/
 
 });
 

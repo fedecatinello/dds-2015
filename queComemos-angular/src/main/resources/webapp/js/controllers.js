@@ -306,12 +306,12 @@ app.service('loginModal', function ($modal, $rootScope) {
 
 });
 
-app.controller('UsuarioController', function (usuarioService) {
+app.controller('UsuarioController', function (usuarioService, $state) {
 	var self = this;
 
 	self.loggedUser = null;
 	self.example = "Ver Perfil";
-	self.nombre = "";
+	self.nombre = "Eliana";
 	self.complexion = "";
 	self.sexo = "";
 	self.fechaNacimiento = null;
@@ -323,6 +323,10 @@ app.controller('UsuarioController', function (usuarioService) {
 	self.preferenciasAlimenticias = [];
 	self.comidasQueDisgustan = [];
 	self.recetasFavoritas = [];
+	
+	self.credentials = {};
+	self.credentials.username = localStorage.getItem("username");
+	self.credentials.password = localStorage.getItem("password");
 
 	function transformarUsuario(jsonUsuario) {
 		return Usuario.asUsuario(jsonUsuario);
@@ -345,10 +349,11 @@ app.controller('UsuarioController', function (usuarioService) {
 	}
 	
 	self.getUserInfo = function() {
+		alert(self.nombre);
 		usuarioService.getUserInfoByUsername(self.credentials.username, function() {
 			self.loggedUser = transformarUsuario(jsonUsuario);
 		});
-	
+		alert(self.nombre);
 		recetasService.findFavoritasByUsername(self.credentials.username, function(data) {
 			self.recetasFavoritas = _.map(data, transformarAReceta);
 		});

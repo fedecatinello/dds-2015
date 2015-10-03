@@ -62,12 +62,42 @@ app.directive("authenticate", function() {
 app.directive('tablaRecetas', function() {
 	return {
 		templateUrl: 'templateConsultaRecetas.html'
+		/*scope: {
+			monitoreo : '=monitoreo'
+		},
+		link: function(scope) {
+			console.log(scope.monitoreo);
+			alert($scope.monitoreo);
+		}*/
 	};
 });
 
-app.directive('recetasMasConsultadas', function() {
+app.directive("condicionalInput", function() {
 	return {
-		restrict: 'E',
-		template: '<td class="col-xs-2">{{Ctrl.receta.consultas}}</td>'
-	}
-})
+		template: '<ng-include src="getTemplateInput()"/>',
+		controller: function($scope) {
+			$scope.getTemplateInput = function() {
+				if ($scope.monitoreo){
+					return "partials/templateCondicionalConsultasInput.html";
+				} else {
+					return "partials/templateCondicionalTemporadaInput.html";
+				}
+			}
+		}
+	};
+});
+
+app.directive("condicionalLabel", function() {
+	return {
+		template: '<ng-include src="getTemplateLabel()"/>',
+		controller: function($scope) {
+			$scope.getTemplateLabel = function() {
+				if ($scope.monitoreo){
+					return "partials/templateCondicionalConsultasLabel.html";
+				} else {
+					return "partials/templateCondicionalTemporadaLabel.html";
+				}
+			}
+		}
+	};
+});

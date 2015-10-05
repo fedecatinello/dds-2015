@@ -17,8 +17,8 @@ app.controller('ModalAddIngredienteCtrl', function ($scope, $modalInstance, rece
 	*/
 
 	$scope.ok = function (form) {
-			if (form.$valid) {
-				receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
+		if (form.$valid) {
+			receta.ingredientes[$scope.newIngrediente] = $scope.newCantidad;
 			//borrar lo de abajo, en algun lado validar q se pueda agregar el ingrediente
 			$modalInstance.close($scope.newUnidadMedida, $scope.newCantidad, $scope.newIngrediente);	
 		}
@@ -31,27 +31,24 @@ app.controller('ModalAddIngredienteCtrl', function ($scope, $modalInstance, rece
 
 });
 
-app.controller('HomeController', function($state) {
-	var username = localStorage.getItem("username");
+app.controller('HomeController', function($state, usuarioService) {
+	var username = usuarioService.getUsername();
 	this.login = function(){
-		localStorage.setItem("username", null);
-		localStorage.setItem("password", null);
+		usuarioService.logOut();
 		$state.go('userDeslogueado');
 	};
 	this.logout = function(){
-		localStorage.setItem("username", null);
-		localStorage.setItem("password", null);
+		usuarioService.logOut();
 		$state.go('userDeslogueado');
 	};
 
 });
 
-app.controller('RecetasController', function(recetasService, messageService, $scope, $modal, $state) {
+app.controller('RecetasController', function(recetasService, messageService, usuarioService, $scope, $modal, $state) {
 
 	var self = this;
 	self.credentials = {};
-	self.credentials.username = localStorage.getItem("username");
-	self.credentials.password = localStorage.getItem("password");
+	self.credentials.username = usuarioService.getUsername();
 	self.allowEdit = $scope.allowEdit = true; //TODO
 	self.esFavorita = false;
 	self.animationsEnabled = true;
@@ -221,15 +218,14 @@ app.controller('RecetasController', function(recetasService, messageService, $sc
 });
 
 
-app.controller("ConsultarRecetasController", function(recetasService, monitoreoService, $timeout, $controller, $scope) {
+app.controller("ConsultarRecetasController", function(recetasService, monitoreoService, usuarioService, $timeout, $controller, $scope) {
 
 	angular.extend(this, $controller('RecetasController', { $scope: $scope }));
 
 	var self = this;
 
 	self.credentials = {};
-	self.credentials.username = localStorage.getItem("username");
-	self.credentials.password = localStorage.getItem("password");
+	self.credentials.username = usuarioService.getUsername();
 
 	/** Flag del monitoreo, lo persisto en localStorage **/
 	self.monitoreo = false;
@@ -269,13 +265,13 @@ app.controller("ConsultarRecetasController", function(recetasService, monitoreoS
 		}, 10000);
 	};
 
-/*	self.buscarConsultasPorReceta();*/
+	/*	self.buscarConsultasPorReceta();*/
 
 });
 
 /** Usuarios Controllers **/
 
-app.controller('LoginController', function(loginService, $timeout, $window, $scope, $rootScope, $modalInstance, $state) {
+app.controller('LoginController', function(loginService, usuarioService, $timeout, $window, $scope, $rootScope, $modalInstance, $state) {
 
 	var self = this;
 	self.credentials = {};
@@ -284,9 +280,8 @@ app.controller('LoginController', function(loginService, $timeout, $window, $sco
 	self.ingresar = function () {
 
 		loginService.postUserData(self.credentials,
-			function() {				
-				localStorage.setItem("username", self.credentials.username);
-				localStorage.setItem("password", self.credentials.password);
+			function() {	
+				usuarioService.logIn(self.credentials.username);
 				$modalInstance.close(self.credentials);
 			}
 			,function () {
@@ -345,46 +340,48 @@ app.controller('UsuarioController', function (usuarioService, recetasService, $s
 	self.comidasQueDisgustan = [];
 	self.recetasFavoritas = [];
 	
-	self.username = localStorage.getItem("username");
+	self.username = usuarioService.getUsername();
+
+
 
 	function transformarUsuario(jsonUsuario) {
 //		alert("Transformando");
-		return Usuario.asUsuario(jsonUsuario);
-	}
+return Usuario.asUsuario(jsonUsuario);
+}
 
-	function transformarAReceta(jsonReceta) {
-		return Receta.asReceta(jsonReceta);
-	}
+function transformarAReceta(jsonReceta) {
+	return Receta.asReceta(jsonReceta);
+}
 
-	self.esAlto = function(){
-		return self.imc>30;
-	}
-	
-	self.esBajo = function(){
-		return self.imc<18;
-	}
-	
-	self.esMedio = function(){
-		return self.imc>=18 && self.imc<=30
-	}
-	
-	self.getUserInfo = function() {
+self.esAlto = function(){
+	return self.imc>30;
+}
 
-		usuarioService.getUserInfoByUsername(self.username, 
+self.esBajo = function(){
+	return self.imc<18;
+}
+
+self.esMedio = function(){
+	return self.imc>=18 && self.imc<=30
+}
+
+self.getUserInfo = function() {
+
+	usuarioService.getUserInfoByUsername(self.username, 
 		function(data) {
 			alert("Cargando datos...");
 			self.loggedUser = transformarUsuario();
 //			alert(self.nombre);
-		},
-		function () {
-			alert("Error");
-		});
-		
-		recetasService.findFavoritasByUsername(self.username, function(data) {
-			self.recetasFavoritas = _.map(data, transformarAReceta);
+},
+function () {
+	alert("Error");
+});
+
+	recetasService.findFavoritasByUsername(self.username, function(data) {
+		self.recetasFavoritas = _.map(data, transformarAReceta);
 //			alert(self.recetasFavoritas[0].nombre);
-		});
-	};
+});
+};
 
 });
 

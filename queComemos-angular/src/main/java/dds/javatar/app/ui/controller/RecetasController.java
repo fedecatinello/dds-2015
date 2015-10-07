@@ -2,9 +2,7 @@ package dds.javatar.app.ui.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import queComemos.entrega3.dominio.Dificultad;
@@ -144,6 +142,8 @@ public class RecetasController {
 			return consultas_receta;
 
 		}, this.jsonTransformer);
+		
+		
 
 
 	}

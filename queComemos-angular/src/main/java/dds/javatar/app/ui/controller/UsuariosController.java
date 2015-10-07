@@ -1,9 +1,7 @@
 package dds.javatar.app.ui.controller;
 
 import spark.Spark;
-
 import com.google.gson.Gson;
-
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
@@ -20,6 +18,12 @@ public class UsuariosController {
 	}
 
 	public void register() {
+		
+		Spark.exception(RuntimeException.class, (ex, request, response) -> {
+			ex.printStackTrace();
+			response.body(ex.getMessage());
+			Spark.halt(400);
+		});
 
 		Spark.get("/mensajeInicio/:username", "application/json;charset=utf-8", (request, response) -> {
 
@@ -59,9 +63,18 @@ public class UsuariosController {
 			String username = request.params(":username");
 			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
 	
+			Usuario maru = new Usuario.UsuarioBuilder()
+			.nombre(loggedUser.getNombre())
+			.credenciales(loggedUser.getUser(),loggedUser.getPassword())
+			.sexo(loggedUser.getSexo())
+			.peso(loggedUser.getPeso())
+			.altura(loggedUser.getAltura())
+			.rutina(loggedUser.getRutina())
+			.build();			
+
 			response.type("application/json;charset=utf-8");
-//			String user = this.gson.toJson(loggedUser);
-			return loggedUser.getNombre();
+			
+			return maru;
 		}, this.jsonTransformer);
 	}
 	

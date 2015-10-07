@@ -365,6 +365,8 @@ self.esMedio = function(){
 	return self.imc>=18 && self.imc<=30
 }
 
+
+
 self.getUserInfo = function() {
 
 	usuarioService.getUserInfoByUsername(self.username, 
@@ -381,7 +383,56 @@ function () {
 		self.recetasFavoritas = _.map(data, transformarAReceta);
 //			alert(self.recetasFavoritas[0].nombre);
 });
+
 };
 
+
+self.getUserInfo();
 });
 
+
+app.controller('UsuarioController', function (usuarioService, recetasService, $scope, $state) {
+	var self = this;
+
+	self.mensajeInicio = "Recetas Favoritas";
+	self.loggedUser = new Usuario();
+	
+	self.username = usuarioService.getUsername();
+
+
+
+	function transformarUsuario(jsonUsuario) {
+		//alert("Transformando");
+		return Usuario.asUsuario(jsonUsuario);
+	}
+
+	function transformarAReceta(jsonReceta) {
+		return Receta.asReceta(jsonReceta);
+	}
+
+
+	self.esAlto = function(){
+		return self.loggedUser.imc>30;
+	}
+
+	self.esBajo = function(){
+		return self.loggedUser.imc<18;
+	}
+
+	self.esMedio = function(){
+		return self.loggedUser.imc>=18 && self.imc<=30
+	}
+
+	self.getUserInfoByUsername = function() {
+		usuarioService.getUserInfoByUsername(self.username, function(data) {
+			self.loggedUser = transformarUsuario(data);
+		});
+
+		recetasService.findFavoritasByUsername(self.username, function(data) {
+			self.recetas = _.map(data, transformarAReceta);
+		});
+	};
+
+
+	self.getUserInfoByUsername();
+});

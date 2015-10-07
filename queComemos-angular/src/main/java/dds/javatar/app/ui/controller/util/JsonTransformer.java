@@ -16,5 +16,7 @@ public class JsonTransformer implements ResponseTransformer {
 	public String render(Object model) {
 		return this.gson.toJson(model);
 	}
-
+	
 }
+
+

@@ -431,7 +431,13 @@ app.controller('UsuarioController', function (usuarioService, recetasService, $s
 		usuarioService.getUserIMC(self.username, function(data) {
 			self.loggedUser.imc = data;
 		});
-		
+		usuarioService.getUserLikes(self.username, function(data) {
+			self.loggedUser.comidasGustan = data;
+		});
+		usuarioService.getUserDislikes(self.username, function(data) {
+			self.loggedUser.comidasNoGustan = data;
+		});
+			
 		recetasService.findFavoritasByUsername(self.username, function(data) {
 			self.recetas = _.map(data, transformarAReceta);
 		});

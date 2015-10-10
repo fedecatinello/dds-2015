@@ -228,6 +228,11 @@ public class ContainerFactory {
 			.rutina(new Rutina(Rutina.TipoRutina.LEVE, 20))
 			.build();
 
+		maru.agregarAlimentoQueLeDisgusta("Papaya");
+		maru.agregarAlimentoQueLeDisgusta("Banana");
+		maru.agregarPreferenciaAlimenticia("Lentejas");
+		maru.agregarPreferenciaAlimenticia("Pollo");
+		maru.agregarPreferenciaAlimenticia("Mousse de Chocolate");
 		this.instanceRepoUsuarios.add(maru);
 
 		maru.marcarFavorita(this.instanceRepositorioRecetas.recetaConocidas.get(0));

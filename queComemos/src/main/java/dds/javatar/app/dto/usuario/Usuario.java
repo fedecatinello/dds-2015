@@ -203,6 +203,24 @@ public class Usuario extends Entity {
 	public void agregarAlimentoQueLeDisgusta(String alimento) {
 		this.preferenciasAlimenticias.put(alimento, Boolean.FALSE);
 	}
+	
+	public Map<String, Boolean> getPreferenciasAlimenticias(){
+		return this.preferenciasAlimenticias;
+	}
+	
+	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias){
+		 this.preferenciasAlimenticias=preferenciasAlimenticias;
+	}
+	
+	public List<String> getComidasSegunPreferecia(Boolean preferencia){
+		List<String> comidas = new ArrayList<String>();
+		for(String comida: this.preferenciasAlimenticias.keySet()){
+			if(this.preferenciasAlimenticias.get(comida)==preferencia){
+				comidas.add(comida);
+			}
+		}
+		return comidas;
+	}
 
 	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
 		this.condicionesPreexistentes.add(condicion);

@@ -35,7 +35,13 @@
 								<div class="panel-title">
 									<h4>Preferencias Alimenticias</h4>
 								</div>
-								<select multiple class="form-control"  ng-options="preferencias in Ctrl.loggedUser.preferenciasAlimentarias"></select>
+								<!-- <select multiple class="form-control"  ng-options="comida in Ctrl.loggedUser.comidasGustan"></select>
+							 -->
+							 <table>
+								 <tr data-ng-repeat="Comida in Ctrl.loggedUser.comidasGustan" class="animate-repeat">
+									<td class="col-md-3">{{Comida}}</td>
+								 </tr>
+							</table>
 							</div>
 						</div>
 
@@ -99,7 +105,12 @@
 								<div class="panel-title">
 									<h4>Comidas que le Disgustan</h4>
 								</div>
-								<select multiple class="form-control"  ng-options="comidas in Ctrl.comidasQueDisgustan"></select>
+								<!-- <select multiple class="form-control"  ng-options="comida in Ctrl.loggedUser.comidasNoGustan"></select>
+						 -->	<table>
+								 <tr data-ng-repeat="Comida in Ctrl.loggedUser.comidasNoGustan" class="animate-repeat">
+									<td class="col-md-3">{{Comida}}</td>
+								 </tr>
+							</table>
 							</div>
 						</div>  <!-- /third row -->
 

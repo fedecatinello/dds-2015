@@ -1,10 +1,19 @@
 package dds.javatar.app.ui.controller;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import spark.Spark;
 
+
+
+
 import com.google.gson.Gson;
+
+
+
 
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
@@ -81,7 +90,6 @@ public class UsuariosController {
 			
 			Vegano vegano = new Vegano();
 			maru.agregarCondicionPreexistente(vegano);
-
 			response.type("application/json;charset=utf-8");
 			
 			return maru;
@@ -98,6 +106,28 @@ public class UsuariosController {
 			return IMC;
 		}, this.jsonTransformer);
 	
+		Spark.get("/profileLikes/:username", "application/json;charset=utf-8", (request, response) -> {
+
+			String username = request.params(":username");
+			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
+	
+			List<String> gustan = loggedUser.getComidasSegunPreferecia(true);
+			response.type("application/json;charset=utf-8");
+
+			return gustan;
+		}, this.jsonTransformer);
+		
+		
+		Spark.get("/profileDislikes/:username", "application/json;charset=utf-8", (request, response) -> {
+
+			String username = request.params(":username");
+			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
+	
+			List<String> noGustan = loggedUser.getComidasSegunPreferecia(false);
+			response.type("application/json;charset=utf-8");
+
+			return noGustan;
+		}, this.jsonTransformer);
 	}
 	
 	

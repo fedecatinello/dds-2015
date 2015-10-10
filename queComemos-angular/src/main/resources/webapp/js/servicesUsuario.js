@@ -8,6 +8,15 @@ app.service('usuarioService', function($http) {
 		$http.get('/profileIMC/' + username).success(callback);
 	}
 	
+	this.getUserLikes = function(username, callback){
+		$http.get('/profileLikes/' + username).success(callback);
+	}
+	
+	this.getUserDislikes = function(username, callback){
+		$http.get('/profileDislikes/' + username).success(callback);
+	}
+	
+	
 	this.getUsername = function() {
 		return localStorage.getItem("username");
 	};

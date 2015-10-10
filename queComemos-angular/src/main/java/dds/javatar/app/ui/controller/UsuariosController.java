@@ -1,9 +1,13 @@
 package dds.javatar.app.ui.controller;
 
 import spark.Spark;
+
 import com.google.gson.Gson;
+
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
+import dds.javatar.app.dto.usuario.condiciones.Vegano;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class UsuariosController {
@@ -69,8 +73,12 @@ public class UsuariosController {
 			.sexo(loggedUser.getSexo())
 			.peso(loggedUser.getPeso())
 			.altura(loggedUser.getAltura())
-			.rutina(loggedUser.getRutina())
-			.build();			
+			.rutina(loggedUser.getRutina())	
+			.fechaNacimiento(loggedUser.getFechaNacimiento())
+			.build();	
+			
+			Vegano vegano = new Vegano();
+			maru.agregarCondicionPreexistente(vegano);
 
 			response.type("application/json;charset=utf-8");
 			

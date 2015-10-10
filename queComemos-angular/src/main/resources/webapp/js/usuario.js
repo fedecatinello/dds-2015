@@ -6,6 +6,7 @@ var Usuario = function() {
 	this.sexo = null;
 	this.edad = 0;
 	this.fechaNacimiento = null;
+	this.condicionesPreexistentes = [];
 	this.altura = 0;
 	this.peso = 0;
 	this.imc = 0;

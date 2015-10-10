@@ -1,5 +1,7 @@
 package dds.javatar.app.ui.controller;
 
+import java.math.BigDecimal;
+
 import spark.Spark;
 
 import com.google.gson.Gson;
@@ -84,7 +86,20 @@ public class UsuariosController {
 			
 			return maru;
 		}, this.jsonTransformer);
+		
+		Spark.get("/profileIMC/:username", "application/json;charset=utf-8", (request, response) -> {
+
+			String username = request.params(":username");
+			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
+	
+			BigDecimal IMC = loggedUser.getIMC(2);
+			response.type("application/json;charset=utf-8");
+			
+			return IMC;
+		}, this.jsonTransformer);
+	
 	}
+	
 	
 }
 

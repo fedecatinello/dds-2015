@@ -4,6 +4,10 @@ app.service('usuarioService', function($http) {
 		$http.get('/profile/' + username).success(callback);
 	};
 	
+	this.getUserIMC = function(username, callback){
+		$http.get('/profileIMC/' + username).success(callback);
+	}
+	
 	this.getUsername = function() {
 		return localStorage.getItem("username");
 	};

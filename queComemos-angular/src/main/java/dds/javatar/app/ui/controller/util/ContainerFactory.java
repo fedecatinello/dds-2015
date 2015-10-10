@@ -217,15 +217,11 @@ public class ContainerFactory {
 	}
 
 	public void agregarUsuariosAlRepo() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.YEAR, -40);
-		Date cumpleaños = calendar.getTime();
 		
 		Usuario maru = new Usuario.UsuarioBuilder()
 			.nombre("Maru Botana")
 			.credenciales("mbotana", "megustacocinar")
-			.fechaNacimiento(cumpleaños)
+			.fechaNacimiento(new Date(187056000000L))
 			.sexo(Usuario.Sexo.FEMENINO)
 			.peso(new BigDecimal(58))
 			.altura(new BigDecimal(1.63))

@@ -427,7 +427,11 @@ app.controller('UsuarioController', function (usuarioService, recetasService, $s
 		usuarioService.getUserInfoByUsername(self.username, function(data) {
 			self.loggedUser = transformarUsuario(data);
 		});
-
+		
+		usuarioService.getUserIMC(self.username, function(data) {
+			self.loggedUser.imc = data;
+		});
+		
 		recetasService.findFavoritasByUsername(self.username, function(data) {
 			self.recetas = _.map(data, transformarAReceta);
 		});

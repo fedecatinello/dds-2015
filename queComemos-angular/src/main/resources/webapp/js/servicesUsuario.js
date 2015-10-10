@@ -16,6 +16,10 @@ app.service('usuarioService', function($http) {
 		$http.get('/profileDislikes/' + username).success(callback);
 	}
 	
+	this.getUserConditions = function(username, callback){
+		$http.get('/profileConditions/' + username).success(callback);
+	}
+	
 	
 	this.getUsername = function() {
 		return localStorage.getItem("username");

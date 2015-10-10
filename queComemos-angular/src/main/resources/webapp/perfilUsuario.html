@@ -50,7 +50,11 @@
 								<div class="panel-title">
 									<h4>Condiciones Preexistentes</h4>
 								</div>
-								<select multiple class="form-control" ng-options="condiciones in Ctrl.loggedUser.condicionesPreexistentes"></select>
+								<table>
+									 <tr data-ng-repeat="Condicion in Ctrl.loggedUser.condicionesPreexistentes" class="animate-repeat">
+										<td class="col-md-3">{{Condicion}}</td>
+									 </tr>
+								 </table>
 							</div>
 						</div>
 					</div> <!-- /Left panel -->

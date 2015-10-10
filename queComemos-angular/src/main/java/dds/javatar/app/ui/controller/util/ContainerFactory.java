@@ -11,6 +11,7 @@ import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.condiciones.Celiaco;
 
 public class ContainerFactory {
 
@@ -228,6 +229,9 @@ public class ContainerFactory {
 			.rutina(new Rutina(Rutina.TipoRutina.LEVE, 20))
 			.build();
 
+		Celiaco celiaca = new Celiaco();
+		maru.agregarCondicionPreexistente(celiaca);
+		
 		maru.agregarAlimentoQueLeDisgusta("Papaya");
 		maru.agregarAlimentoQueLeDisgusta("Banana");
 		maru.agregarPreferenciaAlimenticia("Lentejas");

@@ -437,6 +437,10 @@ app.controller('UsuarioController', function (usuarioService, recetasService, $s
 		usuarioService.getUserDislikes(self.username, function(data) {
 			self.loggedUser.comidasNoGustan = data;
 		});
+		
+		usuarioService.getUserConditions(self.username, function(data) {
+			self.loggedUser.condicionesPreexistentes = data;
+		});
 			
 		recetasService.findFavoritasByUsername(self.username, function(data) {
 			self.recetas = _.map(data, transformarAReceta);

@@ -32,6 +32,14 @@ public class BusquedaAdapter {
 	private Map<String, Dificultad> dificultades;
 	private Set<ConsultaObserver> observers;
 
+	public Set<ConsultaObserver> getObservers() {
+		return observers;
+	}
+
+	public void setObservers(Set<ConsultaObserver> observers) {
+		this.observers = observers;
+	}
+
 	public BusquedaAdapter() {
 		this.observers = new HashSet<ConsultaObserver>();
 		this.dificultades = new HashMap<String, Dificultad>();

@@ -1,6 +1,8 @@
 package dds.javatar.app.ui.controller.util;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
@@ -9,6 +11,7 @@ import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Rutina;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.condiciones.Celiaco;
 
 public class ContainerFactory {
 
@@ -215,14 +218,25 @@ public class ContainerFactory {
 	}
 
 	public void agregarUsuariosAlRepo() {
+		
 		Usuario maru = new Usuario.UsuarioBuilder()
 			.nombre("Maru Botana")
+			.credenciales("mbotana", "megustacocinar")
+			.fechaNacimiento(new Date(187056000000L))
 			.sexo(Usuario.Sexo.FEMENINO)
 			.peso(new BigDecimal(58))
 			.altura(new BigDecimal(1.63))
 			.rutina(new Rutina(Rutina.TipoRutina.LEVE, 20))
 			.build();
 
+		Celiaco celiaca = new Celiaco();
+		maru.agregarCondicionPreexistente(celiaca);
+		
+		maru.agregarAlimentoQueLeDisgusta("Papaya");
+		maru.agregarAlimentoQueLeDisgusta("Banana");
+		maru.agregarPreferenciaAlimenticia("Lentejas");
+		maru.agregarPreferenciaAlimenticia("Pollo");
+		maru.agregarPreferenciaAlimenticia("Mousse de Chocolate");
 		this.instanceRepoUsuarios.add(maru);
 
 		maru.marcarFavorita(this.instanceRepositorioRecetas.recetaConocidas.get(0));
@@ -231,6 +245,7 @@ public class ContainerFactory {
 
 		Usuario mariano = new Usuario.UsuarioBuilder()
 			.nombre("Mariano")
+			.credenciales("mloisotto", "elmascapo")
 			.sexo(Usuario.Sexo.MASCULINO)
 			.peso(new BigDecimal(68))
 			.altura(new BigDecimal(1.71))
@@ -241,6 +256,7 @@ public class ContainerFactory {
 
 		Usuario siscate = new Usuario.UsuarioBuilder()
 			.nombre("ElSiscador")
+			.credenciales("siscador", "siscate")
 			.sexo(Usuario.Sexo.MASCULINO)
 			.peso(new BigDecimal(78))
 			.altura(new BigDecimal(1.89))

@@ -1,7 +1,9 @@
 package dds.javatar.app.dto.sistema;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.util.exception.BusinessException;
@@ -35,6 +37,7 @@ public class RepositorioRecetas implements InterfazRepositorioRecetas {
 	public void quitar(Receta receta) throws BusinessException {
 		this.recetaConocidas.remove(receta);
 	}
+	
 
 	/** Metodos **/
 
@@ -42,7 +45,26 @@ public class RepositorioRecetas implements InterfazRepositorioRecetas {
 	public List<Receta> listarTodas() {
 		return this.recetaConocidas;
 	}
+	
+	@Override
+	public Set<String> getAllIngredientes() {
+		Set <String> ingredientes = new HashSet<String>();
 
+		for (Receta receta : this.recetaConocidas) {
+			ingredientes.addAll(receta.getIngredientes().keySet());
+		}
+			return ingredientes;
+	}
+
+	@Override
+	public void updateReceta(Receta receta) {
+		Receta recetaEncontrada = this.recetaConocidas.stream().filter(o -> o.getNombre().equals(receta.getNombre())).findFirst().get();
+		
+		recetaConocidas.remove(recetaEncontrada);
+		recetaConocidas.add(receta);
+		
+	}
+	
 	public void eliminarTodasLasRecetas() {
 		this.recetaConocidas.clear();
 	}

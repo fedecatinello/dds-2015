@@ -1,0 +1,71 @@
+<div class="container">
+	<div class="page-header">
+		<h3>Consultar Recetas</h3>
+	</div>
+
+	<!-- Busqueda y resultados -->
+	<form role="form">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="form-group">
+					<label for="nombre">Nombre</label>
+					<input ng-model="Ctrl.busqueda.nombre" class="form-control" id="nombre" placeholder="Nombre">
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="form-group">
+					<label for="calorias-desde">Calorias</label>
+					<div class="row">
+						<div class="col-lg-6">
+							<input ng-model="Ctrl.busqueda.caloriasDesde" class="form-control" id="calorias-desde" placeholder="Desde">
+						</div>
+						<div class="col-lg-6">
+							<input ng-model="Ctrl.busqueda.caloriasHasta" class="form-control" id="calorias-hasta" placeholder="Hasta">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="form-group">
+					<label for="dificultad">Dificultad</label>
+					<select ng-model="Ctrl.busqueda.dificultad" class="form-control" id="dificultad" placeholder="Dificultad">
+						<option value="FACIL">FACIL</option>
+						<option value="MEDIANA">MEDIANA</option>
+						<option value="DIFICIL">DIFICIL</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="form-group">
+					<label for="temporada">Temporada</label>
+					<input ng-model="Ctrl.busqueda.temporada" class="form-control" id="temporada" placeholder="Temporada">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="form-group">
+					<label for="ingrediente">Que contenga ingrediente</label>
+					<input ng-model="Ctrl.busqueda.ingrediente" class="form-control" id="ingrediente" placeholder="Ingrediente" />
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="form-group">
+					<label for="filtros-perfil">Aplicar filtros del perfil de usuario
+						<input type="checkbox" ng-model="Ctrl.busqueda.aplicarFiltrosUsuario" class="form-control" id="filtros-perfil" />
+					</label>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<br />
+	<div class="row text-center">
+		<button type="button" class="btn btn-default" ng-click="Ctrl.buscarRecetas()">Buscar</button>
+	</div>
+	<br />
+
+	<div tabla-recetas></div>
+</div>

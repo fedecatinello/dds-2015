@@ -9,4 +9,6 @@ public interface ConsultaObserver {
 	// TODO: cambiar los parametros a un objeto.
 	void notificarConsulta(Usuario usuario, Busqueda busqueda);
 	
+	Integer cantidadConsultasReceta(String nombre);
+	
 }

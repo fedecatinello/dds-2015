@@ -1,9 +1,46 @@
 .selected {
-    background-color:orange;
-    font-weight:bold;
+  background-color:orange;
+  font-weight:bold;
 }
 .publicas {
-    background-color:blue;
-    color:white;
-    font-style: italic;
+  background-color:blue;
+  color:white;
+  font-style: italic;
+}
+
+.header {
+  background-color:blue;
+  color:white;
+  font-style: italic;
+}
+
+body, html {
+  height: 130%;
+  background: repeating-linear-gradient(rgb(200, 180, 162), rgb(12, 97, 33) ,rgb(104, 145, 162));
+}
+
+.modal-fit .modal-dialog {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 10px;
+}
+
+.modal-fit .modal-body {
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+}
+
+.css-form input.ng-invalid.ng-touched {
+  background-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-touched {
+  background-color: #78FA89;
+}
+
+.sarasa{
+  background: repeating-linear-gradient(rgb(200, 180, 162), rgb(12, 97, 33) ,rgb(104, 145, 162));
 }

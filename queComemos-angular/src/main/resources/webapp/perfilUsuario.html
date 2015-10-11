@@ -1,0 +1,149 @@
+<head>
+	<link rel="stylesheet" href="/css/user.css">
+</head>
+
+<div>
+	<!-- Main content -->
+	<div class="container"><br>
+		<div class="panel panel-default" style="opacity:0.8;">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-user"></span>
+				Perfil de Usuario</div>
+				<div class="panel-body">	
+
+					<div class="col-lg-6"> <!-- Left panel -->
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="panel-title">
+									<h4>Nombre</h4>
+								</div>
+								<h6>{{Ctrl.loggedUser.nombre}}</h6>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="panel-title">
+									<h4>Complexión</h4>
+								</div>
+								<h6>{{Ctrl.loggedUser.complexion}}</h6>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-7">
+								<div class="panel-title">
+									<h4>Preferencias Alimenticias</h4>
+								</div>
+								<!-- <select multiple class="form-control"  ng-options="comida in Ctrl.loggedUser.comidasGustan"></select>
+							 -->
+							 <table>
+								 <tr data-ng-repeat="Comida in Ctrl.loggedUser.comidasGustan" class="animate-repeat">
+									<td class="col-md-3">{{Comida}}</td>
+								 </tr>
+							</table>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-7">
+								<div class="panel-title">
+									<h4>Condiciones Preexistentes</h4>
+								</div>
+								<table>
+									 <tr data-ng-repeat="Condicion in Ctrl.loggedUser.condicionesPreexistentes" class="animate-repeat">
+										<td class="col-md-3">{{Condicion}}</td>
+									 </tr>
+								 </table>
+							</div>
+						</div>
+					</div> <!-- /Left panel -->
+
+
+
+					<div class="col-lg-6"><!-- Right panel -->
+						<div class="row">
+							<div class ="col-lg-3">
+								<div class="panel-title">
+									<h4>Sexo</h4>
+								</div>
+								<h6>{{Ctrl.loggedUser.sexo}}</h6>
+							</div>
+							<div class ="col-lg-5">
+								<div class="panel-title">
+									<h4>Fecha de Nacimiento</h4>
+								</div>
+								<h6>{{Ctrl.loggedUser.fechaNacimiento | date: 'dd/MM/yyyy'}}</h6>
+							</div>
+						</div> <!-- /first row -->
+
+						<div class="row">
+							<div class ="col-lg-3">
+								<div class="panel-title">
+									<h4>Altura</h4>
+								</div>
+								<h6>{{Ctrl.loggedUser.altura}}</h6>
+							</div>
+
+							<div class ="col-lg-3">
+								<div class="panel-title">
+									<h4>Peso</h4>
+								</div>
+								<h6>{{Ctrl.loggedUser.peso}}</h6>
+							</div>
+
+							<div class ="col-lg-3">
+								<div class="panel-title">
+									<h4>IMC</h4>
+								</div>
+								<h6 ng-class="{'IMC-Alto': {{Ctrl.esAlto()}},
+								'IMC-Medio': {{Ctrl.esMedio()}},
+								'IMC-Bajo': {{Ctrl.esBajo()}}}">
+								{{Ctrl.loggedUser.imc | number:2 }}</h6>
+							</div>		
+						</div> <!-- /second row -->
+
+						<!-- Third Row -->
+						<div class="row">
+							<div class="col-lg-7">
+								<div class="panel-title">
+									<h4>Comidas que le Disgustan</h4>
+								</div>
+								<!-- <select multiple class="form-control"  ng-options="comida in Ctrl.loggedUser.comidasNoGustan"></select>
+						 -->	<table>
+								 <tr data-ng-repeat="Comida in Ctrl.loggedUser.comidasNoGustan" class="animate-repeat">
+									<td class="col-md-3">{{Comida}}</td>
+								 </tr>
+							</table>
+							</div>
+						</div>  <!-- /third row -->
+
+						<!-- Fourth Row -->
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="panel-title">
+									<h4>Rutina</h4>
+								</div>
+								<h6>{{Ctrl.loggedUser.rutina}}</h6>
+							</div>
+						</div>  <!-- /fourth row -->
+
+
+					</div>	<!-- /Right panel -->
+
+
+					<div class="row"> <!-- Botom Panel -->
+						<div class="col-lg-12">
+							<div tabla-recetas></div>
+						</div>
+					</div> <!-- /Botom Panel -->
+					<br>
+
+					<button align="center" type="button" class="btn btn-default" ui-sref="Home">Volver</button>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>

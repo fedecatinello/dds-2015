@@ -1,0 +1,23 @@
+<div class="modal-header">
+	<h4 class="modal-title">Ingrese un nuevo ingrediente!</h3>
+</div>
+<div class="modal-body"> 
+<form name="form" class="css-form">
+	<div class="col-md-6">
+		<h4>Cantidad</h4>
+		<input type="text" ng-model="newCantidad" size="15 " placeholder="Cantidad" required>
+		<h4>Unidad de medida</h4>
+		<input type="text" ng-model="newUnidadMedida" size="15 " placeholder="Unidad de medida">
+	</div>
+	<div class="col-md-6">
+		<h4>Ingrediente</h4>
+		<input type="text" ng-model="newIngrediente" size="15 " placeholder="Ingrediente" required>
+		<br>
+		<input type="text"  size="15 ">
+	</div>
+</div>
+<div class="modal-footer"  style="text-align:center">
+	<button  class="btn btn-primary" type="button" ng-click="ok(form)">Aceptar</button>
+	<button  class="btn btn-warning" type="button" ng-click="cancel()">Cancelar</button>
+</form>
+</div>

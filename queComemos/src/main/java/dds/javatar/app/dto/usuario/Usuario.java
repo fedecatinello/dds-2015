@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.uqbar.commons.model.Entity;
@@ -48,6 +49,10 @@ public class Usuario extends Entity {
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
 	private List<Receta> recetasFavoritas;
 	private boolean favearTodasLasConsultas;
+	
+	/** Login attributes **/
+	private String username;
+	private String password;
 
 	/**** Constructors ****/
 
@@ -65,6 +70,9 @@ public class Usuario extends Entity {
 		this.recetas = new HashSet<Receta>();
 		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 		this.recetasFavoritas = new ArrayList<Receta>();
+		
+		this.username = usuarioBuilder.user;
+		this.password = usuarioBuilder.password;
 	}
 
 	public static class UsuarioBuilder {
@@ -75,6 +83,9 @@ public class Usuario extends Entity {
 		private BigDecimal peso;
 		private EstadoSolicitud estadoSolicitud;
 		private Rutina rutina;
+		
+		private String user;
+		private String password;
 
 		public UsuarioBuilder nombre(String nombre) {
 			this.nombre = nombre;
@@ -110,6 +121,12 @@ public class Usuario extends Entity {
 			this.rutina = rutina;
 			return this;
 		}
+		
+		public UsuarioBuilder credenciales(String usuario, String contrasenia) {
+			this.user = usuario;
+			this.password = contrasenia;
+			return this;
+		}
 
 		public Usuario build() {
 			return new Usuario(this);
@@ -141,6 +158,23 @@ public class Usuario extends Entity {
 	public Rutina getRutina() {
 		return this.rutina;
 	}
+	
+	public String getUser() {
+		return username;
+	}
+
+	public void setUser(String user) {
+		this.username = user;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 
 	public Set<Receta> getRecetas() {
 		return this.recetas;
@@ -168,6 +202,24 @@ public class Usuario extends Entity {
 
 	public void agregarAlimentoQueLeDisgusta(String alimento) {
 		this.preferenciasAlimenticias.put(alimento, Boolean.FALSE);
+	}
+	
+	public Map<String, Boolean> getPreferenciasAlimenticias(){
+		return this.preferenciasAlimenticias;
+	}
+	
+	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias){
+		 this.preferenciasAlimenticias=preferenciasAlimenticias;
+	}
+	
+	public List<String> getComidasSegunPreferecia(Boolean preferencia){
+		List<String> comidas = new ArrayList<String>();
+		for(String comida: this.preferenciasAlimenticias.keySet()){
+			if(this.preferenciasAlimenticias.get(comida)==preferencia){
+				comidas.add(comida);
+			}
+		}
+		return comidas;
 	}
 
 	public void agregarCondicionPreexistente(CondicionPreexistente condicion) {
@@ -362,6 +414,19 @@ public class Usuario extends Entity {
 
 	public void marcarFavorita(Receta receta) {
 		this.recetasFavoritas.add(receta);
+	}
+	
+	public void updateFavorita(Receta receta){
+		
+		try {
+			Receta recetaEncontrada = this.getFavoritos().stream().filter(o -> o.getNombre().equals(receta.getNombre())).findFirst().get();
+			
+			this.getFavoritos().remove(recetaEncontrada);
+			this.marcarFavorita(receta);
+		} catch (NoSuchElementException e) {
+			// TODO: handle exception
+		}
+		
 	}
 
 	public boolean tieneReceta(Receta receta) {

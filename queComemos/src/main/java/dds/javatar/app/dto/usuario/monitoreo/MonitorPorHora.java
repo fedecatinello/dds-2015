@@ -38,4 +38,10 @@ public class MonitorPorHora implements ConsultaObserver {
 		this.consultasPorHora.put(hour, currentValue + 1);
 	}
 
+	@Override
+	public Integer cantidadConsultasReceta(String nombre) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

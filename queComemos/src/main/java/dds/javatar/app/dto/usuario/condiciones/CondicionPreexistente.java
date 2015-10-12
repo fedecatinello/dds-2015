@@ -4,8 +4,9 @@ import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.UsuarioException;
 
-public interface CondicionPreexistente {
 
+public interface CondicionPreexistente {
+	
 	void validarUsuario(Usuario usuario) throws UsuarioException;
 
 	Boolean usuarioSigueRutinaSaludable(Usuario usuario);

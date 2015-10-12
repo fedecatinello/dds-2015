@@ -1,5 +1,6 @@
 package dds.javatar.app.dto.usuario;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.uqbar.commons.model.Entity;
+//import org.uqbar.commons.model.Entity;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
@@ -22,9 +23,9 @@ import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
-@SuppressWarnings("serial")
-public class Usuario extends Entity {
-
+@Entity
+public class Usuario{
+	
 	public enum Sexo {
 		MASCULINO, FEMENINO
 	};
@@ -35,19 +36,51 @@ public class Usuario extends Entity {
 
 	private static final Integer MIN_NAME_LENGTH = 4;
 
+	@Id
+	@GeneratedValue
+	@Column (name="usuario_id")
+	private Long idUsuario;
+	
+	@Column(name="nombre")
 	private String nombre;
+	
+	@Column(name="sexo")
 	private Sexo sexo;
+	
+	@Column(name="fechaNacimiento")
 	private Date fechaNacimiento;
+	
+	@Column(name="altura")
 	private BigDecimal altura;
+	
+	@Column(name="peso")
 	private BigDecimal peso;
-	private EstadoSolicitud estadoSolicitud;
-
-	private Set<CondicionPreexistente> condicionesPreexistentes;
-	private Map<String, Boolean> preferenciasAlimenticias;
+	
+	@Column(name="rutina")
 	private Rutina rutina;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "usuario_condicion",
+	    joinColumns = @JoinColumn(name = "usuario_id"),
+	    inverseJoinColumns = @JoinColumn(name = "condicion_id") )
+	private Set<CondicionPreexistente> condicionesPreexistentes;
+	
+	/* revisar mapeo de ingredientes */
+	private Map<String, Boolean> preferenciasAlimenticias;
+	
+	@OneToMany(mappedBy="autor")
 	private Set<Receta> recetas;
+	
+	@ManyToMany(mappedBy="miembros")
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "usuario_favoritas",
+	    joinColumns = @JoinColumn(name = "usuario_id"),
+	    inverseJoinColumns = @JoinColumn(name = "receta_id") )
 	private List<Receta> recetasFavoritas;
+	
+	private EstadoSolicitud estadoSolicitud;
 	private boolean favearTodasLasConsultas;
 	
 	/** Login attributes **/

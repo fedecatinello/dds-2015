@@ -5,14 +5,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections15.Predicate;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.uqbar.commons.model.CollectionBasedHome;
 
 import dds.javatar.app.dto.usuario.Usuario;
 
-public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
+public class RepositorioUsuarios {
 
+	private static final SessionFactory sessionFactory = new AnnotationConfiguration()
+			.configure()
+			.addAnnotatedClass(Usuario.class)
+			.buildSessionFactory();
+
+	public List<Usuario> allInstances() {
+		Session session = sessionFactory.openSession();
+		try {
+			return (List<Usuario>) session.createCriteria(Usuario.class).list();
+		} finally {
+			session.close();
+		}
+	}
+	
 	private static RepositorioUsuarios instance;
-
+	
 	public static RepositorioUsuarios getInstance() {
 		if (instance == null) {
 			instance = new RepositorioUsuarios();
@@ -21,24 +39,56 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 	}
 
 	public void add(Usuario usuario) {
-		this.effectiveCreate(usuario);
+		Session session = sessionFactory.openSession();
+		try {
+			session.beginTransaction();
+			session.save(usuario);
+			session.getTransaction().commit();
+		} catch (HibernateException ex) {
+			session.getTransaction().rollback();
+			throw new RuntimeException(ex);
+		} finally {
+			session.close();
+		}
 	}
 
-	public void remove(Usuario usuario) {
-		this.effectiveDelete(usuario);
+	public void delete(Usuario usuario) {
+		Session session = sessionFactory.openSession();
+		try {
+			session.beginTransaction();
+			session.delete(usuario);
+			session.getTransaction().commit();
+		} catch (HibernateException ex) {
+			session.getTransaction().rollback();
+			throw new RuntimeException(ex);
+		} finally {
+			session.close();
+		}
 	}
 
 	public void updateUsuario(Usuario usuario) {
-		update(usuario);
+		Session session = sessionFactory.openSession();
+		try {
+			session.beginTransaction();
+			session.update(usuario);
+			session.getTransaction().commit();
+		} catch (HibernateException ex) {
+			session.getTransaction().rollback();
+			throw new RuntimeException(ex);
+		} finally {
+			session.close();
+		}
 	}
 
 	public Usuario get(Usuario Usuario) {
 		return this.searchByName(Usuario).get(0);
 	}
+	
+	/* las búsquedas no tienen criterio */
 
 	public Usuario getByUsername(String username) {
 		try {
-			List<Usuario> listaUsers = super.getObjects();
+			List<Usuario> listaUsers = allInstances();
 			return listaUsers.stream().filter(s -> s.getUser().equals(username)).map(p-> (Usuario) p).collect(Collectors.toList()).get(0);
 		} catch (Exception e) {
 			return null;	// revianta cuando no encuentra nada
@@ -47,7 +97,7 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 	
 	public Usuario getByCredential(String username, String password) {
 		try {
-			List<Usuario> listaUsers = super.getObjects();
+			List<Usuario> listaUsers = allInstances();
 			return listaUsers.stream().filter(s -> s.getUser().equals(username) && s.getPassword().equals(password)).map(p-> (Usuario) p).collect(Collectors.toList()).get(0);
 		} catch (Exception e) {
 			return null;	// revianta cuando no encuentra nada
@@ -56,7 +106,7 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 	
 	public List<Usuario> searchByName(Usuario usuario) {
 		List<Usuario> listaUsuariosConElMismoNombre = new ArrayList<Usuario>();
-		for (Usuario usuarioEnSistema : super.getObjects()) {
+		for (Usuario usuarioEnSistema : allInstances()) {
 			if (usuarioEnSistema.getNombre().equals(usuario.getNombre())) {
 				listaUsuariosConElMismoNombre.add(usuarioEnSistema);
 			}
@@ -82,23 +132,16 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 			lista.add(usuarioConMismoNombre);
 		}
 	}
+
+
+	public static SessionFactory getSessionfactory() {
+		return sessionFactory;
+	}
 	
-	@Override
-	public Class<Usuario> getEntityType() {
-		// TODO Auto-generated method stub
-		return null;
+	/* para que no rompa TestAdministrador: setObject viene de CollectionBasedHome */
+	public void setObjects(List<Usuario> listaUsuarios){
+		for(Usuario usuario:listaUsuarios){
+			this.add(usuario);
+		}
 	}
-
-	@Override
-	public Usuario createExample() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected Predicate<?> getCriterio(Usuario example) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -1,15 +1,36 @@
 package dds.javatar.app.dto.usuario.condiciones;
 
 import java.math.BigDecimal;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.UsuarioException;
 
+@Entity
+@DiscriminatorValue("Diabetico")
+@SequenceGenerator(name="CONDICIONES_SEQ", sequenceName="condiciones_sequence")
 public class Diabetico extends UsuarioConPreferencia {
 
 	private static final Integer MAX_PESO = 70;
 
+	@Id
+	@Column(name="condicion_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="CONDICIONES_SEQ")
+	public Long id;
+	  
+    @ManyToMany(mappedBy="condicionesPreexistentes")
+	private Set<Usuario> usuariosCon;
+	
 	@Override
 	public void validarUsuario(Usuario usuario) throws UsuarioException {
 		super.validarUsuario(usuario);

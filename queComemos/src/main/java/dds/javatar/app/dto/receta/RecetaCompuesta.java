@@ -50,21 +50,6 @@ public abstract class RecetaCompuesta extends AbstractReceta {
 	
 	/** Validadores **/
 	
-	public Boolean containsIngrediente(String ingrediente){
-		Boolean tiene = false;
-		for(Componente comp : this.ingredientes){
-			if(comp.getDescripcion().equalsIgnoreCase(ingrediente)) tiene=true;
-		}
-		return tiene;
-	}
-	
-	public Boolean containsCondimento(String condimento){
-		Boolean tiene = false;
-		for(Componente comp : this.ingredientes){
-			if(comp.getDescripcion().equalsIgnoreCase(condimento)) tiene=true;
-		}
-		return tiene;
-	}
 	
 	public Boolean contieneIngrediente(String ingrediente) {
 		this.getIngredientes();
@@ -76,21 +61,8 @@ public abstract class RecetaCompuesta extends AbstractReceta {
 		return this.containsCondimento(condimento);
 	}
 
-	public Boolean alimentoSobrepasaCantidad(String alimento,
-			BigDecimal cantidad) {
-		this.getIngredientes();
-		if (!this.containsIngrediente(alimento)) {
-			return Boolean.FALSE;
-		}
-		return (this.getIngredienteByNombre(alimento).getCantidad().compareTo(cantidad) == 1);
-	}
-	
-	public Componente getIngredienteByNombre(String nombre){
-		for(Componente comp : this.getIngredientes()){
-			if(comp.getDescripcion().equalsIgnoreCase(nombre)) return comp;
-		}
-		return null;
-	}
+
+
 
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario) {
 		if (usuario.getRecetas().contains(receta)) {

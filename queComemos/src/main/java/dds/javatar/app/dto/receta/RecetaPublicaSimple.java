@@ -24,18 +24,18 @@ public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica {
 			Integer calorias,
 			String dificultad,
 			String temporada,
-			HashMap<String, BigDecimal> ingredientes,
-			HashMap<String, BigDecimal> condimentos,
+			List<Componente> ingredientes,
+			List<Componente> condimentos,
 			List<Paso> pasosPreparacion) 
 	{
 		this.nombre = nombre;
 		this.calorias = calorias;
 		this.dificultad = dificultad;
 		this.temporada = temporada;
-		this.ingredientes = new HashMap<String, BigDecimal>();
-		this.ingredientes.putAll(ingredientes);
-		this.condimentos = new HashMap<String, BigDecimal>();
-		this.condimentos.putAll(condimentos);
+		this.ingredientes = new ArrayList<Componente>();
+		this.ingredientes.addAll(ingredientes);
+		this.condimentos = new ArrayList<Componente>();
+		this.condimentos.addAll(condimentos);
 		this.pasosPreparacion = new ArrayList<Paso>();
 		this.pasosPreparacion.addAll(pasosPreparacion);
 		this.agregarRecetaAlRepo(this);
@@ -83,12 +83,12 @@ public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica {
 	
 	//Getters & Setters
 	
-	public void setCondimentos(HashMap<String, BigDecimal> condimentos) {
+	public void setCondimentos(List<Componente> condimentos) {
 		this.condimentos = condimentos;
 		
 	}
 
-	public void setIngredientes(HashMap<String, BigDecimal> ingredientes) {
+	public void setIngredientes(List<Componente> ingredientes) {
 		this.ingredientes = ingredientes;
 		
 	}

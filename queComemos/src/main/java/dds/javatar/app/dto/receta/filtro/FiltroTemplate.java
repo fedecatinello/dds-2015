@@ -1,8 +1,11 @@
 package dds.javatar.app.dto.receta.filtro;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
@@ -16,5 +19,13 @@ public abstract class FiltroTemplate implements Filtro {
 				recetasUsuario.remove(listaAux.get(i));
 			}
 		}
+	}
+	
+	public Set<String> getComponentesByNombre(List<Componente> componentes){
+		Set<String> nombres = new HashSet<>();
+		for(Componente componente:componentes){
+			nombres.add(componente.getDescripcion());
+		}
+		return nombres;
 	}
 }

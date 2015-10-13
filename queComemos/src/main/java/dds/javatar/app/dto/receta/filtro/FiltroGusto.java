@@ -9,7 +9,7 @@ public class FiltroGusto extends FiltroTemplate {
 	
 	private Set<String> _getNombreIngredientesReceta(Receta receta) {
 		
-		Set<String> ingredientes = receta.getIngredientes().keySet();
+		Set<String> ingredientes = getComponentesByNombre(receta.getIngredientes());
 		return ingredientes;
 		
 	}

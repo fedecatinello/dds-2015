@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.util.exception.BusinessException;
 
@@ -51,7 +52,7 @@ public class RepositorioRecetas implements InterfazRepositorioRecetas {
 		Set <String> ingredientes = new HashSet<String>();
 
 		for (Receta receta : this.recetaConocidas) {
-			ingredientes.addAll(receta.getIngredientes().keySet());
+			ingredientes.addAll(getComponentesByNombre(receta.getIngredientes()));
 		}
 			return ingredientes;
 	}
@@ -67,6 +68,14 @@ public class RepositorioRecetas implements InterfazRepositorioRecetas {
 	
 	public void eliminarTodasLasRecetas() {
 		this.recetaConocidas.clear();
+	}
+	
+	public Set<String> getComponentesByNombre(List<Componente> componentes){
+		Set<String> nombres = new HashSet<>();
+		for(Componente componente:componentes){
+			nombres.add(componente.getDescripcion());
+		}
+		return nombres;
 	}
 
 }

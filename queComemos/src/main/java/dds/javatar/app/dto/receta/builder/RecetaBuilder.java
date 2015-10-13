@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Paso;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
@@ -24,8 +25,8 @@ public class RecetaBuilder {
     private Integer tiempoPreparacion;
     private String autor;
     private Integer anioCreacion;
-    private HashMap<String, BigDecimal> condimentos;
-    private HashMap<String, BigDecimal> ingredientes;
+    private List<Componente>  condimentos;
+    private List<Componente> ingredientes;
     private List<Paso> pasosPreparacion;
     private HashSet<Receta> subrecetas;
     
@@ -33,8 +34,8 @@ public class RecetaBuilder {
 	public RecetaBuilder (String nombre) {
 		this.nombre = nombre;
 		initializeComparatorFields();
-		this.condimentos = new HashMap<String, BigDecimal>();
-		this.ingredientes = new HashMap<String, BigDecimal>();
+		this.condimentos = new ArrayList<Componente>();
+		this.ingredientes = new ArrayList<Componente>();
 		this.pasosPreparacion = new ArrayList<Paso>();
 		this.subrecetas = new HashSet<Receta>();
 	}
@@ -77,22 +78,24 @@ public class RecetaBuilder {
 	}
 
 	public RecetaBuilder agregarCondimento(String condimento, BigDecimal cantidad) {
-		this.condimentos.put(condimento, cantidad);
+		Componente _condimento = new Componente(condimento,cantidad);
+		this.condimentos.add(_condimento);
 		return this;
 	}
 	
-	public RecetaBuilder agregarCondimentos(HashMap<String, BigDecimal> condimentos) {
-		this.condimentos.putAll(condimentos);
+	public RecetaBuilder agregarCondimentos(List<Componente> condimentos) {
+		this.condimentos.addAll(condimentos);
 		return this;
 	}
 
 	public RecetaBuilder agregarIngrediente(String ingrediente, BigDecimal cantidad) {
-		this.ingredientes.put(ingrediente, cantidad);
+		Componente _ingrediente = new Componente(ingrediente,cantidad);
+		this.ingredientes.add(_ingrediente);
 		return this;
 	}
 	
-	public RecetaBuilder agregarIngredientes(HashMap<String, BigDecimal> ingredientes) {
-		this.ingredientes.putAll(ingredientes);
+	public RecetaBuilder agregarIngredientes(List<Componente> ingredientes) {
+		this.ingredientes.addAll(ingredientes);
 		return this;
 	}
 

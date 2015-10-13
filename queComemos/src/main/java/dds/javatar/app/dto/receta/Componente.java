@@ -1,6 +1,7 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
@@ -44,17 +46,13 @@ public class Componente {
 	    inverseJoinColumns = @JoinColumn(name = "receta_id") )
 	private Receta receta_x_condimento;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "usuario_preferencia",
-	    joinColumns = @JoinColumn(name = "componente_id"),
-	    inverseJoinColumns = @JoinColumn(name = "usuario_id") )
-	private Usuario usuario;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	@JoinColumn
+	private List<Usuario> usuariosQuienesGustan;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "grupo_preferencia",
-	    joinColumns = @JoinColumn(name = "componente_id"),
-	    inverseJoinColumns = @JoinColumn(name = "grupo_id") )
-	private GrupoDeUsuarios grupo;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "grupo")
+	@JoinColumn
+	private List<GrupoDeUsuarios> gruposQuienesGustan;
 	
 	/** Constructor **/
 	
@@ -95,20 +93,20 @@ public class Componente {
 		this.receta_x_condimento = receta_x_condimento;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public List<Usuario> getUsuariosQuienesGustan() {
+		return usuariosQuienesGustan;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuariosQuienesGustan(List<Usuario> usuariosQuienesGustan) {
+		this.usuariosQuienesGustan = usuariosQuienesGustan;
 	}
 
-	public GrupoDeUsuarios getGrupo() {
-		return grupo;
+	public List<GrupoDeUsuarios> getGruposQuienesGustan() {
+		return gruposQuienesGustan;
 	}
 
-	public void setGrupo(GrupoDeUsuarios grupo) {
-		this.grupo = grupo;
+	public void setGruposQuienesGustan(List<GrupoDeUsuarios> gruposQuienesGustan) {
+		this.gruposQuienesGustan = gruposQuienesGustan;
 	}
 
 	public BigDecimal getCantidad() {

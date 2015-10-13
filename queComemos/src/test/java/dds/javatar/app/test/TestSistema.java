@@ -3,12 +3,15 @@ package dds.javatar.app.test;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
+import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
@@ -65,9 +68,10 @@ public class TestSistema {
 	private GrupoDeUsuarios crearGrupoDeUsuarios() throws BusinessException {
 		GrupoDeUsuarios grupo = new GrupoDeUsuarios();
 		grupo.setNombre("Amigos del club");
-		HashMap<String, Boolean> preferenciasAlimenticias = new HashMap<String, Boolean>();
-		preferenciasAlimenticias.put("Ravioles", true);
-		preferenciasAlimenticias.put("papa", true);
+
+		List<Componente> preferenciasAlimenticias = new ArrayList<Componente>();
+		preferenciasAlimenticias.add("Ravioles", true);
+		preferenciasAlimenticias.add("papa", true);
 
 		grupo.setPreferenciasAlimenticias(preferenciasAlimenticias);
 

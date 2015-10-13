@@ -18,6 +18,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
@@ -122,8 +123,8 @@ public class BusquedaAdapter {
 	public void agregarReceta(queComemos.entrega3.dominio.Receta receta, List<Receta> recetasUsuario) {
 
 		/** Me guardo los ingredientes **/
-		HashMap<String, BigDecimal> ingredientesReceta = new HashMap<String, BigDecimal>();
-		receta.getIngredientes().forEach(ingrediente -> ingredientesReceta.put(ingrediente, new BigDecimal(0)));
+		List<Componente> ingredientesReceta = new ArrayList<Componente>();
+		receta.getIngredientes().forEach(ingrediente -> ingredientesReceta.add(new Componente(ingrediente, new BigDecimal(0))));
 
 		
 		Receta recetaUsuario = new RecetaBuilder(receta.getNombre())

@@ -369,19 +369,19 @@ public class TestRecetas {
 		this.usuario.modificarNombreDeReceta(receta, "Nuevo nombre");
 	}
 
-	@Test
-	public void testClonarReceta() throws RecetaException, CloneNotSupportedException {
-		RecetaPublica receta = (RecetaPublica) new RecetaBuilder("Papas españolas")
-					.totalCalorias(new Integer(150))
-					.agregarIngrediente("papa", new BigDecimal(100))
-					.buildReceta();
-		
-		RecetaPrivadaSimple recetaClonada = (RecetaPrivadaSimple) receta.clonarme("Usuario");
-		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
-
-		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
-		assertEquals(recetaClonada.getIngredientes().get("papa"), new BigDecimal(150));
-	}
+//	@Test
+//	public void testClonarReceta() throws RecetaException, CloneNotSupportedException {
+//		RecetaPublica receta = (RecetaPublica) new RecetaBuilder("Papas españolas")
+//					.totalCalorias(new Integer(150))
+//					.agregarIngrediente("papa", new BigDecimal(100))
+//					.buildReceta();
+//		
+//		RecetaPrivadaSimple recetaClonada = (RecetaPrivadaSimple) receta.clonarme("Usuario");
+//		recetaClonada.agregarIngrediente("papa", new BigDecimal(150));
+//
+//		assertEquals(receta.getIngredientes().get("papa"), new BigDecimal(100));
+//		assertEquals(recetaClonada.getIngredientes().get("papa"), new BigDecimal(150));
+//	}
 
 	// Entrega 1 - Punto 5: Poder construir una receta con sub-recetas.
 

@@ -19,20 +19,11 @@ public abstract class RecetaSimple extends AbstractReceta {
 	}
 
 	public Boolean contieneIngrediente(String ingrediente) {
-		return this.ingredientes.containsKey(ingrediente);
+		return this.containsIngrediente(ingrediente);
 	}
 
 	public Boolean contieneCondimento(String condimento) {
-		return this.condimentos.containsKey(condimento);
+		return this.containsCondimento(condimento);
 	}
-
-	public Boolean alimentoSobrepasaCantidad(String alimento,
-			BigDecimal cantidad) {
-		if (!this.ingredientes.containsKey(alimento)) {
-			return Boolean.FALSE;
-		}
-		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
-	}
-	
 
 }

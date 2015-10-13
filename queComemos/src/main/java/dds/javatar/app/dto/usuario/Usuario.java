@@ -22,8 +22,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
@@ -76,7 +74,7 @@ public class Usuario{
 	    inverseJoinColumns = @JoinColumn(name = "condicion_id") )
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
 	private List<Componente> preferenciasAlimenticias;
 	
 	@OneToMany(mappedBy="autor")
@@ -258,11 +256,11 @@ public class Usuario{
 		 this.preferenciasAlimenticias=preferenciasAlimenticias;
 	}
 	
-	public List<Componente> getComidasSegunPreferecia(Boolean preferencia){
-		List<Componente> comidas = new ArrayList<Componente>();
+	public List<String> getComidasSegunPreferecia(Boolean preferencia){
+		List<String> comidas = new ArrayList<String>();
 		for(Componente comida: this.preferenciasAlimenticias){
 			if(comida.teGusta()==preferencia){
-				comidas.add(comida);
+				comidas.add(comida.getDescripcion());
 			}
 		}
 		return comidas;

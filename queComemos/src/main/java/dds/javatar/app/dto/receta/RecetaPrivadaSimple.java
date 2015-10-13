@@ -1,7 +1,9 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -23,7 +25,7 @@ public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 			String temporada,
 			HashMap<String, BigDecimal> ingredientes,
 			HashMap<String, BigDecimal> condimentos,
-			HashMap<Integer, String> pasosPreparacion) 
+			List<Paso> pasosPreparacion) 
 	{
 		this.nombre = nombre;
 		this.autor = autor;
@@ -34,8 +36,8 @@ public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 		this.ingredientes.putAll(ingredientes);
 		this.condimentos = new HashMap<String, BigDecimal>();
 		this.condimentos.putAll(condimentos);
-		this.pasosPreparacion = new HashMap<Integer, String>();
-		this.pasosPreparacion.putAll(pasosPreparacion);
+		this.pasosPreparacion = new ArrayList<Paso>();
+		this.pasosPreparacion.addAll(pasosPreparacion);
 	}
 
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario) {
@@ -52,21 +54,5 @@ public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 		return this;
 	}
 
-	//Getters & Setters
-	
-	public void setCondimentos(HashMap<String, BigDecimal> condimentos) {
-		this.condimentos = condimentos;
-		
-	}
-
-	public void setIngredientes(HashMap<String, BigDecimal> ingredientes) {
-		this.ingredientes = ingredientes;
-		
-	}
-
-	public void setPasosPreparacion(HashMap<Integer, String> pasosPreparacion) {
-		this.pasosPreparacion = pasosPreparacion;
-		
-	}
 
 }

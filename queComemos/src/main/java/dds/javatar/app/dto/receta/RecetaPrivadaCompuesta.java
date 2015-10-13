@@ -1,8 +1,10 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -24,7 +26,7 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 				String temporada,
 				HashMap<String, BigDecimal> condimentos,
 				HashMap<String, BigDecimal> ingredientes,
-				HashMap<Integer, String> pasosPreparacion,
+				List<Paso> pasosPreparacion,
 				HashSet<Receta> subRecetas)
 		{
 			this.nombre = nombre;
@@ -36,8 +38,8 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 			this.condimentos.putAll(condimentos);
 			this.ingredientes = new HashMap<String, BigDecimal>();
 			this.ingredientes.putAll(ingredientes);
-			this.pasosPreparacion = new HashMap<Integer, String>();
-			this.pasosPreparacion.putAll(pasosPreparacion);
+			this.pasosPreparacion = new ArrayList<Paso>();
+			this.pasosPreparacion.addAll(pasosPreparacion);
 			this.subRecetas = new HashSet<Receta>();
 			this.subRecetas.addAll(subRecetas);
 		}
@@ -45,18 +47,5 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 	public Receta privatizarSiCorresponde(Usuario user) throws UsuarioException, RecetaException {
 		return this;
 	}
-
-	public void agregarIngrediente(String ingrediente, BigDecimal cantidad) {
-		this.ingredientes.put(ingrediente, cantidad);
-	}
-
-	public void agregarPasoPreparacion(Integer nroPaso, String paso) {
-		this.pasosPreparacion.put(nroPaso, paso);
-	}
-
-	public void agregarCondimento(String condimento, BigDecimal cantidad) {
-		this.condimentos.put(condimento, cantidad);
-	}
-
 	
 }

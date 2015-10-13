@@ -2,8 +2,23 @@ package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="Receta")
@@ -43,8 +58,8 @@ public abstract class AbstractReceta implements Receta {
 	protected HashMap<String, BigDecimal> condimentos;
 	protected HashMap<String, BigDecimal> ingredientes;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "paso_id")
-	protected HashMap<Integer, String> pasosPreparacion;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receta")
+	protected List<Paso> pasosPreparacion;
 	
 	/** Getters & Setters **/
 	public String getNombre() {
@@ -55,12 +70,13 @@ public abstract class AbstractReceta implements Receta {
 		this.nombre = nombre;
 	}
 
-	public HashMap<Integer, String> getPasosPreparacion() {
+	public List<Paso> getPasosPreparacion() {
 		return this.pasosPreparacion;
 	}
 
 	public void agregarPasoPreparacion(Integer nroPaso,String preparacion) {
-		this.pasosPreparacion.put(nroPaso, preparacion);
+		Paso paso = new Paso(nroPaso, preparacion);
+		this.pasosPreparacion.add(paso);
 	}
 	
 	public Integer getCalorias() {
@@ -135,9 +151,8 @@ public abstract class AbstractReceta implements Receta {
 		this.ingredientes = ingredientes;
 	}
 
-	public void setPasosPreparacion(HashMap<Integer, String> pasosPreparacion) {
+	public void setPasosPreparacion(List<Paso> pasosPreparacion) {
 		this.pasosPreparacion = pasosPreparacion;
 	}
-
 	
 }

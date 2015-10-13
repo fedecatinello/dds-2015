@@ -1,10 +1,13 @@
 package dds.javatar.app.dto.receta.builder;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
+import dds.javatar.app.dto.receta.Paso;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
 import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
@@ -23,7 +26,7 @@ public class RecetaBuilder {
     private Integer anioCreacion;
     private HashMap<String, BigDecimal> condimentos;
     private HashMap<String, BigDecimal> ingredientes;
-    private HashMap<Integer, String> pasosPreparacion;
+    private List<Paso> pasosPreparacion;
     private HashSet<Receta> subrecetas;
     
 	
@@ -32,7 +35,7 @@ public class RecetaBuilder {
 		initializeComparatorFields();
 		this.condimentos = new HashMap<String, BigDecimal>();
 		this.ingredientes = new HashMap<String, BigDecimal>();
-		this.pasosPreparacion = new HashMap<Integer, String>();
+		this.pasosPreparacion = new ArrayList<Paso>();
 		this.subrecetas = new HashSet<Receta>();
 	}
 	
@@ -94,12 +97,13 @@ public class RecetaBuilder {
 	}
 
 	public RecetaBuilder agregarPaso(Integer nroPaso, String pasoPreparacion) {
-		this.pasosPreparacion.put(nroPaso, pasoPreparacion);
+		Paso paso = new Paso(nroPaso, pasoPreparacion);
+		this.pasosPreparacion.add(paso);
 		return this;
 	}
 	
-	public RecetaBuilder agregarPasos(HashMap<Integer, String> pasosPreparacion) {
-		this.pasosPreparacion.putAll(pasosPreparacion);
+	public RecetaBuilder agregarPasos(List<Paso> pasosPreparacion) {
+		this.pasosPreparacion.addAll(pasosPreparacion);
 		return this;
 	}
 	

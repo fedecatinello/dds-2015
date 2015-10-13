@@ -2,6 +2,7 @@ package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
@@ -33,8 +34,8 @@ public interface Receta {
 	public HashMap<String, BigDecimal> getIngredientes();
 	public void setIngredientes(HashMap<String, BigDecimal> ingredientes);
 	
-	public HashMap<Integer, String> getPasosPreparacion();
-	public void setPasosPreparacion(HashMap<Integer, String> pasosPreparacion);
+	public List<Paso> getPasosPreparacion();
+	public void setPasosPreparacion(List<Paso> pasosPreparacion);
 	
 	
 	

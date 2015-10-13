@@ -4,10 +4,15 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
+@Entity
+@DiscriminatorValue("CompuestaPrivada")
 public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPrivada {
 	
 	/** Constructor **/

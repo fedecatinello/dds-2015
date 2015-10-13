@@ -9,30 +9,41 @@ import javax.persistence.*;
 @Table(name="Receta")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_receta", discriminatorType = DiscriminatorType.STRING)
-
 public abstract class AbstractReceta implements Receta {
 
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+    @Column(name = "receta_id")
 	 private Long id;
 	
+	@Basic(optional=false)
 	@Column(length=100, nullable=false)
 	protected String nombre;
+	
 	@Column
 	protected Integer calorias;
+	
 	@Column
 	protected String dificultad;
+	
 	@Column
 	protected String temporada;
+	
 	@Column
 	protected Integer tiempoPreparacion;
+	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	protected String autor;
+	
 	@Column
 	protected Integer anioCreacion;
 	
+	/** Estos serian la tabla RecetaComponente, tmb falta **/
 	protected HashMap<String, BigDecimal> condimentos;
 	protected HashMap<String, BigDecimal> ingredientes;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "paso_id")
 	protected HashMap<Integer, String> pasosPreparacion;
 	
 	/** Getters & Setters **/

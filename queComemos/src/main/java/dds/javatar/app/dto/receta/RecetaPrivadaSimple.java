@@ -3,10 +3,15 @@ package dds.javatar.app.dto.receta;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
+@Entity
+@DiscriminatorValue("SimplePrivada")
 public class RecetaPrivadaSimple extends RecetaSimple implements RecetaPrivada {
 
 	/**** Constructor ****/

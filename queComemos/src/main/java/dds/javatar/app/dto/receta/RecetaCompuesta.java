@@ -3,13 +3,24 @@ package dds.javatar.app.dto.receta;
 import java.math.BigDecimal;
 import java.util.HashSet;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 
 public abstract class RecetaCompuesta extends AbstractReceta {
 
+	/** Faltaria el tema de las recetas con las subrecetas **/
 	protected HashSet<Receta> subRecetas;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "receta_condicion",
+		joinColumns = @JoinColumn(name = "receta_id"),
+		inverseJoinColumns = @JoinColumn(name = "condicion_id") )
 	protected HashSet<CondicionPreexistente> condiciones;
 
 	/* Getters & Setters */

@@ -1,6 +1,5 @@
 package dds.javatar.app.dto.usuario;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -13,13 +12,25 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-//import org.uqbar.commons.model.Entity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
+//import org.uqbar.commons.model.Entity;
+import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
@@ -65,8 +76,8 @@ public class Usuario{
 	    inverseJoinColumns = @JoinColumn(name = "condicion_id") )
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	
-	/* revisar mapeo de ingredientes */
-	private Map<String, Boolean> preferenciasAlimenticias;
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	private List<Componente> preferenciasAlimenticias;
 	
 	@OneToMany(mappedBy="autor")
 	private Set<Receta> recetas;
@@ -79,7 +90,7 @@ public class Usuario{
 	    joinColumns = @JoinColumn(name = "usuario_id"),
 	    inverseJoinColumns = @JoinColumn(name = "receta_id") )
 	private List<Receta> recetasFavoritas;
-	
+		
 	private EstadoSolicitud estadoSolicitud;
 	private boolean favearTodasLasConsultas;
 	
@@ -99,7 +110,7 @@ public class Usuario{
 
 		this.rutina = usuarioBuilder.rutina;
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
-		this.preferenciasAlimenticias = new HashMap<String, Boolean>();
+		this.preferenciasAlimenticias = new ArrayList<Componente>();
 		this.recetas = new HashSet<Receta>();
 		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 		this.recetasFavoritas = new ArrayList<Receta>();
@@ -230,25 +241,27 @@ public class Usuario{
 	}
 
 	public void agregarPreferenciaAlimenticia(String alimento) {
-		this.preferenciasAlimenticias.put(alimento, Boolean.TRUE);
+		Componente componente = new Componente(alimento, Boolean.TRUE);
+		this.preferenciasAlimenticias.add(componente);
 	}
 
 	public void agregarAlimentoQueLeDisgusta(String alimento) {
-		this.preferenciasAlimenticias.put(alimento, Boolean.FALSE);
+		Componente componente = new Componente(alimento, Boolean.FALSE);
+		this.preferenciasAlimenticias.add(componente);
 	}
 	
-	public Map<String, Boolean> getPreferenciasAlimenticias(){
+	public List<Componente> getPreferenciasAlimenticias(){
 		return this.preferenciasAlimenticias;
 	}
 	
-	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias){
+	public void setPreferenciasAlimenticias(List<Componente> preferenciasAlimenticias){
 		 this.preferenciasAlimenticias=preferenciasAlimenticias;
 	}
 	
-	public List<String> getComidasSegunPreferecia(Boolean preferencia){
-		List<String> comidas = new ArrayList<String>();
-		for(String comida: this.preferenciasAlimenticias.keySet()){
-			if(this.preferenciasAlimenticias.get(comida)==preferencia){
+	public List<Componente> getComidasSegunPreferecia(Boolean preferencia){
+		List<Componente> comidas = new ArrayList<Componente>();
+		for(Componente comida: this.preferenciasAlimenticias){
+			if(comida.teGusta()==preferencia){
 				comidas.add(comida);
 			}
 		}
@@ -377,15 +390,26 @@ public class Usuario{
 	}
 
 	public Boolean tienePreferenciaAlimenticia(String alimento) {
-		return Boolean.TRUE.equals(this.preferenciasAlimenticias.get(alimento));
+		return chequear(alimento, true);
 	}
 
 	public Boolean tieneAlimentoQueLeDisguste(String alimento) {
-		return Boolean.FALSE.equals(this.preferenciasAlimenticias.get(alimento));
+		return chequear(alimento, false);
 	}
 
+	public Boolean chequear(String alimento, Boolean preferencia){
+
+		Boolean leGusta = false;
+		
+		for(Componente componente : this.preferenciasAlimenticias) {
+			if(componente.getDescripcion().equals(alimento) && componente.teGusta()==preferencia) leGusta = true;
+		}
+	
+		return leGusta;
+	}
+	
 	public Boolean tieneAlgunaPreferencia() {
-		return (this.preferenciasAlimenticias.values().contains(Boolean.TRUE));
+		return (this.preferenciasAlimenticias.contains(Boolean.TRUE));
 	}
 
 	public void puedeVerReceta(Receta receta) throws UsuarioException {

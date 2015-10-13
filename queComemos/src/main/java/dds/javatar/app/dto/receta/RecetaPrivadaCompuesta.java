@@ -1,8 +1,6 @@
 package dds.javatar.app.dto.receta;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -24,8 +22,8 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 				Integer calorias,
 				String dificultad,
 				String temporada,
-				HashMap<String, BigDecimal> condimentos,
-				HashMap<String, BigDecimal> ingredientes,
+				List<Componente> condimentos,
+				List<Componente> ingredientes,
 				List<Paso> pasosPreparacion,
 				HashSet<Receta> subRecetas)
 		{
@@ -34,10 +32,10 @@ public class RecetaPrivadaCompuesta extends RecetaCompuesta implements RecetaPri
 			this.calorias = calorias;
 			this.dificultad = dificultad;
 			this.temporada = temporada;
-			this.condimentos = new HashMap<String, BigDecimal>();
-			this.condimentos.putAll(condimentos);
-			this.ingredientes = new HashMap<String, BigDecimal>();
-			this.ingredientes.putAll(ingredientes);
+			this.condimentos = new ArrayList<Componente>();
+			this.condimentos.addAll(condimentos);
+			this.ingredientes = new  ArrayList<Componente>();
+			this.ingredientes.addAll(ingredientes);
 			this.pasosPreparacion = new ArrayList<Paso>();
 			this.pasosPreparacion.addAll(pasosPreparacion);
 			this.subRecetas = new HashSet<Receta>();

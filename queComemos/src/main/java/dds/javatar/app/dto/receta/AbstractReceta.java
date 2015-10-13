@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -54,9 +55,11 @@ public abstract class AbstractReceta implements Receta {
 	@Column
 	protected Integer anioCreacion;
 	
-	/** Estos serian la tabla RecetaComponente, tmb falta **/
-	protected HashMap<String, BigDecimal> condimentos;
-	protected HashMap<String, BigDecimal> ingredientes;
+	@ManyToMany(mappedBy="receta_x_condimento")
+	protected List<Componente> condimentos;
+	
+	@ManyToMany(mappedBy="receta_x_ingrediente")
+	protected List<Componente> ingredientes;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receta")
 	protected List<Paso> pasosPreparacion;
@@ -104,18 +107,20 @@ public abstract class AbstractReceta implements Receta {
 	}
 
 	public void agregarCondimento(String condimento, BigDecimal cantidad) {
-		this.condimentos.put(condimento, cantidad);
+		Componente componente = new Componente(condimento,cantidad);
+		this.condimentos.add(componente);
 	}
 
-	public HashMap<String, BigDecimal> getCondimentos() {
+	public List<Componente> getCondimentos() {
 		return this.condimentos;
 	}
 
 	public void agregarIngrediente(String ingrediente, BigDecimal cantidad) {
-		this.ingredientes.put(ingrediente, cantidad);
+		Componente componente = new Componente(ingrediente,cantidad);
+		this.ingredientes.add(componente);
 	}
 
-	public HashMap<String, BigDecimal> getIngredientes() {
+	public List<Componente> getIngredientes() {
 		return this.ingredientes;
 	}
 
@@ -143,11 +148,11 @@ public abstract class AbstractReceta implements Receta {
 		this.anioCreacion = anioCreacion;
 	}
 
-	public void setCondimentos(HashMap<String, BigDecimal> condimentos) {
+	public void setCondimentos(List<Componente> condimentos) {
 		this.condimentos = condimentos;
 	}
 
-	public void setIngredientes(HashMap<String, BigDecimal> ingredientes) {
+	public void setIngredientes(List<Componente> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
 

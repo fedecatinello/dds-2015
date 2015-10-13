@@ -28,11 +28,11 @@ public interface Receta {
 	public Integer getTiempoPreparacion();
 	public void setTiempoPreparacion(Integer tiempoPreparacion);
 	
-	public HashMap<String, BigDecimal> getCondimentos();
-	public void setCondimentos(HashMap<String, BigDecimal> condimentos);
+	public List<Componente> getCondimentos();
+	public void setCondimentos(List<Componente> condimentos);
 	
-	public HashMap<String, BigDecimal> getIngredientes();
-	public void setIngredientes(HashMap<String, BigDecimal> ingredientes);
+	public List<Componente> getIngredientes();
+	public void setIngredientes(List<Componente> ingredientes);
 	
 	public List<Paso> getPasosPreparacion();
 	public void setPasosPreparacion(List<Paso> pasosPreparacion);

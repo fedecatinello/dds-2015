@@ -25,8 +25,8 @@ public class RecetaPublicaCompuesta extends RecetaCompuesta implements RecetaPub
 					Integer calorias,
 					String dificultad,
 					String temporada,
-					HashMap<String, BigDecimal> condimentos,
-					HashMap<String, BigDecimal> ingredientes,
+					List<Componente> condimentos,
+					List<Componente> ingredientes,
 					List<Paso> pasosPreparacion,
 					HashSet<Receta> subrecetas)
 	{
@@ -34,10 +34,10 @@ public class RecetaPublicaCompuesta extends RecetaCompuesta implements RecetaPub
 		this.calorias = calorias;
 		this.dificultad = dificultad;
 		this.temporada = temporada;
-		this.condimentos = new HashMap<String, BigDecimal>();
-		this.condimentos.putAll(condimentos);
-		this.ingredientes = new HashMap<String, BigDecimal>();
-		this.ingredientes.putAll(ingredientes);
+		this.condimentos = new ArrayList<Componente>();
+		this.condimentos.addAll(condimentos);
+		this.ingredientes = new ArrayList<Componente>();
+		this.ingredientes.addAll(ingredientes);
 		this.pasosPreparacion = new ArrayList<Paso>();
 		this.pasosPreparacion.addAll(pasosPreparacion);
 		this.subRecetas = new HashSet<Receta>();

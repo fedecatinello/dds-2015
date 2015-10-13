@@ -1,28 +1,17 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 
-public abstract class RecetaCompuesta implements Receta {
+public abstract class RecetaCompuesta extends AbstractReceta {
 
 	protected HashSet<Receta> subRecetas;
-	protected HashMap<String, BigDecimal> condimentos;
-	protected HashMap<String, BigDecimal> ingredientes;
-	protected HashMap<Integer, String> pasosPreparacion;
 	protected HashSet<CondicionPreexistente> condiciones;
-	protected String nombre;
-	protected String autor;
-	protected String dificultad;
-	protected Integer calorias;
-	protected String temporada;
-	protected Integer tiempoPreparacion;
-	
-	
+
 	/* Getters & Setters */
 	
 	public HashSet<Receta> getSubRecetas() {
@@ -31,18 +20,6 @@ public abstract class RecetaCompuesta implements Receta {
 	public void setSubRecetas(HashSet<Receta> subRecetas) {
 		this.subRecetas = subRecetas;
 	}
-	public HashMap<String, BigDecimal> getCondimentos() {
-		return condimentos;
-	}
-	public void setCondimentos(HashMap<String, BigDecimal> condimentos) {
-		this.condimentos = condimentos;
-	}
-	public HashMap<String, BigDecimal> getIngredientes() {
-		return ingredientes;
-	}
-	public void setIngredientes(HashMap<String, BigDecimal> ingredientes) {
-		this.ingredientes = ingredientes;
-	}
 	
 	public HashSet<CondicionPreexistente> getCondiciones() {
 		return condiciones;
@@ -50,49 +27,6 @@ public abstract class RecetaCompuesta implements Receta {
 
 	public void setCondiciones(HashSet<CondicionPreexistente> condiciones) {
 		this.condiciones = condiciones;
-	}
-	
-	public HashMap<Integer, String> getPasosPreparacion() {
-		return pasosPreparacion;
-	}
-	public void setPasosPreparacion(HashMap<Integer, String> pasosPreparacion) {
-		this.pasosPreparacion = pasosPreparacion;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getAutor() {
-		return autor;
-	}
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-	public String getDificultad() {
-		return dificultad;
-	}
-	public void setDificultad(String dificultad) {
-		this.dificultad = dificultad;
-	}
-	public Integer getCalorias() {
-		return calorias;
-	}
-	public void setCalorias(Integer calorias) {
-		this.calorias = calorias;
-	}
-	public String getTemporada() {
-		return temporada;
-	}
-	public void setTemporada(String temporada) {
-		this.temporada = temporada;
-	}
-	public Integer getTiempoPreparacion() {
-		return tiempoPreparacion;
-	}
-	public void setTiempoPreparacion(Integer tiempoPreparacion) {
-		this.tiempoPreparacion = tiempoPreparacion;
 	}
 	
 	/** Add Items **/

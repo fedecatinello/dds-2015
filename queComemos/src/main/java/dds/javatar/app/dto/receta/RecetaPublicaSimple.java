@@ -2,13 +2,15 @@ package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-
+import javax.persistence.*;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.sistema.RepositorioRecetas;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
+@Entity
+@DiscriminatorValue("SimplePublica")
 public class RecetaPublicaSimple extends RecetaSimple implements RecetaPublica {
 
 	/**** Constructor ****/

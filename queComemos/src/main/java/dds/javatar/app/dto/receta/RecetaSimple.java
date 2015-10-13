@@ -1,103 +1,10 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
+
 import dds.javatar.app.util.exception.RecetaException;
 
-public abstract class RecetaSimple implements Receta {
-
-	protected String nombre;
-	protected Integer calorias;
-	protected String dificultad;
-	protected String temporada;
-	protected Integer tiempoPreparacion;
-	protected String autor;
-	protected Integer anioCreacion;
-
-	protected HashMap<String, BigDecimal> ingredientes;
-	protected HashMap<String, BigDecimal> condimentos;
-	protected HashMap<Integer, String> pasosPreparacion;
-
-	/** Getters & Setters **/
-	public String getNombre() {
-		return this.nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public HashMap<Integer, String> getPasosPreparacion() {
-		return this.pasosPreparacion;
-	}
-
-	public void agregarPasoPreparacion(Integer nroPaso,String preparacion) {
-		this.pasosPreparacion.put(nroPaso, preparacion);
-	}
-	
-	public Integer getCalorias() {
-		return this.calorias;
-	}
-
-	public void setCalorias(Integer calorias) {
-		this.calorias = calorias;
-	}
-
-	public String getDificultad() {
-		return this.dificultad;
-	}
-
-	public void setDificultad(String dificultad) {
-		this.dificultad = dificultad;
-	}
-
-	public String getTemporada() {
-		return this.temporada;
-	}
-
-	public void setTemporada(String temporada) {
-		this.temporada = temporada;
-	}
-
-	public void agregarCondimento(String condimento, BigDecimal cantidad) {
-		this.condimentos.put(condimento, cantidad);
-	}
-
-	public HashMap<String, BigDecimal> getCondimentos() {
-		return this.condimentos;
-	}
-
-	public void agregarIngrediente(String ingrediente, BigDecimal cantidad) {
-		this.ingredientes.put(ingrediente, cantidad);
-	}
-
-	public HashMap<String, BigDecimal> getIngredientes() {
-		return this.ingredientes;
-	}
-
-	public Integer getTiempoPreparacion() {
-		return tiempoPreparacion;
-	}
-
-	public void setTiempoPreparacion(Integer tiempoPreparacion) {
-		this.tiempoPreparacion = tiempoPreparacion;
-	}
-
-	public String getAutor() {
-		return autor;
-	}
-
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-
-	public Integer getAnioCreacion() {
-		return anioCreacion;
-	}
-
-	public void setAnioCreacion(Integer anioCreacion) {
-		this.anioCreacion = anioCreacion;
-	}
+public abstract class RecetaSimple extends AbstractReceta {
 
 	/** Metodos **/
 	public void validarSiLaRecetaEsValida() throws RecetaException {

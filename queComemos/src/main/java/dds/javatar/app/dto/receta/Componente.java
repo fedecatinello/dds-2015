@@ -46,7 +46,7 @@ public class Componente {
 	    inverseJoinColumns = @JoinColumn(name = "receta_id") )
 	private Receta receta_x_condimento;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "componente")
 	@JoinColumn
 	private List<Usuario> usuariosQuienesGustan;
 	

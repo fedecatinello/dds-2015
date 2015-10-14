@@ -1,10 +1,8 @@
 package dds.javatar.app.dto.grupodeusuarios;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import dds.javatar.app.dto.receta.Componente;
+import dds.javatar.app.dto.receta.PreferenciaGrupo;
 import dds.javatar.app.dto.usuario.Usuario;
 
 @Entity
@@ -31,7 +29,7 @@ public class GrupoDeUsuarios {
 	private String nombre;
 	
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="grupo")
-	private List<Componente> preferenciasAlimenticias;
+	private List<PreferenciaGrupo> preferenciasAlimenticias;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "grupo_usuario",
@@ -41,7 +39,7 @@ public class GrupoDeUsuarios {
 
 	/**** Constructor ****/
 	public GrupoDeUsuarios() {
-		this.preferenciasAlimenticias = new ArrayList<Componente>();
+		this.preferenciasAlimenticias = new ArrayList<PreferenciaGrupo>();
 		this.miembros = new HashSet<Usuario>();
 	}
 
@@ -55,12 +53,12 @@ public class GrupoDeUsuarios {
 		this.nombre = nombre;
 	}
 
-	public List<Componente> getPreferenciasAlimenticias() {
+	public List<PreferenciaGrupo> getPreferenciasAlimenticias() {
 		return preferenciasAlimenticias;
 	}
 
 	public void setPreferenciasAlimenticias(
-			List<Componente> preferenciasAlimenticias) {
+			List<PreferenciaGrupo> preferenciasAlimenticias) {
 		this.preferenciasAlimenticias = preferenciasAlimenticias;
 	}
 

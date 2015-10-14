@@ -6,6 +6,7 @@ import java.util.Set;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Componente;
+import dds.javatar.app.dto.receta.PreferenciaGrupo;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.tareasPendientes.TareaPendiente;
 import dds.javatar.app.dto.usuario.Usuario;
@@ -38,7 +39,7 @@ public class Administrador {
 	}
 
 	public void sugerir(Receta receta, GrupoDeUsuarios grupo) throws BusinessException {
-		for (String preferencia : getComponentesByNombre(grupo.getPreferenciasAlimenticias())) {
+		for (String preferencia : getComponentesByNombrePorGrupo(grupo.getPreferenciasAlimenticias())) {
 
 			if (!receta.contieneCondimento(preferencia) || !receta.contieneIngrediente(preferencia) || !(receta.getNombre() == preferencia)) {
 				throw new BusinessException("La receta:" + receta.getNombre() + " no contiene palabra clave del grupo:" + grupo.getNombre());
@@ -70,9 +71,17 @@ public class Administrador {
 		this.tareasPendientes.clear();
 	}
 
+	public Set<String> getComponentesByNombrePorGrupo(List<PreferenciaGrupo> preferencias){
+		Set<String> nombres = new HashSet<>();
+		for(PreferenciaGrupo pref: preferencias){
+			nombres.add(pref.getComponente().getDescripcion());
+		}
+		return nombres;
+	}
+	
 	public Set<String> getComponentesByNombre(List<Componente> componentes){
 		Set<String> nombres = new HashSet<>();
-		for(Componente componente:componentes){
+		for(Componente componente: componentes){
 			nombres.add(componente.getDescripcion());
 		}
 		return nombres;

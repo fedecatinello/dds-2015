@@ -5,10 +5,8 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -22,13 +20,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+//import org.uqbar.commons.model.Entity;
+import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Componente;
+import dds.javatar.app.dto.receta.PreferenciaUsuario;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
-//import org.uqbar.commons.model.Entity;
-import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
@@ -75,7 +74,7 @@ public class Usuario{
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	private List<Componente> preferenciasAlimenticias;
+	private List<PreferenciaUsuario> preferenciasAlimenticias;
 	
 	@OneToMany(mappedBy="autor")
 	private Set<Receta> recetas;
@@ -108,7 +107,7 @@ public class Usuario{
 
 		this.rutina = usuarioBuilder.rutina;
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
-		this.preferenciasAlimenticias = new ArrayList<Componente>();
+		this.preferenciasAlimenticias = new ArrayList<PreferenciaUsuario>();
 		this.recetas = new HashSet<Receta>();
 		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 		this.recetasFavoritas = new ArrayList<Receta>();
@@ -239,28 +238,30 @@ public class Usuario{
 	}
 
 	public void agregarPreferenciaAlimenticia(String alimento) {
-		Componente componente = new Componente(alimento, Boolean.TRUE);
-		this.preferenciasAlimenticias.add(componente);
+		Componente componente = new Componente(alimento, new BigDecimal(0));
+		PreferenciaUsuario preferencia = new PreferenciaUsuario(this,componente,true);
+		this.preferenciasAlimenticias.add(preferencia);
 	}
 
 	public void agregarAlimentoQueLeDisgusta(String alimento) {
-		Componente componente = new Componente(alimento, Boolean.FALSE);
-		this.preferenciasAlimenticias.add(componente);
+		Componente componente = new Componente(alimento, new BigDecimal(0));
+		PreferenciaUsuario preferencia = new PreferenciaUsuario(this,componente,false);
+		this.preferenciasAlimenticias.add(preferencia);
 	}
 	
-	public List<Componente> getPreferenciasAlimenticias(){
-		return this.preferenciasAlimenticias;
+	public List<PreferenciaUsuario> getPreferenciasAlimenticias() {
+		return preferenciasAlimenticias;
 	}
-	
-	public void setPreferenciasAlimenticias(List<Componente> preferenciasAlimenticias){
-		 this.preferenciasAlimenticias=preferenciasAlimenticias;
+
+	public void setPreferenciasAlimenticias(List<PreferenciaUsuario> preferenciasAlimenticias) {
+		this.preferenciasAlimenticias = preferenciasAlimenticias;
 	}
-	
+
 	public List<String> getComidasSegunPreferecia(Boolean preferencia){
 		List<String> comidas = new ArrayList<String>();
-		for(Componente comida: this.preferenciasAlimenticias){
-			if(comida.teGusta()==preferencia){
-				comidas.add(comida.getDescripcion());
+		for(PreferenciaUsuario comida: this.preferenciasAlimenticias){
+			if(comida.getGusta()==preferencia){
+				comidas.add(comida.getComponente().getDescripcion());
 			}
 		}
 		return comidas;
@@ -395,12 +396,12 @@ public class Usuario{
 		return chequear(alimento, false);
 	}
 
-	public Boolean chequear(String alimento, Boolean preferencia){
+	public Boolean chequear(String alimento, Boolean gusta){
 
 		Boolean leGusta = false;
 		
-		for(Componente componente : this.preferenciasAlimenticias) {
-			if(componente.getDescripcion().equals(alimento) && componente.teGusta()==preferencia) leGusta = true;
+		for(PreferenciaUsuario preferencia : this.preferenciasAlimenticias) {
+			if(preferencia.getComponente().getDescripcion().equals(alimento) && preferencia.getGusta()==gusta) leGusta = true;
 		}
 	
 		return leGusta;

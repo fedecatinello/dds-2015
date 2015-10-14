@@ -3,6 +3,7 @@ package dds.javatar.app.test;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Componente;
+import dds.javatar.app.dto.receta.PreferenciaGrupo;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
@@ -69,9 +71,15 @@ public class TestSistema {
 		GrupoDeUsuarios grupo = new GrupoDeUsuarios();
 		grupo.setNombre("Amigos del club");
 
-		List<Componente> preferenciasAlimenticias = new ArrayList<Componente>();
-		preferenciasAlimenticias.add("Ravioles", true);
-		preferenciasAlimenticias.add("papa", true);
+		List<PreferenciaGrupo> preferenciasAlimenticias = new ArrayList<PreferenciaGrupo>();
+		Componente ravioles = new Componente("ravioles", new BigDecimal(0));
+		Componente papa = new Componente("papa", new BigDecimal(0));
+		
+		PreferenciaGrupo prefRaviol = new PreferenciaGrupo(grupo,ravioles,true);
+		PreferenciaGrupo prefPapa = new PreferenciaGrupo(grupo,papa,true);
+		
+		preferenciasAlimenticias.add(prefRaviol);
+		preferenciasAlimenticias.add(prefPapa);
 
 		grupo.setPreferenciasAlimenticias(preferenciasAlimenticias);
 

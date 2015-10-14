@@ -88,7 +88,11 @@ public class Usuario {
 	private boolean favearTodasLasConsultas;
 
 	/** Login attributes **/
+	
+	@Column(name="username")
 	private String username;
+	
+	@Column(name="password")
 	private String password;
 
 	/**** Constructors ****/

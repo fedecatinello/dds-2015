@@ -35,19 +35,19 @@ public class Componente {
 	/** Ver si agregar dosis y unidades **/
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ingrediente_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
+	@JoinTable(name = "ingrediente_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns =
+	@JoinColumn(name = "receta_id"))
 	private Receta receta_x_ingrediente;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "condimento_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
+	@JoinTable(name = "condimento_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns =
+	 @JoinColumn(name = "receta_id"))
 	private Receta receta_x_condimento;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "componente")
-	@JoinColumn
+	@OneToMany(targetEntity = Usuario.class, fetch = FetchType.LAZY, mappedBy = "componente")
 	private List<Usuario> usuariosQuienesGustan;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "grupo")
-	@JoinColumn
+	@OneToMany(targetEntity = GrupoDeUsuarios.class, fetch = FetchType.LAZY, mappedBy = "componente")
 	private List<GrupoDeUsuarios> gruposQuienesGustan;
 
 	/** Constructor **/

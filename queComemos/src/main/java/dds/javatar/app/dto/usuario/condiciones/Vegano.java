@@ -4,12 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -20,12 +16,7 @@ import dds.javatar.app.util.exception.UsuarioException;
 @Entity
 @DiscriminatorValue("Vegano")
 @SequenceGenerator(name="CONDICIONES_SEQ", sequenceName="condiciones_sequence")
-public class Vegano implements CondicionPreexistente {
-
-    @Id
-    @Column(name="condicion_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="CONDICIONES_SEQ")
-    public Long id;
+public class Vegano extends CondicionPreexistente {
     
     @ManyToMany(mappedBy="condicionesPreexistentes")
    	private Set<Usuario> usuariosCon;

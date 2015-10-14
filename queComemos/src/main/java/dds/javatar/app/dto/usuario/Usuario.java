@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
@@ -83,15 +84,18 @@ public class Usuario {
 	@JoinTable(name = "usuario_favoritas", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
 	private List<Receta> recetasFavoritas;
 
+	@ManyToOne
+	private Componente componente;
+
 	private EstadoSolicitud estadoSolicitud;
 	private boolean favearTodasLasConsultas;
 
 	/** Login attributes **/
-	
-	@Column(name="username")
+
+	@Column(name = "username")
 	private String username;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
 
 	/**** Constructors ****/

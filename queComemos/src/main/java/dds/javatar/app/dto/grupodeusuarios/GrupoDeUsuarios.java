@@ -13,7 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
+import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.PreferenciaGrupo;
 import dds.javatar.app.dto.usuario.Usuario;
 
@@ -27,6 +29,9 @@ public class GrupoDeUsuarios {
 	
 	@Column(name="nombre")
 	private String nombre;
+	
+	@ManyToOne
+	private Componente componente;
 	
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="grupo")
 	private List<PreferenciaGrupo> preferenciasAlimenticias;
@@ -46,7 +51,7 @@ public class GrupoDeUsuarios {
 	/**** Setters y getters ****/
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
@@ -54,7 +59,7 @@ public class GrupoDeUsuarios {
 	}
 
 	public List<PreferenciaGrupo> getPreferenciasAlimenticias() {
-		return preferenciasAlimenticias;
+		return this.preferenciasAlimenticias;
 	}
 
 	public void setPreferenciasAlimenticias(
@@ -63,7 +68,7 @@ public class GrupoDeUsuarios {
 	}
 
 	public Set<Usuario> getUsuarios() {
-		return miembros;
+		return this.miembros;
 	}
 
 	public void setUsuarios(Set<Usuario> usuarios) {

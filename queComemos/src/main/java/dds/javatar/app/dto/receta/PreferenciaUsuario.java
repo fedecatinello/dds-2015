@@ -1,7 +1,11 @@
 package dds.javatar.app.dto.receta;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -9,33 +13,37 @@ import javax.persistence.Table;
 import dds.javatar.app.dto.usuario.Usuario;
 
 @Entity
-@Table(name="PreferenciaUsuario")
+@Table(name = "PreferenciaUsuario")
 public class PreferenciaUsuario {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name="componente_id")
+	@JoinColumn(name = "componente_id")
 	protected Componente componente;
-	
+
 	@ManyToOne
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name = "usuario_id")
 	protected Usuario usuario;
-	
-	@Column(name="gusta")
+
+	@Column(name = "gusta")
 	protected Boolean gusta;
-	
-	public PreferenciaUsuario(){
-		
+
+	public PreferenciaUsuario() {
+
 	}
 
-	public PreferenciaUsuario(Usuario usuario, Componente componente, Boolean gusta){
+	public PreferenciaUsuario(Usuario usuario, Componente componente, Boolean gusta) {
 		this.usuario = usuario;
 		this.componente = componente;
 		this.gusta = gusta;
 	}
-	
+
 	public Componente getComponente() {
-		return componente;
+		return this.componente;
 	}
 
 	public void setComponente(Componente componente) {
@@ -43,7 +51,7 @@ public class PreferenciaUsuario {
 	}
 
 	public Usuario getUsuario() {
-		return usuario;
+		return this.usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
@@ -51,13 +59,11 @@ public class PreferenciaUsuario {
 	}
 
 	public Boolean getGusta() {
-		return gusta;
+		return this.gusta;
 	}
 
 	public void setGusta(Boolean gusta) {
 		this.gusta = gusta;
 	}
-	
-	
-	
+
 }

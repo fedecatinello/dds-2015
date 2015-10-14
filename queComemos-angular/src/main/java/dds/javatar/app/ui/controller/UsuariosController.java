@@ -2,26 +2,15 @@ package dds.javatar.app.ui.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import spark.Spark;
 
-
-
-
-
 import com.google.gson.Gson;
-
-
-
-
 
 import dds.javatar.app.dto.sistema.RepositorioUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
-import dds.javatar.app.dto.usuario.condiciones.Vegano;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class UsuariosController {
@@ -36,7 +25,7 @@ public class UsuariosController {
 	}
 
 	public void register() {
-		
+
 		Spark.exception(RuntimeException.class, (ex, request, response) -> {
 			ex.printStackTrace();
 			response.body(ex.getMessage());
@@ -63,80 +52,80 @@ public class UsuariosController {
 			Usuario usuario = this.gson.fromJson(message, Usuario.class);
 
 			response.type("application/json;charset=utf-8");
-			
+
 			/* Busco el usuario en el repositorio para validar */
-			Usuario user = RepositorioUsuarios.getInstance().getByCredential(usuario.getUser(),usuario.getPassword());
-	
-			if(user != null)	
-				response.status(200);				
-			else 
-				response.status(401);					
-			
+			Usuario user = RepositorioUsuarios.getInstance().getByCredential(usuario.getUser(), usuario.getPassword());
+
+			if (user != null)
+				response.status(200);
+			else
+				response.status(401);
+
 			return message;
 
 		}, this.jsonTransformer);
 
-		Spark.get("/profile/:username", "application/json;charset=utf-8", (request, response) -> {
+		Spark.get("/profile/:username", "application/json;charset=utf-8",
+				(request, response) -> {
 
-			String username = request.params(":username");
-			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
-	
-			Usuario user = new Usuario.UsuarioBuilder()
-			.nombre(loggedUser.getNombre())
-			.credenciales(loggedUser.getUser(),loggedUser.getPassword())
-			.sexo(loggedUser.getSexo())
-			.peso(loggedUser.getPeso())
-			.altura(loggedUser.getAltura())
-			.rutina(loggedUser.getRutina())	
-			.fechaNacimiento(loggedUser.getFechaNacimiento())
-			.build();	
-			
-			response.type("application/json;charset=utf-8");
-			
-			return user;
-		}, this.jsonTransformer);
-		
+					String username = request.params(":username");
+					Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
+
+					Usuario user = new Usuario.UsuarioBuilder()
+						.nombre(loggedUser.getNombre())
+						.credenciales(loggedUser.getUser(), loggedUser.getPassword())
+						.sexo(loggedUser.getSexo())
+						.peso(loggedUser.getPeso())
+						.altura(loggedUser.getAltura())
+						.rutina(loggedUser.getRutina())
+						.fechaNacimiento(loggedUser.getFechaNacimiento())
+						.build();
+
+					response.type("application/json;charset=utf-8");
+
+					return user;
+				}, this.jsonTransformer);
+
 		Spark.get("/profileIMC/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
-	
+
 			BigDecimal IMC = loggedUser.getIMC(2);
 			response.type("application/json;charset=utf-8");
-			
+
 			return IMC;
 		}, this.jsonTransformer);
-	
+
 		Spark.get("/profileLikes/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
-	
+
 			List<String> gustan = loggedUser.getComidasSegunPreferecia(true);
 			response.type("application/json;charset=utf-8");
 
 			return gustan;
 		}, this.jsonTransformer);
-		
-		
+
 		Spark.get("/profileDislikes/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
-	
+
 			List<String> noGustan = loggedUser.getComidasSegunPreferecia(false);
 			response.type("application/json;charset=utf-8");
 
 			return noGustan;
 		}, this.jsonTransformer);
-		
+
 		Spark.get("/profileConditions/:username", "application/json;charset=utf-8", (request, response) -> {
 
 			String username = request.params(":username");
 			Usuario loggedUser = RepositorioUsuarios.getInstance().getByUsername(username);
-	
+
 			List<String> condicionesPreexistentes = new ArrayList<String>();
-			for(CondicionPreexistente condicion : loggedUser.getCondicionesPreexistentes()){
+			for (CondicionPreexistente condicion : loggedUser.getCondicionesPreexistentes()) {
 				condicionesPreexistentes.add(condicion.getName());
 			}
 			response.type("application/json;charset=utf-8");
@@ -144,7 +133,5 @@ public class UsuariosController {
 			return condicionesPreexistentes;
 		}, this.jsonTransformer);
 	}
-	
-	
-}
 
+}

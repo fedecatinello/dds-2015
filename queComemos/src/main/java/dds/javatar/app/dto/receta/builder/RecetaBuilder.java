@@ -2,51 +2,47 @@ package dds.javatar.app.dto.receta.builder;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Paso;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaPrivadaCompuesta;
-import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
-import dds.javatar.app.dto.receta.RecetaPublicaCompuesta;
-import dds.javatar.app.dto.receta.RecetaPublicaSimple;
+import dds.javatar.app.dto.receta.RecetaCompuesta;
 import dds.javatar.app.util.exception.RecetaException;
 
 public class RecetaBuilder {
 
 	private String nombre;
-    private String dificultad;
-    private Integer calorias;
-    private String temporada;
-    private Integer tiempoPreparacion;
-    private String autor;
-    private Integer anioCreacion;
-    private List<Componente>  condimentos;
-    private List<Componente> ingredientes;
-    private List<Paso> pasosPreparacion;
-    private HashSet<Receta> subrecetas;
-    
-	
-	public RecetaBuilder (String nombre) {
+	private String dificultad;
+	private Integer calorias;
+	private String temporada;
+	private Integer tiempoPreparacion;
+	private String autor;
+	private Integer anioCreacion;
+	private List<Componente> condimentos;
+	private List<Componente> ingredientes;
+	private List<Paso> pasosPreparacion;
+	private Set<Receta> subrecetas;
+
+	public RecetaBuilder(String nombre) {
 		this.nombre = nombre;
-		initializeComparatorFields();
+		this.initializeComparatorFields();
 		this.condimentos = new ArrayList<Componente>();
 		this.ingredientes = new ArrayList<Componente>();
 		this.pasosPreparacion = new ArrayList<Paso>();
 		this.subrecetas = new HashSet<Receta>();
 	}
-	
-	public void initializeComparatorFields() {  /** To avoid null pointer exception in comparisons **/
+
+	public void initializeComparatorFields() {
+		/** To avoid null pointer exception in comparisons **/
 		this.autor = new String();
 		this.calorias = 0;
 	}
 
-	
-	/** Builder methods **/ 
+	/** Builder methods **/
 	public RecetaBuilder dificultad(String dificultad) {
 		this.dificultad = dificultad;
 		return this;
@@ -66,34 +62,34 @@ public class RecetaBuilder {
 		this.tiempoPreparacion = tiempoPreparacion;
 		return this;
 	}
-	
+
 	public RecetaBuilder inventadaPor(String autor) {
 		this.autor = autor;
 		return this;
 	}
-	
+
 	public RecetaBuilder inventadaEn(Integer anio) {
 		this.anioCreacion = anio;
 		return this;
 	}
 
 	public RecetaBuilder agregarCondimento(String condimento, BigDecimal cantidad) {
-		Componente _condimento = new Componente(condimento,cantidad);
+		Componente _condimento = new Componente(condimento, cantidad);
 		this.condimentos.add(_condimento);
 		return this;
 	}
-	
+
 	public RecetaBuilder agregarCondimentos(List<Componente> condimentos) {
 		this.condimentos.addAll(condimentos);
 		return this;
 	}
 
 	public RecetaBuilder agregarIngrediente(String ingrediente, BigDecimal cantidad) {
-		Componente _ingrediente = new Componente(ingrediente,cantidad);
+		Componente _ingrediente = new Componente(ingrediente, cantidad);
 		this.ingredientes.add(_ingrediente);
 		return this;
 	}
-	
+
 	public RecetaBuilder agregarIngredientes(List<Componente> ingredientes) {
 		this.ingredientes.addAll(ingredientes);
 		return this;
@@ -104,91 +100,56 @@ public class RecetaBuilder {
 		this.pasosPreparacion.add(paso);
 		return this;
 	}
-	
+
 	public RecetaBuilder agregarPasos(List<Paso> pasosPreparacion) {
 		this.pasosPreparacion.addAll(pasosPreparacion);
 		return this;
 	}
-	
+
 	public RecetaBuilder agregarSubReceta(Receta subReceta) throws RecetaException {
-		subReceta.validarSiLaRecetaEsValida();
+		subReceta.validar();
 		this.subrecetas.add(subReceta);
 		return this;
 	}
-	
-	public RecetaBuilder agregarSubRecetas(HashSet<Receta> subRecetas) throws RecetaException {
-		
-		validarSubrecetas(subRecetas);
+
+	public RecetaBuilder agregarSubRecetas(Set<Receta> subRecetas) throws RecetaException {
+		this.validarSubrecetas(subRecetas);
 		this.subrecetas.addAll(subRecetas);
 		return this;
 	}
-	
+
 	/** Util **/
-	public void validarSubrecetas(HashSet<Receta> subRecetas) throws RecetaException {
-		
+	public void validarSubrecetas(Set<Receta> subRecetas) throws RecetaException {
+
 		Iterator<Receta> iteratorRecetas = subRecetas.iterator();
-		
-		while(iteratorRecetas.hasNext()) {
+
+		while (iteratorRecetas.hasNext()) {
 			Receta receta = iteratorRecetas.next();
-			receta.validarSiLaRecetaEsValida();
+			receta.validar();
 		}
-		
 	}
-	
+
 	public Receta buildReceta() {
-		
-		if(this.autor.isEmpty()) { /** Receta Publica **/			
-			
-			if(esCompuesta())
-				return new RecetaPublicaCompuesta(
-									this.nombre, 
-									this.calorias, 
-									this.dificultad, 
-									this.temporada, 
-									this.ingredientes, 
-									this.condimentos, 
-									this.pasosPreparacion,
-									this.subrecetas);
-			else
-				return new RecetaPublicaSimple(
-									this.nombre, 
-									this.calorias, 
-									this.dificultad, 
-									this.temporada, 
-									this.ingredientes, 
-									this.condimentos, 
-									this.pasosPreparacion);
-		}	
-		else {                    /** Receta Privada **/
-			
-			if(esCompuesta())
-				return new RecetaPrivadaCompuesta(
-									this.nombre, 
-									this.autor, 
-									this.calorias, 
-									this.dificultad, 
-									this.temporada, 
-									this.condimentos, 
-									this.ingredientes, 
-									this.pasosPreparacion, 
-									this.subrecetas);
-			else
-				return new RecetaPrivadaSimple(
-									this.nombre, 
-									this.autor, 
-									this.calorias, 
-									this.dificultad, 
-									this.temporada, 
-									this.ingredientes, 
-									this.condimentos, 
-									this.pasosPreparacion);
+
+		if (this.autor.isEmpty()) {
+			if (this.esCompuesta()) {
+				return new RecetaCompuesta(this.nombre, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos,
+						this.pasosPreparacion, this.subrecetas);
+			} else {
+				return new Receta(this.nombre, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos, this.pasosPreparacion);
+			}
+		} else {
+			if (this.esCompuesta()) {
+				return new RecetaCompuesta(this.nombre, this.autor, this.calorias, this.dificultad, this.temporada, this.condimentos, this.ingredientes,
+						this.pasosPreparacion, this.subrecetas);
+			} else {
+				return new Receta(this.nombre, this.autor, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos,
+						this.pasosPreparacion);
+			}
 		}
-			
-			
 	}
-	
+
 	public Boolean esCompuesta() {
-		
 		return (!this.subrecetas.isEmpty());
 	}
 

@@ -32,8 +32,8 @@ import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
 @Entity
-public class Usuario{
-	
+public class Usuario {
+
 	public enum Sexo {
 		MASCULINO, FEMENINO
 	};
@@ -46,51 +46,47 @@ public class Usuario{
 
 	@Id
 	@GeneratedValue
-	@Column (name="usuario_id")
+	@Column(name = "usuario_id")
 	private Long idUsuario;
-	
-	@Column(name="nombre")
+
+	@Column(name = "nombre")
 	private String nombre;
-	
-	@Column(name="sexo")
+
+	@Column(name = "sexo")
 	private Sexo sexo;
-	
-	@Column(name="fechaNacimiento")
+
+	@Column(name = "fechaNacimiento")
 	private Date fechaNacimiento;
-	
-	@Column(name="altura")
+
+	@Column(name = "altura")
 	private BigDecimal altura;
-	
-	@Column(name="peso")
+
+	@Column(name = "peso")
 	private BigDecimal peso;
-	
-	@Column(name="rutina")
+
+	@Column(name = "rutina")
 	private Rutina rutina;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "usuario_condicion",
-	    joinColumns = @JoinColumn(name = "usuario_id"),
-	    inverseJoinColumns = @JoinColumn(name = "condicion_id") )
+	@JoinTable(name = "usuario_condicion", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "condicion_id"))
 	private Set<CondicionPreexistente> condicionesPreexistentes;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
 	private List<PreferenciaUsuario> preferenciasAlimenticias;
-	
-	@OneToMany(mappedBy="autor")
+
+	@OneToMany(mappedBy = "autor")
 	private Set<Receta> recetas;
-	
-	@ManyToMany(mappedBy="miembros")
+
+	@ManyToMany(mappedBy = "miembros")
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "usuario_favoritas",
-	    joinColumns = @JoinColumn(name = "usuario_id"),
-	    inverseJoinColumns = @JoinColumn(name = "receta_id") )
+	@JoinTable(name = "usuario_favoritas", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
 	private List<Receta> recetasFavoritas;
-		
+
 	private EstadoSolicitud estadoSolicitud;
 	private boolean favearTodasLasConsultas;
-	
+
 	/** Login attributes **/
 	private String username;
 	private String password;
@@ -111,7 +107,7 @@ public class Usuario{
 		this.recetas = new HashSet<Receta>();
 		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 		this.recetasFavoritas = new ArrayList<Receta>();
-		
+
 		this.username = usuarioBuilder.user;
 		this.password = usuarioBuilder.password;
 	}
@@ -124,7 +120,7 @@ public class Usuario{
 		private BigDecimal peso;
 		private EstadoSolicitud estadoSolicitud;
 		private Rutina rutina;
-		
+
 		private String user;
 		private String password;
 
@@ -162,7 +158,7 @@ public class Usuario{
 			this.rutina = rutina;
 			return this;
 		}
-		
+
 		public UsuarioBuilder credenciales(String usuario, String contrasenia) {
 			this.user = usuario;
 			this.password = contrasenia;
@@ -199,9 +195,9 @@ public class Usuario{
 	public Rutina getRutina() {
 		return this.rutina;
 	}
-	
+
 	public String getUser() {
-		return username;
+		return this.username;
 	}
 
 	public void setUser(String user) {
@@ -209,13 +205,12 @@ public class Usuario{
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public Set<Receta> getRecetas() {
 		return this.recetas;
@@ -239,28 +234,28 @@ public class Usuario{
 
 	public void agregarPreferenciaAlimenticia(String alimento) {
 		Componente componente = new Componente(alimento, new BigDecimal(0));
-		PreferenciaUsuario preferencia = new PreferenciaUsuario(this,componente,true);
+		PreferenciaUsuario preferencia = new PreferenciaUsuario(this, componente, true);
 		this.preferenciasAlimenticias.add(preferencia);
 	}
 
 	public void agregarAlimentoQueLeDisgusta(String alimento) {
 		Componente componente = new Componente(alimento, new BigDecimal(0));
-		PreferenciaUsuario preferencia = new PreferenciaUsuario(this,componente,false);
+		PreferenciaUsuario preferencia = new PreferenciaUsuario(this, componente, false);
 		this.preferenciasAlimenticias.add(preferencia);
 	}
-	
+
 	public List<PreferenciaUsuario> getPreferenciasAlimenticias() {
-		return preferenciasAlimenticias;
+		return this.preferenciasAlimenticias;
 	}
 
 	public void setPreferenciasAlimenticias(List<PreferenciaUsuario> preferenciasAlimenticias) {
 		this.preferenciasAlimenticias = preferenciasAlimenticias;
 	}
 
-	public List<String> getComidasSegunPreferecia(Boolean preferencia){
+	public List<String> getComidasSegunPreferecia(Boolean preferencia) {
 		List<String> comidas = new ArrayList<String>();
-		for(PreferenciaUsuario comida: this.preferenciasAlimenticias){
-			if(comida.getGusta()==preferencia){
+		for (PreferenciaUsuario comida : this.preferenciasAlimenticias) {
+			if (comida.getGusta() == preferencia) {
 				comidas.add(comida.getComponente().getDescripcion());
 			}
 		}
@@ -272,9 +267,8 @@ public class Usuario{
 	}
 
 	public void agregarReceta(Receta receta) throws RecetaException {
-		receta.validarSiLaRecetaEsValida();
-		this.getRecetas()
-			.add(receta);
+		receta.validar();
+		this.getRecetas().add(receta);
 	}
 
 	public void quitarReceta(Receta receta) throws UsuarioException {
@@ -372,8 +366,7 @@ public class Usuario{
 
 	public Boolean sigueRutinaSaludable() {
 
-		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision())
-			.intValue();
+		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
 
 		if (userIMC < 18 || userIMC > 30) {
 			return Boolean.FALSE;
@@ -389,24 +382,25 @@ public class Usuario{
 	}
 
 	public Boolean tienePreferenciaAlimenticia(String alimento) {
-		return chequear(alimento, true);
+		return this.chequear(alimento, true);
 	}
 
 	public Boolean tieneAlimentoQueLeDisguste(String alimento) {
-		return chequear(alimento, false);
+		return this.chequear(alimento, false);
 	}
 
-	public Boolean chequear(String alimento, Boolean gusta){
+	public Boolean chequear(String alimento, Boolean gusta) {
 
 		Boolean leGusta = false;
-		
-		for(PreferenciaUsuario preferencia : this.preferenciasAlimenticias) {
-			if(preferencia.getComponente().getDescripcion().equals(alimento) && preferencia.getGusta()==gusta) leGusta = true;
+
+		for (PreferenciaUsuario preferencia : this.preferenciasAlimenticias) {
+			if (preferencia.getComponente().getDescripcion().equals(alimento) && preferencia.getGusta() == gusta)
+				leGusta = true;
 		}
-	
+
 		return leGusta;
 	}
-	
+
 	public Boolean tieneAlgunaPreferencia() {
 		return (this.preferenciasAlimenticias.contains(Boolean.TRUE));
 	}
@@ -471,33 +465,31 @@ public class Usuario{
 	public void marcarFavorita(Receta receta) {
 		this.recetasFavoritas.add(receta);
 	}
-	
-	public void updateFavorita(Receta receta){
-		
+
+	public void updateFavorita(Receta receta) {
+
 		try {
 			Receta recetaEncontrada = this.getFavoritos().stream().filter(o -> o.getNombre().equals(receta.getNombre())).findFirst().get();
-			
+
 			this.getFavoritos().remove(recetaEncontrada);
 			this.marcarFavorita(receta);
 		} catch (NoSuchElementException e) {
 			// TODO: handle exception
 		}
-		
+
 	}
 
 	public boolean tieneReceta(Receta receta) {
 		for (Receta recetaUser : this.getRecetas()) {
-			if (recetaUser.getNombre()
-				.equals(receta.getNombre()))
+			if (recetaUser.getNombre().equals(receta.getNombre()))
 				return true;
 		}
 		return false;
 	}
-	
+
 	public boolean tieneRecetaFavorita(Receta receta) {
 		for (Receta recetaUser : this.getFavoritos()) {
-			if (recetaUser.getNombre()
-				.equals(receta.getNombre()))
+			if (recetaUser.getNombre().equals(receta.getNombre()))
 				return true;
 		}
 		return false;

@@ -1,80 +1,113 @@
 package dds.javatar.app.dto.receta;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
+import dds.javatar.app.util.exception.UsuarioException;
 
-public abstract class RecetaCompuesta extends AbstractReceta {
+public class RecetaCompuesta extends Receta {
 
 	/** Faltaria el tema de las recetas con las subrecetas **/
-	protected HashSet<Receta> subRecetas;
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "receta_condicion",
-		joinColumns = @JoinColumn(name = "receta_id"),
-		inverseJoinColumns = @JoinColumn(name = "condicion_id") )
-	protected HashSet<CondicionPreexistente> condiciones;
+	private Set<Receta> subRecetas;
 
-	/* Getters & Setters */
-	
-	public HashSet<Receta> getSubRecetas() {
-		return subRecetas;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "receta_condicion", joinColumns = @JoinColumn(name = "receta_id"), inverseJoinColumns = @JoinColumn(name = "condicion_id"))
+	protected Set<CondicionPreexistente> condiciones;
+
+	public RecetaCompuesta(String nombre, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes, List<Componente> condimentos,
+			List<Paso> pasosPreparacion, Set<Receta> subRecetas) {
+		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion, subRecetas);
 	}
-	public void setSubRecetas(HashSet<Receta> subRecetas) {
+
+	public RecetaCompuesta(String nombre, String autor, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes,
+			List<Componente> condimentos, List<Paso> pasosPreparacion, Set<Receta> subRecetas) {
+		super(nombre, autor, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion);
 		this.subRecetas = subRecetas;
 	}
-	
-	public HashSet<CondicionPreexistente> getCondiciones() {
-		return condiciones;
+
+	/* Getters & Setters */
+
+	public Set<Receta> getSubRecetas() {
+		return this.subRecetas;
 	}
 
-	public void setCondiciones(HashSet<CondicionPreexistente> condiciones) {
+	public void setSubRecetas(Set<Receta> subRecetas) {
+		this.subRecetas = subRecetas;
+	}
+
+	public Set<CondicionPreexistente> getCondiciones() {
+		return this.condiciones;
+	}
+
+	public void setCondiciones(Set<CondicionPreexistente> condiciones) {
 		this.condiciones = condiciones;
 	}
-	
-	/** Add Items **/
-	
-	public void agregarSubReceta(Receta subReceta)
-			throws RecetaException {
-		subReceta.validarSiLaRecetaEsValida();
+
+	public void agregarSubReceta(Receta subReceta) throws RecetaException {
 		this.subRecetas.add(subReceta);
 	}
-	
-	/** Validadores **/
-	
-	
-	public Boolean contieneIngrediente(String ingrediente) {
-		this.getIngredientes();
-		return this.containsIngrediente(ingrediente);
-	}
 
-	public Boolean contieneCondimento(String condimento) {
-		this.getCondimentos();
-		return this.containsCondimento(condimento);
-	}
-
-
-
-
+	@Override
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario) {
 		if (usuario.getRecetas().contains(receta)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
-	public void validarSiLaRecetaEsValida() throws RecetaException {
+	public Receta privatizarSiCorresponde(Usuario user) throws UsuarioException, RecetaException {
+
+		HashSet<Receta> recetasPrivatizadas = new HashSet<Receta>();
+
+		for (Receta receta : this.subRecetas) {
+			recetasPrivatizadas.add(receta.privatizarSiCorresponde(user));
+		}
+
+		Receta recetaClonada = new RecetaBuilder(this.nombre)
+			.dificultad(this.dificultad)
+			.temporada(this.temporada)
+			.agregarSubRecetas(recetasPrivatizadas)
+			.buildReceta();
+
+		user.agregarReceta(recetaClonada);
+		user.quitarReceta(this);
+		return recetaClonada;
+
+	}
+
+	@Override
+	public Receta hacerPrivada(String autor) throws RecetaException {
+		Receta recetaClonada = new RecetaBuilder(this.nombre)
+			.totalCalorias(this.calorias)
+			.dificultad(this.dificultad)
+			.temporada(this.temporada)
+			.agregarSubRecetas(this.subRecetas)
+			.agregarIngredientes(this.ingredientes)
+			.agregarCondimentos(this.condimentos)
+			.agregarPasos(this.pasosPreparacion)
+			.inventadaPor(autor)
+			.buildReceta();
+
+		return recetaClonada;
+	}
+
+	@Override
+	public void validar() throws RecetaException {
+		super.validar();
 		if (this.subRecetas.isEmpty()) {
 			throw new RecetaException("La receta no es valida ya que esta vacia! (No tiene subrecetas)");
 		}
 	}
+
 }

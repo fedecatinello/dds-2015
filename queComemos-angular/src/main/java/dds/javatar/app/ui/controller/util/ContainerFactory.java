@@ -1,7 +1,6 @@
 package dds.javatar.app.ui.controller.util;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
@@ -218,7 +217,7 @@ public class ContainerFactory {
 	}
 
 	public void agregarUsuariosAlRepo() {
-		
+
 		Usuario maru = new Usuario.UsuarioBuilder()
 			.nombre("Maru Botana")
 			.credenciales("mbotana", "megustacocinar")
@@ -231,7 +230,7 @@ public class ContainerFactory {
 
 		Celiaco celiaca = new Celiaco();
 		maru.agregarCondicionPreexistente(celiaca);
-		
+
 		maru.agregarAlimentoQueLeDisgusta("Papaya");
 		maru.agregarAlimentoQueLeDisgusta("Banana");
 		maru.agregarPreferenciaAlimenticia("Lentejas");

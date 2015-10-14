@@ -11,7 +11,6 @@ import spark.Spark;
 import com.google.gson.Gson;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.receta.busqueda.Busqueda.BusquedaBuilder;
@@ -51,38 +50,38 @@ public class RecetasController {
 			String username = request.queryParams("username");
 			String nombre = request.queryParams("nombre");
 			// Calorias No soportado por el buscador de la entrega 3 de uqbar:
-			//String caloriasDesde = request.queryParams("calorias_desde");
-			//String caloriasHasta = request.queryParams("calorias_hasta");
-			String dificultad = request.queryParams("dificultad");
-			String temporada = request.queryParams("temporada");
-			String ingrediente = request.queryParams("ingrediente");
+			// String caloriasDesde = request.queryParams("calorias_desde");
+			// String caloriasHasta = request.queryParams("calorias_hasta");
+				String dificultad = request.queryParams("dificultad");
+				String temporada = request.queryParams("temporada");
+				String ingrediente = request.queryParams("ingrediente");
 
-			Usuario usuario = RepositorioUsuarios.getInstance().getByUsername(username);
+				Usuario usuario = RepositorioUsuarios.getInstance().getByUsername(username);
 
-			List<String> palabrasClave = new ArrayList<>();
-			if (ingrediente != null && !ingrediente.isEmpty()) {
-				palabrasClave.add(ingrediente);
-			}
-			if (temporada != null && !temporada.isEmpty()) {
-				palabrasClave.add(temporada);
-			}
+				List<String> palabrasClave = new ArrayList<>();
+				if (ingrediente != null && !ingrediente.isEmpty()) {
+					palabrasClave.add(ingrediente);
+				}
+				if (temporada != null && !temporada.isEmpty()) {
+					palabrasClave.add(temporada);
+				}
 
-			Busqueda busqueda = new BusquedaBuilder()
-				.nombre(nombre)
-				.dificultad(dificultad != null ? Dificultad.valueOf(dificultad) : null)
-				.palabrasClave(palabrasClave)
-				.build();
+				Busqueda busqueda = new BusquedaBuilder()
+					.nombre(nombre)
+					.dificultad(dificultad != null ? Dificultad.valueOf(dificultad) : null)
+					.palabrasClave(palabrasClave)
+					.build();
 
-			List<Receta> recetas = BusquedaAdapter.getInstance().consultarRecetas(usuario, busqueda);
-			if (request.queryParams("aplicar_filtros_usuario") != null) {
-				Buscador buscador = new Buscador();
-				buscador.setFiltros(Arrays.asList(new FiltroCondiciones()));
-				buscador.filtrar(usuario, recetas);
-			}
+				List<Receta> recetas = BusquedaAdapter.getInstance().consultarRecetas(usuario, busqueda);
+				if (request.queryParams("aplicar_filtros_usuario") != null) {
+					Buscador buscador = new Buscador();
+					buscador.setFiltros(Arrays.asList(new FiltroCondiciones()));
+					buscador.filtrar(usuario, recetas);
+				}
 
-			response.type("application/json;charset=utf-8");
-			return recetas;
-		}, this.jsonTransformer);
+				response.type("application/json;charset=utf-8");
+				return recetas;
+			}, this.jsonTransformer);
 
 		Spark.get("/recetas/:username", "application/json;charset=utf-8", (request, response) -> {
 
@@ -115,7 +114,7 @@ public class RecetasController {
 
 			String username = request.params(":username");
 			String message = request.body();
-			Receta receta = this.gson.fromJson(message, RecetaPrivadaSimple.class);
+			Receta receta = this.gson.fromJson(message, Receta.class);
 			RepositorioRecetas.getInstance().updateReceta(receta);
 			Usuario userLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
 			userLogueado.updateFavorita(receta);
@@ -130,21 +129,17 @@ public class RecetasController {
 			return ingredientes.removeIf(s -> !s.contains(patron));
 
 		}, this.jsonTransformer);
-		
+
 		Spark.get("/monitoreo/:receta", "application/json;charset=utf-8", (request, response) -> {
 
 			String nombre_receta = request.params(":receta");
-									
-			BusquedaAdapter.getInstance().getObservers()
-																	.forEach(observer -> consultas_receta = observer.cantidadConsultasReceta(nombre_receta));
-			
+
+			BusquedaAdapter.getInstance().getObservers().forEach(observer -> this.consultas_receta = observer.cantidadConsultasReceta(nombre_receta));
+
 			response.type("application/json;charset=utf-8");
-			return consultas_receta;
+			return this.consultas_receta;
 
 		}, this.jsonTransformer);
-		
-		
-
 
 	}
 }

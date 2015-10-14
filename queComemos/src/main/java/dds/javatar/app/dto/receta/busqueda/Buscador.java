@@ -7,7 +7,6 @@ import java.util.Set;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaSimple;
 import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
 import dds.javatar.app.dto.receta.filtro.Filtro;
 import dds.javatar.app.dto.sistema.Administrador;

@@ -37,7 +37,7 @@ public class TestAdministrador {
 
 	@Test
 	public void updateUsuario() {
-		this.repositorioUsuarios.updateUsuario(this.usuario);
+		this.repositorioUsuarios.update(this.usuario);
 		assertEquals(2, this.repositorioUsuarios.allInstances().size());
 	}
 

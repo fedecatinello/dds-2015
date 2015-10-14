@@ -31,7 +31,7 @@ public class Administrador {
 	}
 
 	public void sugerir(Receta receta, Usuario usuario) throws BusinessException {
-		for (String ingrediente : getComponentesByNombre(receta.getIngredientes())) {
+		for (String ingrediente : this.getComponentesByNombre(receta.getIngredientes())) {
 			if (!usuario.validarSiAceptaReceta(receta) || usuario.tieneAlimentoQueLeDisguste(ingrediente)) {
 				throw new BusinessException("la receta: " + receta.getNombre() + " no puede ser sugerida al usuario" + usuario.getNombre());
 			}
@@ -39,7 +39,7 @@ public class Administrador {
 	}
 
 	public void sugerir(Receta receta, GrupoDeUsuarios grupo) throws BusinessException {
-		for (String preferencia : getComponentesByNombrePorGrupo(grupo.getPreferenciasAlimenticias())) {
+		for (String preferencia : this.getComponentesByNombrePorGrupo(grupo.getPreferenciasAlimenticias())) {
 
 			if (!receta.contieneCondimento(preferencia) || !receta.contieneIngrediente(preferencia) || !(receta.getNombre() == preferencia)) {
 				throw new BusinessException("La receta:" + receta.getNombre() + " no contiene palabra clave del grupo:" + grupo.getNombre());
@@ -53,13 +53,13 @@ public class Administrador {
 	public void aceptar(Solicitud solicitud) {
 		Usuario usuario = solicitud.build();
 		usuario.setEstadoSolicitud(EstadoSolicitud.ACEPTADA);
-		this.repositorioUsuarios.add(usuario);
+		this.repositorioUsuarios.saveOrUpdate(usuario);
 	}
 
 	public void rechazar(Solicitud solicitud) {
 		Usuario usuario = solicitud.build();
 		usuario.setEstadoSolicitud(EstadoSolicitud.RECHAZADA);
-		this.repositorioUsuarios.add(usuario);
+		this.repositorioUsuarios.saveOrUpdate(usuario);
 	}
 
 	public void agregarTareaPendiente(TareaPendiente tareaPendiente) {

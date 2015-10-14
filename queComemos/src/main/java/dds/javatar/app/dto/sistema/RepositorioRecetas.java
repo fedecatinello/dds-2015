@@ -1,22 +1,17 @@
 package dds.javatar.app.dto.sistema;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 
 import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.util.exception.BusinessException;
 
-
-public class RepositorioRecetas implements InterfazRepositorioRecetas {
-
-	public List<Receta> recetaConocidas;
-
-	protected RepositorioRecetas() {
-		this.recetaConocidas = new ArrayList<Receta>();
-	}
+public class RepositorioRecetas extends RepoDefault<Receta> {
 
 	private static RepositorioRecetas instance;
 
@@ -29,53 +24,35 @@ public class RepositorioRecetas implements InterfazRepositorioRecetas {
 
 	/** Getter & Setter **/
 
-	@Override
-	public void agregar(Receta receta) {
-		this.recetaConocidas.add(receta);
-	}
-
-	@Override
-	public void quitar(Receta receta) throws BusinessException {
-		this.recetaConocidas.remove(receta);
-	}
-	
-
 	/** Metodos **/
 
-	@Override
-	public List<Receta> listarTodas() {
-		return this.recetaConocidas;
-	}
-	
-	@Override
 	public Set<String> getAllIngredientes() {
-		Set <String> ingredientes = new HashSet<String>();
+		Set<String> ingredientes = new HashSet<String>();
 
-		for (Receta receta : this.recetaConocidas) {
-			ingredientes.addAll(getComponentesByNombre(receta.getIngredientes()));
+		for (Receta receta : this.getAll()) {
+			ingredientes.addAll(this.getComponentesByNombre(receta.getIngredientes()));
 		}
-			return ingredientes;
+		return ingredientes;
+	}
+
+	public void eliminarTodasLasRecetas() {
+		// TODO ?
+	}
+
+	public Set<String> getComponentesByNombre(List<Componente> componentes) {
+		return componentes.stream().map(Componente::getDescripcion).collect(Collectors.toSet());
 	}
 
 	@Override
-	public void updateReceta(Receta receta) {
-		Receta recetaEncontrada = this.recetaConocidas.stream().filter(o -> o.getNombre().equals(receta.getNombre())).findFirst().get();
-		
-		recetaConocidas.remove(recetaEncontrada);
-		recetaConocidas.add(receta);
-		
+	protected Class<Receta> getEntityType() {
+		return Receta.class;
 	}
-	
-	public void eliminarTodasLasRecetas() {
-		this.recetaConocidas.clear();
-	}
-	
-	public Set<String> getComponentesByNombre(List<Componente> componentes){
-		Set<String> nombres = new HashSet<>();
-		for(Componente componente:componentes){
-			nombres.add(componente.getDescripcion());
+
+	@Override
+	protected void addCriteriaToSearchByExample(Criteria criteria, Receta receta) {
+		if (receta.getNombre() != null) {
+			criteria.add(Restrictions.eq("nombre", receta.getNombre()));
 		}
-		return nombres;
 	}
 
 }

@@ -42,7 +42,7 @@ public class RecetasController {
 
 		Spark.get("/recetasPublicas", "application/json;charset=utf-8", (request, response) -> {
 			response.type("application/json;charset=utf-8");
-			return RepositorioRecetas.getInstance().recetaConocidas;
+			return RepositorioRecetas.getInstance().getAll();
 		}, this.jsonTransformer);
 
 		Spark.get("/buscarRecetas", (request, response) -> {
@@ -115,7 +115,7 @@ public class RecetasController {
 			String username = request.params(":username");
 			String message = request.body();
 			Receta receta = this.gson.fromJson(message, Receta.class);
-			RepositorioRecetas.getInstance().updateReceta(receta);
+			RepositorioRecetas.getInstance().update(receta);
 			Usuario userLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
 			userLogueado.updateFavorita(receta);
 			response.status(200);

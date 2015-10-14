@@ -18,51 +18,47 @@ import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.dto.usuario.Usuario;
 
 @Entity
-@Table(name="Componente")
+@Table(name = "Componente")
 public class Componente {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="componente_id")
+	@Column(name = "componente_id")
 	private Long id;
-	
+
 	@Column
 	private String descripcion;
-	
+
 	@Column
 	private BigDecimal cantidad;
-	
-	/** Ver si agregar dosis y unidades**/
-	
+
+	/** Ver si agregar dosis y unidades **/
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name ="ingrediente_receta",
-	    joinColumns = @JoinColumn(name = "componente_id"),
-	    inverseJoinColumns = @JoinColumn(name = "receta_id") )
+	@JoinTable(name = "ingrediente_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
 	private Receta receta_x_ingrediente;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name ="condimento_receta",
-	    joinColumns = @JoinColumn(name = "componente_id"),
-	    inverseJoinColumns = @JoinColumn(name = "receta_id") )
+	@JoinTable(name = "condimento_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
 	private Receta receta_x_condimento;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "componente")
 	@JoinColumn
 	private List<Usuario> usuariosQuienesGustan;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "grupo")
 	@JoinColumn
 	private List<GrupoDeUsuarios> gruposQuienesGustan;
-	
+
 	/** Constructor **/
-	
+
 	public Componente(String descripcion, BigDecimal cantidad) {
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
 	}
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -70,7 +66,7 @@ public class Componente {
 	}
 
 	public String getDescripcion() {
-		return descripcion;
+		return this.descripcion;
 	}
 
 	public void setDescripcion(String descripcion) {
@@ -78,7 +74,7 @@ public class Componente {
 	}
 
 	public Receta getReceta_x_ingrediente() {
-		return receta_x_ingrediente;
+		return this.receta_x_ingrediente;
 	}
 
 	public void setReceta_x_ingrediente(Receta receta_x_ingrediente) {
@@ -86,7 +82,7 @@ public class Componente {
 	}
 
 	public Receta getReceta_x_condimento() {
-		return receta_x_condimento;
+		return this.receta_x_condimento;
 	}
 
 	public void setReceta_x_condimento(Receta receta_x_condimento) {
@@ -94,7 +90,7 @@ public class Componente {
 	}
 
 	public List<Usuario> getUsuariosQuienesGustan() {
-		return usuariosQuienesGustan;
+		return this.usuariosQuienesGustan;
 	}
 
 	public void setUsuariosQuienesGustan(List<Usuario> usuariosQuienesGustan) {
@@ -102,7 +98,7 @@ public class Componente {
 	}
 
 	public List<GrupoDeUsuarios> getGruposQuienesGustan() {
-		return gruposQuienesGustan;
+		return this.gruposQuienesGustan;
 	}
 
 	public void setGruposQuienesGustan(List<GrupoDeUsuarios> gruposQuienesGustan) {
@@ -110,13 +106,11 @@ public class Componente {
 	}
 
 	public BigDecimal getCantidad() {
-		return cantidad;
+		return this.cantidad;
 	}
 
 	public void setCantidad(BigDecimal cantidad) {
 		this.cantidad = cantidad;
 	}
 
-	
-	
 }

@@ -29,7 +29,7 @@ public class RecetaCompuesta extends Receta {
 		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion, subRecetas);
 	}
 
-	public RecetaCompuesta(String nombre, String autor, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes,
+	public RecetaCompuesta(String nombre, Usuario autor, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes,
 			List<Componente> condimentos, List<Paso> pasosPreparacion, Set<Receta> subRecetas) {
 		super(nombre, autor, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion);
 		this.subRecetas = subRecetas;

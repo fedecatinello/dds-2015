@@ -56,7 +56,7 @@ public class Receta {
 	protected Integer tiempoPreparacion;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	protected String autor;
+	protected Usuario autor;
 
 	@Column
 	protected Integer anioCreacion;
@@ -75,7 +75,7 @@ public class Receta {
 		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion);
 	}
 
-	public Receta(String nombre, String autor, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes,
+	public Receta(String nombre, Usuario autor, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes,
 			List<Componente> condimentos, List<Paso> pasosPreparacion) {
 		this.nombre = nombre;
 		this.autor = autor;
@@ -158,11 +158,11 @@ public class Receta {
 		this.tiempoPreparacion = tiempoPreparacion;
 	}
 
-	public String getAutor() {
+	public Usuario getAutor() {
 		return this.autor;
 	}
 
-	public void setAutor(String autor) {
+	public void setAutor(Usuario autor) {
 		this.autor = autor;
 	}
 
@@ -248,7 +248,7 @@ public class Receta {
 	}
 
 	public void agregarRecetaAlRepo(Receta receta) {
-		RepositorioRecetas.getInstance().agregar(receta);
+		RepositorioRecetas.getInstance().add(receta);
 	}
 
 	public Receta hacerPrivada(String autor) throws RecetaException {

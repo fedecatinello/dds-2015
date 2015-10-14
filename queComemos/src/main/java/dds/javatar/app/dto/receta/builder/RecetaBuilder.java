@@ -11,6 +11,8 @@ import dds.javatar.app.dto.receta.Componente;
 import dds.javatar.app.dto.receta.Paso;
 import dds.javatar.app.dto.receta.Receta;
 import dds.javatar.app.dto.receta.RecetaCompuesta;
+import dds.javatar.app.dto.sistema.RepositorioUsuarios;
+import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.util.exception.RecetaException;
 
 public class RecetaBuilder {
@@ -20,7 +22,7 @@ public class RecetaBuilder {
 	private Integer calorias;
 	private String temporada;
 	private Integer tiempoPreparacion;
-	private String autor;
+	private Usuario autor;
 	private Integer anioCreacion;
 	private List<Componente> condimentos;
 	private List<Componente> ingredientes;
@@ -38,7 +40,6 @@ public class RecetaBuilder {
 
 	public void initializeComparatorFields() {
 		/** To avoid null pointer exception in comparisons **/
-		this.autor = new String();
 		this.calorias = 0;
 	}
 
@@ -64,6 +65,10 @@ public class RecetaBuilder {
 	}
 
 	public RecetaBuilder inventadaPor(String autor) {
+		return this.inventadaPor(RepositorioUsuarios.getInstance().getByUsername(autor));
+	}
+
+	public RecetaBuilder inventadaPor(Usuario autor) {
 		this.autor = autor;
 		return this;
 	}
@@ -131,7 +136,7 @@ public class RecetaBuilder {
 
 	public Receta buildReceta() {
 
-		if (this.autor.isEmpty()) {
+		if (this.autor != null) {
 			if (this.esCompuesta()) {
 				return new RecetaCompuesta(this.nombre, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos,
 						this.pasosPreparacion, this.subrecetas);

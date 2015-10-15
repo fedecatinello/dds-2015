@@ -34,7 +34,7 @@ public class BusquedaAdapter {
 	private Set<ConsultaObserver> observers;
 
 	public Set<ConsultaObserver> getObservers() {
-		return observers;
+		return this.observers;
 	}
 
 	public void setObservers(Set<ConsultaObserver> observers) {
@@ -108,7 +108,7 @@ public class BusquedaAdapter {
 
 		Iterator<JsonElement> iterator = array.iterator();
 
-		iterator.forEachRemaining(element -> obtenerReceta(element, gson, listaRecetas));
+		iterator.forEachRemaining(element -> this.obtenerReceta(element, gson, listaRecetas));
 
 		// Creo listas de recetas del usuario y mapeo recetas para agregarlas a
 		// esta lista
@@ -123,20 +123,18 @@ public class BusquedaAdapter {
 	public void agregarReceta(queComemos.entrega3.dominio.Receta receta, List<Receta> recetasUsuario) {
 
 		/** Me guardo los ingredientes **/
-		List<Componente> ingredientesReceta = new ArrayList<Componente>();
+		Set<Componente> ingredientesReceta = new HashSet<Componente>();
 		receta.getIngredientes().forEach(ingrediente -> ingredientesReceta.add(new Componente(ingrediente, new BigDecimal(0))));
 
-		
 		Receta recetaUsuario = new RecetaBuilder(receta.getNombre())
-							.tiempoPreparacion(receta.getTiempoPreparacion())
-							.totalCalorias(receta.getTotalCalorias())
-							.dificultad(receta.getDificultadReceta().toString())
-							.inventadaPor(receta.getAutor())
-							.inventadaEn(receta.getAnioReceta())
-							.agregarIngredientes(ingredientesReceta)
-							.buildReceta();
-		
-		
+			.tiempoPreparacion(receta.getTiempoPreparacion())
+			.totalCalorias(receta.getTotalCalorias())
+			.dificultad(receta.getDificultadReceta().toString())
+			.inventadaPor(receta.getAutor())
+			.inventadaEn(receta.getAnioReceta())
+			.agregarIngredientes(ingredientesReceta)
+			.buildReceta();
+
 		recetasUsuario.add(recetaUsuario);
 	}
 

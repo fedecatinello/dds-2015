@@ -1,7 +1,6 @@
 package dds.javatar.app.dto.receta;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.FetchType;
@@ -20,17 +19,17 @@ public class RecetaCompuesta extends Receta {
 	/** Faltaria el tema de las recetas con las subrecetas **/
 	private Set<Receta> subRecetas;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "receta_condicion", joinColumns = @JoinColumn(name = "receta_id"), inverseJoinColumns = @JoinColumn(name = "condicion_id"))
 	protected Set<CondicionPreexistente> condiciones;
 
-	public RecetaCompuesta(String nombre, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes, List<Componente> condimentos,
-			List<Paso> pasosPreparacion, Set<Receta> subRecetas) {
+	public RecetaCompuesta(String nombre, Integer calorias, String dificultad, String temporada, Set<Componente> ingredientes, Set<Componente> condimentos,
+			Set<Paso> pasosPreparacion, Set<Receta> subRecetas) {
 		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion, subRecetas);
 	}
 
-	public RecetaCompuesta(String nombre, Usuario autor, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes,
-			List<Componente> condimentos, List<Paso> pasosPreparacion, Set<Receta> subRecetas) {
+	public RecetaCompuesta(String nombre, Usuario autor, Integer calorias, String dificultad, String temporada, Set<Componente> ingredientes,
+			Set<Componente> condimentos, Set<Paso> pasosPreparacion, Set<Receta> subRecetas) {
 		super(nombre, autor, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion);
 		this.subRecetas = subRecetas;
 	}

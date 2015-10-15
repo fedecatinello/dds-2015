@@ -208,7 +208,7 @@ public class TestRecetas {
 		Receta receta = new RecetaBuilder("Paella")
 			.totalCalorias(new Integer(350))
 			.agregarIngrediente("pollo", new BigDecimal(100))
-			.inventadaPor(this.usuario.getNombre())
+			.inventadaPor(this.usuario.getUser())
 			.buildReceta();
 		this.usuario.agregarReceta(receta);
 		this.usuario.puedeVerReceta(receta);
@@ -232,7 +232,7 @@ public class TestRecetas {
 		Receta receta = new RecetaBuilder("paella")
 			.totalCalorias(50)
 			.agregarIngrediente("pollo", new BigDecimal(100))
-			.inventadaPor(userOwner.getNombre())
+			.inventadaPor(userOwner.getUser())
 			.buildReceta();
 		userOwner.agregarReceta(receta);
 
@@ -270,7 +270,7 @@ public class TestRecetas {
 		Receta receta = new RecetaBuilder("paella")
 			.totalCalorias(150)
 			.agregarIngrediente("pollo", new BigDecimal(100))
-			.inventadaPor(this.usuario.getNombre())
+			.inventadaPor(this.usuario.getUser())
 			.buildReceta();
 
 		this.usuario.agregarReceta(receta);
@@ -284,7 +284,7 @@ public class TestRecetas {
 	public void testModificarRecetaPropia() throws RecetaException, CloneNotSupportedException, UsuarioException {
 		Receta receta1 = new RecetaBuilder("Nombre original")
 			.totalCalorias(350)
-			.inventadaPor(this.usuario.getNombre())
+			.inventadaPor(this.usuario.getUser())
 			.agregarIngrediente("pollo", new BigDecimal(100))
 			.buildReceta();
 
@@ -292,7 +292,7 @@ public class TestRecetas {
 
 		this.usuario.validarModificarReceta(receta1);
 		this.usuario.modificarNombreDeReceta(receta1, "Nuevo nombre");
-		assertEquals(receta1.getNombre(), "Nuevo nombre");
+		assertEquals( "Nuevo nombre",receta1.getNombre());
 	}
 
 	@Test
@@ -370,7 +370,7 @@ public class TestRecetas {
 			.totalCalorias(350)
 			.agregarIngrediente("Manteca", new BigDecimal(300))
 			.agregarIngrediente("Papa", new BigDecimal(300))
-			.inventadaPor("Mariano")
+			.inventadaPor("mloisotto")
 			.buildReceta();
 
 		Receta pollo = new RecetaBuilder("Pollo")

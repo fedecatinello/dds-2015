@@ -92,8 +92,8 @@ public class Buscador {
 
 	public List<Receta> realizarBusquedaPara(Usuario usuario, Busqueda busqueda) throws FilterException {
 		List<Receta> recetasXusuario = this.recetasQueConoceEl(usuario);
-		List<Receta> recetasRepoExterno = this.buscarRecetasExternas(usuario, busqueda);
-		recetasXusuario.addAll(recetasRepoExterno);
+		//List<Receta> recetasRepoExterno = this.buscarRecetasExternas(usuario, busqueda);
+		//recetasXusuario.addAll(recetasRepoExterno);
 		this.filtrar(usuario, recetasXusuario);
 		this.postProcesar(recetasXusuario);
 

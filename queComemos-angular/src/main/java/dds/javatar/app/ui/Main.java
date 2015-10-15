@@ -24,8 +24,8 @@ public class Main {
 		MonitorMasConsultadas observer = new MonitorMasConsultadas();
 		BusquedaAdapter.getInstance().addObserver(observer);
 
-		ContainerFactory.getInstance().agregarRecetasAlRepositorio();
 		ContainerFactory.getInstance().agregarUsuariosAlRepo();
+		ContainerFactory.getInstance().agregarRecetasAlRepositorio();
 		new UsuariosController(jsonTransformer, gson).register();
 		new RecetasController(jsonTransformer, gson).register();
 

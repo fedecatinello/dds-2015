@@ -79,7 +79,7 @@ public class Administrador {
 		return nombres;
 	}
 	
-	public Set<String> getComponentesByNombre(List<Componente> componentes){
+	public Set<String> getComponentesByNombre(Set<Componente> componentes){
 		Set<String> nombres = new HashSet<>();
 		for(Componente componente: componentes){
 			nombres.add(componente.getDescripcion());

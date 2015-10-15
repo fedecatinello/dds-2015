@@ -2,18 +2,20 @@ package dds.javatar.app.dto.sistema;
 
 import java.util.HashSet;
 
+import org.hibernate.Criteria;
+
 import dds.javatar.app.dto.usuario.condiciones.Celiaco;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.dto.usuario.condiciones.Diabetico;
 import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
 import dds.javatar.app.dto.usuario.condiciones.Vegano;
 
-public class RepositorioCondiciones {
+public class RepositorioCondiciones extends RepoDefault<CondicionPreexistente> {
 
 	public HashSet<CondicionPreexistente> condicionesPreexistentes;
 
 	protected RepositorioCondiciones() {
-		this.condicionesPreexistentes = crearCondiciones();
+		this.condicionesPreexistentes = this.crearCondiciones();
 	}
 
 	private HashSet<CondicionPreexistente> crearCondiciones() {
@@ -22,8 +24,8 @@ public class RepositorioCondiciones {
 		Hipertenso hipertenso = new Hipertenso();
 		Diabetico diabetico = new Diabetico();
 		Celiaco celiaco = new Celiaco();
-		
-//
+
+		//
 		condicionesAll.add(vegano);
 		condicionesAll.add(hipertenso);
 		condicionesAll.add(diabetico);
@@ -38,6 +40,16 @@ public class RepositorioCondiciones {
 			instance = new RepositorioCondiciones();
 		}
 		return instance;
+	}
+
+	@Override
+	protected Class<CondicionPreexistente> getEntityType() {
+		return CondicionPreexistente.class;
+	}
+
+	@Override
+	protected void addCriteriaToSearchByExample(Criteria criteria, CondicionPreexistente t) {
+		
 	}
 
 }

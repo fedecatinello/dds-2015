@@ -1,6 +1,6 @@
 var Receta = function() { 
 	this.nombre = null;
-	this.autor = "";
+	this.autor = {};
 	this.dificultad = null;
 	this.temporada = "";
 	this.dificultad = "";

@@ -18,7 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
@@ -63,29 +62,27 @@ public class Usuario {
 
 	@Column(name = "peso")
 	private BigDecimal peso;
+	//
+	// @Enumerated(EnumType.STRING)
+	// @Column(name = "rutina", columnDefinition = "enum('LEVE','NADA')")
+	// private Rutina rutina;
 
-	@Column(name = "rutina")
-	private Rutina rutina;
-
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_condicion", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "condicion_id"))
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	private List<PreferenciaUsuario> preferenciasAlimenticias;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
+	private Set<PreferenciaUsuario> preferenciasAlimenticias;
 
-	@OneToMany(mappedBy = "autor")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "autor")
 	private Set<Receta> recetas;
 
-	@ManyToMany(mappedBy = "miembros")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "miembros")
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_favoritas", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
 	private List<Receta> recetasFavoritas;
-
-	@ManyToOne
-	private Componente componente;
 
 	private EstadoSolicitud estadoSolicitud;
 	private boolean favearTodasLasConsultas;
@@ -100,6 +97,10 @@ public class Usuario {
 
 	/**** Constructors ****/
 
+	public Usuario() {
+
+	}
+
 	private Usuario(UsuarioBuilder usuarioBuilder) {
 		this.nombre = usuarioBuilder.nombre;
 		this.sexo = usuarioBuilder.sexo;
@@ -108,9 +109,9 @@ public class Usuario {
 		this.peso = usuarioBuilder.peso;
 		this.estadoSolicitud = usuarioBuilder.estadoSolicitud;
 
-		this.rutina = usuarioBuilder.rutina;
+		// this.rutina = usuarioBuilder.rutina;
 		this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
-		this.preferenciasAlimenticias = new ArrayList<PreferenciaUsuario>();
+		this.preferenciasAlimenticias = new HashSet<PreferenciaUsuario>();
 		this.recetas = new HashSet<Receta>();
 		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 		this.recetasFavoritas = new ArrayList<Receta>();
@@ -200,7 +201,7 @@ public class Usuario {
 	}
 
 	public Rutina getRutina() {
-		return this.rutina;
+		return null;
 	}
 
 	public String getUser() {
@@ -232,6 +233,9 @@ public class Usuario {
 	}
 
 	public List<Receta> getFavoritos() {
+		if (this.recetasFavoritas == null) {
+			this.recetasFavoritas = new ArrayList<>();
+		}
 		return this.recetasFavoritas;
 	}
 
@@ -251,11 +255,11 @@ public class Usuario {
 		this.preferenciasAlimenticias.add(preferencia);
 	}
 
-	public List<PreferenciaUsuario> getPreferenciasAlimenticias() {
+	public Set<PreferenciaUsuario> getPreferenciasAlimenticias() {
 		return this.preferenciasAlimenticias;
 	}
 
-	public void setPreferenciasAlimenticias(List<PreferenciaUsuario> preferenciasAlimenticias) {
+	public void setPreferenciasAlimenticias(Set<PreferenciaUsuario> preferenciasAlimenticias) {
 		this.preferenciasAlimenticias = preferenciasAlimenticias;
 	}
 
@@ -316,7 +320,7 @@ public class Usuario {
 	}
 
 	private void validarCamposNulos() throws UsuarioException {
-		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null || this.rutina == null) {
+		if (this.nombre == null || this.fechaNacimiento == null || this.peso == null || this.altura == null) {
 			throw new UsuarioException("El usuario tiene campos obligatorios sin completar");
 		}
 	}

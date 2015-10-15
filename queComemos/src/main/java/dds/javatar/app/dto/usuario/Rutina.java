@@ -1,5 +1,6 @@
 package dds.javatar.app.dto.usuario;
 
+
 public class Rutina {
 
 	public enum TipoRutina {

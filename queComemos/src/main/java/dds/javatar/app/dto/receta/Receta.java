@@ -1,8 +1,8 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -55,38 +55,40 @@ public class Receta {
 	@Column
 	protected Integer tiempoPreparacion;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	protected Usuario autor;
 
 	@Column
 	protected Integer anioCreacion;
 
-	@ManyToMany(mappedBy = "receta_x_condimento")
-	protected List<Componente> condimentos;
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "receta_x_condimento")
+	protected Set<Componente> condimentos;
 
-	@ManyToMany(mappedBy = "receta_x_ingrediente")
-	protected List<Componente> ingredientes;
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "receta_x_ingrediente")
+	protected Set<Componente> ingredientes;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "receta")
-	protected List<Paso> pasosPreparacion;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "receta")
+	protected Set<Paso> pasosPreparacion;
 
-	public Receta(String nombre, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes, List<Componente> condimentos,
-			List<Paso> pasosPreparacion) {
+	public Receta() {
+
+	}
+
+	public Receta(String nombre, Integer calorias, String dificultad, String temporada, Set<Componente> ingredientes, Set<Componente> condimentos,
+			Set<Paso> pasosPreparacion) {
 		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion);
 	}
 
-	public Receta(String nombre, Usuario autor, Integer calorias, String dificultad, String temporada, List<Componente> ingredientes,
-			List<Componente> condimentos, List<Paso> pasosPreparacion) {
+	public Receta(String nombre, Usuario autor, Integer calorias, String dificultad, String temporada, Set<Componente> ingredientes,
+			Set<Componente> condimentos, Set<Paso> pasosPreparacion) {
 		this.nombre = nombre;
 		this.autor = autor;
 		this.calorias = calorias;
 		this.dificultad = dificultad;
 		this.temporada = temporada;
-		this.ingredientes = new ArrayList<Componente>();
-		this.ingredientes.addAll(ingredientes);
-		this.condimentos = new ArrayList<Componente>();
-		this.condimentos.addAll(condimentos);
-		this.pasosPreparacion = new ArrayList<Paso>();
+		this.ingredientes = new HashSet<Componente>(ingredientes);
+		this.condimentos = new HashSet<Componente>(condimentos);
+		this.pasosPreparacion = new HashSet<Paso>();
 		this.pasosPreparacion.addAll(pasosPreparacion);
 	}
 
@@ -99,7 +101,7 @@ public class Receta {
 		this.nombre = nombre;
 	}
 
-	public List<Paso> getPasosPreparacion() {
+	public Set<Paso> getPasosPreparacion() {
 		return this.pasosPreparacion;
 	}
 
@@ -137,7 +139,7 @@ public class Receta {
 		this.condimentos.add(componente);
 	}
 
-	public List<Componente> getCondimentos() {
+	public Set<Componente> getCondimentos() {
 		return this.condimentos;
 	}
 
@@ -146,7 +148,7 @@ public class Receta {
 		this.ingredientes.add(componente);
 	}
 
-	public List<Componente> getIngredientes() {
+	public Set<Componente> getIngredientes() {
 		return this.ingredientes;
 	}
 
@@ -174,15 +176,15 @@ public class Receta {
 		this.anioCreacion = anioCreacion;
 	}
 
-	public void setCondimentos(List<Componente> condimentos) {
+	public void setCondimentos(Set<Componente> condimentos) {
 		this.condimentos = condimentos;
 	}
 
-	public void setIngredientes(List<Componente> ingredientes) {
+	public void setIngredientes(Set<Componente> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
 
-	public void setPasosPreparacion(List<Paso> pasosPreparacion) {
+	public void setPasosPreparacion(Set<Paso> pasosPreparacion) {
 		this.pasosPreparacion = pasosPreparacion;
 	}
 

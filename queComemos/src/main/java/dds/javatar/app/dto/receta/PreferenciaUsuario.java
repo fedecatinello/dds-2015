@@ -3,6 +3,7 @@ package dds.javatar.app.dto.receta;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,16 +22,16 @@ public class PreferenciaUsuario {
 	@Basic(optional = false)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "componente_id")
-	protected Componente componente;
+	private Componente componente;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario_id")
-	protected Usuario usuario;
+	private Usuario usuario;
 
 	@Column(name = "gusta")
-	protected Boolean gusta;
+	private Boolean gusta;
 
 	public PreferenciaUsuario() {
 

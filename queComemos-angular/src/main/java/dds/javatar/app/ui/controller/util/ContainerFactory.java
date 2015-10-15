@@ -34,7 +34,7 @@ public class ContainerFactory {
 			.agregarIngrediente("Aceite", new BigDecimal(5))
 			.agregarIngrediente("Papa", new BigDecimal(300))
 			.agregarIngrediente("Agua", new BigDecimal(100))
-			.inventadaPor("Mariano")
+			.inventadaPor("mloisotto")
 			.dificultad("FACIL")
 			.temporada("Otoño")
 			.agregarCondimento("Sal", new BigDecimal(12))
@@ -58,7 +58,7 @@ public class ContainerFactory {
 			.agregarPaso(1, "Rebozar las supremas con huevo revuelto y pan rallado.")
 			.agregarPaso(2, "Hornear durante 25 minutos.")
 			.agregarPaso(3, "Decorar con hojas de laurel.")
-			.inventadaPor("ElSiscador")
+			.inventadaPor("siscador")
 			.dificultad("FACIL")
 			.temporada("Todo el año")
 			.buildReceta();
@@ -77,7 +77,7 @@ public class ContainerFactory {
 			.agregarPaso(3, "Hornear la mezcla por 15 minutos.")
 			.agregarPaso(4, "Decorar con nuez moscada espolvoreada.")
 			.agregarIngrediente("Aceite", new BigDecimal(50))
-			.inventadaPor("Maru Botana")
+			.inventadaPor("mbotana")
 			.dificultad("MEDIA")
 			.temporada("Primavera")
 			.buildReceta();
@@ -96,7 +96,7 @@ public class ContainerFactory {
 			.agregarPaso(3, "Colocar en la tapa para pascualina.")
 			.agregarPaso(4, "Hornear durante 40 minutos.")
 			.dificultad("MEDIA")
-			.inventadaPor("Cocineros Argentinos")
+			.inventadaPor("mloisotto")
 			.temporada("Invierno")
 			.buildReceta();
 
@@ -153,7 +153,7 @@ public class ContainerFactory {
 			.agregarPaso(1, "Untar las dos rodajas de pan con el/los condimento(s) deseado(s).")
 			.agregarPaso(2, "Agregar las fetas de jamón y queso.")
 			.agregarPaso(3, "Agregar los vegetales.")
-			.inventadaPor("ElSiscador")
+			.inventadaPor("siscador")
 			.dificultad("FACIL")
 			.temporada("Todo el año")
 			.buildReceta();
@@ -165,7 +165,7 @@ public class ContainerFactory {
 			.agregarIngrediente("Tomate", new BigDecimal(60))
 			.agregarIngrediente("Lechuga", new BigDecimal(40))
 			.agregarIngrediente("Huevo", new BigDecimal(80))
-			.inventadaPor("Mariano")
+			.inventadaPor("siscador")
 			.dificultad("FACIL")
 			.temporada("Primavera")
 			.agregarCondimento("Sal", new BigDecimal(12))
@@ -184,7 +184,7 @@ public class ContainerFactory {
 			.totalCalorias(85)
 			.agregarIngrediente("Polvo para preparar", new BigDecimal(45))
 			.agregarIngrediente("Leche Descremada", new BigDecimal(1))
-			.inventadaPor("ElSiscador")
+			.inventadaPor("siscador")
 			.dificultad("FACIL")
 			.temporada("Primavera")
 			.agregarCondimento("Dulce de Leche", new BigDecimal(30))
@@ -202,7 +202,7 @@ public class ContainerFactory {
 			.totalCalorias(150)
 			.agregarIngrediente("Papas", new BigDecimal(45))
 			.agregarIngrediente("Aceite", new BigDecimal(1))
-			.inventadaPor("Maru Botana")
+			.inventadaPor("mbotana")
 			.dificultad("FACIL")
 			.temporada("Todo el año")
 			.agregarCondimento("Sal", new BigDecimal(10))
@@ -238,9 +238,9 @@ public class ContainerFactory {
 		maru.agregarPreferenciaAlimenticia("Mousse de Chocolate");
 		this.instanceRepoUsuarios.add(maru);
 
-		maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(0));
-		maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(1));
-		maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(2));
+		// maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(0));
+		// maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(1));
+		// maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(2));
 
 		Usuario mariano = new Usuario.UsuarioBuilder()
 			.nombre("Mariano")

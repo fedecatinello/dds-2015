@@ -1,7 +1,6 @@
 package dds.javatar.app.dto.sistema;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,6 +25,17 @@ public class RepositorioRecetas extends RepoDefault<Receta> {
 
 	/** Metodos **/
 
+	@Override
+	public void saveOrUpdate(Receta receta) {
+		for (Componente comp : receta.getIngredientes()) {
+			RepositorioComponentes.getInstance().saveOrUpdate(comp);
+		}
+		for (Componente comp : receta.getCondimentos()) {
+			RepositorioComponentes.getInstance().saveOrUpdate(comp);
+		}
+		super.saveOrUpdate(receta);
+	}
+
 	public Set<String> getAllIngredientes() {
 		Set<String> ingredientes = new HashSet<String>();
 
@@ -35,11 +45,7 @@ public class RepositorioRecetas extends RepoDefault<Receta> {
 		return ingredientes;
 	}
 
-	public void eliminarTodasLasRecetas() {
-		// TODO ?
-	}
-
-	public Set<String> getComponentesByNombre(List<Componente> componentes) {
+	public Set<String> getComponentesByNombre(Set<Componente> componentes) {
 		return componentes.stream().map(Componente::getDescripcion).collect(Collectors.toSet());
 	}
 
@@ -53,6 +59,9 @@ public class RepositorioRecetas extends RepoDefault<Receta> {
 		if (receta.getNombre() != null) {
 			criteria.add(Restrictions.eq("nombre", receta.getNombre()));
 		}
+	}
+
+	public void eliminarTodasLasRecetas() {
 	}
 
 }

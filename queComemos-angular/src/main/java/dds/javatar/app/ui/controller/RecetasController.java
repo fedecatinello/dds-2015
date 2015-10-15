@@ -115,6 +115,7 @@ public class RecetasController {
 			String username = request.params(":username");
 			String message = request.body();
 			Receta receta = this.gson.fromJson(message, Receta.class);
+			receta.setAutor(RepositorioUsuarios.getInstance().getByUsername(username));
 			RepositorioRecetas.getInstance().update(receta);
 			Usuario userLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
 			userLogueado.updateFavorita(receta);

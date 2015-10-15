@@ -8,7 +8,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import dds.javatar.app.dto.receta.PreferenciaUsuario;
 import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 
 public class RepositorioUsuarios extends RepoDefault<Usuario> {
 
@@ -37,6 +39,17 @@ public class RepositorioUsuarios extends RepoDefault<Usuario> {
 
 	/* las búsquedas no tienen criterio */
 
+	@Override
+	public void saveOrUpdate(Usuario usuario) {
+		for (PreferenciaUsuario pref : usuario.getPreferenciasAlimenticias()) {
+			RepositorioComponentes.getInstance().saveOrUpdate(pref.getComponente());
+		}
+		for (CondicionPreexistente cond : usuario.getCondicionesPreexistentes()) {
+			RepositorioCondiciones.getInstance().saveOrUpdate(cond);
+		}
+		super.saveOrUpdate(usuario);
+	}
+
 	public Usuario getByUsername(String username) {
 		try {
 			List<Usuario> listaUsers = this.allInstances();
@@ -48,13 +61,8 @@ public class RepositorioUsuarios extends RepoDefault<Usuario> {
 
 	public Usuario getByCredential(String username, String password) {
 		try {
-			List<Usuario> listaUsers = this.allInstances();
-			return listaUsers
-				.stream()
-				.filter(s -> s.getUser().equals(username) && s.getPassword().equals(password))
-				.map(p -> p)
-				.collect(Collectors.toList())
-				.get(0);
+			List<Usuario> listaUsers = this.getAll();
+			return listaUsers.stream().filter(s -> s.getUser().equals(username) && s.getPassword().equals(password)).collect(Collectors.toList()).get(0);
 		} catch (Exception e) {
 			return null; // revianta cuando no encuentra nada
 		}

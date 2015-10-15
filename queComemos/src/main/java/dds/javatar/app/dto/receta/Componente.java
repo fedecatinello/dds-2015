@@ -14,9 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
-import dds.javatar.app.dto.usuario.Usuario;
-
 @Entity
 @Table(name = "Componente")
 public class Componente {
@@ -35,20 +32,18 @@ public class Componente {
 	/** Ver si agregar dosis y unidades **/
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ingrediente_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns =
-	@JoinColumn(name = "receta_id"))
-	private Receta receta_x_ingrediente;
+	@JoinTable(name = "ingrediente_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
+	private List<Receta> receta_x_ingrediente;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "condimento_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns =
-	 @JoinColumn(name = "receta_id"))
-	private Receta receta_x_condimento;
+	@JoinTable(name = "condimento_receta", joinColumns = @JoinColumn(name = "componente_id"), inverseJoinColumns = @JoinColumn(name = "receta_id"))
+	private List<Receta> receta_x_condimento;
 
-	@OneToMany(targetEntity = Usuario.class, fetch = FetchType.LAZY, mappedBy = "componente")
-	private List<Usuario> usuariosQuienesGustan;
+	@OneToMany(targetEntity = PreferenciaUsuario.class, fetch = FetchType.LAZY, mappedBy = "componente")
+	private List<PreferenciaUsuario> usuariosQuienesGustan;
 
-	@OneToMany(targetEntity = GrupoDeUsuarios.class, fetch = FetchType.LAZY, mappedBy = "componente")
-	private List<GrupoDeUsuarios> gruposQuienesGustan;
+	@OneToMany(targetEntity = PreferenciaGrupo.class, fetch = FetchType.LAZY, mappedBy = "componente")
+	private List<PreferenciaGrupo> gruposQuienesGustan;
 
 	/** Constructor **/
 
@@ -73,35 +68,35 @@ public class Componente {
 		this.descripcion = descripcion;
 	}
 
-	public Receta getReceta_x_ingrediente() {
+	public List<Receta> getReceta_x_ingrediente() {
 		return this.receta_x_ingrediente;
 	}
 
-	public void setReceta_x_ingrediente(Receta receta_x_ingrediente) {
+	public void setReceta_x_ingrediente(List<Receta> receta_x_ingrediente) {
 		this.receta_x_ingrediente = receta_x_ingrediente;
 	}
 
-	public Receta getReceta_x_condimento() {
+	public List<Receta> getReceta_x_condimento() {
 		return this.receta_x_condimento;
 	}
 
-	public void setReceta_x_condimento(Receta receta_x_condimento) {
+	public void setReceta_x_condimento(List<Receta> receta_x_condimento) {
 		this.receta_x_condimento = receta_x_condimento;
 	}
 
-	public List<Usuario> getUsuariosQuienesGustan() {
+	public List<PreferenciaUsuario> getUsuariosQuienesGustan() {
 		return this.usuariosQuienesGustan;
 	}
 
-	public void setUsuariosQuienesGustan(List<Usuario> usuariosQuienesGustan) {
+	public void setUsuariosQuienesGustan(List<PreferenciaUsuario> usuariosQuienesGustan) {
 		this.usuariosQuienesGustan = usuariosQuienesGustan;
 	}
 
-	public List<GrupoDeUsuarios> getGruposQuienesGustan() {
+	public List<PreferenciaGrupo> getGruposQuienesGustan() {
 		return this.gruposQuienesGustan;
 	}
 
-	public void setGruposQuienesGustan(List<GrupoDeUsuarios> gruposQuienesGustan) {
+	public void setGruposQuienesGustan(List<PreferenciaGrupo> gruposQuienesGustan) {
 		this.gruposQuienesGustan = gruposQuienesGustan;
 	}
 

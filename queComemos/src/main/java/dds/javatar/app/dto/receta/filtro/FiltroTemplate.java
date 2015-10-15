@@ -12,16 +12,17 @@ import dds.javatar.app.util.exception.FilterException;
 
 public abstract class FiltroTemplate implements Filtro {
 
+	@Override
 	public void filtrarBusqueda(Usuario usuarioBusqueda, List<Receta> recetasUsuario) throws FilterException {
 		List<Receta> listaAux = new ArrayList<Receta>(recetasUsuario);
 		for (int i = 0; i < listaAux.size(); i++) {
-			if (validator(usuarioBusqueda, listaAux.get(i))) {
+			if (this.validator(usuarioBusqueda, listaAux.get(i))) {
 				recetasUsuario.remove(listaAux.get(i));
 			}
 		}
 	}
 	
-	public Set<String> getComponentesByNombre(List<Componente> componentes){
+	public Set<String> getComponentesByNombre(Set<Componente> componentes){
 		Set<String> nombres = new HashSet<>();
 		for(Componente componente:componentes){
 			nombres.add(componente.getDescripcion());

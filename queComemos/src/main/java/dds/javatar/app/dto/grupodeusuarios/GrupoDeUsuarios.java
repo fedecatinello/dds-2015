@@ -36,7 +36,7 @@ public class GrupoDeUsuarios {
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy="grupo")
 	private List<PreferenciaGrupo> preferenciasAlimenticias;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "grupo_usuario",
 	    joinColumns = @JoinColumn(name = "grupo_id"),
 	    inverseJoinColumns = @JoinColumn(name = "usuario_id") )

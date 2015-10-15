@@ -1,10 +1,8 @@
 package dds.javatar.app.dto.receta.builder;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import dds.javatar.app.dto.receta.Componente;
@@ -24,17 +22,17 @@ public class RecetaBuilder {
 	private Integer tiempoPreparacion;
 	private Usuario autor;
 	private Integer anioCreacion;
-	private List<Componente> condimentos;
-	private List<Componente> ingredientes;
-	private List<Paso> pasosPreparacion;
+	private Set<Componente> condimentos;
+	private Set<Componente> ingredientes;
+	private Set<Paso> pasosPreparacion;
 	private Set<Receta> subrecetas;
 
 	public RecetaBuilder(String nombre) {
 		this.nombre = nombre;
 		this.initializeComparatorFields();
-		this.condimentos = new ArrayList<Componente>();
-		this.ingredientes = new ArrayList<Componente>();
-		this.pasosPreparacion = new ArrayList<Paso>();
+		this.condimentos = new HashSet<Componente>();
+		this.ingredientes = new HashSet<Componente>();
+		this.pasosPreparacion = new HashSet<Paso>();
 		this.subrecetas = new HashSet<Receta>();
 	}
 
@@ -84,7 +82,7 @@ public class RecetaBuilder {
 		return this;
 	}
 
-	public RecetaBuilder agregarCondimentos(List<Componente> condimentos) {
+	public RecetaBuilder agregarCondimentos(Set<Componente> condimentos) {
 		this.condimentos.addAll(condimentos);
 		return this;
 	}
@@ -95,7 +93,7 @@ public class RecetaBuilder {
 		return this;
 	}
 
-	public RecetaBuilder agregarIngredientes(List<Componente> ingredientes) {
+	public RecetaBuilder agregarIngredientes(Set<Componente> ingredientes) {
 		this.ingredientes.addAll(ingredientes);
 		return this;
 	}
@@ -106,7 +104,7 @@ public class RecetaBuilder {
 		return this;
 	}
 
-	public RecetaBuilder agregarPasos(List<Paso> pasosPreparacion) {
+	public RecetaBuilder agregarPasos(Set<Paso> pasosPreparacion) {
 		this.pasosPreparacion.addAll(pasosPreparacion);
 		return this;
 	}
@@ -135,22 +133,12 @@ public class RecetaBuilder {
 	}
 
 	public Receta buildReceta() {
-
-		if (this.autor != null) {
-			if (this.esCompuesta()) {
-				return new RecetaCompuesta(this.nombre, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos,
-						this.pasosPreparacion, this.subrecetas);
-			} else {
-				return new Receta(this.nombre, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos, this.pasosPreparacion);
-			}
+		if (this.esCompuesta()) {
+			return new RecetaCompuesta(this.nombre, this.autor, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos,
+					this.pasosPreparacion, this.subrecetas);
 		} else {
-			if (this.esCompuesta()) {
-				return new RecetaCompuesta(this.nombre, this.autor, this.calorias, this.dificultad, this.temporada, this.condimentos, this.ingredientes,
-						this.pasosPreparacion, this.subrecetas);
-			} else {
-				return new Receta(this.nombre, this.autor, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos,
-						this.pasosPreparacion);
-			}
+			return new Receta(this.nombre, this.autor, this.calorias, this.dificultad, this.temporada, this.ingredientes, this.condimentos,
+					this.pasosPreparacion);
 		}
 	}
 

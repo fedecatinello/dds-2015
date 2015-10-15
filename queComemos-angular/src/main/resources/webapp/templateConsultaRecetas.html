@@ -59,9 +59,9 @@
 											<th>Ingrediente</th>
 											<th>Dosis</th>
 										</tr>
-										<tr data-ng-repeat="(Ingrediente, Dosis) in Ctrl.getRecetaSelected().ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == Ctrl.getSelectedRowIngrediente()}">
-											<td class="col-md-4">{{Ingrediente}}</td>
-											<td class="col-md-2">{{Dosis}}</td>
+										<tr data-ng-repeat="Ctrl.getRecetaSelected().ingredientes as ingrediente" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == Ctrl.getSelectedRowIngrediente()}">
+											<td class="col-md-4">{{ingrediente.descripcion}}</td>
+											<td class="col-md-2">{{ingrediente.cantidad}}</td>
 										</tr>
 									</tbody>
 								</table>

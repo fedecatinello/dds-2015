@@ -11,7 +11,6 @@ import spark.Spark;
 import com.google.gson.Gson;
 
 import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.RecetaPrivadaSimple;
 import dds.javatar.app.dto.receta.busqueda.Buscador;
 import dds.javatar.app.dto.receta.busqueda.Busqueda;
 import dds.javatar.app.dto.receta.busqueda.Busqueda.BusquedaBuilder;
@@ -115,7 +114,7 @@ public class RecetasController {
 
 			String username = request.params(":username");
 			String message = request.body();
-			Receta receta = this.gson.fromJson(message, RecetaPrivadaSimple.class);
+			Receta receta = this.gson.fromJson(message, Receta.class);
 			RepositorioRecetas.getInstance().updateReceta(receta);
 			Usuario userLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
 			userLogueado.updateFavorita(receta);
@@ -136,10 +135,10 @@ public class RecetasController {
 			String nombre_receta = request.params(":receta");
 									
 			BusquedaAdapter.getInstance().getObservers()
-																	.forEach(observer -> consultas_receta = observer.cantidadConsultasReceta(nombre_receta));
+																	.forEach(observer -> this.consultas_receta = observer.cantidadConsultasReceta(nombre_receta));
 			
 			response.type("application/json;charset=utf-8");
-			return consultas_receta;
+			return this.consultas_receta;
 
 		}, this.jsonTransformer);
 		

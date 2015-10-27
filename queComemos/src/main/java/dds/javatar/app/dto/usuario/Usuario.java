@@ -49,7 +49,7 @@ public class Usuario extends Entity {
 	private Set<GrupoDeUsuarios> gruposAlQuePertenece;
 	private List<Receta> recetasFavoritas;
 	private boolean favearTodasLasConsultas;
-	
+
 	/** Login attributes **/
 	private String username;
 	private String password;
@@ -70,7 +70,7 @@ public class Usuario extends Entity {
 		this.recetas = new HashSet<Receta>();
 		this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
 		this.recetasFavoritas = new ArrayList<Receta>();
-		
+
 		this.username = usuarioBuilder.user;
 		this.password = usuarioBuilder.password;
 	}
@@ -83,7 +83,7 @@ public class Usuario extends Entity {
 		private BigDecimal peso;
 		private EstadoSolicitud estadoSolicitud;
 		private Rutina rutina;
-		
+
 		private String user;
 		private String password;
 
@@ -121,7 +121,7 @@ public class Usuario extends Entity {
 			this.rutina = rutina;
 			return this;
 		}
-		
+
 		public UsuarioBuilder credenciales(String usuario, String contrasenia) {
 			this.user = usuario;
 			this.password = contrasenia;
@@ -158,9 +158,9 @@ public class Usuario extends Entity {
 	public Rutina getRutina() {
 		return this.rutina;
 	}
-	
+
 	public String getUser() {
-		return username;
+		return this.username;
 	}
 
 	public void setUser(String user) {
@@ -168,13 +168,12 @@ public class Usuario extends Entity {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public Set<Receta> getRecetas() {
 		return this.recetas;
@@ -203,19 +202,19 @@ public class Usuario extends Entity {
 	public void agregarAlimentoQueLeDisgusta(String alimento) {
 		this.preferenciasAlimenticias.put(alimento, Boolean.FALSE);
 	}
-	
-	public Map<String, Boolean> getPreferenciasAlimenticias(){
+
+	public Map<String, Boolean> getPreferenciasAlimenticias() {
 		return this.preferenciasAlimenticias;
 	}
-	
-	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias){
-		 this.preferenciasAlimenticias=preferenciasAlimenticias;
+
+	public void setPreferenciasAlimenticias(Map<String, Boolean> preferenciasAlimenticias) {
+		this.preferenciasAlimenticias = preferenciasAlimenticias;
 	}
-	
-	public List<String> getComidasSegunPreferecia(Boolean preferencia){
+
+	public List<String> getComidasSegunPreferecia(Boolean preferencia) {
 		List<String> comidas = new ArrayList<String>();
-		for(String comida: this.preferenciasAlimenticias.keySet()){
-			if(this.preferenciasAlimenticias.get(comida)==preferencia){
+		for (String comida : this.preferenciasAlimenticias.keySet()) {
+			if (this.preferenciasAlimenticias.get(comida) == preferencia) {
 				comidas.add(comida);
 			}
 		}
@@ -227,9 +226,8 @@ public class Usuario extends Entity {
 	}
 
 	public void agregarReceta(Receta receta) throws RecetaException {
-		receta.validarSiLaRecetaEsValida();
-		this.getRecetas()
-			.add(receta);
+		receta.validar();
+		this.getRecetas().add(receta);
 	}
 
 	public void quitarReceta(Receta receta) throws UsuarioException {
@@ -327,8 +325,7 @@ public class Usuario extends Entity {
 
 	public Boolean sigueRutinaSaludable() {
 
-		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision())
-			.intValue();
+		int userIMC = this.getIMC(MathContext.DECIMAL32.getPrecision()).intValue();
 
 		if (userIMC < 18 || userIMC > 30) {
 			return Boolean.FALSE;
@@ -415,33 +412,31 @@ public class Usuario extends Entity {
 	public void marcarFavorita(Receta receta) {
 		this.recetasFavoritas.add(receta);
 	}
-	
-	public void updateFavorita(Receta receta){
-		
+
+	public void updateFavorita(Receta receta) {
+
 		try {
 			Receta recetaEncontrada = this.getFavoritos().stream().filter(o -> o.getNombre().equals(receta.getNombre())).findFirst().get();
-			
+
 			this.getFavoritos().remove(recetaEncontrada);
 			this.marcarFavorita(receta);
 		} catch (NoSuchElementException e) {
 			// TODO: handle exception
 		}
-		
+
 	}
 
 	public boolean tieneReceta(Receta receta) {
 		for (Receta recetaUser : this.getRecetas()) {
-			if (recetaUser.getNombre()
-				.equals(receta.getNombre()))
+			if (recetaUser.getNombre().equals(receta.getNombre()))
 				return true;
 		}
 		return false;
 	}
-	
+
 	public boolean tieneRecetaFavorita(Receta receta) {
 		for (Receta recetaUser : this.getFavoritos()) {
-			if (recetaUser.getNombre()
-				.equals(receta.getNombre()))
+			if (recetaUser.getNombre().equals(receta.getNombre()))
 				return true;
 		}
 		return false;

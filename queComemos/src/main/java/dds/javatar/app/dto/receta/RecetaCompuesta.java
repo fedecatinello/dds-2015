@@ -1,140 +1,106 @@
 package dds.javatar.app.dto.receta;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
+import dds.javatar.app.dto.receta.builder.RecetaBuilder;
 import dds.javatar.app.dto.usuario.Usuario;
 import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
+import dds.javatar.app.util.exception.UsuarioException;
 
-public abstract class RecetaCompuesta implements Receta {
+public class RecetaCompuesta extends Receta {
 
-	protected HashSet<Receta> subRecetas;
-	protected HashMap<String, BigDecimal> condimentos;
-	protected HashMap<String, BigDecimal> ingredientes;
-	protected HashMap<Integer, String> pasosPreparacion;
-	protected HashSet<CondicionPreexistente> condiciones;
-	protected String nombre;
-	protected String autor;
-	protected String dificultad;
-	protected Integer calorias;
-	protected String temporada;
-	protected Integer tiempoPreparacion;
-	
-	
-	/* Getters & Setters */
-	
-	public HashSet<Receta> getSubRecetas() {
-		return subRecetas;
+	private Set<Receta> subRecetas;
+
+	protected Set<CondicionPreexistente> condiciones;
+
+	public RecetaCompuesta(String nombre, Integer calorias, String dificultad, String temporada,  Map<String, BigDecimal> ingredientes,
+			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion, Set<Receta> subRecetas) {
+		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion, subRecetas);
 	}
-	public void setSubRecetas(HashSet<Receta> subRecetas) {
+
+	public RecetaCompuesta(String nombre, String autor, Integer calorias, String dificultad, String temporada, Map<String, BigDecimal> ingredientes,
+			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion, Set<Receta> subRecetas) {
+		super(nombre, autor, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion);
 		this.subRecetas = subRecetas;
 	}
-	public HashMap<String, BigDecimal> getCondimentos() {
-		return condimentos;
-	}
-	public void setCondimentos(HashMap<String, BigDecimal> condimentos) {
-		this.condimentos = condimentos;
-	}
-	public HashMap<String, BigDecimal> getIngredientes() {
-		return ingredientes;
-	}
-	public void setIngredientes(HashMap<String, BigDecimal> ingredientes) {
-		this.ingredientes = ingredientes;
-	}
-	
-	public HashSet<CondicionPreexistente> getCondiciones() {
-		return condiciones;
+
+	/* Getters & Setters */
+
+	public Set<Receta> getSubRecetas() {
+		return this.subRecetas;
 	}
 
-	public void setCondiciones(HashSet<CondicionPreexistente> condiciones) {
+	public void setSubRecetas(Set<Receta> subRecetas) {
+		this.subRecetas = subRecetas;
+	}
+
+	public Set<CondicionPreexistente> getCondiciones() {
+		return this.condiciones;
+	}
+
+	public void setCondiciones(Set<CondicionPreexistente> condiciones) {
 		this.condiciones = condiciones;
 	}
-	
-	public HashMap<Integer, String> getPasosPreparacion() {
-		return pasosPreparacion;
-	}
-	public void setPasosPreparacion(HashMap<Integer, String> pasosPreparacion) {
-		this.pasosPreparacion = pasosPreparacion;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getAutor() {
-		return autor;
-	}
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
-	public String getDificultad() {
-		return dificultad;
-	}
-	public void setDificultad(String dificultad) {
-		this.dificultad = dificultad;
-	}
-	public Integer getCalorias() {
-		return calorias;
-	}
-	public void setCalorias(Integer calorias) {
-		this.calorias = calorias;
-	}
-	public String getTemporada() {
-		return temporada;
-	}
-	public void setTemporada(String temporada) {
-		this.temporada = temporada;
-	}
-	public Integer getTiempoPreparacion() {
-		return tiempoPreparacion;
-	}
-	public void setTiempoPreparacion(Integer tiempoPreparacion) {
-		this.tiempoPreparacion = tiempoPreparacion;
-	}
-	
-	/** Add Items **/
-	
-	public void agregarSubReceta(Receta subReceta)
-			throws RecetaException {
-		subReceta.validarSiLaRecetaEsValida();
+
+	public void agregarSubReceta(Receta subReceta) throws RecetaException {
 		this.subRecetas.add(subReceta);
 	}
-	
-	/** Validadores **/
-	
-	public Boolean contieneIngrediente(String ingrediente) {
-		this.getIngredientes();
-		return this.ingredientes.containsKey(ingrediente);
-	}
 
-	public Boolean contieneCondimento(String condimento) {
-		this.getCondimentos();
-		return this.condimentos.containsKey(condimento);
-	}
-
-	public Boolean alimentoSobrepasaCantidad(String alimento,
-			BigDecimal cantidad) {
-		this.getIngredientes();
-		if (!this.ingredientes.containsKey(alimento)) {
-			return Boolean.FALSE;
-		}
-		return (this.ingredientes.get(alimento).compareTo(cantidad) == 1);
-	}
-
+	@Override
 	public Boolean chequearVisibilidad(Receta receta, Usuario usuario) {
 		if (usuario.getRecetas().contains(receta)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
-	public void validarSiLaRecetaEsValida() throws RecetaException {
+	public Receta privatizarSiCorresponde(Usuario user) throws UsuarioException, RecetaException {
+
+		HashSet<Receta> recetasPrivatizadas = new HashSet<Receta>();
+
+		for (Receta receta : this.subRecetas) {
+			recetasPrivatizadas.add(receta.privatizarSiCorresponde(user));
+		}
+
+		Receta recetaClonada = new RecetaBuilder(this.nombre)
+			.dificultad(this.dificultad)
+			.temporada(this.temporada)
+			.agregarSubRecetas(recetasPrivatizadas)
+			.buildReceta();
+
+		user.agregarReceta(recetaClonada);
+		user.quitarReceta(this);
+		return recetaClonada;
+
+	}
+
+	@Override
+	public Receta hacerPrivada(String autor) throws RecetaException {
+		Receta recetaClonada = new RecetaBuilder(this.nombre)
+			.totalCalorias(this.calorias)
+			.dificultad(this.dificultad)
+			.temporada(this.temporada)
+			.agregarSubRecetas(this.subRecetas)
+			.agregarIngredientes(this.ingredientes)
+			.agregarCondimentos(this.condimentos)
+			.agregarPasos(this.pasosPreparacion)
+			.inventadaPor(autor)
+			.buildReceta();
+
+		return recetaClonada;
+	}
+
+	@Override
+	public void validar() throws RecetaException {
+		super.validar();
 		if (this.subRecetas.isEmpty()) {
 			throw new RecetaException("La receta no es valida ya que esta vacia! (No tiene subrecetas)");
 		}
 	}
+
 }

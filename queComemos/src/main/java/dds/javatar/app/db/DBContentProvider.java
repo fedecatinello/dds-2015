@@ -1,5 +1,7 @@
 package dds.javatar.app.db;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,10 +11,11 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import static com.mongodb.client.model.Filters.*;
 
-public class DBContentProvider {
-
+public abstract class DBContentProvider<T> {
+		
+		protected String collectionName;  
+	
 		/** Singleton that represent the DB client **/
 		private static MongoClient clientInstance = new MongoClient( "localhost" , 27017 );
 		
@@ -31,27 +34,31 @@ public class DBContentProvider {
 		}
 		
 		/** Get a particular collection **/
-		public MongoCollection<Document> getCollection(String collectionName) {
+		public MongoCollection<Document> getCollection() {
 			
-			return getDB().getCollection(collectionName);			
+			return getDB().getCollection(this.collectionName);			
 		}
 		
 		/** To be applied by subclasses **/
-		public Document create(Object obj) {
-			return null;
-		}
+		public abstract Document create(T t);
 		
+		public abstract Document createFilter(T t);
+		
+		public abstract T map(Document bson);
+				
 		/** Basic CRUD **/
-		public void insert(Document bson, String collectionName) {
-			
-			this.getCollection(collectionName).insertOne(bson);
+		public void insert(T t) {
+			Document bson = create(t);
+			this.getCollection().insertOne(bson);
 		}
 		
-		public Set<Document> findAll(String collectionName) {
+		public Set<T> findAll() {
 			
 			Set<Document> allDocuments = new HashSet<Document>(); 
 			
-			MongoCursor<Document> cursor = this.getCollection(collectionName).find().iterator();
+			Set<T> resultItems = new HashSet<T>();
+			
+			MongoCursor<Document> cursor = this.getCollection().find().iterator();
 			try {
 				while (cursor.hasNext()) {
 					allDocuments.add(cursor.next());
@@ -60,27 +67,35 @@ public class DBContentProvider {
 				cursor.close();
 			}
 			
-			return allDocuments;
+			/** Map all items to its entity type **/
+			allDocuments.forEach(doc -> {
+						T t = map(doc);
+						resultItems.add(t);
+			});
+			
+			return resultItems;
 
 		}
 		
-		public Document findByName(String collectionName, String value) {
+		public Document findByName(String value) {
 			
-			return this.getCollection(collectionName).find(eq("name", value)).first();
+			return this.getCollection().find(eq("name", value)).first();
 		}
 		
-		public Document findByUsername(String collectionName, String value) {
+		public Document findByUsername(String value) {
 			
-			return this.getCollection(collectionName).find(eq("username", value)).first();
+			return this.getCollection().find(eq("username", value)).first();
 		}
 		
-		public void update(String collectionName, Document query, String key, Object newValue) {
+		public void update(T t, String key, Object newValue) {
 			
-			this.getCollection(collectionName).updateOne(query, new Document("$set", new Document(key, newValue)));
+			Document query = createFilter(t);
+			this.getCollection().updateOne(query, new Document("$set", new Document(key, newValue)));
 		}
 		
-		public void delete(String collectionName, Document query) {
+		public void delete(T t) {
 			
-			this.getCollection(collectionName).deleteOne(query);
+			Document query = create(t);
+			this.getCollection().deleteOne(query);
 		}
 }

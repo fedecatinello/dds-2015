@@ -8,19 +8,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.bson.BsonArray;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 
 import static java.util.Arrays.asList;
 import dds.javatar.app.db.DBContentProvider;
 import dds.javatar.app.domain.receta.Receta;
+import dds.javatar.app.domain.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.BusinessException;
 
 
-public class RepositorioRecetas extends DBContentProvider implements InterfazRepositorioRecetas {
+public class RepositorioRecetas extends DBContentProvider<Receta> implements InterfazRepositorioRecetas {
 
 	public List<Receta> recetaConocidas;
 
 	protected RepositorioRecetas() {
+		this.collectionName = "Recetas";
 		this.recetaConocidas = new ArrayList<Receta>();
 	}
 
@@ -35,10 +42,8 @@ public class RepositorioRecetas extends DBContentProvider implements InterfazRep
 
 
 	@Override   
-	public Document create(Object doc) {
-		
-		Receta receta = (Receta) doc;
-		
+	public Document create(Receta receta) {
+			
 		return new Document("nombre", receta.getNombre())
 									.append("calorias", receta.getCalorias())
 									.append("dificultad", receta.getDificultad())
@@ -46,12 +51,10 @@ public class RepositorioRecetas extends DBContentProvider implements InterfazRep
 									.append("tiempoPreparacion", receta.getTiempoPreparacion())
 									.append("autor", receta.getAutor())
 									.append("anioCreacion", receta.getAnioCreacion())
-									.append("condimentos", asList(
-																		new Document(new HashMap<String,Object>(receta.getCondimentos())))
-									.append("ingredientes", asList(
-																		new Document(new HashMap<String,Object>(receta.getIngredientes()))))
-									.append("pasosPreparacion", asList(receta.getPasosPreparacion().keySet())) //FIX
-									.append("condiciones", asList(receta.getCondiciones())); //FiX
+									.append("condimentos", asList(new BasicDBObject(receta.getCondimentos())))
+									.append("ingredientes", asList(new BasicDBObject(receta.getIngredientes()))
+									.append("pasosPreparacion", asList(new BasicDBObject(receta.getPasosPreparacion())) 
+									.append("condiciones", new BasicDBList()); //FiX
 									
 	};
 	
@@ -94,6 +97,20 @@ public class RepositorioRecetas extends DBContentProvider implements InterfazRep
 	
 	public void eliminarTodasLasRecetas() {
 		this.recetaConocidas.clear();
+	}
+
+
+	@Override
+	public Document createFilter(Receta t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Receta map(Document bson) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

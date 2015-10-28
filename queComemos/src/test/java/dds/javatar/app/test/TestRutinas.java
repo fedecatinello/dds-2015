@@ -5,12 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
-import dds.javatar.app.dto.usuario.condiciones.Celiaco;
-import dds.javatar.app.dto.usuario.condiciones.Diabetico;
-import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
-import dds.javatar.app.dto.usuario.condiciones.Vegano;
-import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.domain.usuario.Usuario;
+import dds.javatar.app.domain.usuario.Rutina.TipoRutina;
+import dds.javatar.app.domain.usuario.condiciones.Celiaco;
+import dds.javatar.app.domain.usuario.condiciones.Diabetico;
+import dds.javatar.app.domain.usuario.condiciones.Hipertenso;
+import dds.javatar.app.domain.usuario.condiciones.Vegano;
 import dds.javatar.app.util.exception.BusinessException;
 
 public class TestRutinas {

@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
-import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.builder.RecetaBuilder;
-import dds.javatar.app.dto.sistema.RepositorioRecetas;
-import dds.javatar.app.dto.sistema.RepositorioUsuarios;
-import dds.javatar.app.dto.usuario.Rutina;
-import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.dto.usuario.condiciones.Celiaco;
+import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;
+import dds.javatar.app.domain.receta.Receta;
+import dds.javatar.app.domain.receta.builder.RecetaBuilder;
+import dds.javatar.app.domain.sistema.RepositorioRecetas;
+import dds.javatar.app.domain.sistema.RepositorioUsuarios;
+import dds.javatar.app.domain.usuario.Rutina;
+import dds.javatar.app.domain.usuario.Usuario;
+import dds.javatar.app.domain.usuario.condiciones.Celiaco;
 
 public class ContainerFactory {
 

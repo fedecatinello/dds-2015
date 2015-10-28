@@ -2,18 +2,19 @@ package dds.javatar.app.test;
 
 import java.util.Calendar;
 import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.receta.busqueda.Busqueda;
-import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
-import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.dto.usuario.condiciones.Vegano;
-import dds.javatar.app.dto.usuario.monitoreo.MonitorMasConsultadas;
-import dds.javatar.app.dto.usuario.monitoreo.MonitorMasConsultadasPorSexo;
-import dds.javatar.app.dto.usuario.monitoreo.MonitorPorHora;
-import dds.javatar.app.dto.usuario.monitoreo.MonitorVeganos;
+import dds.javatar.app.domain.receta.busqueda.Busqueda;
+import dds.javatar.app.domain.receta.busqueda.adapter.BusquedaAdapter;
+import dds.javatar.app.domain.usuario.Usuario;
+import dds.javatar.app.domain.usuario.condiciones.Vegano;
+import dds.javatar.app.domain.usuario.monitoreo.MonitorMasConsultadas;
+import dds.javatar.app.domain.usuario.monitoreo.MonitorMasConsultadasPorSexo;
+import dds.javatar.app.domain.usuario.monitoreo.MonitorPorHora;
+import dds.javatar.app.domain.usuario.monitoreo.MonitorVeganos;
 
 public class TestMonitoresConsultas {
 

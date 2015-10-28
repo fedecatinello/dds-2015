@@ -8,10 +8,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import dds.javatar.app.dto.sistema.Administrador;
-import dds.javatar.app.dto.sistema.RepositorioUsuarios;
-import dds.javatar.app.dto.sistema.Solicitud;
-import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.domain.sistema.Administrador;
+import dds.javatar.app.domain.sistema.RepositorioUsuarios;
+import dds.javatar.app.domain.sistema.Solicitud;
+import dds.javatar.app.domain.usuario.Usuario;
 
 public class TestAdministrador {
 

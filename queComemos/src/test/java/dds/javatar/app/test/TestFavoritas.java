@@ -9,12 +9,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.busqueda.Buscador;
-import dds.javatar.app.dto.receta.busqueda.Busqueda;
-import dds.javatar.app.dto.sistema.Administrador;
-import dds.javatar.app.dto.sistema.RepositorioRecetas;
-import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.domain.receta.Receta;
+import dds.javatar.app.domain.receta.busqueda.Buscador;
+import dds.javatar.app.domain.receta.busqueda.Busqueda;
+import dds.javatar.app.domain.sistema.Administrador;
+import dds.javatar.app.domain.sistema.RepositorioRecetas;
+import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 
 public class TestFavoritas {

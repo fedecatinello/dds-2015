@@ -12,16 +12,22 @@ import spark.Spark;
 
 
 
+
+
+
 import com.google.gson.Gson;
 
 
 
 
 
-import dds.javatar.app.dto.sistema.RepositorioUsuarios;
-import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.dto.usuario.condiciones.CondicionPreexistente;
-import dds.javatar.app.dto.usuario.condiciones.Vegano;
+
+
+
+import dds.javatar.app.domain.sistema.RepositorioUsuarios;
+import dds.javatar.app.domain.usuario.Usuario;
+import dds.javatar.app.domain.usuario.condiciones.CondicionPreexistente;
+import dds.javatar.app.domain.usuario.condiciones.Vegano;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class UsuariosController {

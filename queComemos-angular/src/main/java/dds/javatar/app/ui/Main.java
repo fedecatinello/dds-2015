@@ -4,8 +4,8 @@ import spark.Spark;
 
 import com.google.gson.Gson;
 
-import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
-import dds.javatar.app.dto.usuario.monitoreo.MonitorMasConsultadas;
+import dds.javatar.app.domain.receta.busqueda.adapter.BusquedaAdapter;
+import dds.javatar.app.domain.usuario.monitoreo.MonitorMasConsultadas;
 import dds.javatar.app.ui.controller.RecetasController;
 import dds.javatar.app.ui.controller.UsuariosController;
 import dds.javatar.app.ui.controller.util.ContainerFactory;

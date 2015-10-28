@@ -8,14 +8,14 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.grupodeusuarios.GrupoDeUsuarios;
-import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.builder.RecetaBuilder;
-import dds.javatar.app.dto.receta.busqueda.Buscador;
-import dds.javatar.app.dto.sistema.Administrador;
-import dds.javatar.app.dto.sistema.RepositorioRecetas;
-import dds.javatar.app.dto.usuario.Usuario;
-import dds.javatar.app.dto.usuario.condiciones.Hipertenso;
+import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;
+import dds.javatar.app.domain.receta.Receta;
+import dds.javatar.app.domain.receta.builder.RecetaBuilder;
+import dds.javatar.app.domain.receta.busqueda.Buscador;
+import dds.javatar.app.domain.sistema.Administrador;
+import dds.javatar.app.domain.sistema.RepositorioRecetas;
+import dds.javatar.app.domain.usuario.Usuario;
+import dds.javatar.app.domain.usuario.condiciones.Hipertenso;
 import dds.javatar.app.util.exception.BusinessException;
 import dds.javatar.app.util.exception.RecetaException;
 

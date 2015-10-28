@@ -6,12 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import queComemos.entrega3.dominio.Dificultad;
-import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.builder.RecetaBuilder;
-import dds.javatar.app.dto.receta.busqueda.Busqueda;
-import dds.javatar.app.dto.usuario.Rutina;
-import dds.javatar.app.dto.usuario.Rutina.TipoRutina;
-import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.domain.receta.Receta;
+import dds.javatar.app.domain.receta.builder.RecetaBuilder;
+import dds.javatar.app.domain.receta.busqueda.Busqueda;
+import dds.javatar.app.domain.usuario.Rutina;
+import dds.javatar.app.domain.usuario.Usuario;
+import dds.javatar.app.domain.usuario.Rutina.TipoRutina;
 import dds.javatar.app.util.exception.RecetaException;
 
 public class TestFactory {

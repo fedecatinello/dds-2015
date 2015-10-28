@@ -18,9 +18,9 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import dds.javatar.app.dto.receta.busqueda.Buscador;
-import dds.javatar.app.dto.sistema.Administrador;
-import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.domain.receta.busqueda.Buscador;
+import dds.javatar.app.domain.sistema.Administrador;
+import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 import dds.javatar.app.util.exception.RecetaException;
 

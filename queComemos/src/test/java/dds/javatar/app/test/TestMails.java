@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import dds.javatar.app.dto.receta.busqueda.Buscador;
-import dds.javatar.app.dto.sistema.Administrador;
-import dds.javatar.app.dto.tareasPendientes.MailBusqueda;
-import dds.javatar.app.dto.tareasPendientes.mail.MailSender;
-import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.domain.receta.busqueda.Buscador;
+import dds.javatar.app.domain.sistema.Administrador;
+import dds.javatar.app.domain.tareasPendientes.MailBusqueda;
+import dds.javatar.app.domain.tareasPendientes.mail.MailSender;
+import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 
 public class TestMails {

@@ -10,15 +10,15 @@ import spark.Spark;
 
 import com.google.gson.Gson;
 
-import dds.javatar.app.dto.receta.Receta;
-import dds.javatar.app.dto.receta.busqueda.Buscador;
-import dds.javatar.app.dto.receta.busqueda.Busqueda;
-import dds.javatar.app.dto.receta.busqueda.Busqueda.BusquedaBuilder;
-import dds.javatar.app.dto.receta.busqueda.adapter.BusquedaAdapter;
-import dds.javatar.app.dto.receta.filtro.FiltroCondiciones;
-import dds.javatar.app.dto.sistema.RepositorioRecetas;
-import dds.javatar.app.dto.sistema.RepositorioUsuarios;
-import dds.javatar.app.dto.usuario.Usuario;
+import dds.javatar.app.domain.receta.Receta;
+import dds.javatar.app.domain.receta.busqueda.Buscador;
+import dds.javatar.app.domain.receta.busqueda.Busqueda;
+import dds.javatar.app.domain.receta.busqueda.Busqueda.BusquedaBuilder;
+import dds.javatar.app.domain.receta.busqueda.adapter.BusquedaAdapter;
+import dds.javatar.app.domain.receta.filtro.FiltroCondiciones;
+import dds.javatar.app.domain.sistema.RepositorioRecetas;
+import dds.javatar.app.domain.sistema.RepositorioUsuarios;
+import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class RecetasController {

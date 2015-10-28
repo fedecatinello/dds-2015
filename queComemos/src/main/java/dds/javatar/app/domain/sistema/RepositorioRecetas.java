@@ -1,15 +1,20 @@
 package dds.javatar.app.domain.sistema;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.bson.Document;
+import static java.util.Arrays.asList;
+import dds.javatar.app.db.DBContentProvider;
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.util.exception.BusinessException;
 
 
-public class RepositorioRecetas implements InterfazRepositorioRecetas {
+public class RepositorioRecetas extends DBContentProvider implements InterfazRepositorioRecetas {
 
 	public List<Receta> recetaConocidas;
 
@@ -26,8 +31,24 @@ public class RepositorioRecetas implements InterfazRepositorioRecetas {
 		return instance;
 	}
 
-	/** Getter & Setter **/
 
+//	@Override   
+//	public Document create(Receta receta) {
+//		
+//		return new Document("nombre", receta.getNombre())
+//									.append("calorias", receta.getCalorias())
+//									.append("dificultad", receta.getDificultad())
+//									.append("temporada", receta.getTemporada())
+//									.append("tiempoPreparacion", receta.getTiempoPreparacion())
+//									.append("autor", receta.getAutor())
+//									.append("anioCreacion", receta.getAnioCreacion())
+//									.append("condimentos", asList(new Document())
+//									.append("ingredientes", receta.getIngredientes())
+//									.append("pasosPreparacion", receta.getPasosPreparacion())
+//									.append("condiciones", receta.getCondiciones());
+//									
+//	};
+	
 	@Override
 	public void agregar(Receta receta) {
 		this.recetaConocidas.add(receta);

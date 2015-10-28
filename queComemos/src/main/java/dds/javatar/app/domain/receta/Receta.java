@@ -127,6 +127,14 @@ public class Receta {
 		this.anioCreacion = anioCreacion;
 	}
 
+	public Set<CondicionPreexistente> getCondiciones() {
+		return condiciones;
+	}
+
+	public void setCondiciones(Set<CondicionPreexistente> condiciones) {
+		this.condiciones = condiciones;
+	}
+
 	public Boolean contieneIngrediente(String ingrediente) {
 		return this.ingredientes.containsKey(ingrediente);
 	}

@@ -37,7 +37,7 @@ public class DBContentProvider {
 		}
 		
 		/** To be applied by subclasses **/
-		public Document createDocument() {
+		public Document create(Object obj) {
 			return null;
 		}
 		

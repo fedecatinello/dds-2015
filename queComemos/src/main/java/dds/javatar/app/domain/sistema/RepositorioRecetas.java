@@ -40,24 +40,6 @@ public class RepositorioRecetas extends DBContentProvider<Receta> implements Int
 		return instance;
 	}
 
-
-	@Override   
-	public Document create(Receta receta) {
-			
-		return new Document("nombre", receta.getNombre())
-									.append("calorias", receta.getCalorias())
-									.append("dificultad", receta.getDificultad())
-									.append("temporada", receta.getTemporada())
-									.append("tiempoPreparacion", receta.getTiempoPreparacion())
-									.append("autor", receta.getAutor())
-									.append("anioCreacion", receta.getAnioCreacion())
-									.append("condimentos", asList(new BasicDBObject(receta.getCondimentos())))
-									.append("ingredientes", asList(new BasicDBObject(receta.getIngredientes()))
-									.append("pasosPreparacion", asList(new BasicDBObject(receta.getPasosPreparacion())) 
-									.append("condiciones", new BasicDBList()); //FiX
-									
-	};
-	
 	@Override
 	public void agregar(Receta receta) {
 		this.recetaConocidas.add(receta);
@@ -99,18 +81,69 @@ public class RepositorioRecetas extends DBContentProvider<Receta> implements Int
 		this.recetaConocidas.clear();
 	}
 
+	
+	@Override   
+	public Document create(Receta receta) {
+		
+		Document bson = new Document("_id", new ObjectId()).append("nombre", receta.getNombre());
+		
+		/* Append author if applies */
+		this.appendAuthorIfApply(bson, receta);
+		
+		bson.append("calorias", receta.getCalorias())
+			.append("dificultad", receta.getDificultad())
+			.append("temporada", receta.getTemporada())
+			.append("tiempoPreparacion", receta.getTiempoPreparacion())
+			.append("anioCreacion", receta.getAnioCreacion())
+			.append("condimentos", asList(new BasicDBObject(receta.getCondimentos())))
+			.append("ingredientes", asList(new BasicDBObject(receta.getIngredientes()))
+			.append("pasosPreparacion", asList(new BasicDBObject(receta.getPasosPreparacion())) 
+			.append("condiciones", new BasicDBList()); /**TODO FIX**/
+									
+	};
+	
+	public void appendAuthorIfApply(Document bson, Receta receta) {
+		if(receta.getAutor()!= null) {
+			bson.append("autor", receta.getAutor());
+		}
+	}
+	
 
 	@Override
 	public Document createFilter(Receta t) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		/** Creamos un filtro para buscar recetas por nombre y autor **/		
+		Document bson = new Document("nombre", t.getNombre());
+		
+		/* Append author if applies */
+		this.appendAuthorIfApply(bson, t);
+		
+		return bson;
 	}
 
 
 	@Override
 	public Receta map(Document bson) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Receta receta = new Receta();
+		
+		receta.setNombre(bson.getString("nombre"));
+		this.mapAuthorIfApply(bson, receta);
+		receta.setCalorias(bson.getInteger("calorias"));
+		receta.setDificultad(bson.getString("dificultad"));
+		receta.setTemporada(bson.getString("temporada"));
+		receta.setTiempoPreparacion(bson.getInteger("tiempoPreparacion"));
+		receta.setAnioCreacion(bson.getInteger("anioCreacion"));
+		
+		// TODO Faltan mapear las colecciones
+		
+		return receta;
+	}
+	
+	public void mapAuthorIfApply(Document bson, Receta receta) {
+		if(bson.containsKey("autor")) {
+			receta.setAutor(bson.getString("autor"));
+		}
 	}
 
 }

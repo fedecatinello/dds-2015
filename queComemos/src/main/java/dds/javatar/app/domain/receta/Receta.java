@@ -45,6 +45,12 @@ public class Receta {
 		this.ingredientes = new HashMap<String, BigDecimal>(ingredientes);
 		this.pasosPreparacion = new HashMap<Integer, String>(pasosPreparacion);
 	}
+	
+	public Receta() {
+		this.condimentos = new HashMap<String, BigDecimal>(condimentos);
+		this.ingredientes = new HashMap<String, BigDecimal>(ingredientes);
+		this.pasosPreparacion = new HashMap<Integer, String>(pasosPreparacion);
+	}
 
 	/** Getters & Setters **/
 	public String getNombre() {

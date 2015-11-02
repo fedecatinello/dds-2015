@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.impl.ServletContextCleaner;
 import org.bson.BsonArray;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -90,17 +91,27 @@ public class RepositorioRecetas extends DBContentProvider<Receta> implements Int
 		/* Append author if applies */
 		this.appendAuthorIfApply(bson, receta);
 		
-		bson.append("calorias", receta.getCalorias())
+	
+		return bson.append("calorias", receta.getCalorias())
 			.append("dificultad", receta.getDificultad())
 			.append("temporada", receta.getTemporada())
 			.append("tiempoPreparacion", receta.getTiempoPreparacion())
 			.append("anioCreacion", receta.getAnioCreacion())
 			.append("condimentos", asList(new BasicDBObject(receta.getCondimentos())))
-			.append("ingredientes", asList(new BasicDBObject(receta.getIngredientes()))
-			.append("pasosPreparacion", asList(new BasicDBObject(receta.getPasosPreparacion())) 
-			.append("condiciones", new BasicDBList()); /**TODO FIX**/
+			.append("ingredientes", asList(new BasicDBObject(receta.getIngredientes())))
+			.append("pasosPreparacion", asList(new BasicDBObject(receta.getPasosPreparacion())))
+			.append("condiciones", receta.getCondiciones()); 
+		/**TODO FIX**/
 									
-	};
+	}
+	
+	public List<String> getCondicionesName(Set<CondicionPreexistente> condicionesPreexistentes){
+		List<String> condiciones = new ArrayList<String>();
+		for(CondicionPreexistente cond : condicionesPreexistentes){
+			condiciones.add(cond.getName());
+		}
+		return condiciones;
+	}
 	
 	public void appendAuthorIfApply(Document bson, Receta receta) {
 		if(receta.getAutor()!= null) {
@@ -136,7 +147,7 @@ public class RepositorioRecetas extends DBContentProvider<Receta> implements Int
 		receta.setAnioCreacion(bson.getInteger("anioCreacion"));
 		
 		// TODO Faltan mapear las colecciones
-		
+		receta.setCondiciones((Set<CondicionPreexistente>)bson.get("condiciones"));
 		return receta;
 	}
 	

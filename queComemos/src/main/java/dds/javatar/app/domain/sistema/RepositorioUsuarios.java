@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.despegar.integration.mongo.connector.MongoCollection;
 
 import dds.javatar.app.db.DBContentProvider;
+import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.usuario.Usuario;
 
 public class RepositorioUsuarios extends DBContentProvider<Usuario> {
@@ -14,13 +15,11 @@ public class RepositorioUsuarios extends DBContentProvider<Usuario> {
 	private static final String collection_name = "usuarios";
 	private static MongoCollection<Usuario> usuarios_collection;
 	
-	private static RepositorioUsuarios instance;
-
-	public static RepositorioUsuarios getInstance() {
-		if (instance == null) {
-			instance = new RepositorioUsuarios();
+	public MongoCollection<Usuario> getInstance() {
+		if (usuarios_collection == null) {
+			usuarios_collection = this.buildCollection(collection_name, Usuario.class);
 		}
-		return instance;
+		return usuarios_collection;
 	}
 
 	public void add(Usuario usuario) {

@@ -69,7 +69,7 @@ public class Buscador {
 
 		List<Receta> recetasQueConoceLista = new ArrayList<Receta>();
 		Set<Receta> recetasQueConoceSet = new LinkedHashSet<Receta>(
-				RepositorioRecetas.getInstance().recetaConocidas);
+				RepositorioRecetas.getInstance().listarTodas());
 		recetasQueConoceSet.addAll(usuario.getRecetas());
 
 		if (!usuario.getGruposAlQuePertenece().isEmpty()

@@ -12,7 +12,6 @@ import com.despegar.integration.mongo.query.Query;
 public abstract class DBContentProvider<T extends GenericIdentifiableEntity<?>> {
 			
 		MongoDBConnection connection = new MongoDBConnection("utn-dds", "localhost:27017");
-		
 		MongoCollectionFactory factory = new MongoCollectionFactory(connection);		
 		
 		/** To be applied by subclasses **/

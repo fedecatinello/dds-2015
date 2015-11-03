@@ -15,9 +15,10 @@ public class RepositorioUsuarios extends DBContentProvider<Usuario> {
 	private static final String collection_name = "usuarios";
 	private static MongoCollection<Usuario> usuarios_collection;
 	
-	public MongoCollection<Usuario> getInstance() {
+	public static MongoCollection<Usuario> getInstance() {
 		if (usuarios_collection == null) {
-			usuarios_collection = this.buildCollection(collection_name, Usuario.class);
+			RepositorioUsuarios repo = new RepositorioUsuarios(); // esta bien manejarlo asi?
+			usuarios_collection = repo.buildCollection(collection_name, Usuario.class);
 		}
 		return usuarios_collection;
 	}

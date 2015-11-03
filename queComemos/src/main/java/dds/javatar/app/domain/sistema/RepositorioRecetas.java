@@ -17,11 +17,11 @@ public class RepositorioRecetas extends DBContentProvider<Receta> implements Int
 
 	private static final String collection_name = "recetas";
 	
-	private static MongoCollection<Receta> receta_collection;
+	private MongoCollection<Receta> receta_collection;
 	
 	public MongoCollection<Receta> getInstance() {
 		if (receta_collection == null) {
-			receta_collection = this.buildCollection(collection_name, Receta.class);
+			receta_collection = buildCollection(collection_name, Receta.class);
 		}
 		return receta_collection;
 	}

@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
-import org.uqbar.commons.model.Entity;
-
 import com.despegar.integration.mongo.entities.IdentifiableEntity;
 
 import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;

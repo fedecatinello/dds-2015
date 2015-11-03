@@ -2,32 +2,13 @@ package dds.javatar.app.ui.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import spark.Spark;
-
-
-
-
-
-
-
-
 import com.google.gson.Gson;
-
-
-
-
-
-
-
 
 import dds.javatar.app.domain.sistema.RepositorioUsuarios;
 import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.domain.usuario.condiciones.CondicionPreexistente;
-import dds.javatar.app.domain.usuario.condiciones.Vegano;
 import dds.javatar.app.ui.controller.util.JsonTransformer;
 
 public class UsuariosController {
@@ -149,8 +130,5 @@ public class UsuariosController {
 
 			return condicionesPreexistentes;
 		}, this.jsonTransformer);
-	}
-	
-	
+	}	
 }
-

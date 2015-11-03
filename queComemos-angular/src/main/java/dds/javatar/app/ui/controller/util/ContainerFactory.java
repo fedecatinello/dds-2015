@@ -2,9 +2,6 @@ package dds.javatar.app.ui.controller.util;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
-import com.despegar.integration.mongo.connector.MongoCollection;
-
 import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.receta.builder.RecetaBuilder;

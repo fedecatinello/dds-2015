@@ -212,8 +212,6 @@ public class TestFactory {
 
 	public static void crearListaRecetasParaUsuarioSize30(Usuario user)
 			throws RecetaException {
-		Receta recetaPrivadaCompuesta;
-		Receta recetaPrivadaSimple;
 		Receta recetaPrivadaSimpleHipertenso;
 		Receta recetaPublicaSimple, recetaPublicaSimple2,recetaPublicaSimple3;
 		for (int i = 0; i < 10; i++) {

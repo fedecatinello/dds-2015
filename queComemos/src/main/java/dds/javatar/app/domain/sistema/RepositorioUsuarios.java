@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import com.despegar.integration.mongo.connector.MongoCollection;
 
 import dds.javatar.app.db.DBContentProvider;
-import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.usuario.Usuario;
 
 public class RepositorioUsuarios extends DBContentProvider<Usuario> {

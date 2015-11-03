@@ -14,6 +14,8 @@ import java.util.Set;
 
 import org.uqbar.commons.model.Entity;
 
+import com.despegar.integration.mongo.entities.IdentifiableEntity;
+
 import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.receta.busqueda.Buscador;
@@ -22,8 +24,8 @@ import dds.javatar.app.domain.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
-@SuppressWarnings("serial")
-public class Usuario extends Entity {
+
+public class Usuario implements IdentifiableEntity {
 
 	public enum Sexo {
 		MASCULINO, FEMENINO
@@ -35,6 +37,7 @@ public class Usuario extends Entity {
 
 	private static final Integer MIN_NAME_LENGTH = 4;
 
+	private String id;
 	private String nombre;
 	private Sexo sexo;
 	private Date fechaNacimiento;
@@ -440,6 +443,16 @@ public class Usuario extends Entity {
 				return true;
 		}
 		return false;
+	}
+
+	@Override
+	public String getId() {
+		return this.id;
+	}
+
+	@Override
+	public void setId(String usuario_id) {
+		this.id=usuario_id;
 	}
 
 }

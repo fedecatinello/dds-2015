@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections15.Predicate;
-import org.uqbar.commons.model.CollectionBasedHome;
+import com.despegar.integration.mongo.connector.MongoCollection;
 
+import dds.javatar.app.db.DBContentProvider;
 import dds.javatar.app.domain.usuario.Usuario;
 
-public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
+public class RepositorioUsuarios extends DBContentProvider<Usuario> {
 
+	private static final String collection_name = "usuarios";
+	private static MongoCollection<Usuario> usuarios_collection;
+	
 	private static RepositorioUsuarios instance;
 
 	public static RepositorioUsuarios getInstance() {
@@ -21,15 +24,15 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 	}
 
 	public void add(Usuario usuario) {
-		this.effectiveCreate(usuario);
+		this.insert(usuarios_collection, usuario);	
 	}
 
 	public void remove(Usuario usuario) {
-		this.effectiveDelete(usuario);
+		this.deleteByName(usuarios_collection, usuario.getNombre());
 	}
 
 	public void updateUsuario(Usuario usuario) {
-		update(usuario);
+		this.update(usuarios_collection, usuario);		
 	}
 
 	public Usuario get(Usuario Usuario) {
@@ -38,7 +41,7 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 
 	public Usuario getByUsername(String username) {
 		try {
-			List<Usuario> listaUsers = super.getObjects();
+			List<Usuario> listaUsers = listarUsuarios();
 			return listaUsers.stream().filter(s -> s.getUser().equals(username)).map(p-> (Usuario) p).collect(Collectors.toList()).get(0);
 		} catch (Exception e) {
 			return null;	// revianta cuando no encuentra nada
@@ -47,7 +50,7 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 	
 	public Usuario getByCredential(String username, String password) {
 		try {
-			List<Usuario> listaUsers = super.getObjects();
+			List<Usuario> listaUsers = listarUsuarios();
 			return listaUsers.stream().filter(s -> s.getUser().equals(username) && s.getPassword().equals(password)).map(p-> (Usuario) p).collect(Collectors.toList()).get(0);
 		} catch (Exception e) {
 			return null;	// revianta cuando no encuentra nada
@@ -56,7 +59,7 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 	
 	public List<Usuario> searchByName(Usuario usuario) {
 		List<Usuario> listaUsuariosConElMismoNombre = new ArrayList<Usuario>();
-		for (Usuario usuarioEnSistema : super.getObjects()) {
+		for (Usuario usuarioEnSistema : listarUsuarios()) {
 			if (usuarioEnSistema.getNombre().equals(usuario.getNombre())) {
 				listaUsuariosConElMismoNombre.add(usuarioEnSistema);
 			}
@@ -83,22 +86,27 @@ public class RepositorioUsuarios extends CollectionBasedHome<Usuario> {
 		}
 	}
 	
-	@Override
-	public Class<Usuario> getEntityType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Usuario createExample() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Usuario> listarUsuarios() {
+		return this.findAll(usuarios_collection);
 	}
-
-	@Override
-	protected Predicate<?> getCriterio(Usuario example) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	
+//	@Override
+//	public Class<Usuario> getEntityType() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public Usuario createExample() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	protected Predicate<?> getCriterio(Usuario example) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }

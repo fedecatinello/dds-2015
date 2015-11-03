@@ -1,5 +1,6 @@
 package dds.javatar.app.db;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 import com.despegar.integration.mongo.connector.MongoCollection;
@@ -11,12 +12,18 @@ import com.despegar.integration.mongo.query.Query;
 public abstract class DBContentProvider<T extends GenericIdentifiableEntity<?>> {
 			
 		MongoDBConnection connection = new MongoDBConnection("utn-dds", "localhost:27017");
+		
 		MongoCollectionFactory factory = new MongoCollectionFactory(connection);		
 		
 		/** To be applied by subclasses **/
 		public MongoCollection<T> buildCollection(String collectionName, Class<T> t) {
-			
-			MongoCollection<T> collection = factory.buildMongoCollection(collectionName, t);
+			MongoCollection<T> collection = null;
+			try{
+			collection = factory.buildMongoCollection(collectionName, t);
+			} catch(UnknownHostException uhex){
+				
+			}
+			return collection;
 		}
 		
 		/** Basic CRUD **/

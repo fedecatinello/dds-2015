@@ -41,7 +41,7 @@ import dds.javatar.app.util.exception.RecetaException;
     		this.calorias = 0;
     	}
 
-    	/** Builder methods **/
+    	/** Builder methods **/    	
     	public RecetaBuilder dificultad(String dificultad) {
     		this.dificultad = dificultad;
     		return this;

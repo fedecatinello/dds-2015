@@ -238,9 +238,9 @@ public class ContainerFactory {
 		maru.agregarPreferenciaAlimenticia("Mousse de Chocolate");
 		this.instanceRepoUsuarios.add(maru);
 
-		maru.marcarFavorita(this.instanceRepositorioRecetas.recetaConocidas.get(0));
-		maru.marcarFavorita(this.instanceRepositorioRecetas.recetaConocidas.get(1));
-		maru.marcarFavorita(this.instanceRepositorioRecetas.recetaConocidas.get(2));
+		maru.marcarFavorita(this.instanceRepositorioRecetas.listarTodas().get(0));
+		maru.marcarFavorita(this.instanceRepositorioRecetas.listarTodas().get(1));
+		maru.marcarFavorita(this.instanceRepositorioRecetas.listarTodas().get(2));
 
 		Usuario mariano = new Usuario.UsuarioBuilder()
 			.nombre("Mariano")

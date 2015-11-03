@@ -42,7 +42,7 @@ public class RecetasController {
 
 		Spark.get("/recetasPublicas", "application/json;charset=utf-8", (request, response) -> {
 			response.type("application/json;charset=utf-8");
-			return RepositorioRecetas.getInstance().recetaConocidas;
+			return RepositorioRecetas.getInstance().listarTodas();
 		}, this.jsonTransformer);
 
 		Spark.get("/buscarRecetas", (request, response) -> {

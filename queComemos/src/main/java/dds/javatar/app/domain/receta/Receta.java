@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.despegar.integration.mongo.entities.IdentifiableEntity;
+
 import dds.javatar.app.domain.receta.builder.RecetaBuilder;
 import dds.javatar.app.domain.sistema.RepositorioRecetas;
 import dds.javatar.app.domain.usuario.Usuario;
@@ -14,8 +16,9 @@ import dds.javatar.app.domain.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
 
-public class Receta {
+public class Receta implements IdentifiableEntity {
 
+	protected String id;
 	protected String nombre;
 	protected Integer calorias;
 	protected String dificultad;
@@ -53,6 +56,16 @@ public class Receta {
 	}
 
 	/** Getters & Setters **/
+	@Override
+	public String getId() {
+		return this.id;
+	}
+
+	@Override
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getNombre() {
 		return this.nombre;
 	}

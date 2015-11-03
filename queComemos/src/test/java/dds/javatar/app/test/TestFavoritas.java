@@ -92,12 +92,8 @@ public class TestFavoritas {
 		assertEquals(1, user.getFavoritos().size());
 		
 		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
-		List<Receta> resultadoSegundaBusqueda = this.buscador.realizarBusquedaPara(this.user, busqueda);
 		Administrador.getInstance().realizarTareasPendientes();
-		
-		/*La búsqueda devuelve una, la misma*/
-	//	assertEquals(1, resultadoSegundaBusqueda.size());
-		
+				
 		/*No se vuelve a agregar porque ya estaba*/
 		assertEquals(1, user.getFavoritos().size());
 	}

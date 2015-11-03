@@ -13,14 +13,16 @@ import dds.javatar.app.domain.usuario.Usuario;
 public class RepositorioUsuarios extends DBContentProvider<Usuario> {
 
 	private static final String collection_name = "usuarios";
+	
+	private static RepositorioUsuarios instance;
 	private static MongoCollection<Usuario> usuarios_collection;
 	
-	public static MongoCollection<Usuario> getInstance() {
-		if (usuarios_collection == null) {
-			RepositorioUsuarios repo = new RepositorioUsuarios(); // esta bien manejarlo asi?
-			usuarios_collection = repo.buildCollection(collection_name, Usuario.class);
+	public static RepositorioUsuarios getInstance() {
+		if (instance == null) {
+			instance = new RepositorioUsuarios(); // esta bien manejarlo asi?
+			usuarios_collection = instance.buildCollection(collection_name, Usuario.class);
 		}
-		return usuarios_collection;
+		return instance;
 	}
 
 	public void add(Usuario usuario) {

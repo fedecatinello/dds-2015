@@ -17,20 +17,19 @@ public class RepositorioRecetas extends DBContentProvider<Receta> implements Int
 
 	private static final String collection_name = "recetas";
 	
+	private static RepositorioRecetas instance;
 	private static MongoCollection<Receta> receta_collection;
 	
-	public static MongoCollection<Receta> getInstance() {
-		if (receta_collection == null) {
-			RepositorioRecetas repo = new RepositorioRecetas(); // esta bien manejarlo asi?
-			receta_collection = repo.buildCollection(collection_name, Receta.class);
+	public static RepositorioRecetas getInstance() {
+		if (instance == null) {
+			instance = new RepositorioRecetas();
+			receta_collection = instance.buildCollection(collection_name, Receta.class);
 		}
-		return receta_collection;
+		return instance;
 	}
 	
 	@Override
-	public void agregar(Receta receta) {
-		buildCollection(collection_name, Receta.class);
-		
+	public void agregar(Receta receta) {	
 		this.insert(receta_collection, receta);		
 	}
 	

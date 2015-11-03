@@ -16,9 +16,8 @@ import dds.javatar.app.domain.usuario.condiciones.Celiaco;
 
 public class ContainerFactory {
 
-	private RepositorioRecetas asd = new RepositorioRecetas();
-	private MongoCollection<Receta> instanceRepositorioRecetas = RepositorioRecetas.getInstance();
-	private MongoCollection<Usuario> instanceRepoUsuarios = RepositorioUsuarios.getInstance();
+	private RepositorioRecetas instanceRepositorioRecetas = RepositorioRecetas.getInstance();
+	private RepositorioUsuarios instanceRepoUsuarios = RepositorioUsuarios.getInstance();
 
 	private static ContainerFactory instance;
 

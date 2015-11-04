@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 
 import com.despegar.integration.mongo.entities.IdentifiableEntity;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dds.javatar.app.domain.receta.builder.RecetaBuilder;
 import dds.javatar.app.domain.sistema.RepositorioRecetas;
@@ -18,7 +19,7 @@ import dds.javatar.app.util.exception.UsuarioException;
 
 public class Receta implements IdentifiableEntity {
 
-	protected String id;
+	@JsonProperty("_id")
 	protected String nombre;
 	protected Integer calorias;
 	protected String dificultad;
@@ -60,12 +61,12 @@ public class Receta implements IdentifiableEntity {
 	/** Getters & Setters **/
 	@Override
 	public String getId() {
-		return this.id;
+		return this.nombre;
 	}
 
 	@Override
 	public void setId(String id) {
-		this.id = id;
+		this.nombre = id;
 	}
 
 	public String getNombre() {
@@ -215,6 +216,36 @@ public class Receta implements IdentifiableEntity {
 			.buildReceta();
 
 		return recetaClonada;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.nombre == null) ? 0 : this.nombre.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		Receta other = (Receta) obj;
+		if (this.nombre == null) {
+			if (other.nombre != null) {
+				return false;
+			}
+		} else if (!this.nombre.equals(other.nombre)) {
+			return false;
+		}
+		return true;
 	}
 
 }

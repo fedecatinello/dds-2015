@@ -14,6 +14,7 @@ import java.util.Set;
 
 import com.despegar.integration.mongo.entities.IdentifiableEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.domain.receta.Receta;
@@ -35,7 +36,6 @@ public class Usuario implements IdentifiableEntity {
 
 	private static final Integer MIN_NAME_LENGTH = 4;
 
-	private String id;
 	private String nombre;
 	private Sexo sexo;
 	@JsonIgnore
@@ -54,15 +54,16 @@ public class Usuario implements IdentifiableEntity {
 	private boolean favearTodasLasConsultas;
 
 	/** Login attributes **/
+	@JsonProperty("_id")
 	private String username;
 	private String password;
 
 	/**** Constructors ****/
 
 	public Usuario() {
-		
+
 	}
-	
+
 	private Usuario(UsuarioBuilder usuarioBuilder) {
 		this.nombre = usuarioBuilder.nombre;
 		this.sexo = usuarioBuilder.sexo;
@@ -426,9 +427,7 @@ public class Usuario implements IdentifiableEntity {
 			if (this.tieneRecetaFavorita(receta)) {
 				Receta recetaEncontrada = this.getFavoritos().stream().filter(o -> o.getNombre().equals(receta.getNombre())).findFirst().get();
 				this.getFavoritos().remove(recetaEncontrada);
-			} 
-			else
-			{
+			} else {
 				this.marcarFavorita(receta);
 			}
 		} catch (NoSuchElementException e) {
@@ -455,19 +454,19 @@ public class Usuario implements IdentifiableEntity {
 
 	@Override
 	public String getId() {
-		return this.id;
+		return this.username;
 	}
 
 	@Override
 	public void setId(String id) {
-		this.id = id;
+		this.username = id;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result + ((this.username == null) ? 0 : this.username.hashCode());
 		return result;
 	}
 
@@ -483,11 +482,11 @@ public class Usuario implements IdentifiableEntity {
 			return false;
 		}
 		Usuario other = (Usuario) obj;
-		if (this.id == null) {
-			if (other.id != null) {
+		if (this.username == null) {
+			if (other.username != null) {
 				return false;
 			}
-		} else if (!this.id.equals(other.id)) {
+		} else if (!this.username.equals(other.username)) {
 			return false;
 		}
 		return true;

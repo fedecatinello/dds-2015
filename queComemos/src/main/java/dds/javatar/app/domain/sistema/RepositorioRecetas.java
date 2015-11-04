@@ -8,6 +8,7 @@ import java.util.Set;
 import dds.javatar.app.db.RepoDefault;
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.usuario.condiciones.CondicionPreexistente;
+import dds.javatar.app.util.exception.RecetaException;
 
 public class RepositorioRecetas extends RepoDefault<Receta> {
 
@@ -26,6 +27,15 @@ public class RepositorioRecetas extends RepoDefault<Receta> {
 
 	/** Metodos **/
 
+	@Override
+	public void saveOrUpdate(Receta receta) {
+		if (receta.getNombre() == null) {
+			throw new RecetaException("El nombre no puede ser nulo!");
+		}
+		super.saveOrUpdate(receta);
+	}
+
+	
 	public Set<String> getAllIngredientes() {
 		Set<String> ingredientes = new HashSet<String>();
 

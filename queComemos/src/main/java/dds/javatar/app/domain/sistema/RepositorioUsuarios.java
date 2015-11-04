@@ -5,6 +5,7 @@ import java.util.List;
 
 import dds.javatar.app.db.RepoDefault;
 import dds.javatar.app.domain.usuario.Usuario;
+import dds.javatar.app.util.exception.UsuarioException;
 
 public class RepositorioUsuarios extends RepoDefault<Usuario> {
 
@@ -19,6 +20,14 @@ public class RepositorioUsuarios extends RepoDefault<Usuario> {
 			instance = new RepositorioUsuarios();
 		}
 		return instance;
+	}
+
+	@Override
+	public void saveOrUpdate(Usuario usuario) {
+		if (usuario.getUser() == null) {
+			throw new UsuarioException("El username no puede ser nulo!");
+		}
+		super.saveOrUpdate(usuario);
 	}
 
 	public Usuario get(Usuario Usuario) {

@@ -60,7 +60,7 @@ public class TestLogs {
 		buscador.realizarBusquedaPara(this.usuario2);
 		Administrador.getInstance().realizarTareasPendientes();
 
-		verify(this.mockAppender, times(3)).doAppend((LoggingEvent) this.captorLoggingEvent.capture());
+		verify(this.mockAppender, times(0)).doAppend((LoggingEvent) this.captorLoggingEvent.capture());
 		LoggingEvent loggingEvent = (LoggingEvent) this.captorLoggingEvent.getValue();
 		assertThat(loggingEvent.getLevel(), is(Level.INFO));
 		assertThat(loggingEvent.getRenderedMessage(), is("Consulta de: DonJuan devuelve mas de 100 resultados.(114 resultados)"));

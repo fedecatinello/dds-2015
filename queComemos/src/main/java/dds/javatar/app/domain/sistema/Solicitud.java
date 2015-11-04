@@ -115,6 +115,7 @@ public class Solicitud {
 
 	public Usuario build() {
 		return new Usuario.UsuarioBuilder()
+			.credenciales(this.nombre, this.nombre)
 			.nombre(this.nombre)
 			.sexo(this.sexo)
 			.altura(this.altura)

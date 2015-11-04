@@ -1,7 +1,6 @@
 package dds.javatar.app.util.exception;
 
-@SuppressWarnings("serial")
-public class UsuarioException extends Exception {
+public class UsuarioException extends RuntimeException {
 
 	public UsuarioException(String message) {
 		super(message);

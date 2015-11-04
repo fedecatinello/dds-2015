@@ -20,7 +20,6 @@ import dds.javatar.app.domain.receta.busqueda.ResultadosPares;
 import dds.javatar.app.domain.receta.filtro.Filtro;
 import dds.javatar.app.domain.receta.filtro.FiltroCondiciones;
 import dds.javatar.app.domain.receta.filtro.FiltroPrecio;
-import dds.javatar.app.domain.sistema.RepositorioRecetas;
 import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 import dds.javatar.app.util.exception.RecetaException;
@@ -39,15 +38,13 @@ public class TestBusquedas {
 
 	@Test
 	public void testBuscarRecetasSinFiltro() throws FilterException {
-		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Buscador buscador = new Buscador();
 		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
-		assertEquals(42, listaRecetas.size()); // Son 30 locales + 12 externas
+		assertEquals(14, listaRecetas.size()); // Son 2 locales + 12 externas
 	}
 
 	@Test
 	public void testFiltrarRecetasConExcesoDeCalorias() throws FilterException {
-		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Buscador buscador = new Buscador();
 		List<Filtro> filtros = new ArrayList<Filtro>();
 		filtros.add(new FiltroCondiciones());
@@ -60,7 +57,6 @@ public class TestBusquedas {
 
 	@Test
 	public void testFiltrarRecetasConIngredientesCaros() throws FilterException, RecetaException {
-		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Usuario usuarioPedro = TestFactory.crearUsuarioBasicoValido();
 		TestFactory.crearListaRecetasParaUsuarioSize30(usuarioPedro);
 
@@ -75,7 +71,7 @@ public class TestBusquedas {
 		filtros.add(filtroPrecio);
 		buscador.setFiltros(filtros);
 		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuarioPedro);
-		assertEquals(32, listaRecetas.size()); // Son 20 locales + 12 externas
+		assertEquals(14, listaRecetas.size()); // Son 2 locales + 12 externas
 	}
 
 	/* Tests de Busquedas */
@@ -95,25 +91,23 @@ public class TestBusquedas {
 
 	@Test
 	public void cantidadRecetasGeneradas() {
-		assertEquals(40, this.usuario.getRecetas().size());
+		assertEquals(3, this.usuario.getRecetas().size());
 	}
 
 	@Test
 	public void testProcesarSoloPares() throws FilterException {
-		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Buscador buscador = new Buscador();
 		PostProcesamiento soloPares = new ResultadosPares();
 		buscador.setPostProcesamiento(soloPares);
 
 		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
-		assertEquals(21, listaRecetas.size()); // Son 30 locales + 12 externas =
-												// 42 /2 =21
+		assertEquals(7, listaRecetas.size()); // Son 2 locales + 12 externas =
+												// 14 /2 =7
 	}
 
 	// revisar: no tiene sentido el assert
 	@Test
 	public void testProcesarOrdenAlfabetico() throws FilterException {
-		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Buscador buscador = new Buscador();
 		Criterio alfabetico = new Alfabeticamente();
 		Ordenamiento orden = new Ordenamiento(alfabetico);
@@ -123,13 +117,12 @@ public class TestBusquedas {
 		buscador.setFiltros(filtros);
 
 		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
-		assertEquals(42, listaRecetas.size()); // Son 30 locales + 12 externas
+		assertEquals(14, listaRecetas.size()); // Son 2 locales + 12 externas
 	}
 
 	// revisar: no tiene sentido el assert
 	@Test
 	public void testProcesarOrdenCalorias() throws FilterException {
-		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Buscador buscador = new Buscador();
 		Criterio calorias = new Calorias();
 		Ordenamiento orden = new Ordenamiento(calorias);
@@ -139,7 +132,7 @@ public class TestBusquedas {
 		buscador.setFiltros(filtros);
 
 		List<Receta> listaRecetas = buscador.realizarBusquedaPara(usuario);
-		assertEquals(42, listaRecetas.size()); // Son 30 locales + 12 externas
+		assertEquals(14, listaRecetas.size()); // Son 2 locales + 12 externas
 	}
 
 }

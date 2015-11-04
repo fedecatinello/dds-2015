@@ -6,11 +6,11 @@ import java.util.List;
 import com.despegar.integration.mongo.connector.MongoCollection;
 import com.despegar.integration.mongo.connector.MongoCollectionFactory;
 import com.despegar.integration.mongo.connector.MongoDBConnection;
-import com.despegar.integration.mongo.entities.GenericIdentifiableEntity;
+import com.despegar.integration.mongo.entities.IdentifiableEntity;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public abstract class RepoDefault<T extends GenericIdentifiableEntity<String>> {
+public abstract class RepoDefault<T extends IdentifiableEntity> {
 
 	protected MongoCollection<T> collection;
 

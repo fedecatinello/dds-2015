@@ -24,10 +24,6 @@ import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.util.exception.FilterException;
 import dds.javatar.app.util.exception.RecetaException;
 
-
-
-
-
 @RunWith(MockitoJUnitRunner.class)
 public class TestLogs {
 	Usuario usuario1, usuario2;
@@ -36,63 +32,54 @@ public class TestLogs {
 	private Appender mockAppender;
 
 	@Captor
-	private ArgumentCaptor captorLoggingEvent;
+	private ArgumentCaptor<?> captorLoggingEvent;
 
 	@Before
 	public void initialize() {
-		usuario1 = TestFactory.crearUsuarioBasicoValido();
-		usuario2 = TestFactory.crearUsuarioBasicoValido();
-		LogManager.getRootLogger().addAppender(mockAppender);
+		this.usuario1 = TestFactory.crearUsuarioBasicoValido();
+		this.usuario2 = TestFactory.crearUsuarioBasicoValido();
+		LogManager.getRootLogger().addAppender(this.mockAppender);
 
 	}
 
 	@After
 	public void teardown() {
-		LogManager.getRootLogger().removeAppender(mockAppender);
+		LogManager.getRootLogger().removeAppender(this.mockAppender);
 	}
 
 	@Test
 	public void logueaTresConsultas() throws FilterException, RecetaException {
 
-		TestFactory.crearListaRecetasParaUsuarioSize101(usuario1);
-		TestFactory.crearListaRecetasParaUsuarioSize101(usuario1);
-		TestFactory.crearListaRecetasParaUsuarioSize101(usuario2);
-		TestFactory.crearListaRecetasParaUsuarioSize101(usuario2);
+		TestFactory.crearListaRecetasParaUsuarioSize101(this.usuario1);
+		TestFactory.crearListaRecetasParaUsuarioSize101(this.usuario1);
+		TestFactory.crearListaRecetasParaUsuarioSize101(this.usuario2);
+		TestFactory.crearListaRecetasParaUsuarioSize101(this.usuario2);
 		Buscador buscador = new Buscador();
-		buscador.realizarBusquedaPara(usuario1);
-		buscador.realizarBusquedaPara(usuario1);
-		buscador.realizarBusquedaPara(usuario2);
+		buscador.realizarBusquedaPara(this.usuario1);
+		buscador.realizarBusquedaPara(this.usuario1);
+		buscador.realizarBusquedaPara(this.usuario2);
 		Administrador.getInstance().realizarTareasPendientes();
-		
 
-		verify(mockAppender,times(3)).doAppend(
-				(LoggingEvent) captorLoggingEvent.capture());
-		LoggingEvent loggingEvent = (LoggingEvent) captorLoggingEvent
-				.getValue();
+		verify(this.mockAppender, times(3)).doAppend((LoggingEvent) this.captorLoggingEvent.capture());
+		LoggingEvent loggingEvent = (LoggingEvent) this.captorLoggingEvent.getValue();
 		assertThat(loggingEvent.getLevel(), is(Level.INFO));
-		assertThat(
-				loggingEvent.getRenderedMessage(),
-				is("Consulta de: DonJuan devuelve mas de 100 resultados.(114 resultados)"));
+		assertThat(loggingEvent.getRenderedMessage(), is("Consulta de: DonJuan devuelve mas de 100 resultados.(114 resultados)"));
 	}
 
-	@Test(expected=Exception.class)
+	@Test(expected = Exception.class)
 	public void noLogueaConsultas() throws FilterException, RecetaException {
-		TestFactory.crearListaRecetasParaUsuarioSize3(usuario1);
-		TestFactory.crearListaRecetasParaUsuarioSize3(usuario2);
+		TestFactory.crearListaRecetasParaUsuarioSize3(this.usuario1);
+		TestFactory.crearListaRecetasParaUsuarioSize3(this.usuario2);
 		Buscador buscador = new Buscador();
-		buscador.realizarBusquedaPara(usuario1);
-		buscador.realizarBusquedaPara(usuario1);
-		buscador.realizarBusquedaPara(usuario2);
+		buscador.realizarBusquedaPara(this.usuario1);
+		buscador.realizarBusquedaPara(this.usuario1);
+		buscador.realizarBusquedaPara(this.usuario2);
 		Administrador.getInstance().realizarTareasPendientes();
-		
-		verify(mockAppender, times(0)).doAppend(
-				(LoggingEvent) captorLoggingEvent.capture());
-		LoggingEvent loggingEvent = (LoggingEvent) captorLoggingEvent
-				.getValue();
+
+		verify(this.mockAppender, times(0)).doAppend((LoggingEvent) this.captorLoggingEvent.capture());
+		LoggingEvent loggingEvent = (LoggingEvent) this.captorLoggingEvent.getValue();
 		assertThat(loggingEvent.getLevel(), is(Level.INFO));
-		assertThat(
-				loggingEvent.getRenderedMessage(),
-				is("Consulta de: DonJuan devuelve mas de 100 resultados.(113 resultados)"));
+		assertThat(loggingEvent.getRenderedMessage(), is("Consulta de: DonJuan devuelve mas de 100 resultados.(113 resultados)"));
 	}
 
 }

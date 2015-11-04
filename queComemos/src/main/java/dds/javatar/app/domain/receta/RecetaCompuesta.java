@@ -17,14 +17,14 @@ public class RecetaCompuesta extends Receta {
 
 	protected Set<CondicionPreexistente> condiciones;
 
-	public RecetaCompuesta(String nombre, Integer calorias, String dificultad, String temporada,  Map<String, BigDecimal> ingredientes,
-			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion, Set<Receta> subRecetas) {
-		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion, subRecetas);
+	public RecetaCompuesta(String nombre, Integer calorias, String dificultad, String temporada, Map<String, BigDecimal> ingredientes,
+			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion, Set<Receta> subRecetas, Integer anioCreacion, Integer tiempoPreparacion) {
+		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion, subRecetas, anioCreacion, tiempoPreparacion);
 	}
 
 	public RecetaCompuesta(String nombre, String autor, Integer calorias, String dificultad, String temporada, Map<String, BigDecimal> ingredientes,
-			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion, Set<Receta> subRecetas) {
-		super(nombre, autor, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion);
+			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion, Set<Receta> subRecetas, Integer anioCreacion, Integer tiempoPreparacion) {
+		super(nombre, autor, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion, anioCreacion, tiempoPreparacion);
 		this.subRecetas = subRecetas;
 	}
 
@@ -38,10 +38,12 @@ public class RecetaCompuesta extends Receta {
 		this.subRecetas = subRecetas;
 	}
 
+	@Override
 	public Set<CondicionPreexistente> getCondiciones() {
 		return this.condiciones;
 	}
 
+	@Override
 	public void setCondiciones(Set<CondicionPreexistente> condiciones) {
 		this.condiciones = condiciones;
 	}

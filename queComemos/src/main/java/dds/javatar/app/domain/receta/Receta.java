@@ -33,12 +33,12 @@ public class Receta implements IdentifiableEntity {
 	protected Set<CondicionPreexistente> condiciones;
 
 	public Receta(String nombre, Integer calorias, String dificultad, String temporada, Map<String, BigDecimal> ingredientes,
-			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion) {
-		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion);
+			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion, Integer anioCreacion, Integer tiempoPreparacion) {
+		this(nombre, null, calorias, dificultad, temporada, ingredientes, condimentos, pasosPreparacion, anioCreacion, tiempoPreparacion);
 	}
 
 	public Receta(String nombre, String autor, Integer calorias, String dificultad, String temporada, Map<String, BigDecimal> ingredientes,
-			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion) {
+			Map<String, BigDecimal> condimentos, Map<Integer, String> pasosPreparacion, Integer anioCreacion, Integer tiempoPreparacion) {
 		this.nombre = nombre;
 		this.autor = autor;
 		this.calorias = calorias;
@@ -47,12 +47,14 @@ public class Receta implements IdentifiableEntity {
 		this.condimentos = new HashMap<String, BigDecimal>(condimentos);
 		this.ingredientes = new HashMap<String, BigDecimal>(ingredientes);
 		this.pasosPreparacion = new HashMap<Integer, String>(pasosPreparacion);
+		this.anioCreacion = anioCreacion;
+		this.tiempoPreparacion = tiempoPreparacion;
 	}
 
 	public Receta() {
-		this.condimentos = new HashMap<String, BigDecimal>(this.condimentos);
-		this.ingredientes = new HashMap<String, BigDecimal>(this.ingredientes);
-		this.pasosPreparacion = new HashMap<Integer, String>(this.pasosPreparacion);
+		this.condimentos = new HashMap<String, BigDecimal>();
+		this.ingredientes = new HashMap<String, BigDecimal>();
+		this.pasosPreparacion = new HashMap<Integer, String>();
 	}
 
 	/** Getters & Setters **/

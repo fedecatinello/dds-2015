@@ -32,24 +32,24 @@ public class Solicitud {
 
 	/**** Constructors ****/
 
-//	 public Solicitud() {
-//	 this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
-//	 this.preferenciasAlimenticias = new HashMap<String, Boolean>();
-//	 this.recetas = new HashSet<Receta>();
-//	 this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
-//	 this.recetasFavoritas = new ArrayList<Receta>();
-//	 }
-//	
-//	 public Solicitud(BigDecimal altura, BigDecimal peso) {
-//	 this();
-//	 this.altura = altura;
-//	 this.peso = peso;
-//	 }
-//	
-//	 public Solicitud(BigDecimal altura, BigDecimal peso, Sexo sexo) {
-//	 this(altura, peso);
-//	 this.sexo = sexo;
-//	 }
+	// public Solicitud() {
+	// this.condicionesPreexistentes = new HashSet<CondicionPreexistente>();
+	// this.preferenciasAlimenticias = new HashMap<String, Boolean>();
+	// this.recetas = new HashSet<Receta>();
+	// this.gruposAlQuePertenece = new HashSet<GrupoDeUsuarios>();
+	// this.recetasFavoritas = new ArrayList<Receta>();
+	// }
+	//
+	// public Solicitud(BigDecimal altura, BigDecimal peso) {
+	// this();
+	// this.altura = altura;
+	// this.peso = peso;
+	// }
+	//
+	// public Solicitud(BigDecimal altura, BigDecimal peso, Sexo sexo) {
+	// this(altura, peso);
+	// this.sexo = sexo;
+	// }
 
 	/**** Setters y getters ****/
 
@@ -114,6 +114,14 @@ public class Solicitud {
 	}
 
 	public Usuario build() {
-		return new Usuario.UsuarioBuilder().nombre(this.nombre).sexo(this.sexo).altura(this.altura).peso(this.peso).fechaNacimiento(this.fechaNacimiento).rutina(this.rutina).estadoSolicitud(this.estadoSolicitud).build();
+		return new Usuario.UsuarioBuilder()
+			.nombre(this.nombre)
+			.sexo(this.sexo)
+			.altura(this.altura)
+			.peso(this.peso)
+			.fechaNacimiento(this.fechaNacimiento)
+			.rutina(this.rutina)
+			.estadoSolicitud(this.estadoSolicitud)
+			.build();
 	}
 }

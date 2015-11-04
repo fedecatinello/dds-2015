@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 import com.despegar.integration.mongo.entities.IdentifiableEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.domain.receta.Receta;
@@ -20,7 +22,6 @@ import dds.javatar.app.domain.receta.busqueda.Busqueda;
 import dds.javatar.app.domain.usuario.condiciones.CondicionPreexistente;
 import dds.javatar.app.util.exception.RecetaException;
 import dds.javatar.app.util.exception.UsuarioException;
-
 
 public class Usuario implements IdentifiableEntity {
 
@@ -37,11 +38,13 @@ public class Usuario implements IdentifiableEntity {
 	private String id;
 	private String nombre;
 	private Sexo sexo;
+	@JsonIgnore
 	private Date fechaNacimiento;
 	private BigDecimal altura;
 	private BigDecimal peso;
 	private EstadoSolicitud estadoSolicitud;
 
+	@JsonIgnore
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	private Map<String, Boolean> preferenciasAlimenticias;
 	private Rutina rutina;
@@ -448,8 +451,38 @@ public class Usuario implements IdentifiableEntity {
 	}
 
 	@Override
-	public void setId(String usuario_id) {
-		this.id=usuario_id;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		Usuario other = (Usuario) obj;
+		if (this.id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!this.id.equals(other.id)) {
+			return false;
+		}
+		return true;
 	}
 
 }

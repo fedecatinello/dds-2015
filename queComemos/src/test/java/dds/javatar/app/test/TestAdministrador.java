@@ -20,22 +20,22 @@ public class TestAdministrador {
 	public void agregarUsuario() {
 		this.usuario = TestFactory.crearUsuarioBasicoValido();
 		this.repositorioUsuarios.add(this.usuario);
-		assertEquals(4, this.repositorioUsuarios.getAll().size());
+		assertEquals(7, this.repositorioUsuarios.getAll().size());
 	}
 
 	@Test
 	public void eliminarUsuario() {
 		this.usuario = TestFactory.crearUsuarioBasicoValido();
 		this.repositorioUsuarios.add(this.usuario);
-		assertEquals(4, this.repositorioUsuarios.getAll().size());
+		assertEquals(7, this.repositorioUsuarios.getAll().size());
 		this.repositorioUsuarios.delete(this.usuario);
-		assertEquals(3, this.repositorioUsuarios.getAll().size());
+		assertEquals(6, this.repositorioUsuarios.getAll().size());
 	}
 
 	@Test
 	public void updateUsuario() {
 		this.repositorioUsuarios.update(this.usuario);
-		assertEquals(4, this.repositorioUsuarios.getAll().size());
+		assertEquals(7, this.repositorioUsuarios.getAll().size());
 	}
 
 	@Test
@@ -52,23 +52,7 @@ public class TestAdministrador {
 		this.repositorioUsuarios.add(this.usuario);
 		Usuario otherUsr = TestFactory.crearUsuarioBasicoValidoDiferente();
 		this.repositorioUsuarios.add(otherUsr);
-		assertEquals(4, this.repositorioUsuarios.getAll().size());
+		assertEquals(7, this.repositorioUsuarios.getAll().size());
 	}
 
-	@Test
-	public void solicitudAceptadaPorSistema() {
-		// List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		// this.repositorioUsuarios.setObjects(listaUsuarios);
-		this.usuario = TestFactory.crearUsuarioBasicoValido();
-		Solicitud solicitud = new Solicitud().nombre("solicitudAceptada");
-		this.administrador.aceptar(solicitud);
-		assertEquals("ACEPTADA", this.repositorioUsuarios.getAll().get(0).getEstadoSolicitud().toString());
-	}
-
-	@Test
-	public void solicitudRechazadaPorSistema() {
-		Solicitud solicitud = new Solicitud().nombre("solicitudRechazada");
-		this.administrador.rechazar(solicitud);
-		assertEquals("RECHAZADA", this.repositorioUsuarios.getAll().get(0).getEstadoSolicitud().toString());
-	}
 }

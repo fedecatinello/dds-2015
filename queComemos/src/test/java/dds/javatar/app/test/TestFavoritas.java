@@ -32,7 +32,6 @@ public class TestFavoritas {
 	public void limpiar(){
 		List<Receta> faveadas = this.user.getFavoritos();
 		this.user.getFavoritos().removeAll(faveadas);
-		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 	}
 
 	@Test
@@ -91,7 +90,6 @@ public class TestFavoritas {
 		/*Se favea esa sola*/
 		assertEquals(1, user.getFavoritos().size());
 		
-		RepositorioRecetas.getInstance().eliminarTodasLasRecetas();
 		Administrador.getInstance().realizarTareasPendientes();
 				
 		/*No se vuelve a agregar porque ya estaba*/

@@ -29,7 +29,7 @@ public class TestFactory {
 		calendar.add(Calendar.YEAR, -1);
 
 		return new Usuario.UsuarioBuilder()
-			.nombre("DonJuan")
+			.nombre("Mariano")
 				.fechaNacimiento(calendar.getTime())
 				.sexo(Usuario.Sexo.MASCULINO)
 				.peso(new BigDecimal(70))

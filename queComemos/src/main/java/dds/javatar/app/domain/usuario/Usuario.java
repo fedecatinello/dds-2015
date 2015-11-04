@@ -421,11 +421,13 @@ public class Usuario implements IdentifiableEntity {
 	public void updateFavorita(Receta receta) {
 
 		try {
-			if (this.tieneRecetaFavorita(receta)) {
+			if (receta.getEsFavorita() && !this.tieneRecetaFavorita(receta)) {
+				this.marcarFavorita(receta);
+			}
+			else if (!receta.getEsFavorita() && this.tieneRecetaFavorita(receta))
+			{
 				Receta recetaEncontrada = this.getFavoritos().stream().filter(o -> o.getNombre().equals(receta.getNombre())).findFirst().get();
 				this.getFavoritos().remove(recetaEncontrada);
-			} else {
-				this.marcarFavorita(receta);
 			}
 		} catch (NoSuchElementException e) {
 			// TODO: handle exception

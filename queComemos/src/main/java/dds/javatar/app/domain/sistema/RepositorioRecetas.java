@@ -35,10 +35,6 @@ public class RepositorioRecetas extends RepoDefault<Receta> {
 		return ingredientes;
 	}
 
-	public void eliminarTodasLasRecetas() {
-		this.deleteAll();
-	}
-
 	public List<String> getCondicionesName(Set<CondicionPreexistente> condicionesPreexistentes) {
 		List<String> condiciones = new ArrayList<String>();
 		for (CondicionPreexistente cond : condicionesPreexistentes) {

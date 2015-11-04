@@ -18,6 +18,7 @@ public class TestAdministrador {
 
 	@Test
 	public void agregarUsuario() {
+		this.usuario = TestFactory.crearUsuarioBasicoValido();
 		this.repositorioUsuarios.add(this.usuario);
 		assertEquals(2, this.repositorioUsuarios.getAll().size());
 	}

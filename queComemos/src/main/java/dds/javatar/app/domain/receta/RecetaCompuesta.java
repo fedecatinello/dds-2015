@@ -99,10 +99,12 @@ public class RecetaCompuesta extends Receta {
 
 	@Override
 	public void validar() throws RecetaException {
-		super.validar();
 		if (this.subRecetas.isEmpty()) {
 			throw new RecetaException("La receta no es valida ya que esta vacia! (No tiene subrecetas)");
-		}
+		}		
+		for (Receta a : (Iterable<Receta>) this.getSubRecetas()::iterator) {
+			   a.validar();
+			}
 	}
 
 }

@@ -50,7 +50,7 @@ app.controller('RecetasController', function(recetasService, messageService, usu
 	self.credentials = {};
 	self.credentials.username = usuarioService.getUsername();
 	self.allowEdit = $scope.allowEdit = true; //TODO
-	self.esFavorita = false;
+	self.esFavorita ;// = false;
 	self.animationsEnabled = true;
 
 	self.selectedRowReceta = -1;
@@ -189,9 +189,10 @@ app.controller('RecetasController', function(recetasService, messageService, usu
 	};
 
 	self.updateReceta = function(){
+		self.recetaSelected.esFavorita =  self.getEsFavorita();
 		self.recetaSelectedOriginal = self.recetaSelected;
 
-		recetasService.updateReceta(self.recetaSelected, self.credentials.username , function() {
+		recetasService.updateReceta(self.recetaSelected, self.credentials.username ,function() {
 			self.getRecetas();
 		});
 	};

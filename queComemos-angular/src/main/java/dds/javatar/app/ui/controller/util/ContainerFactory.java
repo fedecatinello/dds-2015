@@ -230,7 +230,7 @@ public class ContainerFactory {
 
 		Celiaco celiaca = new Celiaco();
 		maru.agregarCondicionPreexistente(celiaca);
-		
+
 		maru.agregarAlimentoQueLeDisgusta("Papaya");
 		maru.agregarAlimentoQueLeDisgusta("Banana");
 		maru.agregarPreferenciaAlimenticia("Lentejas");

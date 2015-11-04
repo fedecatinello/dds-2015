@@ -1,9 +1,12 @@
 package dds.javatar.app.domain.usuario.condiciones;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.util.exception.UsuarioException;
 
+@JsonTypeName("celiaco")
 public class Celiaco implements CondicionPreexistente {
 
 	@Override

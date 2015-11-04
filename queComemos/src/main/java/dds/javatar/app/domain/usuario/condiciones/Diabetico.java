@@ -2,10 +2,13 @@ package dds.javatar.app.domain.usuario.condiciones;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.util.exception.UsuarioException;
 
+@JsonTypeName("diabetico")
 public class Diabetico extends UsuarioConPreferencia {
 
 	private static final Integer MAX_PESO = 70;

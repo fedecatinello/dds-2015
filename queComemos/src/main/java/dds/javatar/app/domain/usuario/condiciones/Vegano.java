@@ -1,13 +1,16 @@
 package dds.javatar.app.domain.usuario.condiciones;
 
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.usuario.Usuario;
 import dds.javatar.app.util.exception.UsuarioException;
-
+@JsonTypeName("vegano")
 public class Vegano implements CondicionPreexistente {
 
 	private static final Set<String> alimentosProhibidos = new HashSet<String>(Arrays.asList("pollo", "carne", "chivito", "chori"));

@@ -4,9 +4,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.usuario.Usuario;
 
+@JsonTypeName("hipertenso")
 public class Hipertenso extends UsuarioConPreferencia {
 
 	private static final Set<String> ingredientesProhibidos = new HashSet<String>(Arrays.asList("sal", "caldo"));

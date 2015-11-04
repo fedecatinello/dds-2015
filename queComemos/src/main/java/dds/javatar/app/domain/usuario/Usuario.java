@@ -13,7 +13,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import com.despegar.integration.mongo.entities.IdentifiableEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;
@@ -38,13 +37,11 @@ public class Usuario implements IdentifiableEntity {
 
 	private String nombre;
 	private Sexo sexo;
-	@JsonIgnore
 	private Date fechaNacimiento;
 	private BigDecimal altura;
 	private BigDecimal peso;
 	private EstadoSolicitud estadoSolicitud;
 
-	@JsonIgnore
 	private Set<CondicionPreexistente> condicionesPreexistentes;
 	private Map<String, Boolean> preferenciasAlimenticias;
 	private Rutina rutina;

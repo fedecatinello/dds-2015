@@ -48,11 +48,11 @@ public class Receta implements IdentifiableEntity {
 		this.ingredientes = new HashMap<String, BigDecimal>(ingredientes);
 		this.pasosPreparacion = new HashMap<Integer, String>(pasosPreparacion);
 	}
-	
+
 	public Receta() {
-		this.condimentos = new HashMap<String, BigDecimal>(condimentos);
-		this.ingredientes = new HashMap<String, BigDecimal>(ingredientes);
-		this.pasosPreparacion = new HashMap<Integer, String>(pasosPreparacion);
+		this.condimentos = new HashMap<String, BigDecimal>(this.condimentos);
+		this.ingredientes = new HashMap<String, BigDecimal>(this.ingredientes);
+		this.pasosPreparacion = new HashMap<Integer, String>(this.pasosPreparacion);
 	}
 
 	/** Getters & Setters **/
@@ -65,7 +65,7 @@ public class Receta implements IdentifiableEntity {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -147,7 +147,7 @@ public class Receta implements IdentifiableEntity {
 	}
 
 	public Set<CondicionPreexistente> getCondiciones() {
-		return condiciones;
+		return this.condiciones;
 	}
 
 	public void setCondiciones(Set<CondicionPreexistente> condiciones) {
@@ -198,7 +198,7 @@ public class Receta implements IdentifiableEntity {
 	}
 
 	public void agregarRecetaAlRepo(Receta receta) {
-		RepositorioRecetas.getInstance().agregar(receta);
+		RepositorioRecetas.getInstance().add(receta);
 	}
 
 	public Receta hacerPrivada(String autor) throws RecetaException {

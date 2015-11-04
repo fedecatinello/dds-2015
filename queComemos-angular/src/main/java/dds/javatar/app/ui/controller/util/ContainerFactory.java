@@ -2,6 +2,7 @@ package dds.javatar.app.ui.controller.util;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import dds.javatar.app.domain.grupodeusuarios.GrupoDeUsuarios;
 import dds.javatar.app.domain.receta.Receta;
 import dds.javatar.app.domain.receta.builder.RecetaBuilder;
@@ -45,7 +46,7 @@ public class ContainerFactory {
 			.agregarPaso(4, "Mezclar")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(pure);
+		this.instanceRepositorioRecetas.add(pure);
 
 		// propia
 		Receta milanesas = new RecetaBuilder("Milanesa de Pollo")
@@ -62,7 +63,7 @@ public class ContainerFactory {
 			.temporada("Todo el año")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(milanesas);
+		this.instanceRepositorioRecetas.add(milanesas);
 
 		// gente del grupo
 		Receta souffleVegano = new RecetaBuilder("Souffle Vegano")
@@ -81,7 +82,7 @@ public class ContainerFactory {
 			.temporada("Primavera")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(souffleVegano);
+		this.instanceRepositorioRecetas.add(souffleVegano);
 
 		// publica
 		Receta tartaEspinaca = new RecetaBuilder("Tarta de Espinaca")
@@ -99,7 +100,7 @@ public class ContainerFactory {
 			.temporada("Invierno")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(tartaEspinaca);
+		this.instanceRepositorioRecetas.add(tartaEspinaca);
 
 		// publica
 		Receta mousseChocolate = new RecetaBuilder("Mousse de Chocolate")
@@ -118,7 +119,7 @@ public class ContainerFactory {
 			.temporada("Todo el año")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(mousseChocolate);
+		this.instanceRepositorioRecetas.add(mousseChocolate);
 
 		// publica
 		Receta arrolladoPrimavera = new RecetaBuilder("Arrollado Primavera")
@@ -137,7 +138,7 @@ public class ContainerFactory {
 			.temporada("Verano")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(arrolladoPrimavera);
+		this.instanceRepositorioRecetas.add(arrolladoPrimavera);
 
 		// propia
 		Receta sandwitch = new RecetaBuilder("Sanguchitos de jamón y queso")
@@ -157,7 +158,7 @@ public class ContainerFactory {
 			.temporada("Todo el año")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(sandwitch);
+		this.instanceRepositorioRecetas.add(sandwitch);
 
 		Receta ensaladaPobretona = new RecetaBuilder("Ensalada Simple")
 			.totalCalorias(120)
@@ -176,7 +177,7 @@ public class ContainerFactory {
 			.agregarPaso(5, "Mezclar")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(ensaladaPobretona);
+		this.instanceRepositorioRecetas.add(ensaladaPobretona);
 
 		// propia
 		Receta flan = new RecetaBuilder("Flan de Sobrecito Light")
@@ -195,7 +196,7 @@ public class ContainerFactory {
 			.agregarPaso(5, "Agregar dulce de leche en el centro.")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(flan);
+		this.instanceRepositorioRecetas.add(flan);
 
 		Receta papasFritas = new RecetaBuilder("Papas fritas")
 			.totalCalorias(150)
@@ -212,7 +213,7 @@ public class ContainerFactory {
 			.agregarPaso(5, "Condimentar con sal a gusto.")
 			.buildReceta();
 
-		this.instanceRepositorioRecetas.agregar(papasFritas);
+		this.instanceRepositorioRecetas.add(papasFritas);
 	}
 
 	public void agregarUsuariosAlRepo() {
@@ -237,9 +238,9 @@ public class ContainerFactory {
 		maru.agregarPreferenciaAlimenticia("Mousse de Chocolate");
 		this.instanceRepoUsuarios.add(maru);
 
-		maru.marcarFavorita(this.instanceRepositorioRecetas.listarTodas().get(0));
-		maru.marcarFavorita(this.instanceRepositorioRecetas.listarTodas().get(1));
-		maru.marcarFavorita(this.instanceRepositorioRecetas.listarTodas().get(2));
+		maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(0));
+		maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(1));
+		maru.marcarFavorita(this.instanceRepositorioRecetas.getAll().get(2));
 
 		Usuario mariano = new Usuario.UsuarioBuilder()
 			.nombre("Mariano")

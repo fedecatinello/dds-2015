@@ -89,19 +89,12 @@
 			<artifactId>log4j-core</artifactId>
 			<version>2.0-rc1</version>
 		</dependency>
-		
-		<!-- Mongo DB Driver Dependency -->
+
+		<!-- Despegar Mongo Connector -->
 		<dependency>
-	        <groupId>org.mongodb</groupId>
-	        <artifactId>mongodb-driver</artifactId>
-	        <version>3.0.4</version>
-	    </dependency>
-	    
-	    <!-- Despegar Mongo Connector -->
-	    <dependency>
-    		<groupId>com.despegar.integration</groupId>
-    		<artifactId>mongo-connector</artifactId>
-    		<version>1.1.1</version>
+			<groupId>com.despegar.integration</groupId>
+			<artifactId>mongo-connector</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
 </project>

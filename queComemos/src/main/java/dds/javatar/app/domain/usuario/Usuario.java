@@ -59,6 +59,10 @@ public class Usuario implements IdentifiableEntity {
 
 	/**** Constructors ****/
 
+	public Usuario() {
+		
+	}
+	
 	private Usuario(UsuarioBuilder usuarioBuilder) {
 		this.nombre = usuarioBuilder.nombre;
 		this.sexo = usuarioBuilder.sexo;

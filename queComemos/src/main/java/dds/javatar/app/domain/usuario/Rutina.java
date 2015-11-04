@@ -37,6 +37,10 @@ public class Rutina {
 	private TipoRutina tipo;
 	private Integer duracion;
 
+	public Rutina() {
+		
+	}
+	
 	public Rutina(TipoRutina tipo, Integer duracion) {
 		this.setTipo(tipo);
 		this.setDuracion(duracion);

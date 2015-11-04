@@ -87,8 +87,7 @@ public class RecetasController {
 
 			Buscador buscador = new Buscador();
 			String username = request.params(":username");
-			Usuario usuarioLogueado;
-			usuarioLogueado = RepositorioUsuarios.getInstance().getByUsername(username);
+			Usuario usuarioLogueado= RepositorioUsuarios.getInstance().getByUsername(username);
 
 			List<Receta> recetas = buscador.realizarBusquedaPara(usuarioLogueado);
 

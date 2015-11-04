@@ -2,7 +2,6 @@ package dds.javatar.app.domain.sistema;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import dds.javatar.app.db.RepoDefault;
 import dds.javatar.app.domain.usuario.Usuario;
@@ -27,26 +26,13 @@ public class RepositorioUsuarios extends RepoDefault<Usuario> {
 	}
 
 	public Usuario getByUsername(String username) {
-		try {
-			List<Usuario> listaUsers = this.getAll();
-			return listaUsers.stream().filter(s -> s.getUser().equals(username)).map(p -> p).collect(Collectors.toList()).get(0);
-		} catch (Exception e) {
-			return null; // revianta cuando no encuentra nada
-		}
+		List<Usuario> listaUsers = this.getAll();
+		return listaUsers.stream().filter(user -> user.getUser().equals(username)).findFirst().orElse(null);
 	}
 
 	public Usuario getByCredential(String username, String password) {
-		try {
-			List<Usuario> listaUsers = this.getAll();
-			return listaUsers
-				.stream()
-				.filter(s -> s.getUser().equals(username) && s.getPassword().equals(password))
-				.map(p -> p)
-				.collect(Collectors.toList())
-				.get(0);
-		} catch (Exception e) {
-			return null; // revianta cuando no encuentra nada
-		}
+		List<Usuario> listaUsers = this.getAll();
+		return listaUsers.stream().filter(s -> s.getUser().equals(username) && s.getPassword().equals(password)).findFirst().orElse(null);
 	}
 
 	public List<Usuario> searchByName(Usuario usuario) {

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import dds.javatar.app.domain.sistema.Administrador;
+import dds.javatar.app.domain.sistema.RepositorioRecetas;
 import dds.javatar.app.domain.sistema.RepositorioUsuarios;
 import dds.javatar.app.domain.sistema.Solicitud;
 import dds.javatar.app.domain.usuario.Usuario;
@@ -13,11 +14,13 @@ import dds.javatar.app.domain.usuario.Usuario;
 public class TestAdministrador {
 
 	private RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getInstance();
+	private RepositorioRecetas sistema = RepositorioRecetas.getInstance();
 	private Administrador administrador = Administrador.getInstance();
 	private Usuario usuario;
 
 	@Test
 	public void agregarUsuario() {
+		this.usuario = TestFactory.crearUsuarioBasicoValido();
 		this.repositorioUsuarios.add(this.usuario);
 		assertEquals(2, this.repositorioUsuarios.getAll().size());
 	}

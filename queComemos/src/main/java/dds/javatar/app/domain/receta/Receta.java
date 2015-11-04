@@ -26,6 +26,8 @@ public class Receta implements IdentifiableEntity {
 	protected Integer tiempoPreparacion;
 	protected String autor;
 	protected Integer anioCreacion;
+	protected boolean esFavorita;
+
 
 	protected Map<String, BigDecimal> condimentos;
 	protected Map<String, BigDecimal> ingredientes;
@@ -58,6 +60,15 @@ public class Receta implements IdentifiableEntity {
 	}
 
 	/** Getters & Setters **/
+	
+	public boolean getEsFavorita() {
+		return esFavorita;
+	}
+
+	public void setEsFavorita(boolean esFavorita) {
+		this.esFavorita = esFavorita;
+	}
+	
 	@Override
 	public String getId() {
 		return this.id;

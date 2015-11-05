@@ -1,0 +1,130 @@
+<div>
+	<div class="page-header">
+		<h3>{{Ctrl.mensajeInicio}}</h3>
+	</div>
+	<!-- Busqueda y resultados -->
+	<div class="col-lg-12">
+		<div class="filtro">
+			<form role="form"></form>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover table-condensed ">
+				<tbody>
+					<tr class="header">
+						<th>Nombre</th>
+						<th>Calor&iacute;as</th>
+						<th>Dificultad</th>
+						<th condicional-label></th>
+
+					</tr>
+					<tr data-ng-repeat="receta in Ctrl.recetas" class="animate-repeat"
+						ng-class="{'selected':$index == Ctrl.getSelectedRowReceta() , 'publicas': {{receta.esPublica()}}}"
+						ng-click="Ctrl.setClickedReceta(receta, $index)">
+					<td class="col-xs-4">{{receta.nombre}}</td>
+					<td class="col-xs-2">{{receta.calorias}}</td>
+					<td class="col-xs-3">{{receta.dificultad}}</td>
+					<td class="col-xs-3" condicional-input></td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<br>
+	<!-- Boton desplegable -->
+	<div class="accordion" id="accordion1">
+		<div class="accordion-group">
+
+			<button type="button" ng-disabled="!Ctrl.getRecetaSelected()" class="btn btn-default" data-toggle="collapse" data-target="#demo" >Ver Detalles</button>
+			<br>
+			<div id="demo" class="accordion-body collapse" >
+				<div class="panel panel-default" style="opacity:0.8;">
+
+					<!-- Panel de arriba de toodo con datos principales -->
+					<div class="panel-body">
+						<h4>{{Ctrl.getRecetaSelected().nombre}}</h4>
+						<h6>{{Ctrl.getRecetaSelected().calorias}} calorías.   {{Ctrl.getMensajeAutorReceta()}}</h6>
+
+						<div class="col-md-6">
+							<div class="panel-title">
+								<h4>Dificultad</h4>
+							</div>
+							<dificultad></dificultad>
+							<br>
+							<div class="panel-title">
+								<h4>Ingredientes</h4>
+								<table class="table table-bordered table-condensed ">
+									<tbody>
+										<tr class='header'>
+											<th>Ingrediente</th>
+											<th>Dosis</th>
+										</tr>
+										<tr data-ng-repeat="(Ingrediente, Dosis) in Ctrl.getRecetaSelected().ingredientes" class="animate-repeat" ng-click="setClickedIngrediente($index)" ng-class="{'selected':$index == Ctrl.getSelectedRowIngrediente()}">
+											<td class="col-md-4">{{Ingrediente}}</td>
+											<td class="col-md-2">{{Dosis}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<button type="button" visible='allowEdit' class="btn btn-default" ng-click="Ctrl.addIngrediente()">Agregar</button>
+								<button type="button" visible='allowEdit' class="btn btn-default" ng-click="Ctrl.deleteIngrediente()" >Eliminar</button>
+							</div>
+						</div>
+						<!-- Fin columna izquierda -->	
+
+
+						<div class="col-md-6">
+							<div class="panel-title">
+								<h4>Temporada</h4>
+							</div>
+							<temporada></temporada>
+							<br>
+							<div>
+								<h4>Condimentos</h4>
+								<form name="form" class="css-form">
+									<input type="text" visible='allowEdit' ng-model="Ctrl.newCondimento" size="15" placeholder=" Condimento" required>
+									<input type="number" visible='allowEdit' ng-model="Ctrl.newDosis" size="5" placeholder=" Dosis" required>
+									<button type="button" visible='allowEdit' class="btn btn-sm btn-default" ng-click="Ctrl.addCondimento(form)" >Agregar</button>
+									<button type="button" visible='allowEdit' class="btn btn-sm btn-default"  ng-click="Ctrl.deleteCondimento()"> Eliminar</Button>
+									</form>
+									<table class="table table-condensed">
+										<tbody>
+											<tr class='header'>
+												<th>Condimento</th>
+												<th>Dosis</th>
+											</tr>
+											<tr data-ng-repeat="(Condimento, Dosis) in Ctrl.getRecetaSelected().condimentos" class="animate-repeat" ng-click="setClickedCondimento($index)" ng-class="{'selected':$index == Ctrl.getSelectedRowCondimento()}">
+												<td class="col-md-3">{{Condimento}}</td>
+												<td class="col-md-2">{{Dosis}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<br>
+								<div class="panel-title">
+									<h4>Condiciones Preexistentes</h4>
+								</div>
+								<br>
+							</div>
+							<!-- Fin columna Derecha -->
+							<div class="col-md-12">
+								<br>
+								<input type="checkbox" name="recetaFavorita" ng-checked="Ctrl.getEsFavorita()">Favorita<br>
+
+								<div class="panel-title">
+									<h4>Proceso de Preparación</h4>
+								</div>
+								{{Ctrl.getPasos()}}
+							</div>
+						</div>
+						<div style="text-align:center">
+							<button type="button" visible='allowEdit' class="btn btn-default" ng-click="Ctrl.updateReceta()" >Actualizar</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="alert alert-danger animate-repeat" ng-repeat="error in Ctrl.errors">{{error}}</div>
+		</div>
+	</div>
+</div>
